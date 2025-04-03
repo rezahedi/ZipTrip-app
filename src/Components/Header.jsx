@@ -5,7 +5,8 @@ const Header = () => {
   return (
     <div>
       {/* Navbar */}
-      <AppBar position="static" sx={{backgroundColor: "primary.default", boxShadow: "none"}}>
+      <AppBar position="static" sx={{backgroundColor: "primary.default", boxShadow: "none", 
+        "& .MuiToolbar-root": { padding: 0 }}}>
         <Toolbar sx={{ padding: 0 }}>
           <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
             OneDayPlanner
