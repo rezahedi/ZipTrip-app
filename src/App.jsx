@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Header from "./Components/Header";
+import { Box } from "@mui/material";
 import { getAllData } from "./util/index";
 
 const URL = "http://localhost:8000/api/v1/";
@@ -19,7 +21,9 @@ function App() {
 
   return (
     <>
-      <h1>{message}</h1>
+      <Box sx={{ paddingX: "60px" }}>
+        <Header />
+      </Box>
     </>
   );
 }
