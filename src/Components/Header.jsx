@@ -1,5 +1,13 @@
 import React from "react";
-import {AppBar, Toolbar, Typography, Button, TextField, Box, InputAdornment} from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  TextField,
+  Box,
+  InputAdornment,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Header = () => {
