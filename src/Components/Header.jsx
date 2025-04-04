@@ -27,7 +27,7 @@ const Header = () => {
               fontWeight: "bold",
               "&:hover": {
                 backgroundColor: "white",
-                color: "#45a049", 
+                color: "#45a049",
               },
             }}
           >
@@ -43,7 +43,7 @@ const Header = () => {
       <Box
         sx={{
           backgroundImage:
-            "url(https://s3-alpha-sig.figma.com/img/0cf9/b967/5f7578c574ee3138e46a9d9b309a3e20?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RtXfDQQy9kJOrv-aWOgd4Yo-Ugk5ypOSJiC2vvX~rOZG5MUIjBvQ06MWY7viqdFCuTopC-5Qeum6deWkFGwXhoN-w0kW5d0lOxC4y-Z5l3nAGj4QAowEDeEJXsfPfNzxg3HBd8ruXTEXGT2g5iZZObmAO9TS8FH1AHtMqh~QGG8Wtv4EJkiS1C5Q9E-8JgniY3CpwPM7vX~ooAVQva3nYeolDy30Qqpcqs2CAAIFjl7kTqal3w0xfAQo2vZNx7pVRJsA65oCcjkXcjGJz2prMNm3tLXqG9jVyfJx3MD5AwxI9K7owyHE5Alm~KDKAyfACLKBv5LV6p8XMIJu4zug5A__)", // Örnek kapak resmi
+            "url(https://s3-alpha-sig.figma.com/img/0cf9/b967/5f7578c574ee3138e46a9d9b309a3e20?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RtXfDQQy9kJOrv-aWOgd4Yo-Ugk5ypOSJiC2vvX~rOZG5MUIjBvQ06MWY7viqdFCuTopC-5Qeum6deWkFGwXhoN-w0kW5d0lOxC4y-Z5l3nAGj4QAowEDeEJXsfPfNzxg3HBd8ruXTEXGT2g5iZZObmAO9TS8FH1AHtMqh~QGG8Wtv4EJkiS1C5Q9E-8JgniY3CpwPM7vX~ooAVQva3nYeolDy30Qqpcqs2CAAIFjl7kTqal3w0xfAQo2vZNx7pVRJsA65oCcjkXcjGJz2prMNm3tLXqG9jVyfJx3MD5AwxI9K7owyHE5Alm~KDKAyfACLKBv5LV6p8XMIJu4zug5A__)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "230px",
