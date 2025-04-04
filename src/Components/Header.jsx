@@ -5,13 +5,24 @@ const Header = () => {
   return (
     <div>
       {/* Navbar */}
-      <AppBar position="static" sx={{backgroundColor: "primary.default", boxShadow: "none", 
-        "& .MuiToolbar-root": { padding: 0 }}}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "primary.default",
+          boxShadow: "none",
+          "& .MuiToolbar-root": { padding: 0 },
+        }}
+      >
         <Toolbar sx={{ padding: 0 }}>
           <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
             OneDayPlanner
           </Typography>
-          <Button color="inherit" sx={{minWidth : 84}} >Register</Button>
+          <Button  sx={{ minWidth: 84, marginRight: 2, backgroundColor: "white", color: "#45a049", fontWeight:"bold"}}>
+            Login
+          </Button>
+          <Button color="inherit" sx={{ minWidth: 84 }}>
+            Register
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -28,22 +39,34 @@ const Header = () => {
           alignItems: "center",
         }}
       >
-        <Typography
-          variant="h4"
-          color="white"
-        >
+        <Typography variant="h4" color="white">
           Plan your perfect day with ease!
         </Typography>
       </Box>
 
-      {/* Arama Çubuğu */}
-      <Box sx={{ padding: "20px" }}>
+      {/* Search Bar */}
+      <Box
+        sx={{
+          position: "absolute",
+          transform: "translate( 20%, -50%)",
+          maxWidth: "900px",
+          width: "80%",
+        }}
+      >
         <TextField
-          label="Search"
-          variant="outlined"
+          label="Search by city, type of activity or a place name"
+          //   variant="outlined"
           fullWidth
-          size="small"
-          sx={{ maxWidth: "500px", margin: "0 auto" }}
+          size="medium"
+          sx={{
+            margin: "0 auto",
+            backgroundColor: "white",
+            borderRadius: "30px",
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "40px",
+              height: "60px",
+            },
+          }}
         />
       </Box>
     </div>
