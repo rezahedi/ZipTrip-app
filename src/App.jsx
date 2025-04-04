@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Header from "./Components/Header";
 import { Box } from "@mui/material";
-import { getAllData } from "./util/index";
+// import { getAllData } from "./util/index";
 
-const URL = "http://localhost:8000/api/v1/";
+// const URL = "http://localhost:8000/api/v1/";
 
 function App() {
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      const myData = await getAllData(URL);
-      setMessage(myData.data);
-    })();
+  // useEffect(() => {
+  //   (async () => {
+  //     const myData = await getAllData(URL);
+  //     setMessage(myData.data);
+  //   })();
 
-    return () => {
-      console.log("unmounting");
-    };
-  }, []);
+  //   return () => {
+  //     console.log("unmounting");
+  //   };
+  // }, []);
 
   return (
     <>
