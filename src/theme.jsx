@@ -22,7 +22,7 @@ const theme = createTheme({
           borderRadius: "8px",
           backgroundColor: "#4CAF50",
           "&:hover": {
-            backgroundColor: "#45a049",
+            backgroundColor: "#388e3c",
           },
           textTransform: "none",
         },

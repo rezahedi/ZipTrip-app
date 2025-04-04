@@ -25,6 +25,10 @@ const Header = () => {
               backgroundColor: "white",
               color: "#45a049",
               fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "white",
+                color: "#45a049", 
+              },
             }}
           >
             Login
