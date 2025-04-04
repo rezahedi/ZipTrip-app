@@ -1,5 +1,6 @@
 import React from "react";
-import {AppBar, Toolbar, Typography, Button, TextField, Box, } from "@mui/material";
+import {AppBar, Toolbar, Typography, Button, TextField, Box, InputAdornment} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Header = () => {
   return (
@@ -17,7 +18,15 @@ const Header = () => {
           <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
             OneDayPlanner
           </Typography>
-          <Button  sx={{ minWidth: 84, marginRight: 2, backgroundColor: "white", color: "#45a049", fontWeight:"bold"}}>
+          <Button
+            sx={{
+              minWidth: 84,
+              marginRight: 2,
+              backgroundColor: "white",
+              color: "#45a049",
+              fontWeight: "bold",
+            }}
+          >
             Login
           </Button>
           <Button color="inherit" sx={{ minWidth: 84 }}>
@@ -54,17 +63,27 @@ const Header = () => {
         }}
       >
         <TextField
-          label="Search by city, type of activity or a place name"
-          //   variant="outlined"
+          placeholder="Search for a city, activity, or place"
+          variant="outlined"
           fullWidth
           size="medium"
           sx={{
             margin: "0 auto",
             backgroundColor: "white",
             borderRadius: "30px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 255, 0.2)",
             "& .MuiOutlinedInput-root": {
               borderRadius: "40px",
               height: "60px",
+            },
+          }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
             },
           }}
         />
