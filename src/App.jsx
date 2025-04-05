@@ -24,7 +24,7 @@ function App() {
     // Routes and paths for pages (CL)
     <div className="app">
       <BrowserRouter>
-        <Box sx={{ paddingX: "60px" }}>
+        <Box sx={{ paddingX: "7%" }}>
           <Header />
         </Box>
         <Routes>

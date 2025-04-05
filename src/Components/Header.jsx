@@ -28,8 +28,8 @@ const Header = () => {
           </Typography>
           <Button
             sx={{
-              minWidth: 84,
-              marginRight: 2,
+              minWidth: "6%",
+              marginRight: "1%",
               backgroundColor: "white",
               color: "#45a049",
               fontWeight: "bold",
@@ -41,7 +41,7 @@ const Header = () => {
           >
             Login
           </Button>
-          <Button color="inherit" sx={{ minWidth: 84 }}>
+          <Button color="inherit" sx={{ minWidth: "6%" }}>
             Register
           </Button>
         </Toolbar>
@@ -69,9 +69,9 @@ const Header = () => {
       <Box
         sx={{
           position: "absolute",
-          transform: "translate( 20%, -50%)",
-          maxWidth: "900px",
-          width: "80%",
+          transform: "translate( 17%, -50%)",
+          // maxWidth: "80%",
+          width: "65%",
         }}
       >
         <TextField
