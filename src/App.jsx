@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Components/Header";
 import { Box } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { getAllData } from "./util/index";
 
 // const URL = "http://localhost:8000/api/v1/";
@@ -20,11 +21,22 @@ function App() {
   // }, []);
 
   return (
-    <>
-      <Box sx={{ paddingX: "60px" }}>
-        <Header />
-      </Box>
-    </>
+    // Routes and paths for pages (CL)
+    <div className="app">
+      <BrowserRouter>
+        <Box sx={{ paddingX: "60px" }}>
+          <Header />
+        </Box>
+        <Routes>
+          <Route path="/" element="" />
+          <Route path="/myplan" element="" />
+          <Route path="/login" element="" />
+          <Route path="/register" element="" />
+          <Route path="/forgotpassword" element="" />
+          <Route path="/resetpassword" element="" />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
