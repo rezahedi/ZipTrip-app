@@ -1,4 +1,3 @@
-
 // //-------------------------------------------``** GET ALL PLANS **`` //-------------------------------------------
 
 // const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans`; //
@@ -53,6 +52,5 @@
 // };
 
 // // getPlansByCategory("academic-and-cultural-tour");
-
 
 // export { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId };

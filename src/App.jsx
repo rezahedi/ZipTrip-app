@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // const URL = "http://localhost:8000/api/v1/";
 
 function App() {
-
   // useEffect(() => {
   //   getAllPlans();
   //   getPlansByCategory("academic-and-cultural-tour");
