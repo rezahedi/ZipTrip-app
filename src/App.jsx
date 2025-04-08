@@ -2,8 +2,8 @@ import React from "react";
 import Header from "./Components/Header";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId } from "./util/functions";
-import { useEffect } from "react";
+// import { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId } from "./util/functions";
+// import { useEffect } from "react";
 
 // const URL = "http://localhost:8000/api/v1/";
 
