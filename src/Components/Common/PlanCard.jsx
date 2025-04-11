@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 const PlanCard = ({ image, title, rate, type, distance, stopCount }) => {
   return (
-    <Card>
+    <Card sx={{ height: "100%" }}>
       <Box
         sx={{
           display: "flex",
