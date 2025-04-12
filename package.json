@@ -20,7 +20,6 @@
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
     "@mui/styled-engine-sc": "^7.0.1",
-    "@rollup/rollup-win32-x64-msvc": "^4.39.0",
     "axios": "^1.6.7",
     "npm-check-updates": "^17.1.16",
     "react": "^18.2.0",
