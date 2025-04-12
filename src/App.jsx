@@ -1,6 +1,4 @@
 import React from "react";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
 import PlanPage from "./Components/Pages/PlanPage";
 import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
@@ -23,9 +21,6 @@ function App() {
     // Routes and paths for pages (CL)
     <div className="app">
       <BrowserRouter>
-        <Box sx={{ paddingX: "7%" }}>
-          <Header />
-        </Box>
         <Routes>
           <Route path="/" element="" />
           <Route path="/myplan" element={<PlanPage />} />
@@ -35,7 +30,7 @@ function App() {
           <Route path="/resetpassword" element="" />
           <Route path="/bookmark" element={<Bookmark />} />
         </Routes>
-        <Footer />
+
         <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
