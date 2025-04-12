@@ -60,9 +60,7 @@ const PageHeader = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4" color="white">
-          Plan your perfect day with ease!
-        </Typography>
+        
       </Box>
 
       {/* Search Bar */}
