@@ -25,7 +25,8 @@ function Footer() {
               p: 5,
             }}
           >
-            <Typography component="div"
+            <Typography
+              component="div"
               sx={{
                 fontSize: 12,
                 color: "white",
@@ -60,7 +61,8 @@ function Footer() {
               marginRight: "400px",
             }}
           >
-            <Typography component="div"
+            <Typography
+              component="div"
               sx={{
                 fontSize: 12,
                 color: "white",
