@@ -1,18 +1,18 @@
-import React from "react";
-import PageHeader from "../Common/PageHeader";
-import Footer from "../Footer";
-import { Box } from "@mui/material";
+// import React from "react";
+// import PageHeader from "../Common/PageHeader";
+// import Footer from "../Footer";
+// import { Box } from "@mui/material";
 
-const PlanPage = () => {
-  return (
-    <div>
-      <Box sx={{ paddingX: "7%" }}>
-        <PageHeader />
-      </Box>
+// const PlanPage = () => {
+//   return (
+//     <div>
+//       <Box sx={{ paddingX: "7%" }}>
+//         <PageHeader />
+//       </Box>
 
-      <Footer />
-    </div>
-  );
-};
+//       <Footer />
+//     </div>
+//   );
+// };
 
-export default PlanPage;
+// export default PlanPage;

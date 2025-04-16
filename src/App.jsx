@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Components/Header";
-import PlanPage from "./Components/Pages/PlanPage";
+// import PlanPage from "./Components/Pages/PlanPage";
 import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
 import { Box } from "@mui/material";
@@ -22,27 +22,30 @@ function App() {
     // Routes and paths for pages (CL)
     <div className="app">
       <BrowserRouter>
-        <Box sx={{ paddingX: "7%" }}>
+        {/* <Box sx={{ paddingX: "7%" }}>
+          <Header />
+        </Box> */}
+
+        <Box
+          sx={{
+            paddingX: "7%",
+            position: "relative",
+            zIndex: 10,
+            backgroundColor: "white",
+          }}
+        >
           <Header />
         </Box>
-        <Routes>
-          <Route path="/" element="" />
-          <Route path="/myplan" element={<PlanPage />} />
-          <Route path="/login" element="" />
-          <Route path="/register" element="" />
-          <Route path="/forgotpassword" element="" />
-          <Route path="/resetpassword" element="" />
-          <Route path="/bookmark" element={<Bookmark />} />
-        </Routes>
 
         <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/myplan" element="" />
+            {/* <Route path="/myplan" element={<PlanPage />} /> */}
             <Route path="/login" element="" />
             <Route path="/register" element="" />
             <Route path="/forgotpassword" element="" />
             <Route path="/resetpassword" element="" />
+            <Route path="/bookmark" element={<Bookmark />} />
           </Routes>
         </Box>
       </BrowserRouter>
