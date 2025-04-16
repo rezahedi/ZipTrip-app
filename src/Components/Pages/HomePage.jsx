@@ -35,6 +35,7 @@ const HomePage = () => {
                   type={plan.type}
                   distance={`${plan.distance}` + " " + `mi`}
                   stopCount={`${plan.stopCount}` + " " + `places`}
+                  planId={plan.planId}
                 />
               </Grid>
             );
