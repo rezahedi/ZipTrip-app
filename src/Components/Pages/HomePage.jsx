@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import PlanCard from "../Common/PlanCard";
 import { Box, Grid } from "@mui/material";
 import { getData } from "../../util";
-import Header from "../Header";
-import Footer from "../Footer";
 
 const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans`;
 
@@ -25,9 +23,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Box sx={{ paddingX: "7%" }}>
-        <Header />
-      </Box>
       <Box>
         <Grid container spacing={3}>
           {plans.map((plan) => {
@@ -46,7 +41,6 @@ const HomePage = () => {
           })}
         </Grid>
       </Box>
-      <Footer />
     </>
   );
 };
