@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
+import theme from "../../theme";
 
 const RegisterPage = ({ open, handleClose }) => {
   return (
@@ -86,7 +87,9 @@ const RegisterPage = ({ open, handleClose }) => {
               >
                 Sign up with Google
               </Button>
-              <Divider sx={{ my: 2 }}>OR</Divider>
+              <Divider sx={{ my: 1 }}>
+                <Typography sx={{ color: "#8c8c8c" }}>OR</Typography>
+              </Divider>
               <Box>
                 <TextField fullWidth label="Name" margin="normal" />
                 <TextField fullWidth label="Email" margin="normal" />
@@ -98,8 +101,12 @@ const RegisterPage = ({ open, handleClose }) => {
                 />
                 <FormControlLabel
                   control={<Checkbox />}
-                  label="I accept all terms and conditions."
-                  sx={{ mt: 2 }}
+                  label={
+                    <Typography variant="body2">
+                      I accept all terms and conditions.
+                    </Typography>
+                  }
+                  sx={{ mt: 0 }}
                 />
                 <Button
                   variant="contained"
