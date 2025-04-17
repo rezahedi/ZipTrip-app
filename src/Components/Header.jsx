@@ -1,4 +1,6 @@
 import React from "react";
+import RegisterPage from "./Auth/Register";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,6 +13,16 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       {/* Navbar */}
@@ -41,12 +53,19 @@ const Header = () => {
           >
             Login
           </Button>
-          <Button color="inherit" sx={{ minWidth: "6%" }}>
+          <Button
+            color="inherit"
+            sx={{ minWidth: "6%" }}
+            onClick={handleClickOpen}
+          >
             Register
           </Button>
         </Toolbar>
       </AppBar>
 
+      {/* Register Dialog */}
+      <RegisterPage open={open} handleClose={handleClose} />
+      
       {/* image */}
       <Box
         sx={{
