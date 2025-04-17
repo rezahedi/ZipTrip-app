@@ -23,10 +23,6 @@ function App() {
     // Routes and paths for pages (CL)
     <div className="app">
       <BrowserRouter>
-        {/* <Box sx={{ paddingX: "7%" }}>
-          <Header />
-        </Box> */}
-
         <Box
           sx={{
             paddingX: "7%",
@@ -42,7 +38,6 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
-            {/* <Route path="/myplan" element={<PlanPage />} /> */}
             <Route path="/login" element="" />
             <Route path="/register" element="" />
             <Route path="/forgotpassword" element="" />
