@@ -36,6 +36,36 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      defaultProps: {
+        variant: "outlined",
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#BDBDBD",
+            borderWidth: "1px",
+          },
+          //focus
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#666666",
+            borderWidth: "1px",
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "#666666",
+          "&.Mui-focused": {
+            color: "#333333",
+          },
+        },
+      },
+    },
   },
 });
 

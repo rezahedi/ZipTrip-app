@@ -100,7 +100,16 @@ const RegisterPage = ({ open, handleClose }) => {
                   margin="normal"
                 />
                 <FormControlLabel
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      sx={{
+                        "&.Mui-checked": {
+                          borderColor: "#333333",
+                          color: "#333333",
+                        },
+                      }}
+                    />
+                  }
                   label={
                     <Typography variant="body2">
                       I accept all terms and conditions.
