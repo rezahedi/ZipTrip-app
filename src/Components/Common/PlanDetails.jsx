@@ -93,10 +93,10 @@ const PlanDetails = ({
 
           <ImageList
             sx={{
-              width: 500,
+              width: 300,
               height: 450,
             }}
-            cols={2}
+            cols={1}
             rowHeight={200}
           >
             {images.map((url, index) => (
