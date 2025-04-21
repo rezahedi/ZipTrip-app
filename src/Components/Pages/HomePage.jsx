@@ -22,24 +22,26 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Box>
-      <Grid container spacing={3}>
-        {plans.map((plan) => {
-          return (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan.planId}>
-              <PlanCard
-                image={plan.images[0]}
-                title={plan.title}
-                rate={plan.rating}
-                type={plan.type}
-                distance={`${plan.distance}` + " " + `mi`}
-                stopCount={`${plan.stopCount}` + " " + `places`}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-    </Box>
+    <>
+      <Box>
+        <Grid container spacing={3}>
+          {plans.map((plan) => {
+            return (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan.planId}>
+                <PlanCard
+                  image={plan.images[0]}
+                  title={plan.title}
+                  rate={plan.rating}
+                  type={plan.type}
+                  distance={`${plan.distance}` + " " + `mi`}
+                  stopCount={`${plan.stopCount}` + " " + `places`}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+    </>
   );
 };
 
