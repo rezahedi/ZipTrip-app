@@ -22,7 +22,6 @@ const getAllData = async (url) => {
   }
 };
 
-
 // const requestBody = {
 //   name: "John",
 //   email: "john@gmail.com",

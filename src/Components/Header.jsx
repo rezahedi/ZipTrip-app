@@ -65,7 +65,7 @@ const Header = () => {
 
       {/* Register Dialog */}
       <RegisterPage open={open} handleClose={handleClose} />
-      
+
       {/* image */}
       <Box
         sx={{
