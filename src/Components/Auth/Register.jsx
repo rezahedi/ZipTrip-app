@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -15,9 +15,60 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-import theme from "../../theme";
+// import theme from "../../theme";
+import { postData } from "../../util";
+
+const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
 
 const RegisterPage = ({ open, handleClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  // const handleConfirmPassword = (event) => {
+  //   setConfirmPassword(event.target.value);
+  // };
+
+  const handleCheckboxChange = (event) => {
+    setCheckbox(event.target.checked);
+  };
+
+  const requestBody = {
+    name: name,
+    email: email,
+    password: password,
+  };
+
+  const handleRegister = async () => {
+    if (!checkbox) {
+      alert("Please accept the terms and conditions");
+      return;
+    }
+
+    try {
+      const data = await postData(URL, requestBody);
+      console.log(data);
+      handleClose();
+    } catch (error) {
+      console.error("Registration failed", error);
+      alert("Registration failed. Please try again.");
+    }
+  };
+
   return (
     <Dialog
       open={open}
@@ -51,7 +102,7 @@ const RegisterPage = ({ open, handleClose }) => {
           p: { xs: 4, sm: 8 },
           m: { xs: 2, sm: 3 },
           width: "100%",
-          maxWidth: 800,
+          maxWidth: 700,
         }}
       >
         <Box>
@@ -68,7 +119,9 @@ const RegisterPage = ({ open, handleClose }) => {
             <Box
               sx={{
                 flex: 1,
-                minWidth: { xs: "300px", sm: "350px" },
+                px: 2,
+                py: 3,
+                minWidth: { xs: "250px", sm: "300px" },
               }}
             >
               <Typography
@@ -91,17 +144,33 @@ const RegisterPage = ({ open, handleClose }) => {
                 <Typography sx={{ color: "#8c8c8c" }}>OR</Typography>
               </Divider>
               <Box>
-                <TextField fullWidth label="Name" margin="normal" />
-                <TextField fullWidth label="Email" margin="normal" />
+                <TextField
+                  fullWidth
+                  label="Name"
+                  margin="normal"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+                <TextField
+                  fullWidth
+                  label="Email"
+                  margin="normal"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
                 <TextField
                   fullWidth
                   label="Password"
                   type="password"
                   margin="normal"
+                  value={password}
+                  onChange={handlePasswordChange}
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={checkbox}
+                      onChange={handleCheckboxChange}
                       sx={{
                         "&.Mui-checked": {
                           borderColor: "#333333",
@@ -122,6 +191,7 @@ const RegisterPage = ({ open, handleClose }) => {
                   color="primary"
                   fullWidth
                   sx={{ mt: 3 }}
+                  onClick={handleRegister}
                 >
                   Sign in
                 </Button>
@@ -135,7 +205,7 @@ const RegisterPage = ({ open, handleClose }) => {
             <Box
               sx={{
                 flex: 1,
-                minWidth: { xs: "300px", sm: "350px" },
+                minWidth: { xs: "250px", sm: "300px" },
                 backgroundColor: "#484747",
                 color: "white",
                 px: 2,
@@ -160,7 +230,7 @@ const RegisterPage = ({ open, handleClose }) => {
                 sx={{
                   width: "100%",
                   maxWidth: 350,
-                  height: 215,
+                  height: 190,
                   objectFit: "cover",
                   objectPosition: "bottom",
                   mx: "auto",

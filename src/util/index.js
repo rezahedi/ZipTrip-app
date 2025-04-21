@@ -22,4 +22,20 @@ const getAllData = async (url) => {
   }
 };
 
-export { getData, getAllData };
+
+// const requestBody = {
+//   name: "John",
+//   email: "john@gmail.com",
+//   password: "1234John",
+// };
+
+const postData = async (url, requestBody = {}, config = {}) => {
+  try {
+    const res = await axios.post(url, requestBody, config);
+    return res.data;
+  } catch (error) {
+    console.error("POST error in", url, error);
+  }
+};
+
+export { getData, getAllData, postData };
