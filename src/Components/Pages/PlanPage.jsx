@@ -11,7 +11,7 @@ const PlanPage = () => {
   useEffect(() => {
     const fetchSinglePlan = async (planId) => {
       try {
-        const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans/plan/${planId}`;
+        const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans/${planId}`;
         const res = await getData(URL);
         setPlan(res);
       } catch (error) {
