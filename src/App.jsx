@@ -3,6 +3,7 @@ import Header from "./Components/Header";
 import HomePage from "./Components/Pages/HomePage";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import RegisterPage from "./Components/Auth/Register";
 // import { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId } from "./util/functions";
 // import { useEffect } from "react";
 
@@ -26,9 +27,12 @@ function App() {
         <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/myplan" element="" />
+            <Route
+              path="/bookmark"
+              element={<div>Bookmark Page Coming Soon</div>}
+            />
             <Route path="/login" element="" />
-            <Route path="/register" element="" />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgotpassword" element="" />
             <Route path="/resetpassword" element="" />
           </Routes>

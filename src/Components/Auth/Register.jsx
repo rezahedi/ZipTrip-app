@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 // import theme from "../../theme";
 import { postData } from "../../util";
 
@@ -26,6 +27,7 @@ const RegisterPage = ({ open, handleClose }) => {
   const [password, setPassword] = useState("");
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
+  const navigate = useNavigate();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -62,6 +64,7 @@ const RegisterPage = ({ open, handleClose }) => {
     try {
       const data = await postData(URL, requestBody);
       console.log(data);
+      navigate("/bookmark");
       handleClose();
     } catch (error) {
       console.error("Registration failed", error);
