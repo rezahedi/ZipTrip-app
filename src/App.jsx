@@ -5,6 +5,7 @@ import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CreatePlan from "./Components/Pages/CreatePlan";
 // import { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId } from "./util/functions";
 // import { useEffect } from "react";
 
@@ -46,6 +47,8 @@ function App() {
             <Route path="/forgotpassword" element="" />
             <Route path="/resetpassword" element="" />
             <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/createPlan" element={<CreatePlan />} />
+
           </Routes>
         </Box>
       </BrowserRouter>
