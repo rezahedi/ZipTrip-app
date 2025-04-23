@@ -3,6 +3,7 @@ import Header from "./Components/Header";
 // import PlanPage from "./Components/Pages/PlanPage";
 import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
+import { DashboardTheme, MyPlans, Bookmarked, CreateNew } from "./Components/Pages/dashboard";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId } from "./util/functions";
@@ -46,6 +47,12 @@ function App() {
             <Route path="/forgotpassword" element="" />
             <Route path="/resetpassword" element="" />
             <Route path="/bookmark" element={<Bookmark />} />
+
+            <Route path="/account/" element={<DashboardTheme />}>
+              <Route index element={<MyPlans />} />
+              <Route path="bookmarked" element={<Bookmarked />} />
+              <Route path="create" element={<CreateNew />} />
+            </Route>
           </Routes>
         </Box>
       </BrowserRouter>
