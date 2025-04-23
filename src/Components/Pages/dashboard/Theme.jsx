@@ -8,8 +8,9 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 const links = [
   { text: 'My Plans', path: '/account' },
-  { text: 'Bookmarked Plans', path: '/account/bookmarked' },
-  { text: 'Create New', path: '/account/create' },
+  { text: 'Bookmarked', path: '/account/bookmarked' },
+  { text: 'Done', path: '/account/done' },
+  { text: 'Profile', path: '/account/profile' },
 ];
 
 export default function DashboardTheme() {
