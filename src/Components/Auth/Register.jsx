@@ -153,6 +153,7 @@ const RegisterPage = ({ open, handleClose }) => {
                   margin="normal"
                   value={name}
                   onChange={handleNameChange}
+                  required
                 />
                 <TextField
                   fullWidth
@@ -160,6 +161,7 @@ const RegisterPage = ({ open, handleClose }) => {
                   margin="normal"
                   value={email}
                   onChange={handleEmailChange}
+                  required
                 />
                 <TextField
                   fullWidth
@@ -168,6 +170,7 @@ const RegisterPage = ({ open, handleClose }) => {
                   margin="normal"
                   value={password}
                   onChange={handlePasswordChange}
+                  required
                 />
                 <FormControlLabel
                   control={
