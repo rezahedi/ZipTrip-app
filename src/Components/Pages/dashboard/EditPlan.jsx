@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function EditPlan() {
-  return (
-    <div>Edit Plan Component</div>
-  )
+  return <div>Edit Plan Component</div>;
 }
 
-export default EditPlan
+export default EditPlan;

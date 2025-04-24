@@ -1,6 +1,5 @@
 // TODO: The token value should be saved in localStorage in Register or Login components
-const token =
-  localStorage.getItem("token")
+const token = localStorage.getItem("token");
 
 const getMyPlans = async (onError) => {
   try {
