@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "./Components/Header";
-// import PlanPage from "./Components/Pages/PlanPage";
 import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
+import PlanPage from "./Components/Pages/PlanPage";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegisterPage from "./Components/Auth/Register";
@@ -13,10 +13,6 @@ function App() {
     <AuthProvider>
       <div className="app">
         <BrowserRouter>
-          {/* <Box sx={{ paddingX: "7%" }}>
-          <Header />
-        </Box> */}
-
           <Box
             sx={{
               paddingX: "7%",
@@ -31,7 +27,7 @@ function App() {
           <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              {/* <Route path="/myplan" element={<PlanPage />} /> */}
+              <Route path="/plans/:planId" element={<PlanPage />} />
               <Route path="/login" element="" />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgotpassword" element="" />
