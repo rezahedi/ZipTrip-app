@@ -60,7 +60,7 @@ const RegisterPage = ({ open, handleClose }) => {
     try {
       const data = await postData(URL, requestBody);
       if (data) {
-        console.log(data)
+        console.log(data);
         const { token, name, email, imageURL } = data;
         login(name, email, imageURL, token);
         navigate("/bookmark");

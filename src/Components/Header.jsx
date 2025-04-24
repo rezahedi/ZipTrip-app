@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const { user,  logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
@@ -28,8 +28,8 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-      logout();
-      navigate("/");
+    logout();
+    navigate("/");
   };
 
   return (
@@ -49,7 +49,10 @@ const Header = () => {
           </Typography>
           {user ? (
             <>
-              <Typography sx={{ mr: "8px", fontSize:"20px" }} > 👋 Hello, {user.name}!</Typography>
+              <Typography sx={{ mr: "8px", fontSize: "20px" }}>
+                {" "}
+                👋 Hello, {user.name}!
+              </Typography>
               <Button sx={{ minWidth: "6%" }} onClick={handleLogout}>
                 Logout
               </Button>

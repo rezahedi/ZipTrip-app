@@ -11,36 +11,36 @@ import { AuthProvider } from "./context/AuthContext";
 function App() {
   return (
     <AuthProvider>
-    <div className="app">
-      <BrowserRouter>
-        {/* <Box sx={{ paddingX: "7%" }}>
+      <div className="app">
+        <BrowserRouter>
+          {/* <Box sx={{ paddingX: "7%" }}>
           <Header />
         </Box> */}
 
-        <Box
-          sx={{
-            paddingX: "7%",
-            position: "relative",
-            zIndex: 10,
-            backgroundColor: "white",
-          }}
-        >
-          <Header />
-        </Box>
+          <Box
+            sx={{
+              paddingX: "7%",
+              position: "relative",
+              zIndex: 10,
+              backgroundColor: "white",
+            }}
+          >
+            <Header />
+          </Box>
 
-        <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            {/* <Route path="/myplan" element={<PlanPage />} /> */}
-            <Route path="/login" element="" />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forgotpassword" element="" />
-            <Route path="/resetpassword" element="" />
-            <Route path="/bookmark" element={<Bookmark />} />
-          </Routes>
-        </Box>
-      </BrowserRouter>
-    </div>
+          <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              {/* <Route path="/myplan" element={<PlanPage />} /> */}
+              <Route path="/login" element="" />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgotpassword" element="" />
+              <Route path="/resetpassword" element="" />
+              <Route path="/bookmark" element={<Bookmark />} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
+      </div>
     </AuthProvider>
   );
 }

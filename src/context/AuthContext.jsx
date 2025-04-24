@@ -14,10 +14,10 @@ const AuthProvider = ({ children }) => {
 
   const login = (name, email, imageURL, token) => {
     const userData = {
-    name,
-    email,
-    imageURL,
-  };
+      name,
+      email,
+      imageURL,
+    };
     setUser(userData);
     setToken(token);
     localStorage.setItem("user", JSON.stringify(userData));
