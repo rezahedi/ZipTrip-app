@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import { deletePlan, getMyPlans } from '../../../util/dashboard'
 import PlanCard from '../../Common/PlanCard'
 import { Box, Grid, Button, Typography } from "@mui/material"
+import AlertDialog from '../../Common/AlertDialog'
 
 function MyPlans() {
   const [plans, setPlans] = useState([])
   const [error, setError] = useState(null)
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [selectedPlanToRemove, setSelectedPlanToRemove] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -16,14 +19,25 @@ function MyPlans() {
     })()
   }, [])
 
-  const handleRemovePlan = async (planId) => {
-    const result = await deletePlan(planId, setError)
+  const handleRemovePlan = async () => {
+    const result = await deletePlan(selectedPlanToRemove, setError)
 
     if (!result) return
 
     // Filter out the removed plan from the state
-    setPlans( plans.filter((plan) => plan._id !== planId) )
+    setPlans( plans.filter((plan) => plan._id !== selectedPlanToRemove) )
+    setSelectedPlanToRemove(null);
+    setAlertOpen(false);
   }
+
+  const openDeleteDialog = (planId) => {
+    setSelectedPlanToRemove(planId);
+    setAlertOpen(true);
+  };
+
+  const handleClose = () => {
+    setAlertOpen(false);
+  };
 
   return (
     <>
@@ -37,24 +51,35 @@ function MyPlans() {
       </Box>
       {error && <p>{error}</p>}
       {plans.length > 0 ? (
-        <Grid container spacing={3}>
-          {plans.map((plan) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={plan._id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <PlanCard 
-                image={plan.images[0]}
-                title={plan.title}
-                rate={plan.rate}
-                type={plan.type}
-                distance={plan.distance}
-                stopCount={plan.stopCount}
-              />
-              <Box>
-                <Button component={Link} to={`/account/${plan._id}`} sx={{ marginTop: 1 }}>Edit</Button>
-                <Button onClick={() => handleRemovePlan(plan._id)} style={{ backgroundColor: '#f44336', color: 'white' }} sx={{ marginLeft: 1, marginTop: 1 }}>Remove</Button>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Grid container spacing={3}>
+            {plans.map((plan) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={plan._id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <PlanCard 
+                  image={plan.images[0]}
+                  title={plan.title}
+                  rate={plan.rate}
+                  type={plan.type}
+                  distance={plan.distance}
+                  stopCount={plan.stopCount}
+                />
+                <Box>
+                  <Button component={Link} to={`/account/${plan._id}`} sx={{ marginTop: 1 }}>Edit</Button>
+                  <Button onClick={() => openDeleteDialog(plan._id)} style={{ backgroundColor: '#f44336', color: 'white' }} sx={{ marginLeft: 1, marginTop: 1 }}>Remove</Button>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          <AlertDialog
+            isOpen={alertOpen}
+            onClose={handleClose}
+            title="Removing a Plan Permanently"
+            message="Are you sure you want to remove this plan?"
+            onConfirm={handleRemovePlan}
+            confirmText="Remove"
+            cancelText="Cancel"
+          />
+        </>
       ) : (
         <p>No plans found.</p>
       )}
