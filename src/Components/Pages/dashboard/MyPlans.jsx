@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getMyPlans } from '../../../util/dashboard'
+import { deletePlan, getMyPlans } from '../../../util/dashboard'
 import PlanCard from '../../Common/PlanCard'
 import { Box, Grid, Button, Typography } from "@mui/material"
 
@@ -17,7 +17,12 @@ function MyPlans() {
   }, [])
 
   const handleRemovePlan = async (planId) => {
-    console.log('Do remove!', planId)
+    const result = await deletePlan(planId, setError)
+
+    if (!result) return
+
+    // Filter out the removed plan from the state
+    setPlans( plans.filter((plan) => plan._id !== planId) )
   }
 
   return (

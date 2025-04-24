@@ -21,4 +21,24 @@ const getMyPlans = async (onError) => {
   }
 };
 
-export { getMyPlans };
+const deletePlan = async (planId, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/plans/${planId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to remove plan");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    onError(error.message || "An error occurred while removing the plan");
+    return false;
+  }
+};
+
+export { getMyPlans, deletePlan };
