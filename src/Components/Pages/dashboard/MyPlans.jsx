@@ -20,11 +20,9 @@ function MyPlans() {
     <div>
       <div>
         <h1>My Plans</h1>
-        <Link to="/account/create">
-          <Button color="inherit" sx={{ minWidth: "6%" }}>
-            Create New Plan
-          </Button>
-        </Link>
+        <Button component={Link} to="/account/create" color="inherit">
+          Create New Plan
+        </Button>
       </div>
       {error && <p>{error}</p>}
       {plans.length > 0 ? (
