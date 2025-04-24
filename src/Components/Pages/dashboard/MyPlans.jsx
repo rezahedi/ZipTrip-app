@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getMyPlans } from '../../../util/dashboard'
+import PlanCard from '../../Common/PlanCard'
+import { Grid } from "@mui/material"
 
 function MyPlans() {
   const [plans, setPlans] = useState([])
@@ -24,14 +26,21 @@ function MyPlans() {
       </div>
       {error && <p>{error}</p>}
       {plans.length > 0 ? (
-        <ul>
+        <Grid container spacing={3}>
           {plans.map((plan) => (
-            <li key={plan._id}>
-              <h2>{plan.title}</h2>
-              <p>{plan.description}</p>
-            </li>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={plan.planId}>
+              <PlanCard 
+                key={plan._id}
+                image={plan.images[0]}
+                title={plan.title}
+                rate={plan.rate}
+                type={plan.type}
+                distance={plan.distance}
+                stopCount={plan.stopCount}
+              />
+            </Grid>
           ))}
-        </ul>
+        </Grid>
       ) : (
         <p>No plans found.</p>
       )}
