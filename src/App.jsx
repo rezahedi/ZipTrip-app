@@ -48,7 +48,6 @@ function App() {
             <Route path="/resetpassword" element="" />
             <Route path="/bookmark" element={<Bookmark />} />
             <Route path="/createPlan" element={<CreatePlan />} />
-
           </Routes>
         </Box>
       </BrowserRouter>

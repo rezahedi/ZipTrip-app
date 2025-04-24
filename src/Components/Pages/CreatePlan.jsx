@@ -112,11 +112,7 @@ const createPlan = () => {
         </Typography>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={6} sm={3}>
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<AddLocation />}
-            >
+            <Button fullWidth variant="outlined" startIcon={<AddLocation />}>
               Manually
             </Button>
           </Grid>
@@ -131,11 +127,7 @@ const createPlan = () => {
             </Button>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<PhotoCamera />}
-            >
+            <Button fullWidth variant="outlined" startIcon={<PhotoCamera />}>
               Add Photos
             </Button>
           </Grid>
