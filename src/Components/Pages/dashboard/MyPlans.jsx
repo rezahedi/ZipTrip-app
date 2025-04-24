@@ -16,6 +16,10 @@ function MyPlans() {
     })()
   }, [])
 
+  const handleRemovePlan = async (planId) => {
+    console.log('Do remove!', planId)
+  }
+
   return (
     <div>
       <div>
@@ -38,6 +42,8 @@ function MyPlans() {
                 distance={plan.distance}
                 stopCount={plan.stopCount}
               />
+              <Button component={Link} to={`/account/${plan._id}`} color="primary" sx={{ marginTop: 1 }}>Edit</Button>
+              <Button onClick={() => handleRemovePlan(plan._id)} color="error" sx={{ marginLeft: 1, marginTop: 1 }}>Remove</Button>
             </Grid>
           ))}
         </Grid>
