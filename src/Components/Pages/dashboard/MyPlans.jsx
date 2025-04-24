@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getMyPlans } from '../../../util/dashboard'
 import PlanCard from '../../Common/PlanCard'
-import { Grid } from "@mui/material"
+import { Grid, Button } from "@mui/material"
 
 function MyPlans() {
   const [plans, setPlans] = useState([])
@@ -21,7 +21,9 @@ function MyPlans() {
       <div>
         <h1>My Plans</h1>
         <Link to="/account/create">
-          Create New Plan
+          <Button color="inherit" sx={{ minWidth: "6%" }}>
+            Create New Plan
+          </Button>
         </Link>
       </div>
       {error && <p>{error}</p>}
