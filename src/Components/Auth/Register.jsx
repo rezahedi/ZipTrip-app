@@ -16,8 +16,8 @@ import {
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
-// import theme from "../../theme";
 import { postData } from "../../util";
+import { useAuth } from "../../context/AuthContext";
 
 const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
 
@@ -25,9 +25,9 @@ const RegisterPage = ({ open, handleClose }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -40,10 +40,6 @@ const RegisterPage = ({ open, handleClose }) => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-
-  // const handleConfirmPassword = (event) => {
-  //   setConfirmPassword(event.target.value);
-  // };
 
   const handleCheckboxChange = (event) => {
     setCheckbox(event.target.checked);
@@ -63,9 +59,13 @@ const RegisterPage = ({ open, handleClose }) => {
 
     try {
       const data = await postData(URL, requestBody);
-      console.log(data);
-      navigate("/bookmark");
-      handleClose();
+      if (data) {
+        console.log(data)
+        const { token, name, email, imageURL } = data;
+        login(name, email, imageURL, token);
+        navigate("/bookmark");
+        handleClose();
+      }
     } catch (error) {
       console.error("Registration failed", error);
       alert("Registration failed. Please try again.");

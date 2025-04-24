@@ -6,21 +6,11 @@ import HomePage from "./Components/Pages/HomePage";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RegisterPage from "./Components/Auth/Register";
-// import { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId } from "./util/functions";
-// import { useEffect } from "react";
-
-// const URL = "http://localhost:8000/api/v1/";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
-  // useEffect(() => {
-  //   getAllPlans();
-  //   getPlansByCategory("academic-and-cultural-tour");
-  //   getSinglePlan("oakland-cultural-highlights");
-  //   getPlansByUserId("john - smith");
-  // }, []);
-
   return (
-    // Routes and paths for pages (CL)
+    <AuthProvider>
     <div className="app">
       <BrowserRouter>
         {/* <Box sx={{ paddingX: "7%" }}>
@@ -51,6 +41,7 @@ function App() {
         </Box>
       </BrowserRouter>
     </div>
+    </AuthProvider>
   );
 }
 
