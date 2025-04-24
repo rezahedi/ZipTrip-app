@@ -89,11 +89,11 @@ const PlanCard = ({
 export default PlanCard;
 
 PlanCard.propTypes = {
+  planId: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  rate: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
-  distance: PropTypes.string.isRequired,
-  stopCount: PropTypes.string.isRequired,
-  planId: PropTypes.string,
+  rate: PropTypes.number,
+  type: PropTypes.string,
+  distance: PropTypes.string,
+  stopCount: PropTypes.string,
 };

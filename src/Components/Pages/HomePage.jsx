@@ -27,7 +27,7 @@ const HomePage = () => {
         <Grid container spacing={3}>
           {plans.map((plan) => {
             return (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan.planId}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
                 <PlanCard
                   image={plan.images[0]}
                   title={plan.title}
