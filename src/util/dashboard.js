@@ -57,7 +57,7 @@ const getPlan = async (planId, onError) => {
     onError(error.message || "An error occurred while fetching the plan");
     return null;
   }
-}
+};
 
 const updatePlan = async (plan, onError) => {
   try {
@@ -79,6 +79,6 @@ const updatePlan = async (plan, onError) => {
     onError(error.message || "An error occurred while updating the plan");
     return null;
   }
-}
+};
 
 export { getMyPlans, deletePlan, getPlan, updatePlan };

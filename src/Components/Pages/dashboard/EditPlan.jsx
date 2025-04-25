@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Typography, FormControl, FormLabel, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  FormControl,
+  FormLabel,
+  TextField,
+  Button,
+} from "@mui/material";
 import { getPlan, updatePlan } from "../../../util/dashboard";
 
 function EditPlan() {
@@ -15,7 +22,11 @@ function EditPlan() {
     (async () => {
       const data = await getPlan(planId, setError);
       if (!data) return;
-      setPlan({...data, categoryId: data.categoryId?._id, userId: data.userId?._id});
+      setPlan({
+        ...data,
+        categoryId: data.categoryId?._id,
+        userId: data.userId?._id,
+      });
     })();
   }, []);
 
@@ -32,7 +43,6 @@ function EditPlan() {
         <Typography variant="h4">Edit Plan:</Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 650 }}>
-
         {error && <p>{error}</p>}
 
         {/* Title */}
@@ -80,8 +90,23 @@ function EditPlan() {
           />
         </FormControl>
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-          <Button variant="outlined" sx={{ backgroundColor: "white", color: "#4CAF50", borderColor: "#4CAF50", ":hover": { backgroundColor: "#388e3c30", borderColor: "#388e3c"} }}>Cancel</Button>
-          <Button variant="contained" color="primary" onClick={handleUpdate}>Save Changes</Button>
+          <Button
+            variant="outlined"
+            sx={{
+              backgroundColor: "white",
+              color: "#4CAF50",
+              borderColor: "#4CAF50",
+              ":hover": {
+                backgroundColor: "#388e3c30",
+                borderColor: "#388e3c",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button variant="contained" color="primary" onClick={handleUpdate}>
+            Save Changes
+          </Button>
         </Box>
       </Box>
     </>
