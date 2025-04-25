@@ -35,7 +35,6 @@ const Header = () => {
 
   const handleCloseLogin = () => {
     setOpenLogin(false);
-
   };
 
   const handleLogout = () => {
@@ -111,7 +110,7 @@ const Header = () => {
       <LoginPage
         open={openLogin}
         handleClose={handleCloseLogin}
-        onSwitchToRegister={()=> {
+        onSwitchToRegister={() => {
           setOpenRegister(true);
           setOpenLogin(false);
         }}
