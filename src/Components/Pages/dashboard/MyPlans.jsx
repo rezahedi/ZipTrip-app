@@ -8,7 +8,7 @@ import AlertDialog from "../../Common/AlertDialog";
 function MyPlans() {
   const [plans, setPlans] = useState([]);
   const [error, setError] = useState(null);
-  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   const [selectedPlanToRemove, setSelectedPlanToRemove] = useState(null);
 
   useEffect(() => {
