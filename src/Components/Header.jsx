@@ -1,4 +1,6 @@
 import React from "react";
+import RegisterPage from "./Auth/Register";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,8 +11,27 @@ import {
   InputAdornment,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <div>
       {/* Navbar */}
@@ -26,26 +47,47 @@ const Header = () => {
           <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
             OneDayPlanner
           </Typography>
-          <Button
-            sx={{
-              minWidth: "6%",
-              marginRight: "1%",
-              backgroundColor: "white",
-              color: "#45a049",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "white",
-                color: "#45a049",
-              },
-            }}
-          >
-            Login
-          </Button>
-          <Button color="inherit" sx={{ minWidth: "6%" }}>
-            Register
-          </Button>
+          {user ? (
+            <>
+              <Typography sx={{ mr: "8px", fontSize: "20px" }}>
+                {" "}
+                👋 Hello, {user.name}!
+              </Typography>
+              <Button sx={{ minWidth: "6%" }} onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                sx={{
+                  minWidth: "6%",
+                  marginRight: "1%",
+                  backgroundColor: "white",
+                  color: "#45a049",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "#45a049",
+                  },
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                color="inherit"
+                sx={{ minWidth: "6%" }}
+                onClick={handleClickOpen}
+              >
+                Register
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
+
+      {/* Register Dialog */}
+      <RegisterPage open={open} handleClose={handleClose} />
 
       {/* image */}
       <Box
