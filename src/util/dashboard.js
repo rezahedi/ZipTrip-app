@@ -59,4 +59,26 @@ const getPlan = async (planId, onError) => {
   }
 }
 
-export { getMyPlans, deletePlan, getPlan };
+const updatePlan = async (plan, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/plans/${plan._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(plan),
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to update plan");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while updating the plan");
+    return null;
+  }
+}
+
+export { getMyPlans, deletePlan, getPlan, updatePlan };
