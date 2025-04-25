@@ -25,6 +25,8 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [isValid, setIsValid] = useState();
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -40,12 +42,32 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
     setCheckbox(event.target.checked);
   };
 
+  const validateInput = () => {
+    setIsValid(true);
+
+    if (!email) {
+      setEmailError("Email is required.");
+      setIsValid(false);
+    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+      setEmailError("Email is invalid.");
+      setIsValid(false);
+    } else {
+      setEmailError("");
+    }
+  };
+
   const requestBody = {
     email: email,
     password: password,
   };
 
   const handleLogin = async () => {
+    validateInput();
+    if (!isValid) {
+      return;
+    }
+
+
     try {
       const data = await postData(URL, requestBody);
       if (data) {
@@ -141,6 +163,8 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                   label="Email"
                   margin="normal"
                   value={email}
+                  error={emailError !== ""}
+                  helperText={emailError}
                   onChange={handleEmailChange}
                   required
                 />

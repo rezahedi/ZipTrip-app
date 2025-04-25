@@ -27,6 +27,11 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
+
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isValid, setIsValid] = useState();
+
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -52,7 +57,33 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     password: password,
   };
 
+  const validateInput = () => {
+    setIsValid(true);
+
+    if (!name || name.length < 3) {
+      setNameError("Name must be at least 3 characters.");
+      setIsValid(false);
+    } else {
+      setNameError("");
+    }
+
+    if (!email) {
+      setEmailError("Email is required.");
+      setIsValid(false);
+    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+      setEmailError("Email is invalid.");
+      setIsValid(false);
+    } else {
+      setEmailError("");
+    }
+  };
+
   const handleRegister = async () => {
+    validateInput();
+    if (!isValid) {
+      return;
+    }
+
     if (!checkbox) {
       alert("Please accept the terms and conditions");
       return;
@@ -153,6 +184,8 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   label="Name"
                   margin="normal"
                   value={name}
+                  error={nameError !== ""}
+                  helperText={nameError}
                   onChange={handleNameChange}
                   required
                 />
@@ -161,6 +194,8 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   label="Email"
                   margin="normal"
                   value={email}
+                  error={emailError !== ""}
+                  helperText={emailError}
                   onChange={handleEmailChange}
                   required
                 />
