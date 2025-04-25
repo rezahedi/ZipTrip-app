@@ -24,7 +24,9 @@ function EditPlan() {
         <Typography variant="h4">Edit Plan:</Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 650 }}>
-      
+
+        {error && <p>{error}</p>}
+
         {/* Title */}
         <FormControl fullWidth margin="normal">
           <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
