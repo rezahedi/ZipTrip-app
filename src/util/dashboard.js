@@ -40,4 +40,23 @@ const deletePlan = async (planId, onError) => {
   }
 };
 
-export { getMyPlans, deletePlan };
+const getPlan = async (planId, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/plans/${planId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to fetch plan");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while fetching the plan");
+    return null;
+  }
+}
+
+export { getMyPlans, deletePlan, getPlan };

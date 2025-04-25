@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Box, Typography, FormControl, FormLabel, TextField, Button } from "@mui/material";
+import { getPlan } from "../../../util/dashboard";
 
 function EditPlan() {
+  const [plan, setPlan] = useState({});
+  const [error, setError] = useState(null);
+  const { planId } = useParams();
+
+  useEffect(() => {
+    if (!planId) return;
+
+    (async () => {
+      const data = await getPlan(planId, setError);
+      if (!data) return;
+      setPlan(data);
+    })();
+  }, []);
+
   return (
     <>
       <Box sx={{ marginBottom: 2 }}>
@@ -18,6 +34,7 @@ function EditPlan() {
             variant="outlined"
             fullWidth
             placeholder="Enter the title of your plan"
+            value={plan.title || ""}
           />
         </FormControl>
 
@@ -31,6 +48,7 @@ function EditPlan() {
             variant="outlined"
             fullWidth
             placeholder="Select a category for your plan"
+            value={plan?.categoryId?._id || ""}
           />
         </FormControl>
 
@@ -45,6 +63,7 @@ function EditPlan() {
             multiline
             placeholder="Write a brief description of your plan"
             minRows={4}
+            value={plan.description || ""}
           />
         </FormControl>
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
