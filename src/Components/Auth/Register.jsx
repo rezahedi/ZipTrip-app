@@ -30,21 +30,54 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
 
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [isValid, setIsValid] = useState();
+  const [passwordError, setPasswordError] = useState("");
+  const [isValid, setIsValid] = useState(true);
 
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
+
+    if (!name || name.length < 3) {
+      setNameError("Name must be at least 3 characters.");
+      setIsValid(false);
+    } else {
+      setNameError("");
+      setIsValid(true);
+    }
   };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+
+    if (!email) {
+      setEmailError("Email is required.");
+      setIsValid(false);
+    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+      setEmailError("Email is invalid.");
+      setIsValid(false);
+    } else {
+      setEmailError("");
+      setIsValid(true);
+    }
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+
+    if (!password || password.length < 8) {
+      setPasswordError("Password must be at least 8 characters.");
+      setIsValid(false);
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(password)) {
+      setPasswordError(
+        "Password must include at least one uppercase letter, one lowercase letter, and one number."
+      );
+      setIsValid(false);
+    } else {
+      setPasswordError("");
+      setIsValid(true);
+    }
   };
 
   const handleCheckboxChange = (event) => {
@@ -57,30 +90,12 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     password: password,
   };
 
-  const validateInput = () => {
-    setIsValid(true);
-
-    if (!name || name.length < 3) {
-      setNameError("Name must be at least 3 characters.");
-      setIsValid(false);
-    } else {
-      setNameError("");
-    }
-
-    if (!email) {
-      setEmailError("Email is required.");
-      setIsValid(false);
-    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
-      setEmailError("Email is invalid.");
-      setIsValid(false);
-    } else {
-      setEmailError("");
-    }
-  };
-
   const handleRegister = async () => {
-    validateInput();
-    if (!isValid) {
+    if (!name || !email || !password || !isValid) {
+      setNameError("Name is required");
+      setEmailError("Email is required");
+      setPasswordError("Password is required");
+      setIsValid(false); 
       return;
     }
 
@@ -205,6 +220,8 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   type="password"
                   margin="normal"
                   value={password}
+                  error={passwordError !== ""}
+                  helperText={passwordError}
                   onChange={handlePasswordChange}
                   required
                 />

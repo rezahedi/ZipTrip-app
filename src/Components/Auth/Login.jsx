@@ -26,24 +26,13 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
   const [emailError, setEmailError] = useState("");
-  const [isValid, setIsValid] = useState();
+  const [passwordError, setPasswordError] = useState("");
+  const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleCheckboxChange = (event) => {
-    setCheckbox(event.target.checked);
-  };
-
-  const validateInput = () => {
-    setIsValid(true);
 
     if (!email) {
       setEmailError("Email is required.");
@@ -53,7 +42,29 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
       setIsValid(false);
     } else {
       setEmailError("");
+      setIsValid(true);
     }
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+
+    if (!password || password.length < 8) {
+      setPasswordError("Password must be at least 8 characters.");
+      setIsValid(false);
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(password)) {
+      setPasswordError(
+        "Password must include at least one uppercase letter, one lowercase letter, and one number."
+      );
+      setIsValid(false);
+    } else {
+      setPasswordError("");
+      setIsValid(true);
+    }
+  };
+
+  const handleCheckboxChange = (event) => {
+    setCheckbox(event.target.checked);
   };
 
   const requestBody = {
@@ -62,11 +73,11 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   };
 
   const handleLogin = async () => {
-    validateInput();
-    if (!isValid) {
-      return;
-    }
-
+     if (!email || !password || !isValid) {
+       setEmailError("Email is required");
+       setPasswordError("Password is required");
+       setIsValid(false); 
+     }
 
     try {
       const data = await postData(URL, requestBody);
@@ -174,6 +185,8 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                   type="password"
                   margin="normal"
                   value={password}
+                  error={passwordError !== ""}
+                  helperText={passwordError}
                   onChange={handlePasswordChange}
                   required
                 />
