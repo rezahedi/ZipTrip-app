@@ -103,7 +103,9 @@ function EditPlan() {
               placeholder="Write a brief description of your plan"
               minRows={4}
               value={plan.description || ""}
-              onChange={(e) => setPlan({ ...plan, description: e.target.value })}
+              onChange={(e) =>
+                setPlan({ ...plan, description: e.target.value })
+              }
             />
           </FormControl>
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>

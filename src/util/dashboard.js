@@ -87,7 +87,7 @@ const getCategories = async (onError) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
     });
     if (!res.ok) {
       const errorData = await res.json();
@@ -95,11 +95,10 @@ const getCategories = async (onError) => {
       return null;
     }
     return await res.json();
-  }
-  catch (error) {
+  } catch (error) {
     onError(error.message || "An error occurred while fetching categories");
     return null;
   }
-}
+};
 
 export { getMyPlans, deletePlan, getPlan, updatePlan, getCategories };
