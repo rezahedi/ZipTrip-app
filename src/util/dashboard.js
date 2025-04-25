@@ -81,4 +81,25 @@ const updatePlan = async (plan, onError) => {
   }
 };
 
-export { getMyPlans, deletePlan, getPlan, updatePlan };
+const getCategories = async (onError) => {
+  try {
+    let res = await fetch("/api/v1/account/categories", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to fetch categories");
+      return null;
+    }
+    return await res.json();
+  }
+  catch (error) {
+    onError(error.message || "An error occurred while fetching categories");
+    return null;
+  }
+}
+
+export { getMyPlans, deletePlan, getPlan, updatePlan, getCategories };
