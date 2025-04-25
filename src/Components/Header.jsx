@@ -1,5 +1,6 @@
 import React from "react";
 import RegisterPage from "./Auth/Register";
+import LoginPage from "./Auth/Login";
 import { useState } from "react";
 import {
   AppBar,
@@ -15,16 +16,26 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickRegisterOpen = () => {
+    setOpenRegister(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseRegister = () => {
+    setOpenRegister(false);
+  };
+
+  const handleClickLoginOpen = () => {
+    setOpenLogin(true);
+  };
+
+  const handleCloseLogin = () => {
+    setOpenLogin(false);
+
   };
 
   const handleLogout = () => {
@@ -71,13 +82,14 @@ const Header = () => {
                     color: "#45a049",
                   },
                 }}
+                onClick={handleClickLoginOpen}
               >
                 Login
               </Button>
               <Button
                 color="inherit"
                 sx={{ minWidth: "6%" }}
-                onClick={handleClickOpen}
+                onClick={handleClickRegisterOpen}
               >
                 Register
               </Button>
@@ -87,7 +99,23 @@ const Header = () => {
       </AppBar>
 
       {/* Register Dialog */}
-      <RegisterPage open={open} handleClose={handleClose} />
+      <RegisterPage
+        open={openRegister}
+        handleClose={handleCloseRegister}
+        onSwitchToLogin={() => {
+          setOpenRegister(false);
+          setOpenLogin(true);
+        }}
+      />
+      {/* Login Dialog */}
+      <LoginPage
+        open={openLogin}
+        handleClose={handleCloseLogin}
+        onSwitchToRegister={()=> {
+          setOpenRegister(true);
+          setOpenLogin(false);
+        }}
+      />
 
       {/* image */}
       <Box
