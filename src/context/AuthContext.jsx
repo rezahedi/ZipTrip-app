@@ -24,12 +24,15 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
   };
 
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-  };
+ const logout = () => {
+   const isConfirmed = window.confirm("Are you sure you want to log out?");
+   if (isConfirmed) {
+     setUser(null);
+     setToken(null);
+     localStorage.removeItem("user");
+     localStorage.removeItem("token");
+   }
+ };
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>
