@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -13,20 +13,25 @@ import {
 import { getPlan, updatePlan, getCategories } from "../../../util/dashboard";
 
 function EditPlan() {
+  const { userId } = JSON.parse(localStorage.getItem("user")) || {};
   const [plan, setPlan] = useState({});
   const [error, setError] = useState(null);
   const { planId } = useParams();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const [isPlanExists, setIsPlanExists] = useState(false);
 
   useEffect(() => {
-    if (!planId) return;
+    if (!userId) return navigate("/");
+    if (!planId) return navigate("/account");
 
     (async () => {
       const data = await getPlan(planId, setError);
-      const categoriesData = await getCategories(setError);
+      if (!data) return setIsPlanExists(false);
+      setIsPlanExists(true);
 
-      if (!data || !categoriesData) return;
+      const categoriesData = await getCategories(setError);
+      if (!categoriesData) return;
 
       setPlan({
         ...data,
@@ -44,6 +49,14 @@ function EditPlan() {
 
     navigate("/account");
   };
+
+  if (!isPlanExists)
+    return (
+      <Typography color="error">
+        Plan not found or does not exist. Please go back to{" "}
+        <Link to="/account">your plans</Link>.
+      </Typography>
+    );
 
   return (
     <>
