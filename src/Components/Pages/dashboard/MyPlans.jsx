@@ -41,16 +41,22 @@ function MyPlans() {
     setAlertOpen(false);
   };
 
-  if (!isLoading && !plans.length) return (
-    <Box sx={{ textAlign: "center", marginTop: 4 }}>
-      <Typography variant="h5" color="textSecondary">
-        Please create your first amazing plan!
-      </Typography>
-      <Button component={Link} to="/account/create" color="inherit" sx={{ marginTop: 3 }}>
-        Create New Plan
-      </Button>
-    </Box>
-  );
+  if (!isLoading && !plans.length)
+    return (
+      <Box sx={{ textAlign: "center", marginTop: 4 }}>
+        <Typography variant="h5" color="textSecondary">
+          Please create your first amazing plan!
+        </Typography>
+        <Button
+          component={Link}
+          to="/account/create"
+          color="inherit"
+          sx={{ marginTop: 3 }}
+        >
+          Create New Plan
+        </Button>
+      </Box>
+    );
 
   return (
     <>
