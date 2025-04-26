@@ -123,4 +123,11 @@ const getCategories = async (onError) => {
   }
 };
 
-export { getMyPlans, deletePlan, getPlan, updatePlan, getCategories, createPlan };
+export {
+  getMyPlans,
+  deletePlan,
+  getPlan,
+  updatePlan,
+  getCategories,
+  createPlan,
+};
