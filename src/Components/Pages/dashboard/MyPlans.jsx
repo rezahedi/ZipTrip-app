@@ -10,12 +10,14 @@ function MyPlans() {
   const [error, setError] = useState(null);
   const [alertOpen, setAlertOpen] = useState(false);
   const [selectedPlanToRemove, setSelectedPlanToRemove] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const data = await getMyPlans(setError);
       if (!data) return;
       setPlans(data.items || []);
+      setIsLoading(false);
     })();
   }, []);
 
@@ -39,6 +41,17 @@ function MyPlans() {
     setAlertOpen(false);
   };
 
+  if (!isLoading && !plans.length) return (
+    <Box sx={{ textAlign: "center", marginTop: 4 }}>
+      <Typography variant="h5" color="textSecondary">
+        Please create your first amazing plan!
+      </Typography>
+      <Button component={Link} to="/account/create" color="inherit" sx={{ marginTop: 3 }}>
+        Create New Plan
+      </Button>
+    </Box>
+  );
+
   return (
     <>
       <Box
@@ -54,8 +67,9 @@ function MyPlans() {
           Create New Plan
         </Button>
       </Box>
+      {isLoading && <p>Loading your plans ...</p>}
       {error && <p>{error}</p>}
-      {plans.length > 0 ? (
+      {plans.length > 0 && (
         <>
           <Grid container spacing={3}>
             {plans.map((plan) => (
@@ -105,8 +119,6 @@ function MyPlans() {
             cancelText="Cancel"
           />
         </>
-      ) : (
-        <p>No plans found.</p>
       )}
     </>
   );
