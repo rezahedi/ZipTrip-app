@@ -81,6 +81,28 @@ const updatePlan = async (plan, onError) => {
   }
 };
 
+const createPlan = async (plan, onError) => {
+  try {
+    let res = await fetch("/api/v1/account/plans", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(plan),
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to create plan");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while creating the plan");
+    return null;
+  }
+};
+
 const getCategories = async (onError) => {
   try {
     let res = await fetch("/api/v1/account/categories", {
@@ -101,4 +123,4 @@ const getCategories = async (onError) => {
   }
 };
 
-export { getMyPlans, deletePlan, getPlan, updatePlan, getCategories };
+export { getMyPlans, deletePlan, getPlan, updatePlan, getCategories, createPlan };
