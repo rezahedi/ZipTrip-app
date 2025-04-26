@@ -5,7 +5,6 @@ import HomePage from "./Components/Pages/HomePage";
 import PlanPage from "./Components/Pages/PlanPage";
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RegisterPage from "./Components/Auth/Register";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -28,8 +27,6 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/plans/:planId" element={<PlanPage />} />
-              <Route path="/login" element="" />
-              <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgotpassword" element="" />
               <Route path="/resetpassword" element="" />
               <Route path="/bookmark" element={<Bookmark />} />

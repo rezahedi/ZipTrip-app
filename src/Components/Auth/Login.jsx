@@ -18,35 +18,18 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../util";
 import { useAuth } from "../../context/AuthContext";
-// import LoginPage from "./Login";
 
-const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
+const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`;
 
-const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
-  const [name, setName] = useState("");
+const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
-
-  const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isValid, setIsValid] = useState(true);
-
   const navigate = useNavigate();
   const { login } = useAuth();
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-
-    if (!name || name.length < 3) {
-      setNameError("Name must be at least 3 characters.");
-      setIsValid(false);
-    } else {
-      setNameError("");
-      setIsValid(true);
-    }
-  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -85,23 +68,15 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   };
 
   const requestBody = {
-    name: name,
     email: email,
     password: password,
   };
 
-  const handleRegister = async () => {
-    if (!name || !email || !password || !isValid) {
-      setNameError("Name is required");
+  const handleLogin = async () => {
+    if (!email || !password || !isValid) {
       setEmailError("Email is required");
       setPasswordError("Password is required");
       setIsValid(false);
-      return;
-    }
-
-    if (!checkbox) {
-      alert("Please accept the terms and conditions");
-      return;
     }
 
     try {
@@ -114,8 +89,8 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
         handleClose();
       }
     } catch (error) {
-      console.error("Registration failed", error);
-      alert("Registration failed. Please try again.");
+      console.error("Login failed", error);
+      alert("Login failed. Please try again.");
     }
   };
 
@@ -180,7 +155,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                 display="flex"
                 justifyContent="center"
               >
-                Create Your Account
+                Sign In
               </Typography>
               <Button
                 variant="outlined"
@@ -188,22 +163,12 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                 fullWidth
                 sx={{ my: 2 }}
               >
-                Sign up with Google
+                Sign in with Google
               </Button>
               <Divider sx={{ my: 1 }}>
                 <Typography sx={{ color: "#8c8c8c" }}>OR</Typography>
               </Divider>
               <Box>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  margin="normal"
-                  value={name}
-                  error={nameError !== ""}
-                  helperText={nameError}
-                  onChange={handleNameChange}
-                  required
-                />
                 <TextField
                   fullWidth
                   label="Email"
@@ -240,26 +205,40 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   }
                   label={
                     <Typography variant="body2">
-                      I accept all terms and conditions.
+                      Remember for 30 days
                     </Typography>
                   }
                   sx={{ mt: 0 }}
                 />
                 <Button
+                  variant="text"
+                  size="small"
+                  sx={{
+                    color: "#45a049",
+                    backgroundColor: "white",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#45a049",
+                    },
+                  }}
+                >
+                  Forgot password?
+                </Button>
+                <Button
                   variant="contained"
                   color="primary"
                   fullWidth
                   sx={{ mt: 3 }}
-                  onClick={handleRegister}
+                  onClick={handleLogin}
                 >
                   Sign in
                 </Button>
               </Box>
               <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
-                Already have an account?{" "}
+                Don`t have an account?{" "}
                 <Button
                   variant="text"
-                  onClick={onSwitchToLogin}
+                  onClick={onSwitchToRegister}
                   sx={{
                     color: "text.primary",
                     backgroundColor: "white",
@@ -270,7 +249,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                     },
                   }}
                 >
-                  Sign in
+                  Sign up
                 </Button>
               </Typography>
             </Box>
@@ -315,15 +294,14 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
           </Box>
         </Box>
       </DialogContent>
-      {/* Conditionally show LoginPage if showLogin is true */}
     </Dialog>
   );
 };
 
-RegisterPage.propTypes = {
+LoginPage.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
-  onSwitchToLogin: PropTypes.func,
+  onSwitchToRegister: PropTypes.func,
 };
 
-export default RegisterPage;
+export default LoginPage;
