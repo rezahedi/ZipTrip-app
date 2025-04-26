@@ -1,7 +1,6 @@
 import React from "react";
 
 function Bookmarked() {
-
   // TODO: Implement the logic to fetch and display user's bookmarked plans with related functionality.
   // With a similar structure to MyPlans.jsx, but for bookmarked plans
   // Displaying plans in a grid format using PlanCard component
