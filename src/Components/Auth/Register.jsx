@@ -78,7 +78,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       setIsValid(false);
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(newPassword)) {
       setPasswordError(
-        "Password must include at least one uppercase letter, one lowercase letter, and one number.",
+        "Password must include at least one uppercase letter, one lowercase letter, and one number."
       );
       setIsValid(false);
     } else {
@@ -95,6 +95,18 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     name: name,
     email: email,
     password: password,
+  };
+
+  const handleDialogClose = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setCheckbox(false);
+    setEmailError("");
+    setPasswordError("");
+    setIsValid(true);
+    setErrorMessage("");
+    handleClose();
   };
 
   const handleRegister = async () => {
@@ -118,7 +130,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
         const { token, name, email, imageURL } = data;
         login(name, email, imageURL, token);
         navigate("/bookmark");
-        handleClose();
+        handleDialogClose();
       }
     } catch (error) {
       if (error.response) {
@@ -137,7 +149,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleDialogClose}
       maxWidth={false}
       slotProps={{
         sx: {
@@ -150,7 +162,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleDialogClose}
           sx={{
             position: "absolute",
             right: 8,
@@ -217,6 +229,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   error={nameError !== ""}
                   helperText={nameError}
                   onChange={handleNameChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <TextField
@@ -227,6 +240,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   error={emailError !== ""}
                   helperText={emailError}
                   onChange={handleEmailChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <TextField
@@ -238,6 +252,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   error={passwordError !== ""}
                   helperText={passwordError}
                   onChange={handlePasswordChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <FormControlLabel
@@ -280,7 +295,10 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                 Already have an account?{" "}
                 <Button
                   variant="text"
-                  onClick={onSwitchToLogin}
+                  onClick={() => {
+                    onSwitchToLogin();
+                    handleDialogClose();
+                  }}
                   sx={{
                     color: "text.primary",
                     backgroundColor: "white",
