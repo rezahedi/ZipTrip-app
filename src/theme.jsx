@@ -45,7 +45,9 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: "0.85rem",
-          height: "38px",
+          "& input": {
+            padding: "12px 14px",
+          },
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: "#BDBDBD",
             borderWidth: "1px",
