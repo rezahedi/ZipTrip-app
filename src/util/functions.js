@@ -2,7 +2,7 @@
 
 // const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans`; //
 
-// import { getData } from ".";
+// import { getData, postData } from ".";
 
 // const getAllPlans = async () => {
 //   try {
@@ -53,4 +53,21 @@
 
 // // getPlansByCategory("academic-and-cultural-tour");
 
-// export { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId };
+// --------------------------------------``** USER REGISTER **``  --------------------------------------
+
+// const URL = "${import.meta.env.VITE_API_BASE_URL}/api/v1/user/register";
+
+// const requestBody = {
+//   name: "John",
+//   email: "john@gmail.com",
+//   password: "1234John",
+// };
+
+// async function registerUser(URL, requestBody) {
+//   const res = await postData(URL, requestBody);
+//   console.log(res);
+// }
+
+// registerUser(URL, requestBody);
+
+// export { getAllPlans, getPlansByCategory, getSinglePlan, getPlansByUserId, registerUser };
