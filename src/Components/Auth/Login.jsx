@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   IconButton,
   Divider,
+  Alert,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,16 +29,20 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const newEmail = event.target.value;
+    setEmail(newEmail);
 
-    if (!email) {
+    if (!newEmail) {
       setEmailError("Email is required.");
       setIsValid(false);
-    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+    } else if (
+      !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(newEmail)
+    ) {
       setEmailError("Email is invalid.");
       setIsValid(false);
     } else {
@@ -47,12 +52,13 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    const newPassword = event.target.value;
+    setPassword(newPassword);
 
-    if (!password || password.length < 8) {
+    if (!newPassword || newPassword.length < 8) {
       setPasswordError("Password must be at least 8 characters.");
       setIsValid(false);
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(password)) {
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(newPassword)) {
       setPasswordError(
         "Password must include at least one uppercase letter, one lowercase letter, and one number.",
       );
@@ -72,6 +78,17 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
     password: password,
   };
 
+  const handleDialogClose = () => {
+    setEmail("");
+    setPassword("");
+    setCheckbox(false);
+    setEmailError("");
+    setPasswordError("");
+    setIsValid(true);
+    setErrorMessage("");
+    handleClose();
+  };
+
   const handleLogin = async () => {
     if (!email || !password || !isValid) {
       setEmailError("Email is required");
@@ -86,18 +103,25 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
         const { token, name, email, imageURL } = data;
         login(name, email, imageURL, token);
         navigate("/bookmark");
-        handleClose();
+        handleDialogClose();
       }
     } catch (error) {
+      if (error.response) {
+        console.error("Error Response:", error.response);
+        console.error("Error Message:", error.response.data);
+        setErrorMessage(error.response.data.msg);
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
+      console.log("Error Message in state:", errorMessage);
       console.error("Login failed", error);
-      alert("Login failed. Please try again.");
     }
   };
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleDialogClose}
       maxWidth={false}
       slotProps={{
         sx: {
@@ -110,7 +134,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleDialogClose}
           sx={{
             position: "absolute",
             right: 8,
@@ -177,6 +201,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                   error={emailError !== ""}
                   helperText={emailError}
                   onChange={handleEmailChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <TextField
@@ -188,6 +213,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                   error={passwordError !== ""}
                   helperText={passwordError}
                   onChange={handlePasswordChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <FormControlLabel
@@ -234,11 +260,20 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                   Sign in
                 </Button>
               </Box>
+              {/* Error Message */}
+              {errorMessage && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  {errorMessage}
+                </Alert>
+              )}
               <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
                 Don`t have an account?{" "}
                 <Button
                   variant="text"
-                  onClick={onSwitchToRegister}
+                  onClick={() => {
+                    onSwitchToRegister();
+                    handleDialogClose();
+                  }}
                   sx={{
                     color: "text.primary",
                     backgroundColor: "white",
