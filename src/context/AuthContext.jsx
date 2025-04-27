@@ -12,8 +12,9 @@ const AuthProvider = ({ children }) => {
     return localStorage.getItem("token");
   });
 
-  const login = (name, email, imageURL, token) => {
+  const login = (userId, name, email, imageURL, token) => {
     const userData = {
+      userId,
       name,
       email,
       imageURL,
