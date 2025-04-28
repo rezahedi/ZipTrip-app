@@ -11,26 +11,28 @@ import {
   MenuItem,
 } from "@mui/material";
 import { getPlan, updatePlan, getCategories } from "../../../util/dashboard";
+import { useAuth } from "../../../context/AuthContext";
 
 function EditPlan() {
-  const { userId } = JSON.parse(localStorage.getItem("user")) || {};
   const [plan, setPlan] = useState({});
   const [error, setError] = useState(null);
   const { planId } = useParams();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [isPlanExists, setIsPlanExists] = useState(false);
+  const { token, user } = useAuth();
 
   useEffect(() => {
-    if (!userId) return navigate("/");
+    // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
+    if (!token || !user) return navigate("/");
     if (!planId) return navigate("/account");
 
     (async () => {
-      const data = await getPlan(planId, setError);
+      const data = await getPlan(token, planId, setError);
       if (!data) return setIsPlanExists(false);
       setIsPlanExists(true);
 
-      const categoriesData = await getCategories(setError);
+      const categoriesData = await getCategories(token, setError);
       if (!categoriesData) return;
 
       setPlan({
@@ -44,7 +46,7 @@ function EditPlan() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const result = await updatePlan(plan, setError);
+    const result = await updatePlan(token, plan, setError);
     if (!result) return;
 
     navigate("/account");

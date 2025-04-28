@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deletePlan, getMyPlans } from "../../../util/dashboard";
 import PlanCard from "../../Common/PlanCard";
 import { Box, Grid, Button, Typography } from "@mui/material";
 import AlertDialog from "../../Common/AlertDialog";
+import { useAuth } from "../../../context/AuthContext";
 
 function MyPlans() {
   const [plans, setPlans] = useState([]);
@@ -11,10 +12,15 @@ function MyPlans() {
   const [alertOpen, setAlertOpen] = useState(false);
   const [selectedPlanToRemove, setSelectedPlanToRemove] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { token } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
+    if (!token) return navigate("/");
+
     (async () => {
-      const data = await getMyPlans(setError);
+      const data = await getMyPlans(token, setError);
       if (!data) return;
       setPlans(data.items || []);
       setIsLoading(false);
@@ -22,7 +28,7 @@ function MyPlans() {
   }, []);
 
   const handleRemovePlan = async () => {
-    const result = await deletePlan(selectedPlanToRemove, setError);
+    const result = await deletePlan(token, selectedPlanToRemove, setError);
 
     if (!result) return;
 
