@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   IconButton,
   Divider,
+  Alert,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
@@ -31,15 +32,17 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
 
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    const newName = event.target.value;
+    setName(newName);
 
-    if (!name || name.length < 3) {
+    if (!newName || newName.length < 3) {
       setNameError("Name must be at least 3 characters.");
       setIsValid(false);
     } else {
@@ -49,12 +52,15 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const newEmail = event.target.value;
+    setEmail(newEmail);
 
-    if (!email) {
+    if (!newEmail) {
       setEmailError("Email is required.");
       setIsValid(false);
-    } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+    } else if (
+      !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(newEmail)
+    ) {
       setEmailError("Email is invalid.");
       setIsValid(false);
     } else {
@@ -64,12 +70,13 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    const newPassword = event.target.value;
+    setPassword(newPassword);
 
-    if (!password || password.length < 8) {
+    if (!newPassword || newPassword.length < 8) {
       setPasswordError("Password must be at least 8 characters.");
       setIsValid(false);
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(password)) {
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(newPassword)) {
       setPasswordError(
         "Password must include at least one uppercase letter, one lowercase letter, and one number.",
       );
@@ -88,6 +95,18 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     name: name,
     email: email,
     password: password,
+  };
+
+  const handleDialogClose = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setCheckbox(false);
+    setEmailError("");
+    setPasswordError("");
+    setIsValid(true);
+    setErrorMessage("");
+    handleClose();
   };
 
   const handleRegister = async () => {
@@ -111,18 +130,26 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
         const { token, _id: userId, name, email, imageURL } = data;
         await login(userId, name, email, imageURL, token);
         navigate("/account");
-        handleClose();
+        handleDialogClose();
       }
     } catch (error) {
+      if (error.response) {
+        console.error("Error Response:", error.response);
+        console.error("Error Message:", error.response.data);
+        setErrorMessage(error.response.data.msg);
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
+      console.log("Error Message in state:", errorMessage);
       console.error("Registration failed", error);
-      alert("Registration failed. Please try again.");
+      console.log(error.response);
     }
   };
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleDialogClose}
       maxWidth={false}
       slotProps={{
         sx: {
@@ -135,7 +162,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleDialogClose}
           sx={{
             position: "absolute",
             right: 8,
@@ -202,6 +229,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   error={nameError !== ""}
                   helperText={nameError}
                   onChange={handleNameChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <TextField
@@ -212,6 +240,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   error={emailError !== ""}
                   helperText={emailError}
                   onChange={handleEmailChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <TextField
@@ -223,6 +252,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   error={passwordError !== ""}
                   helperText={passwordError}
                   onChange={handlePasswordChange}
+                  onFocus={() => setErrorMessage("")}
                   required
                 />
                 <FormControlLabel
@@ -255,11 +285,20 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                   Sign in
                 </Button>
               </Box>
+              {/* Error Message  */}
+              {errorMessage && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  {errorMessage}
+                </Alert>
+              )}
               <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
                 Already have an account?{" "}
                 <Button
                   variant="text"
-                  onClick={onSwitchToLogin}
+                  onClick={() => {
+                    onSwitchToLogin();
+                    handleDialogClose();
+                  }}
                   sx={{
                     color: "text.primary",
                     backgroundColor: "white",
