@@ -121,8 +121,7 @@ const Header = () => {
       {/* image */}
       <Box
         sx={{
-          backgroundImage:
-            "url(/images/main-header.jpg)",
+          backgroundImage: "url(/images/main-header.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "230px",

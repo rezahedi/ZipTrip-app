@@ -4,13 +4,15 @@ import { Typography, Box, Link } from "@mui/material";
 
 function Footer() {
   return (
-    <Box sx={{
-      marginTop: 6,
-      backgroundColor: "#333333",
-      color: "white",
-      display: "flex",
-      justifyContent: "space-evenly",
-    }}>
+    <Box
+      sx={{
+        marginTop: 6,
+        backgroundColor: "#333333",
+        color: "white",
+        display: "flex",
+        justifyContent: "space-evenly",
+      }}
+    >
       <Box sx={{ p: 5 }}>
         <Typography
           component="div"
