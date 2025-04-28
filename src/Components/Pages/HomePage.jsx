@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PlanCard from "../Common/PlanCard";
 import { Box, Grid } from "@mui/material";
 import { getData } from "../../util";
+import CardSection from "../Common/CardSection";
 
 const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans`;
 
@@ -24,6 +25,9 @@ const HomePage = () => {
   return (
     <>
       <Box>
+        <CardSection title="City Exploration Best Plans" category="680819f66e7cdbc049ab3f57" />
+        <CardSection title="Local Favorites Near San Francisco" search="san francisco" />
+
         <Grid container spacing={3}>
           {plans.map((plan) => {
             return (
