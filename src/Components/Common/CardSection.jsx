@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import PlanCard from './PlanCard';
 import { getData } from '../../util';
 
-const CardSection = ({ title, category='', search='' }) => {
+const CardSection = ({ title, category='', search='', size=4 }) => {
   const [plans, setPlans] = useState([]);
-  const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans?categoryId=${category}&search=${search}&size=4`;
+  const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans?categoryId=${category}&search=${search}&size=${size}`;
 
   // TODO: Add skeleton loading feature later
 
@@ -57,6 +57,7 @@ CardSection.propTypes = {
   title: PropTypes.string.isRequired,
   category: PropTypes.string,
   search: PropTypes.string,
+  size: PropTypes.number,
 };
 
 export default CardSection;
