@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
   const [openRegister, setOpenRegister] = useState(false);
@@ -55,7 +55,9 @@ const Header = () => {
       >
         <Toolbar sx={{ padding: 0 }}>
           <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
-            OneDayPlanner
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              OneDayPlanner
+            </Link>
           </Typography>
           {user ? (
             <>
@@ -120,7 +122,7 @@ const Header = () => {
       <Box
         sx={{
           backgroundImage:
-            "url(https://s3-alpha-sig.figma.com/img/0cf9/b967/5f7578c574ee3138e46a9d9b309a3e20?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RtXfDQQy9kJOrv-aWOgd4Yo-Ugk5ypOSJiC2vvX~rOZG5MUIjBvQ06MWY7viqdFCuTopC-5Qeum6deWkFGwXhoN-w0kW5d0lOxC4y-Z5l3nAGj4QAowEDeEJXsfPfNzxg3HBd8ruXTEXGT2g5iZZObmAO9TS8FH1AHtMqh~QGG8Wtv4EJkiS1C5Q9E-8JgniY3CpwPM7vX~ooAVQva3nYeolDy30Qqpcqs2CAAIFjl7kTqal3w0xfAQo2vZNx7pVRJsA65oCcjkXcjGJz2prMNm3tLXqG9jVyfJx3MD5AwxI9K7owyHE5Alm~KDKAyfACLKBv5LV6p8XMIJu4zug5A__)",
+            "url(/images/main-header.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "230px",
