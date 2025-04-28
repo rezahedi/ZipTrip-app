@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
 import {
@@ -51,6 +52,7 @@ function App() {
             </Routes>
           </Box>
         </BrowserRouter>
+        <Footer />
       </div>
     </AuthProvider>
   );
