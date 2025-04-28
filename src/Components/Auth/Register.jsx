@@ -109,7 +109,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       if (data) {
         console.log(data);
         const { token, _id: userId, name, email, imageURL } = data;
-        login(userId, name, email, imageURL, token);
+        await login(userId, name, email, imageURL, token);
         navigate("/account");
         handleClose();
       }
