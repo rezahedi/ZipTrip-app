@@ -1,7 +1,4 @@
-// TODO: The token value should be saved in localStorage in Register or Login components
-const token = localStorage.getItem("token");
-
-const getMyPlans = async (onError) => {
+const getMyPlans = async (token, onError) => {
   try {
     let res = await fetch("/api/v1/account/plans", {
       headers: {
@@ -20,7 +17,7 @@ const getMyPlans = async (onError) => {
   }
 };
 
-const deletePlan = async (planId, onError) => {
+const deletePlan = async (token, planId, onError) => {
   try {
     let res = await fetch(`/api/v1/account/plans/${planId}`, {
       method: "DELETE",
@@ -40,7 +37,7 @@ const deletePlan = async (planId, onError) => {
   }
 };
 
-const getPlan = async (planId, onError) => {
+const getPlan = async (token, planId, onError) => {
   try {
     let res = await fetch(`/api/v1/account/plans/${planId}`, {
       headers: {
@@ -59,7 +56,7 @@ const getPlan = async (planId, onError) => {
   }
 };
 
-const updatePlan = async (plan, onError) => {
+const updatePlan = async (token, plan, onError) => {
   try {
     let res = await fetch(`/api/v1/account/plans/${plan._id}`, {
       method: "PUT",
@@ -81,7 +78,7 @@ const updatePlan = async (plan, onError) => {
   }
 };
 
-const createPlan = async (plan, onError) => {
+const createPlan = async (token, plan, onError) => {
   try {
     let res = await fetch("/api/v1/account/plans", {
       method: "POST",
@@ -103,7 +100,7 @@ const createPlan = async (plan, onError) => {
   }
 };
 
-const getCategories = async (onError) => {
+const getCategories = async (token, onError) => {
   try {
     let res = await fetch("/api/v1/account/categories", {
       headers: {
