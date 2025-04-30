@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import React from "react";
 import PropTypes from "prop-types";
+import { AuthModalProvider } from "./AuthModalContext";
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -37,7 +39,9 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>
-      {children}
+      <AuthModalProvider>
+        {children}
+      </AuthModalProvider>
     </AuthContext.Provider>
   );
 };
