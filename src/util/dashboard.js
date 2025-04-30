@@ -120,6 +120,67 @@ const getCategories = async (token, onError) => {
   }
 };
 
+const getBookmarkedPlan = async (token, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/bookmarks/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to fetch plan");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while fetching the plan");
+    return null;
+  }
+};
+
+const deleteBookmarkedPlan = async (token, planId, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to remove plan");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    onError(error.message || "An error occurred while removing the plan");
+    return false;
+  }
+};
+
+const addBookmarkedPlan = async (token, planId, setError) => {
+  try {
+    const res = await fetch(`/api/v1/account/bookmarked/${planId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to bookmark the plan.");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    setError(err.message || "Something went wrong");
+    return null;
+  }
+};
+
 export {
   getMyPlans,
   deletePlan,
@@ -127,4 +188,7 @@ export {
   updatePlan,
   getCategories,
   createPlan,
+  getBookmarkedPlan,
+  deleteBookmarkedPlan,
+  addBookmarkedPlan,
 };
