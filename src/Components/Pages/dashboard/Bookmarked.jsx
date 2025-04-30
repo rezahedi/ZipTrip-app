@@ -61,7 +61,6 @@ function Bookmarked() {
         <Typography variant="h5" color="textSecondary">
           Bookmarked Plans!
         </Typography>
-       
       </Box>
     );
 
@@ -109,7 +108,7 @@ function Bookmarked() {
                     />
                   </Link>
                   <Box>
-                     <Button
+                    <Button
                       onClick={() => openDeleteDialog(plan._id)}
                       style={{ backgroundColor: "#f44336", color: "white" }}
                       sx={{ marginLeft: 1, marginTop: 1 }}
