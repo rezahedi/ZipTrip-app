@@ -49,9 +49,9 @@ const Header = () => {
     navigate("/");
   };
 
- const handleLogoutCancel = () => {
-   setOpenLogoutDialog(false);
- };
+  const handleLogoutCancel = () => {
+    setOpenLogoutDialog(false);
+  };
 
   return (
     <div>
