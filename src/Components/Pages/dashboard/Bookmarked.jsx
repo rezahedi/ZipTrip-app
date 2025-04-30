@@ -61,14 +61,7 @@ function Bookmarked() {
         <Typography variant="h5" color="textSecondary">
           Bookmarked Plans!
         </Typography>
-        {/* <Button
-          component={Link}
-          to="/account/create"
-          color="inherit"
-          sx={{ marginTop: 3 }}
-        >
-          Create New Plan
-        </Button> */}
+       
       </Box>
     );
 
@@ -112,17 +105,11 @@ function Bookmarked() {
                       type={plan.type}
                       distance={plan.distance}
                       stopCount={plan.stopCount}
+                      planId={plan._id}
                     />
                   </Link>
                   <Box>
-                    {/* <Button
-                    component={Link}
-                    to={`/account/${plan._id}`}
-                    sx={{ marginTop: 1 }}
-                  >
-                    Edit
-                  </Button> */}
-                    <Button
+                     <Button
                       onClick={() => openDeleteDialog(plan._id)}
                       style={{ backgroundColor: "#f44336", color: "white" }}
                       sx={{ marginLeft: 1, marginTop: 1 }}
