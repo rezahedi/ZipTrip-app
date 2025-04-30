@@ -1,6 +1,7 @@
 import React from "react";
 import RegisterPage from "./Auth/Register";
 import LoginPage from "./Auth/Login";
+import AlertDialog from "./Common/AlertDialog";
 import { useState } from "react";
 import {
   AppBar,
@@ -18,6 +19,7 @@ import { useNavigate, Link } from "react-router-dom";
 const Header = () => {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -37,10 +39,19 @@ const Header = () => {
     setOpenLogin(false);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setOpenLogoutDialog(true);
+  };
+
+  const handleLogoutConfirm = () => {
     logout();
+    setOpenLogoutDialog(false);
     navigate("/");
   };
+
+ const handleLogoutCancel = () => {
+   setOpenLogoutDialog(false);
+ };
 
   return (
     <div>
@@ -65,7 +76,7 @@ const Header = () => {
                 {" "}
                 👋 Hello, {user.name}!
               </Typography>
-              <Button sx={{ minWidth: "6%" }} onClick={handleLogout}>
+              <Button sx={{ minWidth: "6%" }} onClick={handleLogoutClick}>
                 Logout
               </Button>
             </>
@@ -170,6 +181,16 @@ const Header = () => {
           }}
         />
       </Box>
+      {/* Alert Dialog for Logout */}
+      <AlertDialog
+        isOpen={openLogoutDialog}
+        onClose={handleLogoutCancel}
+        onConfirm={handleLogoutConfirm}
+        title="Log out?"
+        message="Are you sure you want to log out?"
+        confirmText="Log out"
+        cancelText="Cancel"
+      />
     </div>
   );
 };
