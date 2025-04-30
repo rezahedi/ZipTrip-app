@@ -120,6 +120,46 @@ const getCategories = async (token, onError) => {
   }
 };
 
+const AddBookmark = async (token, planId, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to add bookmark");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    onError(error.message || "An error occurred while adding bookmark");
+    return false;
+  }
+};
+
+const removeBookmark = async (token, planId, onError) => {
+  try {
+    let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to remove bookmark");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    onError(error.message || "An error occurred while removing bookmark");
+    return false;
+  }
+};
+
 export {
   getMyPlans,
   deletePlan,
@@ -127,4 +167,6 @@ export {
   updatePlan,
   getCategories,
   createPlan,
+  AddBookmark,
+  removeBookmark,
 };

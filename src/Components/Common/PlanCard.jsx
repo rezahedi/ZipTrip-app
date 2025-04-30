@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -8,8 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark"
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useAuthModal } from "../../context/AuthModalContext";
+import { AddBookmark, removeBookmark } from "../../util/dashboard";
 
 const PlanCard = ({
   image,
@@ -19,7 +23,40 @@ const PlanCard = ({
   distance,
   stopCount,
   planId,
+  isBookmarked=false,
 }) => {
+  const [bookmark, setBookmark] = useState(isBookmarked);
+  const { token } = useAuth();
+  const {
+    openLogin,
+  } = useAuthModal();
+
+  useEffect(() => {
+
+  }, [])
+
+  const handleBookmark = async (e) => {
+    e.preventDefault()
+
+    if (!token) return openLogin();
+
+    if (bookmark) {
+      const result = await removeBookmark(token, planId, setError)
+      if (result) {
+        setBookmark(false)
+      }
+    } else {
+      const result = await AddBookmark(token, planId, setError)
+      if (result) {
+        setBookmark(true)
+      }
+    }
+  }
+
+  const setError = (errorMessage) => {
+    console.log("error", errorMessage)
+  }
+
   return (
     <Link to={`/plans/${planId}`} style={{ textDecoration: "none" }}>
       <Card sx={{ height: "100%" }}>
@@ -32,6 +69,7 @@ const PlanCard = ({
           }}
         >
           <IconButton
+            onClick={handleBookmark}
             sx={{
               position: "absolute",
               backgroundColor: "white",
@@ -40,7 +78,7 @@ const PlanCard = ({
               marginTop: 1,
             }}
           >
-            <BookmarkBorderIcon />
+            {bookmark ? <BookmarkIcon /> : <BookmarkBorderIcon />}
           </IconButton>
         </Box>
         <CardMedia
@@ -96,4 +134,5 @@ PlanCard.propTypes = {
   type: PropTypes.string,
   distance: PropTypes.string,
   stopCount: PropTypes.string,
+  isBookmarked: PropTypes.bool,
 };
