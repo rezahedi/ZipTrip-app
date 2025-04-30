@@ -33,7 +33,6 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
     setEmail(newEmail);
@@ -241,8 +240,8 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                   variant="text"
                   size="small"
                   onClick={() => {
-                    handleDialogClose(); 
-                    navigate("/forgotpassword"); 
+                    handleDialogClose();
+                    navigate("/forgotpassword");
                   }}
                   sx={{
                     color: "#45a049",

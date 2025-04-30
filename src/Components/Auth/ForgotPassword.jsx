@@ -8,12 +8,14 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-       
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/request-reset-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/request-reset-password`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        },
+      );
 
       if (res.ok) {
         setMessage("Password reset email sent! Check your inbox.");
@@ -28,7 +30,9 @@ const ForgotPassword = () => {
 
   return (
     <Box maxWidth={400} mx="auto">
-      <Typography variant="h5" mb={2}>Forgot Password</Typography>
+      <Typography variant="h5" mb={2}>
+        Forgot Password
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Email"
@@ -43,7 +47,9 @@ const ForgotPassword = () => {
         </Button>
       </form>
       {message && (
-        <Typography mt={2} color="primary">{message}</Typography>
+        <Typography mt={2} color="primary">
+          {message}
+        </Typography>
       )}
     </Box>
   );

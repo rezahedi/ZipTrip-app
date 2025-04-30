@@ -51,8 +51,6 @@ function App() {
                 <Route path="done" element={<Done />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="create" element={<CreateNew />} />
-                
-                
               </Route>
             </Routes>
           </Box>

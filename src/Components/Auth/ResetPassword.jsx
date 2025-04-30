@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Box } from "@mui/material";
 
@@ -33,7 +33,9 @@ const ResetPassword = () => {
 
   return (
     <Box maxWidth={400} mx="auto">
-      <Typography variant="h5" mb={2}>Reset Password</Typography>
+      <Typography variant="h5" mb={2}>
+        Reset Password
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="New Password"
@@ -49,7 +51,9 @@ const ResetPassword = () => {
         </Button>
       </form>
       {message && (
-        <Typography mt={2} color="primary">{message}</Typography>
+        <Typography mt={2} color="primary">
+          {message}
+        </Typography>
       )}
     </Box>
   );
