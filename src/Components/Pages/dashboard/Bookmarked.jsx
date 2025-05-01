@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  removeBookmark,
-  getBookmarks,
-} from "../../../util/dashboard";
+import { removeBookmark, getBookmarks } from "../../../util/dashboard";
 import PlanCard from "../../Common/PlanCard";
 import { Box, Grid, Button, Typography } from "@mui/material";
 import AlertDialog from "../../Common/AlertDialog";
@@ -32,11 +29,7 @@ function Bookmarked() {
   }, []);
 
   const handleRemovePlan = async () => {
-    const result = await removeBookmark(
-      token,
-      selectedPlanToRemove,
-      setError,
-    );
+    const result = await removeBookmark(token, selectedPlanToRemove, setError);
 
     if (!result) return;
 
