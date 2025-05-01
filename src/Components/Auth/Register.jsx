@@ -127,9 +127,9 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       const data = await postData(URL, requestBody);
       if (data) {
         console.log(data);
-        const { token, name, email, imageURL } = data;
-        login(name, email, imageURL, token);
-        navigate("/bookmark");
+        const { token, _id: userId, name, email, imageURL } = data;
+        await login(userId, name, email, imageURL, token);
+        navigate("/account");
         handleDialogClose();
       }
     } catch (error) {

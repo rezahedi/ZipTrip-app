@@ -1,6 +1,7 @@
 import React from "react";
 import RegisterPage from "./Auth/Register";
 import LoginPage from "./Auth/Login";
+import AlertDialog from "./Common/AlertDialog";
 import { useState } from "react";
 import {
   AppBar,
@@ -13,11 +14,12 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -37,9 +39,18 @@ const Header = () => {
     setOpenLogin(false);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setOpenLogoutDialog(true);
+  };
+
+  const handleLogoutConfirm = () => {
     logout();
+    setOpenLogoutDialog(false);
     navigate("/");
+  };
+
+  const handleLogoutCancel = () => {
+    setOpenLogoutDialog(false);
   };
 
   return (
@@ -55,7 +66,9 @@ const Header = () => {
       >
         <Toolbar sx={{ padding: 0 }}>
           <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
-            OneDayPlanner
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              OneDayPlanner
+            </Link>
           </Typography>
           {user ? (
             <>
@@ -63,7 +76,7 @@ const Header = () => {
                 {" "}
                 👋 Hello, {user.name}!
               </Typography>
-              <Button sx={{ minWidth: "6%" }} onClick={handleLogout}>
+              <Button sx={{ minWidth: "6%" }} onClick={handleLogoutClick}>
                 Logout
               </Button>
             </>
@@ -119,8 +132,7 @@ const Header = () => {
       {/* image */}
       <Box
         sx={{
-          backgroundImage:
-            "url(https://s3-alpha-sig.figma.com/img/0cf9/b967/5f7578c574ee3138e46a9d9b309a3e20?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RtXfDQQy9kJOrv-aWOgd4Yo-Ugk5ypOSJiC2vvX~rOZG5MUIjBvQ06MWY7viqdFCuTopC-5Qeum6deWkFGwXhoN-w0kW5d0lOxC4y-Z5l3nAGj4QAowEDeEJXsfPfNzxg3HBd8ruXTEXGT2g5iZZObmAO9TS8FH1AHtMqh~QGG8Wtv4EJkiS1C5Q9E-8JgniY3CpwPM7vX~ooAVQva3nYeolDy30Qqpcqs2CAAIFjl7kTqal3w0xfAQo2vZNx7pVRJsA65oCcjkXcjGJz2prMNm3tLXqG9jVyfJx3MD5AwxI9K7owyHE5Alm~KDKAyfACLKBv5LV6p8XMIJu4zug5A__)",
+          backgroundImage: "url(/images/main-header.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "230px",
@@ -169,6 +181,16 @@ const Header = () => {
           }}
         />
       </Box>
+      {/* Alert Dialog for Logout */}
+      <AlertDialog
+        isOpen={openLogoutDialog}
+        onClose={handleLogoutCancel}
+        onConfirm={handleLogoutConfirm}
+        title="Log out?"
+        message="Are you sure you want to log out?"
+        confirmText="Log out"
+        cancelText="Cancel"
+      />
     </div>
   );
 };

@@ -11,22 +11,24 @@ import {
   MenuItem,
 } from "@mui/material";
 import { getCategories, createPlan } from "../../../util/dashboard";
+import { useAuth } from "../../../context/AuthContext";
 
 function CreateNew() {
-  const { userId } = JSON.parse(localStorage.getItem("user")) || {};
   const [plan, setPlan] = useState({});
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { token, user } = useAuth();
 
   // TODO: Create the Add images and add stops components to allow users to add images and stops to their plans.
 
   useEffect(() => {
-    if (!userId) return navigate("/");
+    // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
+    if (!token || !user) return navigate("/");
 
     (async () => {
-      setPlan({ userId, stops: [] });
-      const categoriesData = await getCategories(setError);
+      setPlan({ userId: user.userId, stops: [] });
+      const categoriesData = await getCategories(token, setError);
 
       if (!categoriesData) return;
 
@@ -36,7 +38,7 @@ function CreateNew() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    const result = await createPlan(plan, setError);
+    const result = await createPlan(token, plan, setError);
     if (!result) return;
 
     navigate("/account");
@@ -66,7 +68,6 @@ function CreateNew() {
           </FormControl>
 
           {/* Category */}
-          {/* TODO: Replace it with a select dropdown */}
           <FormControl fullWidth margin="normal">
             <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
               Category *
