@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -30,10 +30,6 @@ const PlanCard = ({
   const {
     openLogin,
   } = useAuthModal();
-
-  useEffect(() => {
-
-  }, [])
 
   const handleBookmark = async (e) => {
     e.preventDefault()

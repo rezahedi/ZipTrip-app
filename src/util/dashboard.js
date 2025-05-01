@@ -160,6 +160,26 @@ const removeBookmark = async (token, planId, onError) => {
   }
 };
 
+const getBookmarks = async (token, onError) => {
+  try {
+    let res = await fetch("/api/v1/account/bookmarks", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to fetch bookmarks");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while fetching bookmarks");
+    return false;
+  }
+};
+
+
 export {
   getMyPlans,
   deletePlan,
@@ -169,4 +189,5 @@ export {
   createPlan,
   AddBookmark,
   removeBookmark,
+  getBookmarks,
 };
