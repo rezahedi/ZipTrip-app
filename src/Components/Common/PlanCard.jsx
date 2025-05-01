@@ -72,7 +72,11 @@ const PlanCard = ({
               marginTop: 1,
             }}
           >
-            {bookmark ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+            {bookmark ? (
+              <BookmarkIcon style={{ color: "orange" }} />
+            ) : (
+              <BookmarkBorderIcon />
+            )}
           </IconButton>
         </Box>
         <CardMedia
