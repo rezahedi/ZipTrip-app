@@ -27,7 +27,7 @@ const Header = () => {
     openRegister,
     closeLogin,
     closeRegister,
-} = useAuthModal();
+  } = useAuthModal();
 
   const handleLogout = () => {
     logout();

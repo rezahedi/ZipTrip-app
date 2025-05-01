@@ -40,5 +40,4 @@ AuthModalProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-
 export const useAuthModal = () => useContext(AuthModalContext);

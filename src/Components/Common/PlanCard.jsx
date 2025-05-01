@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark"
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -23,35 +23,33 @@ const PlanCard = ({
   distance,
   stopCount,
   planId,
-  isBookmarked=false,
+  isBookmarked = false,
 }) => {
   const [bookmark, setBookmark] = useState(isBookmarked);
   const { token } = useAuth();
-  const {
-    openLogin,
-  } = useAuthModal();
+  const { openLogin } = useAuthModal();
 
   const handleBookmark = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!token) return openLogin();
 
     if (bookmark) {
-      const result = await removeBookmark(token, planId, setError)
+      const result = await removeBookmark(token, planId, setError);
       if (result) {
-        setBookmark(false)
+        setBookmark(false);
       }
     } else {
-      const result = await AddBookmark(token, planId, setError)
+      const result = await AddBookmark(token, planId, setError);
       if (result) {
-        setBookmark(true)
+        setBookmark(true);
       }
     }
-  }
+  };
 
   const setError = (errorMessage) => {
-    console.log("error", errorMessage)
-  }
+    console.log("error", errorMessage);
+  };
 
   return (
     <Link to={`/plans/${planId}`} style={{ textDecoration: "none" }}>

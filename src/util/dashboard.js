@@ -179,7 +179,6 @@ const getBookmarks = async (token, onError) => {
   }
 };
 
-
 export {
   getMyPlans,
   deletePlan,
