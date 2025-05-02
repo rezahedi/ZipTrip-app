@@ -14,6 +14,8 @@ import { getCategories, createPlan } from "../../../util/dashboard";
 import { useAuth } from "../../../context/AuthContext";
 import PlanImages from "./components/PlanImages";
 
+const TYPES = ['Full day', 'Half day', 'Night']
+
 function CreateNew() {
   const [plan, setPlan] = useState({});
   const [categories, setCategories] = useState([]);
@@ -110,6 +112,59 @@ function CreateNew() {
               }
             />
           </FormControl>
+
+          {/* Type */}
+          <FormControl fullWidth margin="normal">
+            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+              Type
+            </FormLabel>
+            <Select
+              variant="outlined"
+              fullWidth
+              value={plan.type || ""}
+              onChange={(e) => setPlan({ ...plan, type: e.target.value })}
+            >
+              <MenuItem value="">Select a plan type</MenuItem>
+              {TYPES.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            {/* Distance */}
+            <FormControl fullWidth margin="normal">
+              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+                Distance
+              </FormLabel>
+              <TextField
+                variant="outlined"
+                fullWidth
+                placeholder="Distance in miles"
+                type="number"
+                value={plan.distance || ""}
+                onChange={(e) => setPlan({ ...plan, distance: e.target.value })}
+              />
+            </FormControl>
+
+            {/* Duration */}
+            <FormControl fullWidth margin="normal">
+              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+              Duration
+              </FormLabel>
+              <TextField
+                variant="outlined"
+                fullWidth
+                placeholder="Duration in hours"
+                type="number"
+                value={plan.duration || ""}
+                onChange={(e) => setPlan({ ...plan, duration: e.target.value })}
+              />
+            </FormControl>
+          </Box>
+
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             <Button
               variant="outlined"
