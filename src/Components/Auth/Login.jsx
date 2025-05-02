@@ -60,7 +60,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
       setIsValid(false);
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(newPassword)) {
       setPasswordError(
-        "Password must include at least one uppercase letter, one lowercase letter, and one number."
+        "Password must include at least one uppercase letter, one lowercase letter, and one number.",
       );
       setIsValid(false);
     } else {

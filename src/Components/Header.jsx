@@ -12,7 +12,6 @@ import {
   InputAdornment,
   Menu,
   MenuItem,
-  Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
