@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { getCategories, createPlan } from "../../../util/dashboard";
 import { useAuth } from "../../../context/AuthContext";
+import PlanImages from "./components/PlanImages";
 
 function CreateNew() {
   const [plan, setPlan] = useState({});
@@ -66,6 +67,9 @@ function CreateNew() {
               onChange={(e) => setPlan({ ...plan, title: e.target.value })}
             />
           </FormControl>
+
+          {/* Image */}
+          <PlanImages images={plan.images || []} setImages={(images)=> setPlan({ ...plan, images })} />
 
           {/* Category */}
           <FormControl fullWidth margin="normal">
