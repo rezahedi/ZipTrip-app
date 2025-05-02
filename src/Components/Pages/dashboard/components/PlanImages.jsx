@@ -27,6 +27,13 @@ const PlanImages = ({ images, setImages }) => {
     setImages(newImages);
   }
 
+  const handleImageChange = (event) => {
+    const index = Number(event.target.dataset.index);
+    const newImages = [...images];
+    newImages[index] = event.target.value;
+    setImages(newImages);
+  }
+
   return (
     <FormControl fullWidth margin="normal">
       <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
@@ -41,6 +48,8 @@ const PlanImages = ({ images, setImages }) => {
               fullWidth
               placeholder="Enter the full image URL"
               value={image}
+              inputProps={{ 'data-index': index }}
+              onChange={handleImageChange}
             />
             <IconButton aria-label="Remove Image" onClick={() => handleDeleteImage(index)}>
               <DeleteOutlineOutlinedIcon />

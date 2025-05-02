@@ -38,6 +38,14 @@ const Stops = ({ stops, setStops }) => {
     setStops(newStops);
   }
 
+  const handleStopChange = (event) => {
+    const index = Number(event.target.dataset.index);
+    const type = event.target.dataset.type;
+    const newStops = [...stops];
+    newStops[index][type] = event.target.value;
+    setStops(newStops);
+  }
+
   return (
     <FormControl fullWidth margin="normal">
       <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
@@ -54,6 +62,8 @@ const Stops = ({ stops, setStops }) => {
                 fullWidth
                 placeholder="Enter the name"
                 value={stop.name}
+                inputProps={{ 'data-index': index, 'data-type': 'name' }}
+                onChange={handleStopChange}
                 sx={{ "& input": {background:'white', padding:'6px 12px'}}}
               />
               <TextField
@@ -62,6 +72,8 @@ const Stops = ({ stops, setStops }) => {
                 fullWidth
                 placeholder="Enter the image URL"
                 value={stop.imageURL}
+                inputProps={{ 'data-index': index, 'data-type': 'imageURL' }}
+                onChange={handleStopChange}
                 sx={{ "& input": {background:'white', padding:'6px 12px'}}}
               />
               <TextField
@@ -70,6 +82,8 @@ const Stops = ({ stops, setStops }) => {
                 fullWidth
                 placeholder="Enter the address"
                 value={stop.address}
+                inputProps={{ 'data-index': index, 'data-type': 'address' }}
+                onChange={handleStopChange}
                 sx={{ "& input": {background:'white', padding:'6px 12px'}}}
               />
             </Box>
