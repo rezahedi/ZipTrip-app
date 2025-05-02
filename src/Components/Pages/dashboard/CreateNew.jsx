@@ -13,6 +13,7 @@ import {
 import { getCategories, createPlan } from "../../../util/dashboard";
 import { useAuth } from "../../../context/AuthContext";
 import PlanImages from "./components/PlanImages";
+import Stops from "./components/Stops"
 
 const TYPES = ['Full day', 'Half day', 'Night']
 
@@ -164,6 +165,9 @@ function CreateNew() {
               />
             </FormControl>
           </Box>
+
+          {/* Stops */}
+          <Stops stops={plan.stops || []} setStops={(stops)=> setPlan({ ...plan, stops })} />
 
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             <Button
