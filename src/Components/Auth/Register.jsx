@@ -78,7 +78,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       setIsValid(false);
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(newPassword)) {
       setPasswordError(
-        "Password must include at least one uppercase letter, one lowercase letter, and one number.",
+        "Password must include at least one uppercase letter, one lowercase letter, and one number."
       );
       setIsValid(false);
     } else {
@@ -129,20 +129,18 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
         console.log(data);
         const { token, _id: userId, name, email, imageURL } = data;
         await login(userId, name, email, imageURL, token);
-        navigate("/account");
+        navigate("/");
         handleDialogClose();
       }
     } catch (error) {
       if (error.response) {
-        console.error("Error Response:", error.response);
-        console.error("Error Message:", error.response.data);
         setErrorMessage(error.response.data.msg);
+        console.log("Error message:", errorMessage);
       } else {
         setErrorMessage("Something went wrong. Please try again.");
       }
       console.log("Error Message in state:", errorMessage);
       console.error("Registration failed", error);
-      console.log(error.response);
     }
   };
 
@@ -337,15 +335,13 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
                 meaningful activities that fit your lifestyle!
               </Typography>
               <Box
-                component="img"
-                src="https://s3-alpha-sig.figma.com/img/48f1/4826/c25c43d183d79ae91c15f66b7e2f61f8?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=TE-A-vmPCp~~Pp13vu9Pjz0g2BysQrB15UKyQIwref7o-EESixHLj-aFTRRXWsk1tTkMDtEwOR0m3rOg-hXkywniX3WpFCdGe8ys6BJz9Bg46toz3Gdg4P~RZkMIhWV31~1QcfhCU-WgBmOOFcKCjcI-X2Us7dtYmYb~XcciPvktsiWNeUEzXkR5WD4KmGrsoO2n~YbjBaE8FovtQUZAGPPY3wGXGW7B6hJ8OD4osAezrOrOhPfRTD3tqg4ws00kTW11CQljoCG9q0fSNc7Nbj9ABqiuRaoDSBBGl3~R-bnGSv1GiuzQ72O7K-K-k57aBvKRnFwYTAQTe~VtDLSQfg__"
-                alt="City View"
                 sx={{
+                  backgroundImage: "url(/images/register.jpg)",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
                   width: "100%",
                   maxWidth: 350,
-                  height: 190,
-                  objectFit: "cover",
-                  objectPosition: "bottom",
+                  height: 180,
                   mx: "auto",
                   borderRadius: 2,
                 }}
