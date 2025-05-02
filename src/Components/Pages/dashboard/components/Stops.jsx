@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef } from "react";
+import PropTypes from "prop-types";
 import {
   Box,
   FormControl,
@@ -8,8 +8,7 @@ import {
   IconButton,
   Button,
 } from "@mui/material";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 const Stops = ({ stops, setStops }) => {
   const nameRef = useRef(null);
@@ -23,12 +22,12 @@ const Stops = ({ stops, setStops }) => {
       name: nameRef.current.value,
       imageURL: imageRef.current.value,
       address: addressRef.current.value,
-    }
+    };
 
     setStops([...stops, currentStop]);
-    nameRef.current.value = '';
-    imageRef.current.value = '';
-    addressRef.current.value = '';
+    nameRef.current.value = "";
+    imageRef.current.value = "";
+    addressRef.current.value = "";
     nameRef.current.focus();
   };
 
@@ -36,7 +35,7 @@ const Stops = ({ stops, setStops }) => {
     const newStops = [...stops];
     newStops.splice(stopIndex, 1);
     setStops(newStops);
-  }
+  };
 
   const handleStopChange = (event) => {
     const index = Number(event.target.dataset.index);
@@ -44,7 +43,7 @@ const Stops = ({ stops, setStops }) => {
     const newStops = [...stops];
     newStops[index][type] = event.target.value;
     setStops(newStops);
-  }
+  };
 
   return (
     <FormControl fullWidth margin="normal">
@@ -53,18 +52,39 @@ const Stops = ({ stops, setStops }) => {
       </FormLabel>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {stops.map((stop, index) => (
-          <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, backgroundColor: "#f5f5f5", borderRadius: 2, padding: 2 }}>
-            <img src={stop.imageURL} alt={stop.name} style={{ width: "100px", height: "100px" }} />
-            <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 0.5 }}>
+          <Box
+            key={index}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              backgroundColor: "#f5f5f5",
+              borderRadius: 2,
+              padding: 2,
+            }}
+          >
+            <img
+              src={stop.imageURL}
+              alt={stop.name}
+              style={{ width: "100px", height: "100px" }}
+            />
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 0.5,
+              }}
+            >
               <TextField
                 required
                 variant="outlined"
                 fullWidth
                 placeholder="Enter the name"
                 value={stop.name}
-                inputProps={{ 'data-index': index, 'data-type': 'name' }}
+                inputProps={{ "data-index": index, "data-type": "name" }}
                 onChange={handleStopChange}
-                sx={{ "& input": {background:'white', padding:'6px 12px'}}}
+                sx={{ "& input": { background: "white", padding: "6px 12px" } }}
               />
               <TextField
                 required
@@ -72,9 +92,9 @@ const Stops = ({ stops, setStops }) => {
                 fullWidth
                 placeholder="Enter the image URL"
                 value={stop.imageURL}
-                inputProps={{ 'data-index': index, 'data-type': 'imageURL' }}
+                inputProps={{ "data-index": index, "data-type": "imageURL" }}
                 onChange={handleStopChange}
-                sx={{ "& input": {background:'white', padding:'6px 12px'}}}
+                sx={{ "& input": { background: "white", padding: "6px 12px" } }}
               />
               <TextField
                 required
@@ -82,24 +102,37 @@ const Stops = ({ stops, setStops }) => {
                 fullWidth
                 placeholder="Enter the address"
                 value={stop.address}
-                inputProps={{ 'data-index': index, 'data-type': 'address' }}
+                inputProps={{ "data-index": index, "data-type": "address" }}
                 onChange={handleStopChange}
-                sx={{ "& input": {background:'white', padding:'6px 12px'}}}
+                sx={{ "& input": { background: "white", padding: "6px 12px" } }}
               />
             </Box>
-            <IconButton aria-label="Remove Stop" onClick={() => handleDeleteStop(index)}>
+            <IconButton
+              aria-label="Remove Stop"
+              onClick={() => handleDeleteStop(index)}
+            >
               <DeleteOutlineOutlinedIcon />
             </IconButton>
           </Box>
         ))}
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 0.5, backgroundColor: "#f5f5f5", borderRadius: 2, padding: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            gap: 0.5,
+            backgroundColor: "#f5f5f5",
+            borderRadius: 2,
+            padding: 2,
+          }}
+        >
           <TextField
             inputRef={nameRef}
             required={stops.length === 0}
             variant="outlined"
             fullWidth
             placeholder="Enter the name"
-            sx={{ "& input": {background:'white'}}}
+            sx={{ "& input": { background: "white" } }}
           />
           <TextField
             inputRef={imageRef}
@@ -107,7 +140,7 @@ const Stops = ({ stops, setStops }) => {
             variant="outlined"
             fullWidth
             placeholder="Enter the image URL"
-            sx={{ "& input": {background:'white'}}}
+            sx={{ "& input": { background: "white" } }}
           />
           <TextField
             inputRef={addressRef}
@@ -115,13 +148,15 @@ const Stops = ({ stops, setStops }) => {
             variant="outlined"
             fullWidth
             placeholder="Enter the address"
-            sx={{ "& input": {background:'white'}}}
+            sx={{ "& input": { background: "white" } }}
           />
-          <Button aria-label="Add Stop" onClick={handleAddStop}>Add Stop</Button>
+          <Button aria-label="Add Stop" onClick={handleAddStop}>
+            Add Stop
+          </Button>
         </Box>
       </Box>
     </FormControl>
-  )
+  );
 };
 
 Stops.propTypes = {

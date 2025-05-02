@@ -13,9 +13,9 @@ import {
 import { getCategories, createPlan } from "../../../util/dashboard";
 import { useAuth } from "../../../context/AuthContext";
 import PlanImages from "./components/PlanImages";
-import Stops from "./components/Stops"
+import Stops from "./components/Stops";
 
-const TYPES = ['Full day', 'Half day', 'Night']
+const TYPES = ["Full day", "Half day", "Night"];
 
 function CreateNew() {
   const [plan, setPlan] = useState({});
@@ -72,7 +72,10 @@ function CreateNew() {
           </FormControl>
 
           {/* Image */}
-          <PlanImages images={plan.images || []} setImages={(images)=> setPlan({ ...plan, images })} />
+          <PlanImages
+            images={plan.images || []}
+            setImages={(images) => setPlan({ ...plan, images })}
+          />
 
           {/* Category */}
           <FormControl fullWidth margin="normal">
@@ -153,7 +156,7 @@ function CreateNew() {
             {/* Duration */}
             <FormControl fullWidth margin="normal">
               <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-              Duration
+                Duration
               </FormLabel>
               <TextField
                 variant="outlined"
@@ -167,7 +170,10 @@ function CreateNew() {
           </Box>
 
           {/* Stops */}
-          <Stops stops={plan.stops || []} setStops={(stops)=> setPlan({ ...plan, stops })} />
+          <Stops
+            stops={plan.stops || []}
+            setStops={(stops) => setPlan({ ...plan, stops })}
+          />
 
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             <Button
