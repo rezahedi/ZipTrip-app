@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const getQueryValue = (queryName) => {
+  const queries = new URLSearchParams(location.search);
+  return queries.get(queryName) || "";
+};
 
 const SearchBar = () => {
-  // TODO: Get `q` query's value and set it as searchQuery default value
-  const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState(getQueryValue("q"));
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSearchQuery(getQueryValue("q"));
+  }, [location.search]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
