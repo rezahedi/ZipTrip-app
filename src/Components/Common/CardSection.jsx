@@ -46,12 +46,13 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
           gap: "16px",
         }}
       >
-        <Grid container spacing={3} sx={{ width: '100%' }}>
-          {loading && Array.from({ length: 4}).map((_, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-              <PlanCardSkeleton />
-            </Grid>
-          ))}
+        <Grid container spacing={3} sx={{ width: "100%" }}>
+          {loading &&
+            Array.from({ length: 4 }).map((_, index) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+                <PlanCardSkeleton />
+              </Grid>
+            ))}
           {plans.map((plan) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
               <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
