@@ -12,6 +12,10 @@ import {
 } from "@mui/material";
 import { getPlan, updatePlan, getCategories } from "../../../util/dashboard";
 import { useAuth } from "../../../context/AuthContext";
+import PlanImages from "./components/PlanImages";
+import Stops from "./components/Stops";
+
+const TYPES = ["Full day", "Half day", "Night"];
 
 function EditPlan() {
   const [plan, setPlan] = useState({});
@@ -83,6 +87,12 @@ function EditPlan() {
             />
           </FormControl>
 
+          {/* Image */}
+          <PlanImages
+            images={plan.images || []}
+            setImages={(images) => setPlan({ ...plan, images })}
+          />
+
           {/* Category */}
           {/* TODO: Replace it with a select dropdown */}
           <FormControl fullWidth margin="normal">
@@ -123,6 +133,65 @@ function EditPlan() {
               }
             />
           </FormControl>
+
+          {/* Type */}
+          <FormControl fullWidth margin="normal">
+            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+              Type
+            </FormLabel>
+            <Select
+              variant="outlined"
+              fullWidth
+              value={plan.type || ""}
+              onChange={(e) => setPlan({ ...plan, type: e.target.value })}
+            >
+              <MenuItem value="">Select a plan type</MenuItem>
+              {TYPES.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            {/* Distance */}
+            <FormControl fullWidth margin="normal">
+              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+                Distance
+              </FormLabel>
+              <TextField
+                variant="outlined"
+                fullWidth
+                placeholder="Distance in miles"
+                type="number"
+                value={plan.distance || ""}
+                onChange={(e) => setPlan({ ...plan, distance: e.target.value })}
+              />
+            </FormControl>
+
+            {/* Duration */}
+            <FormControl fullWidth margin="normal">
+              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+                Duration
+              </FormLabel>
+              <TextField
+                variant="outlined"
+                fullWidth
+                placeholder="Duration in hours"
+                type="number"
+                value={plan.duration || ""}
+                onChange={(e) => setPlan({ ...plan, duration: e.target.value })}
+              />
+            </FormControl>
+          </Box>
+
+          {/* Stops */}
+          <Stops
+            stops={plan.stops || []}
+            setStops={(stops) => setPlan({ ...plan, stops })}
+          />
+
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             <Button
               variant="outlined"
