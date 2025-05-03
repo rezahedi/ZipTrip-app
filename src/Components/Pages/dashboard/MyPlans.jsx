@@ -105,6 +105,7 @@ function MyPlans() {
               type={plan.type}
               distance={plan.distance}
               stopCount={plan.stopCount}
+              planId={plan._id}
             />
             <Box>
               <Button
