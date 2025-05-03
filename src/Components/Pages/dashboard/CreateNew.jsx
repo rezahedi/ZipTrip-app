@@ -24,7 +24,7 @@ function CreateNew() {
   const navigate = useNavigate();
   const { token, user } = useAuth();
 
-  // TODO: Create the Add images and add stops components to allow users to add images and stops to their plans.
+  // TODO: Switch image URLs with actual multiple image upload feature.
 
   useEffect(() => {
     // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
@@ -42,7 +42,18 @@ function CreateNew() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    const result = await createPlan(token, plan, setError);
+
+    // A random number with one decimal greater than 0 and less than 5
+    const rate = Math.round(Math.random() * 49 + 1) / 10;
+    // A random number between 0 and 100
+    const reviewCount = Math.floor(Math.random() * 100);
+    // Adding fake review data to the plan
+    const extendedPlan = {
+      ...plan,
+      rate,
+      reviewCount,
+    };
+    const result = await createPlan(token, extendedPlan, setError);
     if (!result) return;
 
     navigate("/account");
