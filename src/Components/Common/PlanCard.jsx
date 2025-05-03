@@ -21,7 +21,10 @@ const PlanCard = ({
   planId,
 }) => {
   return (
-    <Link to={`/plans/${planId}`} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/plans/${planId}`}
+      style={{ textDecoration: "none", width: "100%" }}
+    >
       <Card sx={{ height: "100%" }}>
         <Box
           sx={{
