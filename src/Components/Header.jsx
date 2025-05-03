@@ -2,17 +2,9 @@ import React from "react";
 import RegisterPage from "./Auth/Register";
 import LoginPage from "./Auth/Login";
 import AlertDialog from "./Common/AlertDialog";
+import SearchBar from "./Common/SearchBar";
 import { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  TextField,
-  Box,
-  InputAdornment,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -147,40 +139,8 @@ const Header = () => {
       </Box>
 
       {/* Search Bar */}
-      <Box
-        sx={{
-          position: "absolute",
-          transform: "translate( 17%, -50%)",
-          // maxWidth: "80%",
-          width: "65%",
-        }}
-      >
-        <TextField
-          placeholder="Search for a city, activity, or place"
-          variant="outlined"
-          fullWidth
-          size="medium"
-          sx={{
-            margin: "0 auto",
-            backgroundColor: "white",
-            borderRadius: "30px",
-            boxShadow: "0px 4px 10px rgba(0, 0, 255, 0.2)",
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "40px",
-              height: "60px",
-            },
-          }}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
-      </Box>
+      <SearchBar />
+
       {/* Alert Dialog for Logout */}
       <AlertDialog
         isOpen={openLogoutDialog}
