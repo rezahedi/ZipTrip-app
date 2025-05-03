@@ -3,6 +3,4 @@ const getQueryValue = (queryString, queryName) => {
   return queries.get(queryName) || "";
 };
 
-export {
-  getQueryValue,
-};
+export { getQueryValue };

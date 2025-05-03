@@ -7,7 +7,9 @@ import { getQueryValue } from "../../util/url";
 
 const SearchBar = () => {
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState(getQueryValue(location.search, "q"));
+  const [searchQuery, setSearchQuery] = useState(
+    getQueryValue(location.search, "q"),
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
