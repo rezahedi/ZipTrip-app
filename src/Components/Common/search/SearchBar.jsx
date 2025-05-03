@@ -3,7 +3,7 @@ import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getQueryValue } from "../../util/url";
+import { getQueryValue } from "../../../util/url";
 
 const SearchBar = () => {
   const location = useLocation();

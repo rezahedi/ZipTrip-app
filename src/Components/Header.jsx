@@ -2,7 +2,7 @@ import React from "react";
 import RegisterPage from "./Auth/Register";
 import LoginPage from "./Auth/Login";
 import AlertDialog from "./Common/AlertDialog";
-import SearchBar from "./Common/SearchBar";
+import SearchBar from "./Common/search/SearchBar";
 import { useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
