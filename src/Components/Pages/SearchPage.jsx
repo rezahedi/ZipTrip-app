@@ -21,6 +21,8 @@ const SearchPage = () => {
     setSearchQuery(getQueryValue(location.search, "q"));
   }, [location.search]);
 
+  // TODO: Add pagination ability to the search result
+
   useEffect(() => {
     (async () => {
       const params = new URLSearchParams(location.search);
