@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Grid, Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import PlanCard from "./PlanCard";
+import PlanCardSkeleton from "./PlanCardSkeleton";
 import { getData } from "../../util";
 
 const CardSection = ({ title, category = "", search = "", size = 4 }) => {
   const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
   const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans?categoryId=${category}&search=${search}&size=${size}`;
 
   // TODO: Add skeleton loading feature later
@@ -15,7 +17,7 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
       try {
         const res = await getData(URL);
         setPlans(res?.items || []);
-        console.log(res);
+        setLoading(false);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
@@ -44,7 +46,12 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
           gap: "16px",
         }}
       >
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ width: '100%' }}>
+          {loading && Array.from({ length: 4}).map((_, index) => (
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+              <PlanCardSkeleton />
+            </Grid>
+          ))}
           {plans.map((plan) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
               <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
