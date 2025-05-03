@@ -3,19 +3,15 @@ import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
-
-const getQueryValue = (queryName) => {
-  const queries = new URLSearchParams(location.search);
-  return queries.get(queryName) || "";
-};
+import { getQueryValue } from "../../util/url";
 
 const SearchBar = () => {
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState(getQueryValue("q"));
+  const [searchQuery, setSearchQuery] = useState(getQueryValue(location.search, "q"));
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSearchQuery(getQueryValue("q"));
+    setSearchQuery(getQueryValue(location.search, "q"));
   }, [location.search]);
 
   const handleSubmit = (e) => {
