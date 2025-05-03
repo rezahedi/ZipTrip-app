@@ -10,6 +10,7 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
+import Stops from "./Stops";
 
 const PlanDetails = ({
   title,
@@ -19,6 +20,7 @@ const PlanDetails = ({
   stopCount,
   images,
   description,
+  stops,
 }) => {
   return (
     <>
@@ -112,6 +114,9 @@ const PlanDetails = ({
       <Box sx={{ marginTop: 4 }}>
         <Typography variant="body1">{description}</Typography>
       </Box>
+
+      {/* Stops Section */}
+      {stops.length > 0 && <Stops stops={stops} />}
     </>
   );
 };
@@ -126,4 +131,11 @@ PlanDetails.propTypes = {
   stopCount: PropTypes.number,
   description: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.string),
+  stops: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      imageURL: PropTypes.string,
+      address: PropTypes.string,
+    }),
+  ),
 };
