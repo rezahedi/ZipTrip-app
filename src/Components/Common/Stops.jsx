@@ -25,20 +25,31 @@ const Stops = ({ stops }) => {
           pl: 0,
           ".MuiTimelineItem-missingOppositeContent:before": { display: "none" },
           ".MuiTimelineContent-root": { pt: 1.5, pr: 0, pb: 4, pl: 2 },
-          ".MuiTimelineDot-root": { backgroundColor: 'transparent', boxShadow: 'none', color: '#4CAF50', p: 0 },
+          ".MuiTimelineDot-root": {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            color: "#4CAF50",
+            p: 0,
+          },
         }}
       >
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot><RoomOutlinedIcon sx={{width:30, height:30}} /></TimelineDot>
+            <TimelineDot>
+              <RoomOutlinedIcon sx={{ width: 30, height: 30 }} />
+            </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent><Typography variant="h5">Start Point</Typography></TimelineContent>
+          <TimelineContent>
+            <Typography variant="h5">Start Point</Typography>
+          </TimelineContent>
         </TimelineItem>
         {stops.map((stop, index) => (
           <TimelineItem key={index}>
             <TimelineSeparator>
-              <TimelineDot><RoomOutlinedIcon sx={{width:30, height:30}} /></TimelineDot>
+              <TimelineDot>
+                <RoomOutlinedIcon sx={{ width: 30, height: 30 }} />
+              </TimelineDot>
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
@@ -48,9 +59,13 @@ const Stops = ({ stops }) => {
         ))}
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot><RoomOutlinedIcon sx={{width:30, height:30}} /></TimelineDot>
+            <TimelineDot>
+              <RoomOutlinedIcon sx={{ width: 30, height: 30 }} />
+            </TimelineDot>
           </TimelineSeparator>
-          <TimelineContent><Typography variant="h5">Finish Point</Typography></TimelineContent>
+          <TimelineContent>
+            <Typography variant="h5">Finish Point</Typography>
+          </TimelineContent>
         </TimelineItem>
       </Timeline>
     </Box>
