@@ -14,7 +14,8 @@ import Stops from "./Stops";
 
 const PlanDetails = ({
   title,
-  rating,
+  rate,
+  reviewCount,
   type,
   distance,
   stopCount,
@@ -52,7 +53,7 @@ const PlanDetails = ({
             variant="subtitle1"
             sx={{ color: "#616161", fontSize: "15px" }}
           >
-            {rating}⭐
+            {rate}⭐ ({reviewCount} reviews)
           </Typography>
           <Typography
             variant="subtitle1"
@@ -125,7 +126,8 @@ export default PlanDetails;
 
 PlanDetails.propTypes = {
   title: PropTypes.string,
-  rating: PropTypes.number,
+  rate: PropTypes.number,
+  reviewCount: PropTypes.number,
   type: PropTypes.string,
   distance: PropTypes.number,
   stopCount: PropTypes.number,
