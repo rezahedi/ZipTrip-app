@@ -3,6 +3,7 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Bookmark from "./Components/Pages/Bookmark";
 import HomePage from "./Components/Pages/HomePage";
+import SearchPage from "./Components/Pages/SearchPage";
 import {
   DashboardTheme,
   MyPlans,
@@ -38,6 +39,7 @@ function App() {
           <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/plans/:planId" element={<PlanPage />} />
               <Route path="/resetpassword" element="" />
               <Route path="/bookmark" element={<Bookmark />} />
