@@ -4,6 +4,8 @@ import { getQueryValue } from "../../util/url";
 import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "../Common/PlanCard";
 import { getData } from "../../util";
+import WelcomeMessage from "../Common/search/WelcomeMessage";
+import EmptyResultMessage from "../Common/search/EmptyResultMessage";
 
 const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans`;
 
@@ -35,8 +37,9 @@ const SearchPage = () => {
     })();
   }, [searchQuery]);
 
-  if (searchQuery === "")
-    return <>Use searchbar to search for anything you like!</>;
+  if (searchQuery === "") return <WelcomeMessage />;
+
+  if (!isLoading && plans.length === 0) return <EmptyResultMessage />;
 
   return (
     <Box
@@ -61,9 +64,6 @@ const SearchPage = () => {
       >
         {isLoading && <>Loading ...</>}
         <Grid container spacing={3} sx={{ width: "100%" }}>
-          {!isLoading && plans.length === 0 && (
-            <>Found nothing! Try something else!</>
-          )}
           {plans.map((plan) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
               <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
