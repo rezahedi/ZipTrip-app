@@ -39,6 +39,8 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
                 };
               }),
             );
+          } else {
+            setPlans(fetchedPlans);
           }
         } else {
           setPlans(
