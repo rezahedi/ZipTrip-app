@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import {APIProvider, Map, useMap} from '@vis.gl/react-google-maps';
-const stops = [
+import PropTypes from 'prop-types';
+
+const fakeStops = [
   {
     name: "The Pergola at Lake Merritt",
     location: [37.8087617744117, -122.2497050912179]
@@ -23,7 +25,10 @@ const stops = [
   },  
 ];
 
-const MarkersAndPath = () => {
+const MarkersAndPath = ({stops}) => {
+  //TODO: Use stops to create markers and path
+  console.log(stops);
+
   const map = useMap();
 
   useEffect(() => {
@@ -42,16 +47,16 @@ const MarkersAndPath = () => {
 
     // Prepare the request
     const origin = {
-      lat: stops[0].location[0],
-      lng: stops[0].location[1],
+      lat: fakeStops[0].location[0],
+      lng: fakeStops[0].location[1],
     };
 
     const destination = {
-      lat: stops[stops.length - 1].location[0],
-      lng: stops[stops.length - 1].location[1],
+      lat: fakeStops[fakeStops.length - 1].location[0],
+      lng: fakeStops[fakeStops.length - 1].location[1],
     };
 
-    const waypoints = stops.slice(1, -1).map(stop => ({
+    const waypoints = fakeStops.slice(1, -1).map(stop => ({
       location: {
         lat: stop.location[0],
         lng: stop.location[1],
@@ -77,7 +82,7 @@ const MarkersAndPath = () => {
 
     // Create markers and info windows for each stop
     const infoWindow = new gmaps.InfoWindow();
-    stops.forEach((stop, index) => {
+    fakeStops.forEach((stop, index) => {
       const marker = new gmaps.Marker({
         position: {
           lat: stop.location[0],
@@ -121,6 +126,15 @@ const StopsOnMap = () => {
       <MarkersAndPath />
     </APIProvider>
   )
+}
+
+StopsOnMap.propTypes = {
+  stops: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    imageURL: PropTypes.string,
+    address: PropTypes.string,
+    location: PropTypes.arrayOf(PropTypes.number),
+  })),
 }
 
 export default StopsOnMap

@@ -35,6 +35,7 @@ const PlanPage = () => {
           stopCount={plan.stopCount}
           images={plan.images}
           description={plan.description}
+          stops={plan.stops}
         />
       ) : (
         <Typography variant="h6">Loading...</Typography>
