@@ -15,6 +15,8 @@ import {
   EditPlan,
 } from "./Components/Pages/dashboard";
 import MainLayout from "./Components/Layout/MainLayout";
+import ForgotPassword from "./Components/Auth/ForgotPassword";
+import ResetPassword from "./Components/Auth/ResetPassword";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
             <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
             <Route path="/account/" element={<DashboardTheme />}>
               <Route index element={<MyPlans />} />
               <Route path=":planId" element={<EditPlan />} />
@@ -35,7 +39,6 @@ function App() {
               <Route path="create" element={<CreateNew />} />
             </Route>
           </Route>
-
           {/* Standalone 404 route — no layout */}
           <Route path="*" element={<NotFound404 />} />
         </Routes>
