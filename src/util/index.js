@@ -8,6 +8,7 @@ const getData = async (url, params = {}) => {
     return data;
   } catch (error) {
     console.log(error, `error - getData in ${url} route`);
+    throw error;
   }
 };
 
@@ -19,6 +20,7 @@ const getAllData = async (url) => {
     return data;
   } catch (error) {
     console.log(error, `error - getAllData in ${url} route`);
+    throw error;
   }
 };
 
@@ -34,6 +36,7 @@ const postData = async (url, requestBody = {}, config = {}) => {
     return res.data;
   } catch (error) {
     console.error("POST error in", url, error);
+    throw error;
   }
 };
 

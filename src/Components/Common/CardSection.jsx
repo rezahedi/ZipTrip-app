@@ -22,7 +22,7 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
       try {
         const result = await getData(URL);
 
-        if (!result || result.items.length === 0) return;
+        if (!result || !result.items) return;
 
         let fetchedPlans = result.items;
 

@@ -10,16 +10,23 @@ import {
   TextField,
   Box,
   InputAdornment,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import PersonIcon from "@mui/icons-material/Person";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthModal } from "../context/AuthModalContext";
 
 const Header = () => {
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+  const [anchorElement, setAnchorElement] = useState(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
   const {
     isLoginOpen,
     isRegisterOpen,
@@ -28,6 +35,14 @@ const Header = () => {
     closeLogin,
     closeRegister,
   } = useAuthModal();
+
+  const handleClickMenu = (event) => {
+    setAnchorElement(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorElement(null);
+  };
 
   const handleLogoutClick = () => {
     setOpenLogoutDialog(true);
@@ -62,13 +77,63 @@ const Header = () => {
           </Typography>
           {user ? (
             <>
-              <Typography sx={{ mr: "8px", fontSize: "20px" }}>
-                {" "}
-                👋 Hello, {user.name}!
-              </Typography>
-              <Button sx={{ minWidth: "6%" }} onClick={handleLogoutClick}>
-                Logout
+              <Button
+                sx={{
+                  minWidth: "6%",
+                  mr: "8px",
+                  backgroundColor: "white",
+                  color: "inherit",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "#inherit",
+                  },
+                }}
+                onClick={() => {
+                  navigate("/account");
+                }}
+              >
+                {<PersonIcon />}My Plans
               </Button>
+              <Button
+                sx={{
+                  maxWidth: 180,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  justifyContent: "flex-start",
+                  minWidth: "6%",
+                  mr: "8px",
+                  backgroundColor: "white",
+                  color: "inherit",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "inherit",
+                  },
+                }}
+                onClick={handleClickMenu}
+              >
+                👋 Hello, {user.name.split(" ")[0]}! {<ArrowDropDownIcon />}
+              </Button>
+              <Menu
+                anchorEl={anchorElement}
+                open={Boolean(anchorElement)}
+                onClose={handleCloseMenu}
+                PaperProps={{
+                  sx: { minWidth: 130 },
+                }}
+              >
+                <MenuItem
+                  sx={{
+                    minHeight: "32px",
+                    fontSize: "0.9rem",
+                    paddingTop: "4px",
+                    paddingBottom: "4px",
+                  }}
+                  onClick={handleLogoutClick}
+                >
+                  {<LogoutIcon fontSize="small" />}
+                  Logout
+                </MenuItem>
+              </Menu>
             </>
           ) : (
             <>
