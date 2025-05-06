@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   deleteBookmarkedPlan,
   getBookmarkedPlan,
 } from "../../../util/dashboard";
 import PlanCard from "../../Common/PlanCard";
+import PlanCardSkeleton from "../../Common/PlanCardSkeleton";
 import { Box, Grid, Button, Typography } from "@mui/material";
 import AlertDialog from "../../Common/AlertDialog";
 import { useAuth } from "../../../context/AuthContext";
@@ -77,61 +78,56 @@ function Bookmarked() {
         <Typography variant="h4">Bookmarked Plans</Typography>
       </Box>
 
-      {isLoading && <p>Loading your plans ...</p>}
       {error && <p>{error}</p>}
-      {plans.length > 0 && (
-        <>
-          <Grid container spacing={3}>
-            {plans.map((plan) => {
-              return (
-                <Grid
-                  size={{ xs: 12, sm: 6, md: 4 }}
-                  key={plan._id}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+      <Grid container spacing={3}>
+        {isLoading &&
+          Array.from({ length: 6 }).map((_, index) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+              <PlanCardSkeleton />
+            </Grid>
+          ))}
+        {plans.map((plan) => {
+          return (
+            <Grid
+              size={{ xs: 12, sm: 6, md: 4 }}
+              key={plan._id}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <PlanCard
+                image={plan.images[0]}
+                title={plan.title}
+                rate={plan.rate}
+                type={plan.type}
+                distance={plan.distance}
+                stopCount={plan.stopCount}
+                planId={plan._id}
+              />
+              <Box>
+                <Button
+                  onClick={() => openDeleteDialog(plan._id)}
+                  style={{ backgroundColor: "#f44336", color: "white" }}
+                  sx={{ marginLeft: 1, marginTop: 1 }}
                 >
-                  <Link
-                    to={`/plans/${plan._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <PlanCard
-                      image={plan.images[0]}
-                      title={plan.title}
-                      rate={plan.rate}
-                      type={plan.type}
-                      distance={plan.distance}
-                      stopCount={plan.stopCount}
-                      planId={plan._id}
-                    />
-                  </Link>
-                  <Box>
-                    <Button
-                      onClick={() => openDeleteDialog(plan._id)}
-                      style={{ backgroundColor: "#f44336", color: "white" }}
-                      sx={{ marginLeft: 1, marginTop: 1 }}
-                    >
-                      Remove
-                    </Button>
-                  </Box>
-                </Grid>
-              );
-            })}
-          </Grid>
-
-          <AlertDialog
-            isOpen={alertOpen}
-            onClose={handleClose}
-            title="Removing Bookmarked Plan"
-            message="Are you sure you want to remove this plan?"
-            onConfirm={handleRemovePlan}
-            confirmText="Remove"
-            cancelText="Cancel"
-          />
-        </>
-      )}
+                  Remove
+                </Button>
+              </Box>
+            </Grid>
+          );
+        })}
+      </Grid>
+      <AlertDialog
+        isOpen={alertOpen}
+        onClose={handleClose}
+        title="Removing Bookmarked Plan"
+        message="Are you sure you want to remove this plan?"
+        onConfirm={handleRemovePlan}
+        confirmText="Remove"
+        cancelText="Cancel"
+      />
     </>
   );
 }
