@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteBookmarkedPlan,
-  getBookmarkedPlan,
-} from "../../../util/dashboard";
+import { removeBookmark, getBookmarks } from "../../../util/dashboard";
 import PlanCard from "../../Common/PlanCard";
 import PlanCardSkeleton from "../../Common/PlanCardSkeleton";
 import { Box, Grid, Button, Typography } from "@mui/material";
@@ -24,7 +21,7 @@ function Bookmarked() {
     if (!token) return navigate("/");
 
     (async () => {
-      const data = await getBookmarkedPlan(token, setError);
+      const data = await getBookmarks(token, setError);
       if (!data) return;
       setPlans(data.items || []);
       console.log("Bookmarked data:", data);
@@ -33,11 +30,7 @@ function Bookmarked() {
   }, []);
 
   const handleRemovePlan = async () => {
-    const result = await deleteBookmarkedPlan(
-      token,
-      selectedPlanToRemove,
-      setError,
-    );
+    const result = await removeBookmark(token, selectedPlanToRemove, setError);
 
     if (!result) return;
 
@@ -105,6 +98,8 @@ function Bookmarked() {
                 distance={plan.distance}
                 stopCount={plan.stopCount}
                 planId={plan._id}
+                isBookmarked={true}
+                showBookmarkBtn={false}
               />
               <Box>
                 <Button

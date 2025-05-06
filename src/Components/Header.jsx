@@ -19,14 +19,22 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuthModal } from "../context/AuthModalContext";
 
 const Header = () => {
-  const [openRegister, setOpenRegister] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const [anchorElement, setAnchorElement] = useState(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const {
+    isLoginOpen,
+    isRegisterOpen,
+    openLogin,
+    openRegister,
+    closeLogin,
+    closeRegister,
+  } = useAuthModal();
 
   const handleClickMenu = (event) => {
     setAnchorElement(event.currentTarget);
@@ -34,22 +42,6 @@ const Header = () => {
 
   const handleCloseMenu = () => {
     setAnchorElement(null);
-  };
-
-  const handleClickRegisterOpen = () => {
-    setOpenRegister(true);
-  };
-
-  const handleCloseRegister = () => {
-    setOpenRegister(false);
-  };
-
-  const handleClickLoginOpen = () => {
-    setOpenLogin(true);
-  };
-
-  const handleCloseLogin = () => {
-    setOpenLogin(false);
   };
 
   const handleLogoutClick = () => {
@@ -157,14 +149,14 @@ const Header = () => {
                     color: "#45a049",
                   },
                 }}
-                onClick={handleClickLoginOpen}
+                onClick={openLogin}
               >
                 Login
               </Button>
               <Button
                 color="inherit"
                 sx={{ minWidth: "6%" }}
-                onClick={handleClickRegisterOpen}
+                onClick={openRegister}
               >
                 Register
               </Button>
@@ -175,20 +167,20 @@ const Header = () => {
 
       {/* Register Dialog */}
       <RegisterPage
-        open={openRegister}
-        handleClose={handleCloseRegister}
+        open={isRegisterOpen}
+        handleClose={closeRegister}
         onSwitchToLogin={() => {
-          setOpenRegister(false);
-          setOpenLogin(true);
+          closeRegister();
+          openLogin();
         }}
       />
       {/* Login Dialog */}
       <LoginPage
-        open={openLogin}
-        handleClose={handleCloseLogin}
+        open={isLoginOpen}
+        handleClose={closeLogin}
         onSwitchToRegister={() => {
-          setOpenRegister(true);
-          setOpenLogin(false);
+          openRegister();
+          closeLogin();
         }}
       />
 
