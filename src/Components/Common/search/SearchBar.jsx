@@ -7,13 +7,13 @@ import { getQueryValue } from "../../../util/url";
 
 const SearchBar = () => {
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState(
-    getQueryValue(location.search, "q"),
-  );
+  let q = getQueryValue(location.search, "q");
+  const [searchQuery, setSearchQuery] = useState(q);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSearchQuery(getQueryValue(location.search, "q"));
+    q = getQueryValue(location.search, "q");
+    setSearchQuery(q);
   }, [location.search]);
 
   const handleSubmit = (e) => {
@@ -66,7 +66,7 @@ const SearchBar = () => {
                   </IconButton>
                 </InputAdornment>
               ),
-              ...(searchQuery && {
+              ...(q && {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={handleCancel}>
