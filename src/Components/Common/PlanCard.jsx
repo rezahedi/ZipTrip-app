@@ -64,22 +64,22 @@ const PlanCard = ({
           }}
         >
           {showBookmarkBtn && (
-          <IconButton
-            onClick={handleBookmark}
-            sx={{
-              position: "absolute",
-              backgroundColor: "white",
-              width: 35,
-              height: 35,
-              marginTop: 1,
-            }}
-          >
-            {bookmark ? (
-              <BookmarkIcon style={{ color: "orange" }} />
-            ) : (
-              <BookmarkBorderIcon />
-            )}
-          </IconButton>
+            <IconButton
+              onClick={handleBookmark}
+              sx={{
+                position: "absolute",
+                backgroundColor: "white",
+                width: 35,
+                height: 35,
+                marginTop: 1,
+              }}
+            >
+              {bookmark ? (
+                <BookmarkIcon style={{ color: "orange" }} />
+              ) : (
+                <BookmarkBorderIcon />
+              )}
+            </IconButton>
           )}
         </Box>
         <CardMedia
