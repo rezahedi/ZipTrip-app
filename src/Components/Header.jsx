@@ -1,34 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import RegisterPage from "./Auth/Register";
 import LoginPage from "./Auth/Login";
 import AlertDialog from "./Common/AlertDialog";
 import SearchBar from "./Common/search/SearchBar";
-import { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuthModal } from "../context/AuthModalContext";
 
 const Header = () => {
-  const [openRegister, setOpenRegister] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+  const [anchorElement, setAnchorElement] = useState(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleClickRegisterOpen = () => {
-    setOpenRegister(true);
+  const {
+    isLoginOpen,
+    isRegisterOpen,
+    openLogin,
+    openRegister,
+    closeLogin,
+    closeRegister,
+  } = useAuthModal();
+
+  const handleClickMenu = (event) => {
+    setAnchorElement(event.currentTarget);
   };
 
-  const handleCloseRegister = () => {
-    setOpenRegister(false);
-  };
-
-  const handleClickLoginOpen = () => {
-    setOpenLogin(true);
-  };
-
-  const handleCloseLogin = () => {
-    setOpenLogin(false);
+  const handleCloseMenu = () => {
+    setAnchorElement(null);
   };
 
   const handleLogoutClick = () => {
@@ -64,13 +75,63 @@ const Header = () => {
           </Typography>
           {user ? (
             <>
-              <Typography sx={{ mr: "8px", fontSize: "20px" }}>
-                {" "}
-                👋 Hello, {user.name}!
-              </Typography>
-              <Button sx={{ minWidth: "6%" }} onClick={handleLogoutClick}>
-                Logout
+              <Button
+                sx={{
+                  minWidth: "6%",
+                  mr: "8px",
+                  backgroundColor: "white",
+                  color: "inherit",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "#inherit",
+                  },
+                }}
+                onClick={() => {
+                  navigate("/account");
+                }}
+              >
+                {<PersonIcon />}My Plans
               </Button>
+              <Button
+                sx={{
+                  maxWidth: 180,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  justifyContent: "flex-start",
+                  minWidth: "6%",
+                  mr: "8px",
+                  backgroundColor: "white",
+                  color: "inherit",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "inherit",
+                  },
+                }}
+                onClick={handleClickMenu}
+              >
+                👋 Hello, {user.name.split(" ")[0]}! {<ArrowDropDownIcon />}
+              </Button>
+              <Menu
+                anchorEl={anchorElement}
+                open={Boolean(anchorElement)}
+                onClose={handleCloseMenu}
+                PaperProps={{
+                  sx: { minWidth: 130 },
+                }}
+              >
+                <MenuItem
+                  sx={{
+                    minHeight: "32px",
+                    fontSize: "0.9rem",
+                    paddingTop: "4px",
+                    paddingBottom: "4px",
+                  }}
+                  onClick={handleLogoutClick}
+                >
+                  {<LogoutIcon fontSize="small" />}
+                  Logout
+                </MenuItem>
+              </Menu>
             </>
           ) : (
             <>
@@ -86,14 +147,14 @@ const Header = () => {
                     color: "#45a049",
                   },
                 }}
-                onClick={handleClickLoginOpen}
+                onClick={openLogin}
               >
                 Login
               </Button>
               <Button
                 color="inherit"
                 sx={{ minWidth: "6%" }}
-                onClick={handleClickRegisterOpen}
+                onClick={openRegister}
               >
                 Register
               </Button>
@@ -104,20 +165,20 @@ const Header = () => {
 
       {/* Register Dialog */}
       <RegisterPage
-        open={openRegister}
-        handleClose={handleCloseRegister}
+        open={isRegisterOpen}
+        handleClose={closeRegister}
         onSwitchToLogin={() => {
-          setOpenRegister(false);
-          setOpenLogin(true);
+          closeRegister();
+          openLogin();
         }}
       />
       {/* Login Dialog */}
       <LoginPage
-        open={openLogin}
-        handleClose={handleCloseLogin}
+        open={isLoginOpen}
+        handleClose={closeLogin}
         onSwitchToRegister={() => {
-          setOpenRegister(true);
-          setOpenLogin(false);
+          openRegister();
+          closeLogin();
         }}
       />
 

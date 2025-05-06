@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -8,8 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useAuthModal } from "../../context/AuthModalContext";
+import { AddBookmark, removeBookmark } from "../../util/dashboard";
 
 const PlanCard = ({
   image,
@@ -19,9 +23,40 @@ const PlanCard = ({
   distance,
   stopCount,
   planId,
+  isBookmarked = false,
+  showBookmarkBtn = true,
 }) => {
+  const [bookmark, setBookmark] = useState(isBookmarked);
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
+
+  const handleBookmark = async (e) => {
+    e.preventDefault();
+
+    if (!token) return openLogin();
+
+    if (bookmark) {
+      const result = await removeBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(false);
+      }
+    } else {
+      const result = await AddBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(true);
+      }
+    }
+  };
+
+  const setError = (errorMessage) => {
+    console.log("error", errorMessage);
+  };
+
   return (
-    <Link to={`/plans/${planId}`} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/plans/${planId}`}
+      style={{ textDecoration: "none", width: "100%" }}
+    >
       <Card sx={{ height: "100%" }}>
         <Box
           sx={{
@@ -31,17 +66,24 @@ const PlanCard = ({
             marginRight: 1,
           }}
         >
-          <IconButton
-            sx={{
-              position: "absolute",
-              backgroundColor: "white",
-              width: 35,
-              height: 35,
-              marginTop: 1,
-            }}
-          >
-            <BookmarkBorderIcon />
-          </IconButton>
+          {showBookmarkBtn && (
+            <IconButton
+              onClick={handleBookmark}
+              sx={{
+                position: "absolute",
+                backgroundColor: "white",
+                width: 35,
+                height: 35,
+                marginTop: 1,
+              }}
+            >
+              {bookmark ? (
+                <BookmarkIcon style={{ color: "orange" }} />
+              ) : (
+                <BookmarkBorderIcon />
+              )}
+            </IconButton>
+          )}
         </Box>
         <CardMedia
           component="img"
@@ -96,4 +138,6 @@ PlanCard.propTypes = {
   type: PropTypes.string,
   distance: PropTypes.string,
   stopCount: PropTypes.string,
+  isBookmarked: PropTypes.bool,
+  showBookmarkBtn: PropTypes.bool,
 };

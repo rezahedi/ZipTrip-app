@@ -120,26 +120,27 @@ const getCategories = async (token, onError) => {
   }
 };
 
-const getBookmarkedPlan = async (token, onError) => {
+const AddBookmark = async (token, planId, onError) => {
   try {
-    let res = await fetch(`/api/v1/account/bookmarks/`, {
+    let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     if (!res.ok) {
       const errorData = await res.json();
-      onError(errorData.msg || "Failed to fetch plan");
-      return null;
+      onError(errorData.msg || "Failed to add bookmark");
+      return false;
     }
-    return await res.json();
+    return true;
   } catch (error) {
-    onError(error.message || "An error occurred while fetching the plan");
-    return null;
+    onError(error.message || "An error occurred while adding bookmark");
+    return false;
   }
 };
 
-const deleteBookmarkedPlan = async (token, planId, onError) => {
+const removeBookmark = async (token, planId, onError) => {
   try {
     let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
       method: "DELETE",
@@ -149,35 +150,32 @@ const deleteBookmarkedPlan = async (token, planId, onError) => {
     });
     if (!res.ok) {
       const errorData = await res.json();
-      onError(errorData.msg || "Failed to remove plan");
+      onError(errorData.msg || "Failed to remove bookmark");
       return false;
     }
     return true;
   } catch (error) {
-    onError(error.message || "An error occurred while removing the plan");
+    onError(error.message || "An error occurred while removing bookmark");
     return false;
   }
 };
 
-const addBookmarkedPlan = async (token, planId, setError) => {
+const getBookmarks = async (token, onError) => {
   try {
-    const res = await fetch(`/api/v1/account/bookmarked/${planId}`, {
-      method: "POST",
+    let res = await fetch("/api/v1/account/bookmarks", {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
       },
     });
-
     if (!res.ok) {
-      throw new Error("Failed to bookmark the plan.");
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to fetch bookmarks");
+      return null;
     }
-
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    setError(err.message || "Something went wrong");
-    return null;
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while fetching bookmarks");
+    return false;
   }
 };
 
@@ -188,7 +186,7 @@ export {
   updatePlan,
   getCategories,
   createPlan,
-  getBookmarkedPlan,
-  deleteBookmarkedPlan,
-  addBookmarkedPlan,
+  AddBookmark,
+  removeBookmark,
+  getBookmarks,
 };
