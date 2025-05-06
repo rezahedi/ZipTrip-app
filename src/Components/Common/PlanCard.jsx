@@ -24,6 +24,7 @@ const PlanCard = ({
   stopCount,
   planId,
   isBookmarked = false,
+  showBookmarkBtn = true,
 }) => {
   const [bookmark, setBookmark] = useState(isBookmarked);
   const { token } = useAuth();
@@ -62,6 +63,7 @@ const PlanCard = ({
             marginRight: 1,
           }}
         >
+          {showBookmarkBtn && (
           <IconButton
             onClick={handleBookmark}
             sx={{
@@ -78,6 +80,7 @@ const PlanCard = ({
               <BookmarkBorderIcon />
             )}
           </IconButton>
+          )}
         </Box>
         <CardMedia
           component="img"
@@ -133,4 +136,5 @@ PlanCard.propTypes = {
   distance: PropTypes.string,
   stopCount: PropTypes.string,
   isBookmarked: PropTypes.bool,
+  showBookmarkBtn: PropTypes.bool,
 };

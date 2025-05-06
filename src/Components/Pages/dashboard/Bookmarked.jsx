@@ -99,6 +99,7 @@ function Bookmarked() {
                       stopCount={plan.stopCount}
                       planId={plan._id}
                       isBookmarked={true}
+                      showBookmarkBtn={false}
                     />
                   </Link>
                   <Box>

@@ -102,6 +102,7 @@ function MyPlans() {
                   distance={plan.distance}
                   stopCount={plan.stopCount}
                   planId={plan._id}
+                  showBookmarkBtn={false}
                 />
                 <Box>
                   <Button
