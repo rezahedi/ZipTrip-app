@@ -22,11 +22,8 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
           token,
           setError,
         );
+        setPlans(result?.items || []);
         setLoading(false);
-
-        if (!result || !result.items) return;
-
-        setPlans(result.items);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
