@@ -7,6 +7,7 @@ import { getData } from "../../util";
 import WelcomeMessage from "../Common/search/WelcomeMessage";
 import EmptyResultMessage from "../Common/search/EmptyResultMessage";
 import Pagination from "../Common/Pagination";
+import PlanCardSkeleton from "../Common/PlanCardSkeleton";
 
 const PAGE_SIZE = 8;
 
@@ -29,6 +30,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const params = new URLSearchParams(location.search);
       params.set("search", searchQuery);
       params.set("page", page);
@@ -72,22 +74,24 @@ const SearchPage = () => {
         }}
       >
         {isLoading && <>Loading ...</>}
-        {plans.length > 0 && (
-          <>
-            <Grid container spacing={3} sx={{ width: "100%" }}>
-              {plans.map((plan) => (
-                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-                  <PlanCard
-                    {...plan}
-                    planId={plan._id}
-                    image={plan.images[0]}
-                  />
-                </Grid>
-              ))}
+        <Grid container spacing={3} sx={{ width: "100%" }}>
+          {isLoading &&
+            Array.from({ length: 4 }).map((_, index) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+                <PlanCardSkeleton />
+              </Grid>
+            ))}
+          {!isLoading && plans.map((plan) => (
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
+              <PlanCard
+                {...plan}
+                planId={plan._id}
+                image={plan.images[0]}
+              />
             </Grid>
-            <Pagination page={Number(page)} pagesCount={pagesCount} />
-          </>
-        )}
+          ))}
+        </Grid>
+        <Pagination page={Number(page)} pagesCount={pagesCount} />
       </Box>
     </Box>
   );
