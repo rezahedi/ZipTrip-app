@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Grid, Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import PlanCard from "./PlanCard";
-import { getBookmarks } from "../../util/dashboard";
 import { useAuth } from "../../context/AuthContext";
 import PlanCardSkeleton from "./PlanCardSkeleton";
-import { getData } from "../../util";
+import { fetchPlans } from "../../util";
 
 const CardSection = ({ title, category = "", search = "", size = 4 }) => {
   const { token } = useAuth();
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
-  const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans?categoryId=${category}&search=${search}&size=${size}`;
 
   const setError = (errorMessage) => {
     console.log("error", errorMessage);
@@ -22,39 +20,16 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
   useEffect(() => {
     const fetchAllPlans = async () => {
       try {
-        const result = await getData(URL);
+        const result = await fetchPlans(
+          `plans?categoryId=${category}&search=${search}&size=${size}`,
+          token,
+          setError,
+        );
+        setLoading(false);
 
         if (!result || !result.items) return;
 
-        let fetchedPlans = result.items;
-
-        if (token) {
-          const fetchedBookmarks = await getBookmarks(token, setError);
-          if (fetchedBookmarks && fetchedBookmarks.items.length > 0) {
-            const bookmarksIds = fetchedBookmarks.items.map((item) => item._id);
-
-            setPlans(
-              fetchedPlans.map((plan) => {
-                return {
-                  ...plan,
-                  isBookmarked: bookmarksIds.includes(plan._id),
-                };
-              }),
-            );
-          } else {
-            setPlans(fetchedPlans);
-          }
-        } else {
-          setPlans(
-            fetchedPlans.map((plan) => {
-              return {
-                ...plan,
-                isBookmarked: false,
-              };
-            }),
-          );
-        }
-        setLoading(false);
+        setPlans(result.items);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
