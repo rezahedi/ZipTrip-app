@@ -4,7 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./Components/Pages/HomePage";
 import SearchPage from "./Components/Pages/SearchPage";
 import PlanPage from "./Components/Pages/PlanPage";
-import Bookmark from "./Components/Pages/Bookmark";
+import CategoryPage from "./Components/Pages/CategoryPage";
 import NotFound404 from "./Components/Pages/404NotFound";
 import {
   DashboardTheme,
@@ -29,7 +29,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
-            <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/resetpassword/:token" element={<ResetPassword />} />
             <Route path="/account/" element={<DashboardTheme />}>
