@@ -33,10 +33,10 @@ const CategoryPage = () => {
       try {
         const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans/category/${categoryId}`;
         const res = await getData(`${API_URL}?${paramsString}`);
-        const { plans: categoryPlans, ...category } = res;
-        console.log(categoryPlans, category);
+        const { plans: categoryPlans, ...categoryDetails } = res;
+        console.log(categoryPlans, categoryDetails);
         setPlans(categoryPlans.items || []);
-        setCategory(category || {});
+        setCategory(categoryDetails || {});
         setPagesCount(categoryPlans.pagesCount || 0);
         setIsLoading(false);
       } catch (error) {
