@@ -5,6 +5,7 @@ import HomePage from "./Components/Pages/HomePage";
 import SearchPage from "./Components/Pages/SearchPage";
 import PlanPage from "./Components/Pages/PlanPage";
 import CategoryPage from "./Components/Pages/CategoryPage";
+import UserPage from "./Components/Pages/UserPage";
 import NotFound404 from "./Components/Pages/404NotFound";
 import {
   DashboardTheme,
@@ -30,6 +31,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
             <Route path="/category/:categoryId" element={<CategoryPage />} />
+            <Route path="/user/:userId" element={<UserPage />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/resetpassword/:token" element={<ResetPassword />} />
             <Route path="/account/" element={<DashboardTheme />}>
