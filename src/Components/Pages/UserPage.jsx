@@ -7,7 +7,7 @@ import { getData } from "../../util";
 import Pagination from "../Common/Pagination";
 import PlanCardSkeleton from "../Common/PlanCardSkeleton";
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 8;
 
 const UserPage = () => {
   const { userId } = useParams();
