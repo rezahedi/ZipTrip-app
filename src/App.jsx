@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./Components/Pages/HomePage";
+import SearchPage from "./Components/Pages/SearchPage";
 import PlanPage from "./Components/Pages/PlanPage";
 import Bookmark from "./Components/Pages/Bookmark";
 import NotFound404 from "./Components/Pages/404NotFound";
@@ -26,6 +27,7 @@ function App() {
           {/* Routes wrapped in main layout */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
             <Route path="/bookmark" element={<Bookmark />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
