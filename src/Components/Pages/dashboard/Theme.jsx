@@ -11,25 +11,35 @@ const links = [
 
 export default function DashboardTheme() {
   return (
-    <Box sx={{ display: {xs: "block", sm: "flex"}, pt: {xs: 3, sm: 3, md: 0}, gap: 3 }}>
+    <Box
+      sx={{
+        display: { xs: "block", sm: "flex" },
+        pt: { xs: 3, sm: 3, md: 0 },
+        gap: 3,
+      }}
+    >
       <List
         sx={{
-          position: {xs: "auto", sm: "sticky"},
+          position: { xs: "auto", sm: "sticky" },
           flex: 1,
           flexGrow: 0,
           alignItems: "stretch",
           top: "0",
           maxHeight: "96vh",
-          minHeight: {xs: "auto", sm: "50vh"},
-          width: {xs: "100%", sm: "240px"},
+          minHeight: { xs: "auto", sm: "50vh" },
+          width: { xs: "100%", sm: "240px" },
           bgcolor: "#eee",
           display: "flex",
-          flexDirection: {xs: "row", sm: "column"},
+          flexDirection: { xs: "row", sm: "column" },
           justifyContent: "start",
         }}
       >
         {links.map((link) => (
-          <ListItem key={link.text} disablePadding sx={{width: {xs: "auto", sm:"200px"},}}>
+          <ListItem
+            key={link.text}
+            disablePadding
+            sx={{ width: { xs: "auto", sm: "200px" } }}
+          >
             <NavLink
               to={link.path}
               end
