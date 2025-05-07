@@ -10,10 +10,7 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
   const { token } = useAuth();
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const setError = (errorMessage) => {
-    console.log("error", errorMessage);
-  };
+  const [error, setError] = useState(null);
 
   // TODO: Add skeleton loading feature later
 
@@ -59,6 +56,7 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
         }}
       >
         <Grid container spacing={3} sx={{ width: "100%" }}>
+          {!loading && error && <p>{error}</p>}
           {loading &&
             Array.from({ length: 4 }).map((_, index) => (
               <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
