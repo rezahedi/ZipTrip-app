@@ -68,11 +68,15 @@ const Header = () => {
         }}
       >
         <Toolbar sx={{ padding: 0 }}>
-          <Typography variant="h4" color="inherit" style={{ flexGrow: 1 }}>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              OneDayPlanner
+          <Box sx={{ flexGrow: 1 }}>
+            <Link to="/">
+              <img
+                src="/images/logo-text-3.png"
+                width="140px"
+                alt="ZipTrip Logo"
+              />
             </Link>
-          </Typography>
+          </Box>
           {user ? (
             <>
               <Button
