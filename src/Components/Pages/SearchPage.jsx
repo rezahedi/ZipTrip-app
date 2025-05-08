@@ -3,14 +3,13 @@ import { useLocation } from "react-router-dom";
 import { getQueryValue } from "../../util/url";
 import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "../Common/PlanCard";
-import { getData } from "../../util";
+import { fetchPlans } from "../../util";
 import WelcomeMessage from "../Common/search/WelcomeMessage";
 import EmptyResultMessage from "../Common/search/EmptyResultMessage";
 import Pagination from "../Common/Pagination";
+import { useAuth } from "../../context/AuthContext";
 
 const PAGE_SIZE = 8;
-
-const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans`;
 
 const SearchPage = () => {
   const location = useLocation();
@@ -21,6 +20,8 @@ const SearchPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [plans, setPlans] = useState([]);
   const [pagesCount, setPagesCount] = useState(0);
+  const [error, setError] = useState(null);
+  const { token } = useAuth();
 
   useEffect(() => {
     page = getQueryValue(location.search, "page") || "1";
@@ -36,7 +37,7 @@ const SearchPage = () => {
       const paramsString = params.toString();
 
       try {
-        const res = await getData(`${API_URL}?${paramsString}`);
+        const res = await fetchPlans(`plans?${paramsString}`, token, setError);
         setPlans(res?.items || []);
         setPagesCount(res?.pagesCount || 0);
         setIsLoading(false);
@@ -71,6 +72,7 @@ const SearchPage = () => {
           gap: "16px",
         }}
       >
+        {!isLoading && error && <p>{error}</p>}
         {isLoading && <>Loading ...</>}
         {plans.length > 0 && (
           <>
