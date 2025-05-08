@@ -3,9 +3,10 @@ import { useParams, useLocation } from "react-router-dom";
 import { getQueryValue } from "../../util/url";
 import { Box, Typography, Grid, Avatar } from "@mui/material";
 import PlanCard from "../Common/PlanCard";
-import { getData } from "../../util";
+import { fetchPlans } from "../../util";
 import Pagination from "../Common/Pagination";
 import PlanCardSkeleton from "../Common/PlanCardSkeleton";
+import { useAuth } from "../../context/AuthContext";
 
 const PAGE_SIZE = 8;
 
@@ -17,6 +18,8 @@ const UserPage = () => {
   const [plans, setPlans] = useState([]);
   const [pagesCount, setPagesCount] = useState(0);
   const [user, setUser] = useState({});
+  const [error, setError] = useState(null);
+  const { token } = useAuth();
 
   useEffect(() => {
     page = getQueryValue(location.search, "page") || "1";
@@ -31,8 +34,11 @@ const UserPage = () => {
       const paramsString = params.toString();
 
       try {
-        const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans/user/${userId}`;
-        const res = await getData(`${API_URL}?${paramsString}`);
+        const res = await fetchPlans(
+          `plans/user/${userId}?${paramsString}`,
+          token,
+          setError,
+        );
         const { plans: userPlans, ...userDetails } = res;
         console.log(userPlans, userDetails);
         setPlans(userPlans.items || []);
@@ -83,6 +89,7 @@ const UserPage = () => {
           gap: "16px",
         }}
       >
+        {!isLoading && error && <p>{error}</p>}
         <Grid container spacing={3} sx={{ width: "100%" }}>
           {isLoading &&
             Array.from({ length: 4 }).map((_, index) => (
