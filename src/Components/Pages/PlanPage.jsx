@@ -29,12 +29,14 @@ const PlanPage = () => {
       {plan ? (
         <PlanDetails
           title={plan.title}
-          rating={plan.rating}
+          rate={plan.rate}
+          reviewCount={plan.reviewCount}
           type={plan.type}
           distance={plan.distance}
           stopCount={plan.stopCount}
           images={plan.images}
           description={plan.description}
+          stops={plan.stops}
         />
       ) : (
         <Typography variant="h6">Loading...</Typography>
