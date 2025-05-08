@@ -84,13 +84,13 @@ function MyPlans() {
       <Grid container spacing={3} sx={{ width: "100%" }}>
         {isLoading &&
           Array.from({ length: 6 }).map((_, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+            <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }} key={index}>
               <PlanCardSkeleton />
             </Grid>
           ))}
         {plans.map((plan) => (
           <Grid
-            size={{ xs: 12, sm: 6, md: 4 }}
+            size={{ xs: 12, sm: 12, md: 6, lg: 4 }}
             key={plan._id}
             style={{
               display: "flex",
