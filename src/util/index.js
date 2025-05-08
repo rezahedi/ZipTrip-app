@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
+
 // Fetch data with query parameters
 const getData = async (url, params = {}) => {
   try {
@@ -8,6 +10,7 @@ const getData = async (url, params = {}) => {
     return data;
   } catch (error) {
     console.log(error, `error - getData in ${url} route`);
+    throw error;
   }
 };
 
@@ -19,6 +22,7 @@ const getAllData = async (url) => {
     return data;
   } catch (error) {
     console.log(error, `error - getAllData in ${url} route`);
+    throw error;
   }
 };
 
@@ -34,7 +38,29 @@ const postData = async (url, requestBody = {}, config = {}) => {
     return res.data;
   } catch (error) {
     console.error("POST error in", url, error);
+    throw error;
   }
 };
 
-export { getData, getAllData, postData };
+const fetchPlans = async (endpoint, token = "", onError) => {
+  try {
+    let res = await fetch(`${API_V1_BASE_URL}/${endpoint}`, {
+      ...(token && {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      onError(errorData.msg || "Failed to fetch plans");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    onError(error.message || "An error occurred while fetching plans");
+    return null;
+  }
+};
+
+export { getData, getAllData, postData, fetchPlans };

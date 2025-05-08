@@ -12,6 +12,10 @@ import {
 } from "@mui/material";
 import { getCategories, createPlan } from "../../../util/dashboard";
 import { useAuth } from "../../../context/AuthContext";
+import PlanImages from "./components/PlanImages";
+import Stops from "./components/Stops";
+
+const TYPES = ["Full day", "Half day", "Night"];
 
 function CreateNew() {
   const [plan, setPlan] = useState({});
@@ -20,7 +24,7 @@ function CreateNew() {
   const navigate = useNavigate();
   const { token, user } = useAuth();
 
-  // TODO: Create the Add images and add stops components to allow users to add images and stops to their plans.
+  // TODO: Switch image URLs with actual multiple image upload feature.
 
   useEffect(() => {
     // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
@@ -38,7 +42,18 @@ function CreateNew() {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    const result = await createPlan(token, plan, setError);
+
+    // A random number with one decimal greater than 0 and less than 5
+    const rate = Math.round(Math.random() * 49 + 1) / 10;
+    // A random number between 0 and 100
+    const reviewCount = Math.floor(Math.random() * 100);
+    // Adding fake review data to the plan
+    const extendedPlan = {
+      ...plan,
+      rate,
+      reviewCount,
+    };
+    const result = await createPlan(token, extendedPlan, setError);
     if (!result) return;
 
     navigate("/account");
@@ -66,6 +81,12 @@ function CreateNew() {
               onChange={(e) => setPlan({ ...plan, title: e.target.value })}
             />
           </FormControl>
+
+          {/* Image */}
+          <PlanImages
+            images={plan.images || []}
+            setImages={(images) => setPlan({ ...plan, images })}
+          />
 
           {/* Category */}
           <FormControl fullWidth margin="normal">
@@ -106,6 +127,65 @@ function CreateNew() {
               }
             />
           </FormControl>
+
+          {/* Type */}
+          <FormControl fullWidth margin="normal">
+            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+              Type
+            </FormLabel>
+            <Select
+              variant="outlined"
+              fullWidth
+              value={plan.type || ""}
+              onChange={(e) => setPlan({ ...plan, type: e.target.value })}
+            >
+              <MenuItem value="">Select a plan type</MenuItem>
+              {TYPES.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            {/* Distance */}
+            <FormControl fullWidth margin="normal">
+              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+                Distance
+              </FormLabel>
+              <TextField
+                variant="outlined"
+                fullWidth
+                placeholder="Distance in miles"
+                type="number"
+                value={plan.distance || ""}
+                onChange={(e) => setPlan({ ...plan, distance: e.target.value })}
+              />
+            </FormControl>
+
+            {/* Duration */}
+            <FormControl fullWidth margin="normal">
+              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
+                Duration
+              </FormLabel>
+              <TextField
+                variant="outlined"
+                fullWidth
+                placeholder="Duration in hours"
+                type="number"
+                value={plan.duration || ""}
+                onChange={(e) => setPlan({ ...plan, duration: e.target.value })}
+              />
+            </FormControl>
+          </Box>
+
+          {/* Stops */}
+          <Stops
+            stops={plan.stops || []}
+            setStops={(stops) => setPlan({ ...plan, stops })}
+          />
+
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             <Button
               variant="outlined"
