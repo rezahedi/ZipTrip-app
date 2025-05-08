@@ -81,15 +81,12 @@ const SearchPage = () => {
                 <PlanCardSkeleton />
               </Grid>
             ))}
-          {!isLoading && plans.map((plan) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-              <PlanCard
-                {...plan}
-                planId={plan._id}
-                image={plan.images[0]}
-              />
-            </Grid>
-          ))}
+          {!isLoading &&
+            plans.map((plan) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
+                <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
+              </Grid>
+            ))}
         </Grid>
         <Pagination page={Number(page)} pagesCount={pagesCount} />
       </Box>

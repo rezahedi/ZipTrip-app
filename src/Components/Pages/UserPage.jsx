@@ -56,12 +56,24 @@ const UserPage = () => {
     >
       <Typography
         variant="h5"
-        sx={{ mb: 4, fontWeight: "bold", display: "flex", alignItems: "center", gap: 1 }}
+        sx={{
+          mb: 4,
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
       >
-        {user.name && <>
-          <Avatar alt={user.name} src={user.imageURL} sx={{bgcolor: '#4CAF50'}} />
-          {user.name}
-        </>}
+        {user.name && (
+          <>
+            <Avatar
+              alt={user.name}
+              src={user.imageURL}
+              sx={{ bgcolor: "#4CAF50" }}
+            />
+            {user.name}
+          </>
+        )}
       </Typography>
       <Box
         sx={{
@@ -78,15 +90,12 @@ const UserPage = () => {
                 <PlanCardSkeleton />
               </Grid>
             ))}
-          {!isLoading && plans.map((plan) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-              <PlanCard
-                {...plan}
-                planId={plan._id}
-                image={plan.images[0]}
-              />
-            </Grid>
-          ))}
+          {!isLoading &&
+            plans.map((plan) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
+                <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
+              </Grid>
+            ))}
         </Grid>
         <Pagination page={Number(page)} pagesCount={pagesCount} />
       </Box>

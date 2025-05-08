@@ -54,16 +54,10 @@ const CategoryPage = () => {
         marginBottom: 4,
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{ mb: 1, fontWeight: "bold" }}
-      >
+      <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
         {category.name}
       </Typography>
-      <Typography
-        variant="body1"
-        sx={{ mb: 4}}
-      >
+      <Typography variant="body1" sx={{ mb: 4 }}>
         {category.description}
       </Typography>
       <Box
@@ -81,15 +75,12 @@ const CategoryPage = () => {
                 <PlanCardSkeleton />
               </Grid>
             ))}
-          {!isLoading && plans.map((plan) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-              <PlanCard
-                {...plan}
-                planId={plan._id}
-                image={plan.images[0]}
-              />
-            </Grid>
-          ))}
+          {!isLoading &&
+            plans.map((plan) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
+                <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
+              </Grid>
+            ))}
         </Grid>
         <Pagination page={Number(page)} pagesCount={pagesCount} />
       </Box>
