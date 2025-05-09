@@ -14,11 +14,7 @@ const CategorySection = ({ title }) => {
   useEffect(() => {
     const fetchAllCategories = async () => {
       try {
-        const result = await fetchPlans(
-          `plans/category`,
-          '',
-          setError,
-        );
+        const result = await fetchPlans(`plans/category`, "", setError);
         setCategories(result || []);
         setLoading(false);
       } catch (error) {
@@ -28,18 +24,17 @@ const CategorySection = ({ title }) => {
     fetchAllCategories();
   }, []);
 
+  if (error) return;
+
   return (
     <Box
       sx={{
-        mt: 4,
-        mb: 4,
+        borderRadius: 3,
         bgcolor: "#FCFBE2",
+        p: 3,
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{ mb: 3, fontWeight: "bold" }}
-      >
+      <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold" }}>
         {title}
       </Typography>
       <Box
@@ -54,30 +49,52 @@ const CategorySection = ({ title }) => {
           {!loading && error && <p>{error}</p>}
           {loading &&
             Array.from({ length: 6 }).map((_, index) => (
-              <Grid size={{ xs: 6, sm: 4, md: 2 }} key={index}>
+              <Grid size={{ xs: 6, sm: 6, md: 4, lg: 2 }} key={index}>
                 <Skeleton variant="circular" width={180} height={180} />
                 <Skeleton variant="text" height={30} />
               </Grid>
             ))}
           {categories.map((category) => (
-            <Grid size={{ xs: 6, sm: 4, md: 2 }} key={category._id}>
-              <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
-                <Link to={`/category/${category._id}`}>
+            <Grid size={{ xs: 6, sm: 6, md: 4, lg: 2 }} key={category._id}>
+              <Link
+                to={`/category/${category._id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 2,
+                    transition: "0.1s ease-in-out",
+                    ":hover": {
+                      transform: "scale(1.03)",
+                    },
+                    ":hover .avatar-hover": {
+                      boxShadow: "0 8px 8px 0 rgba(0, 0, 0, 0.2)",
+                    },
+                  }}
+                >
                   <Avatar
+                    className="avatar-hover"
                     alt={category.name}
                     src={category.imageURL}
                     sx={{
                       borderRadius: "50%",
                       width: 180,
                       height: 180,
-                      cursor: "pointer",
                     }}
                   />
-                  <Typography variant="h6" align="center">
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    sx={{ color: "black" }}
+                  >
                     {category.name}
                   </Typography>
-                </Link>
-              </Box>
+                </Box>
+              </Link>
             </Grid>
           ))}
         </Grid>
