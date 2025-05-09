@@ -36,50 +36,6 @@ const MarkersAndPath = ({stops}) => {
 
     const gmaps = window.google.maps;
 
-    // Create the directions service and renderer
-    const directionsService = new gmaps.DirectionsService();
-    const directionsRenderer = new gmaps.DirectionsRenderer({
-      suppressMarkers: false, // keep default markers
-      preserveViewport: false, // zoom/center automatically
-    });
-
-    directionsRenderer.setMap(map);
-
-    // Prepare the request
-    const origin = {
-      lat: fakeStops[0].location[0],
-      lng: fakeStops[0].location[1],
-    };
-
-    const destination = {
-      lat: fakeStops[fakeStops.length - 1].location[0],
-      lng: fakeStops[fakeStops.length - 1].location[1],
-    };
-
-    const waypoints = fakeStops.slice(1, -1).map(stop => ({
-      location: {
-        lat: stop.location[0],
-        lng: stop.location[1],
-      },
-      stopover: false,
-    }));
-
-    const request = {
-      origin,
-      destination,
-      waypoints,
-      travelMode: gmaps.TravelMode.WALKING,
-    };
-
-    // Fetch and render the route
-    directionsService.route(request, (result, status) => {
-      if (status === gmaps.DirectionsStatus.OK) {
-        directionsRenderer.setDirections(result);
-      } else {
-        console.error('Directions request failed due to ' + status);
-      }
-    });
-
     // Create markers and info windows for each stop
     const infoWindow = new gmaps.InfoWindow();
     fakeStops.forEach((stop, index) => {
