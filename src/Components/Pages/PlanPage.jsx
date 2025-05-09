@@ -27,16 +27,7 @@ const PlanPage = () => {
   return (
     <Box sx={{ paddingY: 4 }}>
       {plan ? (
-        <PlanDetails
-          title={plan.title}
-          rating={plan.rating}
-          type={plan.type}
-          distance={plan.distance}
-          stopCount={plan.stopCount}
-          images={plan.images}
-          description={plan.description}
-          {...plan}
-        />
+        <PlanDetails {...plan} />
       ) : (
         <Typography variant="h6">Loading...</Typography>
       )}
