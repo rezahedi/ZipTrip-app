@@ -127,10 +127,12 @@ PlanDetails.propTypes = {
   stopCount: PropTypes.number,
   description: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.string),
-  stops: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    imageURL: PropTypes.string,
-    address: PropTypes.string,
-    location: PropTypes.arrayOf(PropTypes.number),
-  })),
+  stops: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      imageURL: PropTypes.string,
+      address: PropTypes.string,
+      location: PropTypes.arrayOf(PropTypes.number),
+    }),
+  ),
 };

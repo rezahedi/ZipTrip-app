@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react'
-import {APIProvider, Map, useMap} from '@vis.gl/react-google-maps';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
+import PropTypes from "prop-types";
 
 const fakeStops = [
   {
     name: "The Pergola at Lake Merritt",
-    location: [37.8087617744117, -122.2497050912179]
+    location: [37.8087617744117, -122.2497050912179],
   },
   {
     name: "Lake Merritt Labyrinth",
-    location: [37.80742823485923, -122.25397875958909]
+    location: [37.80742823485923, -122.25397875958909],
   },
   {
     name: "Bonsai Garden",
-    location: [37.806107266138106, -122.25849128954741]
+    location: [37.806107266138106, -122.25849128954741],
   },
   {
     name: "Mid Century Monster",
-    location: [37.80710909515832, -122.26061280682225]
+    location: [37.80710909515832, -122.26061280682225],
   },
   {
     name: "Fairyland Hill",
-    location: [37.80992590348893, -122.2610334734226]
-  },  
+    location: [37.80992590348893, -122.2610334734226],
+  },
 ];
 
-const MarkersAndPath = ({stops}) => {
+const MarkersAndPath = ({ stops }) => {
   //TODO: Use stops to create markers and path
   console.log(stops);
 
@@ -82,24 +82,26 @@ const StopsOnMap = () => {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
       <Map
-        style={{width: '100%', height: '100%'}}
-        gestureHandling={'greedy'}
+        style={{ width: "100%", height: "100%" }}
+        gestureHandling={"greedy"}
         options={{
           disableDefaultUI: true,
         }}
       />
       <MarkersAndPath />
     </APIProvider>
-  )
-}
+  );
+};
 
 StopsOnMap.propTypes = {
-  stops: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    imageURL: PropTypes.string,
-    address: PropTypes.string,
-    location: PropTypes.arrayOf(PropTypes.number),
-  })),
-}
+  stops: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      imageURL: PropTypes.string,
+      address: PropTypes.string,
+      location: PropTypes.arrayOf(PropTypes.number),
+    }),
+  ),
+};
 
-export default StopsOnMap
+export default StopsOnMap;
