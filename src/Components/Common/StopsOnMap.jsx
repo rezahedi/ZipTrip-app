@@ -35,15 +35,21 @@ const MarkersAndPath = ({stops}) => {
     if (!map || !window.google) return;
 
     const gmaps = window.google.maps;
+    const bounds = new gmaps.LatLngBounds();
 
     // Create markers and info windows for each stop
     const infoWindow = new gmaps.InfoWindow();
     fakeStops.forEach((stop, index) => {
+      const position = {
+        lat: stop.location[0],
+        lng: stop.location[1],
+      };
+
+      // Extend bounds to include this stop
+      bounds.extend(position);
+
       const marker = new gmaps.Marker({
-        position: {
-          lat: stop.location[0],
-          lng: stop.location[1],
-        },
+        position,
         map,
         title: stop.name,
         label: `${index + 1}`,
@@ -63,6 +69,9 @@ const MarkersAndPath = ({stops}) => {
         infoWindow.setContent(content);
         infoWindow.open(map, marker);
       });
+
+      // Fit map to bounds once all markers are placed
+      map.fitBounds(bounds);
     });
   }, [map]);
 
