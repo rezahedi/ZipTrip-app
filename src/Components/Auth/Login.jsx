@@ -105,12 +105,13 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
       if (data) {
         const { token, _id: userId, name, email, imageURL } = data;
         await login(userId, name, email, imageURL, token);
-        navigate("/account");
+        navigate("/");
         handleDialogClose();
       }
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.msg);
+        console.log("Server error message:", error.response.data.msg);
       } else {
         setErrorMessage("Something went wrong. Please try again.");
       }
@@ -383,15 +384,13 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                 meaningful activities that fit your lifestyle!
               </Typography>
               <Box
-                component="img"
-                src="https://s3-alpha-sig.figma.com/img/48f1/4826/c25c43d183d79ae91c15f66b7e2f61f8?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=TE-A-vmPCp~~Pp13vu9Pjz0g2BysQrB15UKyQIwref7o-EESixHLj-aFTRRXWsk1tTkMDtEwOR0m3rOg-hXkywniX3WpFCdGe8ys6BJz9Bg46toz3Gdg4P~RZkMIhWV31~1QcfhCU-WgBmOOFcKCjcI-X2Us7dtYmYb~XcciPvktsiWNeUEzXkR5WD4KmGrsoO2n~YbjBaE8FovtQUZAGPPY3wGXGW7B6hJ8OD4osAezrOrOhPfRTD3tqg4ws00kTW11CQljoCG9q0fSNc7Nbj9ABqiuRaoDSBBGl3~R-bnGSv1GiuzQ72O7K-K-k57aBvKRnFwYTAQTe~VtDLSQfg__"
-                alt="City View"
                 sx={{
+                  backgroundImage: "url(/images/login.jpg)",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
                   width: "100%",
                   maxWidth: 350,
                   height: 190,
-                  objectFit: "cover",
-                  objectPosition: "bottom",
                   mx: "auto",
                   borderRadius: 2,
                 }}
