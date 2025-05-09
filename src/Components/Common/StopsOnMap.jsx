@@ -74,8 +74,6 @@ const StopsOnMap = ({ stops }) => {
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
       <Map
         style={{ width: "100%", height: "100%" }}
-        center={{ lat: 39.8283, lng: -98.5795 }}
-        zoom={4}
         gestureHandling={"greedy"}
         options={{
           disableDefaultUI: true,
