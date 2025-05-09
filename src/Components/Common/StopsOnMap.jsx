@@ -2,33 +2,7 @@ import React, { useEffect } from "react";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
 
-const fakeStops = [
-  {
-    name: "The Pergola at Lake Merritt",
-    location: [37.8087617744117, -122.2497050912179],
-  },
-  {
-    name: "Lake Merritt Labyrinth",
-    location: [37.80742823485923, -122.25397875958909],
-  },
-  {
-    name: "Bonsai Garden",
-    location: [37.806107266138106, -122.25849128954741],
-  },
-  {
-    name: "Mid Century Monster",
-    location: [37.80710909515832, -122.26061280682225],
-  },
-  {
-    name: "Fairyland Hill",
-    location: [37.80992590348893, -122.2610334734226],
-  },
-];
-
 const MarkersAndPath = ({ stops }) => {
-  //TODO: Use stops to create markers and path
-  console.log(stops);
-
   const map = useMap();
 
   useEffect(() => {
@@ -39,7 +13,9 @@ const MarkersAndPath = ({ stops }) => {
 
     // Create markers and info windows for each stop
     const infoWindow = new gmaps.InfoWindow();
-    fakeStops.forEach((stop, index) => {
+    stops.forEach((stop, index) => {
+      if (stop.location.length !== 2) return;
+
       const position = {
         lat: stop.location[0],
         lng: stop.location[1],
@@ -62,10 +38,9 @@ const MarkersAndPath = ({ stops }) => {
 
       // Set custom content (can be HTML)
       const content = `
-        <div style="max-width:200px">
+        <div style="max-width:260px">
+          <img src="${stop.imageURL}" alt="${stop.name}" style="width:100%;height:auto;border-radius:4px;" />
           <h3>${stop.name}</h3>
-          <p>Lat: ${stop.location[0].toFixed(5)}<br>Lng: ${stop.location[1].toFixed(5)}</p>
-          <img src="https://via.placeholder.com/150" alt="${stop.name}" style="width:100%;height:auto;border-radius:4px;" />
         </div>
       `;
 
@@ -83,7 +58,18 @@ const MarkersAndPath = ({ stops }) => {
   return null;
 };
 
-const StopsOnMap = () => {
+MarkersAndPath.propTypes = {
+  stops: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      imageURL: PropTypes.string,
+      address: PropTypes.string,
+      location: PropTypes.arrayOf(PropTypes.number),
+    }),
+  ),
+};
+
+const StopsOnMap = ({ stops }) => {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
       <Map
@@ -93,7 +79,7 @@ const StopsOnMap = () => {
           disableDefaultUI: true,
         }}
       />
-      <MarkersAndPath />
+      <MarkersAndPath stops={stops} />
     </APIProvider>
   );
 };
