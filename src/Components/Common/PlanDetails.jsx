@@ -10,6 +10,7 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
+import { Link } from "react-router-dom";
 import Stops from "./Stops";
 
 const PlanDetails = ({
@@ -21,6 +22,9 @@ const PlanDetails = ({
   stopCount,
   images,
   description,
+  duration,
+  userId,
+  categoryId,
   stops,
 }) => {
   return (
@@ -53,6 +57,12 @@ const PlanDetails = ({
             variant="subtitle1"
             sx={{ color: "#616161", fontSize: "15px" }}
           >
+            Created by <Link to={`/user/${userId._id}`}>{userId.name}</Link>
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ color: "#616161", fontSize: "15px" }}
+          >
             {rate}⭐ ({reviewCount} reviews)
           </Typography>
           <Typography
@@ -67,6 +77,16 @@ const PlanDetails = ({
             variant="subtitle1"
             sx={{ color: "#616161", fontSize: "15px" }}
           >{`${stopCount} places`}</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ color: "#616161", fontSize: "15px" }}
+          >{`${duration} hours`}</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ color: "#616161", fontSize: "15px" }}
+          >
+            <Link to={`/category/${categoryId._id}`}>{categoryId.name}</Link>
+          </Typography>
         </Box>
       </Paper>
 
@@ -133,6 +153,15 @@ PlanDetails.propTypes = {
   stopCount: PropTypes.number,
   description: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.string),
+  duration: PropTypes.number,
+  userId: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+  }),
+  categoryId: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+  }),
   stops: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,

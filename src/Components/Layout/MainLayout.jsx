@@ -9,16 +9,29 @@ function MainLayout() {
     <>
       <Box
         sx={{
-          paddingX: "7%",
           position: "relative",
-          zIndex: 10,
-          backgroundColor: "white",
+          m: "0 auto",
+          pl: { xs: 2, sm: 3 },
+          pr: { xs: 2, sm: 3 },
+          pb: 5,
+          width: "100%",
+          maxWidth: "1300px",
+          boxSizing: "border-box",
         }}
       >
         <Header />
       </Box>
 
-      <Box sx={{ paddingX: "7%", paddingTop: "4%" }}>
+      <Box
+        sx={{
+          m: "20px auto",
+          pl: { xs: 2, sm: 3 },
+          pr: { xs: 2, sm: 3 },
+          width: "100%",
+          maxWidth: "1300px",
+          boxSizing: "border-box",
+        }}
+      >
         <Outlet />
       </Box>
 

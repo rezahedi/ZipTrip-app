@@ -1,57 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getQueryValue } from "../../util/url";
 import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "../Common/PlanCard";
 import { fetchPlans } from "../../util";
-import WelcomeMessage from "../Common/search/WelcomeMessage";
-import EmptyResultMessage from "../Common/search/EmptyResultMessage";
 import Pagination from "../Common/Pagination";
 import PlanCardSkeleton from "../Common/PlanCardSkeleton";
 import { useAuth } from "../../context/AuthContext";
 
 const PAGE_SIZE = 8;
 
-const SearchPage = () => {
+const CategoryPage = () => {
+  const { categoryId } = useParams();
   const location = useLocation();
-  const [searchQuery, setSearchQuery] = useState(
-    getQueryValue(location.search, "q"),
-  );
   let page = getQueryValue(location.search, "page") || "1";
   const [isLoading, setIsLoading] = useState(true);
   const [plans, setPlans] = useState([]);
   const [pagesCount, setPagesCount] = useState(0);
+  const [category, setCategory] = useState({});
   const [error, setError] = useState(null);
   const { token } = useAuth();
 
   useEffect(() => {
     page = getQueryValue(location.search, "page") || "1";
-    setSearchQuery(getQueryValue(location.search, "q"));
   }, [location.search]);
 
   useEffect(() => {
     (async () => {
       setIsLoading(true);
       const params = new URLSearchParams(location.search);
-      params.set("search", searchQuery);
       params.set("page", page);
       params.set("size", PAGE_SIZE);
       const paramsString = params.toString();
 
       try {
-        const res = await fetchPlans(`plans?${paramsString}`, token, setError);
-        setPlans(res?.items || []);
-        setPagesCount(res?.pagesCount || 0);
+        const res = await fetchPlans(
+          `plans/category/${categoryId}?${paramsString}`,
+          token,
+          setError,
+        );
+        const { plans: categoryPlans, ...categoryDetails } = res;
+        console.log(categoryPlans, categoryDetails);
+        setPlans(categoryPlans.items || []);
+        setCategory(categoryDetails || {});
+        setPagesCount(categoryPlans.pagesCount || 0);
         setIsLoading(false);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [searchQuery, page]);
+  }, [page]);
 
-  if (searchQuery === "") return <WelcomeMessage />;
-
-  if (!isLoading && plans.length === 0) return <EmptyResultMessage />;
+  if (!isLoading && plans.length === 0) return <>There is no plans.</>;
 
   return (
     <Box
@@ -60,11 +60,11 @@ const SearchPage = () => {
         marginBottom: 4,
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{ marginBottom: "16px", fontWeight: "bold" }}
-      >
-        Search result for <u>{searchQuery}</u>:
+      <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
+        {category.name}
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 4 }}>
+        {category.description}
       </Typography>
       <Box
         sx={{
@@ -95,4 +95,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default CategoryPage;
