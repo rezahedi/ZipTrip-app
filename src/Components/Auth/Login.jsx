@@ -371,7 +371,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
                 color: "white",
                 px: 2,
                 py: 4,
-                display: "flex",
+                display: { xs: "none", md: "flex" },
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
