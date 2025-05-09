@@ -52,7 +52,12 @@ const MarkersAndPath = ({ stops }) => {
         position,
         map,
         title: stop.name,
-        label: `${index + 1}`,
+        label: {
+          text: `${index + 1}`,
+          color: "#ffffff",
+          fontWeight: "bold",
+          fontSize: "14px",
+        },
       });
 
       // Set custom content (can be HTML)
