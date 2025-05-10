@@ -49,17 +49,16 @@ const Stops = ({ stops, setStops }) => {
 
   const handleOpenMap = () => {
     setIsMapDialogOpen(true);
-  }
+  };
 
   const handleCloseMap = () => {
     setIsMapDialogOpen(false);
-  }
+  };
 
   const handleAddPlaceConfirm = (stop) => {
-    
     setStops([...stops, stop]);
     setIsMapDialogOpen(false);
-  }
+  };
 
   return (
     <FormControl fullWidth margin="normal">
@@ -171,7 +170,11 @@ const Stops = ({ stops, setStops }) => {
           </Button>
         </Box>
       </Box>
-      <MapDialog isOpen={isMapDialogOpen} onClose={handleCloseMap} onConfirm={handleAddPlaceConfirm} />
+      <MapDialog
+        isOpen={isMapDialogOpen}
+        onClose={handleCloseMap}
+        onConfirm={handleAddPlaceConfirm}
+      />
     </FormControl>
   );
 };

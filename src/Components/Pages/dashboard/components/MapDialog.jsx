@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -9,34 +9,27 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import {
-  APIProvider,
-  Map,
-  Marker,
-} from "@vis.gl/react-google-maps";
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 
-const MapDialog = ({
-  isOpen,
-  onClose,
-  onConfirm,
-}) => {
+const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   const dummyDiv = useRef(null);
   const [selected, setSelected] = useState(null);
   const [placeId, setPlaceId] = useState(null);
 
-
   const handleMapClick = (e) => {
     const lat = e.detail.latLng.lat;
     const lng = e.detail.latLng.lng;
-    console.log(e.detail)
+    console.log(e.detail);
     setSelected({ name: "Custom Location", lat, lng });
-    setPlaceId(e.detail.placeId)
+    setPlaceId(e.detail.placeId);
   };
 
   useEffect(() => {
     if (!placeId || !window.google || !dummyDiv.current) return;
 
-    const service = new window.google.maps.places.PlacesService(dummyDiv.current);
+    const service = new window.google.maps.places.PlacesService(
+      dummyDiv.current,
+    );
 
     service.getDetails(
       {
@@ -46,11 +39,14 @@ const MapDialog = ({
           "formatted_address",
           "geometry.location",
           "photos",
-          "place_id"
-        ]
+          "place_id",
+        ],
       },
       (place, status) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
+        if (
+          status === window.google.maps.places.PlacesServiceStatus.OK &&
+          place
+        ) {
           const location = place.geometry.location;
           const lat = location.lat();
           const lng = location.lng();
@@ -62,11 +58,10 @@ const MapDialog = ({
             location: [lat, lng],
             imageURL,
           });
-
         } else {
           console.warn("Failed to fetch place details:", status);
         }
-      }
+      },
     );
   }, [placeId]);
 
@@ -92,16 +87,29 @@ const MapDialog = ({
                 gestureHandling="greedy"
                 disableDefaultUI={false}
               >
-                {selected && <Marker position={{ lat: selected.lat, lng: selected.lng }} />}
+                {selected && (
+                  <Marker position={{ lat: selected.lat, lng: selected.lng }} />
+                )}
               </Map>
               <div ref={dummyDiv} style={{ display: "none" }} />
               {selected && (
                 <div style={{ marginTop: "10px" }}>
-                  <strong>{selected.name}</strong><br />
-                  Lat: {selected.lat}, Lng: {selected.lng}<br />
-                  {selected.address && <>Address: {selected.address}<br /></>}
+                  <strong>{selected.name}</strong>
+                  <br />
+                  Lat: {selected.lat}, Lng: {selected.lng}
+                  <br />
+                  {selected.address && (
+                    <>
+                      Address: {selected.address}
+                      <br />
+                    </>
+                  )}
                   {selected.imageUrl && (
-                    <img src={selected.imageUrl} alt="Place" style={{ width: "300px", marginTop: "5px" }} />
+                    <img
+                      src={selected.imageUrl}
+                      alt="Place"
+                      style={{ width: "300px", marginTop: "5px" }}
+                    />
                   )}
                 </div>
               )}
@@ -125,8 +133,8 @@ const MapDialog = ({
         </DialogActions>
       </Box>
     </Dialog>
-  )
-}
+  );
+};
 
 MapDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -134,4 +142,4 @@ MapDialog.propTypes = {
   onConfirm: PropTypes.func.isRequired,
 };
 
-export default MapDialog
+export default MapDialog;
