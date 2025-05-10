@@ -15,6 +15,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   const dummyDiv = useRef(null);
   const [selected, setSelected] = useState(null);
   const [placeId, setPlaceId] = useState(null);
+  const isMobile = window.innerWidth < 600;
 
   const handleMapClick = (e) => {
     const lat = e.detail.latLng.lat;
@@ -71,49 +72,57 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      maxWidth="md"
+      fullScreen={isMobile}
     >
       <Box style={{ padding: "10px 30px" }}>
         <DialogTitle id="alert-dialog-title">Select a Place</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <APIProvider
-              apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}
-              libraries={["places"]}
-            >
-              <Map
-                mapId=""
-                style={{ height: "500px", width: "600px" }}
-                onClick={handleMapClick}
-                gestureHandling="greedy"
-                disableDefaultUI={false}
+            <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
+              <APIProvider
+                apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}
+                libraries={["places"]}
               >
-                {selected && (
-                  <Marker position={{ lat: selected.lat, lng: selected.lng }} />
-                )}
-              </Map>
-              <div ref={dummyDiv} style={{ display: "none" }} />
-              {selected && (
-                <div style={{ marginTop: "10px" }}>
-                  <strong>{selected.name}</strong>
-                  <br />
-                  Lat: {selected.lat}, Lng: {selected.lng}
-                  <br />
-                  {selected.address && (
-                    <>
-                      Address: {selected.address}
-                      <br />
-                    </>
-                  )}
-                  {selected.imageUrl && (
-                    <img
-                      src={selected.imageUrl}
-                      alt="Place"
-                      style={{ width: "300px", marginTop: "5px" }}
+                <Map
+                  style={{ width: "100%", height: "100%" }}
+                  onClick={handleMapClick}
+                  gestureHandling="greedy"
+                  disableDefaultUI={false}
+                  options={{
+                    streetViewControl: false,
+                  }}
+                >
+                  {selected && (
+                    <Marker
+                      position={{ lat: selected.lat, lng: selected.lng }}
                     />
                   )}
-                </div>
-              )}
-            </APIProvider>
+                </Map>
+                <div ref={dummyDiv} style={{ display: "none" }} />
+                {selected && (
+                  <div style={{ marginTop: "10px" }}>
+                    <strong>{selected.name}</strong>
+                    <br />
+                    Lat: {selected.lat}, Lng: {selected.lng}
+                    <br />
+                    {selected.address && (
+                      <>
+                        Address: {selected.address}
+                        <br />
+                      </>
+                    )}
+                    {selected.imageUrl && (
+                      <img
+                        src={selected.imageUrl}
+                        alt="Place"
+                        style={{ width: "300px", marginTop: "5px" }}
+                      />
+                    )}
+                  </div>
+                )}
+              </APIProvider>
+            </Box>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

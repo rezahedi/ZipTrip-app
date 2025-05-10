@@ -76,7 +76,9 @@ const StopsOnMap = ({ stops }) => {
         style={{ width: "100%", height: "100%" }}
         gestureHandling={"greedy"}
         options={{
-          disableDefaultUI: true,
+          gestureHandling: "cooperative",
+          streetViewControl: false,
+          fullscreenControl: false,
         }}
       />
       <MarkersAndPath stops={stops} />
