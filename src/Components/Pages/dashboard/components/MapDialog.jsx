@@ -85,8 +85,8 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
           <DialogContentText id="alert-dialog-description">
             <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
               <Map
-                defaultCenter={DEFAULT_CENTER}
-                defaultZoom={DEFAULT_ZOOM}
+                defaultCenter={selected ? { lat: selected.lat, lng: selected.lng } : DEFAULT_CENTER}
+                defaultZoom={selected ? 15 : DEFAULT_ZOOM}
                 style={{ width: "100%", height: "100%" }}
                 onClick={handleMapClick}
                 disableDefaultUI={false}
