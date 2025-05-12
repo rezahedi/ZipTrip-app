@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -6,15 +6,21 @@ import {
   Paper,
   ImageList,
   ImageListItem,
+  IconButton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ShareIcon from "@mui/icons-material/Share";
 import StopsOnMap from "./StopsOnMap";
 import { Link } from "react-router-dom";
 import Stops from "./Stops";
+import { useAuth } from "../../context/AuthContext";
+import { useAuthModal } from "../../context/AuthModalContext";
+import { AddBookmark, removeBookmark } from "../../util/dashboard";
 
 const PlanDetails = ({
+  _id: planId,
   title,
   rate,
   reviewCount,
@@ -27,7 +33,34 @@ const PlanDetails = ({
   userId,
   categoryId,
   stops,
+  isBookmarked,
 }) => {
+  const [bookmark, setBookmark] = useState(isBookmarked);
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
+
+  const handleBookmark = async (e) => {
+    e.preventDefault();
+
+    if (!token) return openLogin();
+
+    if (bookmark) {
+      const result = await removeBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(false);
+      }
+    } else {
+      const result = await AddBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(true);
+      }
+    }
+  };
+
+  const setError = (errorMessage) => {
+    console.log("error", errorMessage);
+  };
+
   return (
     <>
       {/* Plan Card */}
@@ -42,9 +75,21 @@ const PlanDetails = ({
         <Box
           sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 1 }}
         >
-          <FavoriteBorderIcon sx={{ cursor: "pointer", color: "#424242" }} />
-          <ShareIcon sx={{ cursor: "pointer", color: "#424242" }} />
-          <BookmarkBorderIcon sx={{ cursor: "pointer", color: "#424242" }} />
+          <IconButton disabled>
+            <FavoriteBorderIcon sx={{ cursor: "pointer", color: "#424242" }} />
+          </IconButton>
+          <IconButton disabled>
+            <ShareIcon sx={{ cursor: "pointer", color: "#424242" }} />
+          </IconButton>
+          <IconButton onClick={handleBookmark}>
+            {bookmark ? (
+              <BookmarkIcon style={{ cursor: "pointer", color: "orange" }} />
+            ) : (
+              <BookmarkBorderIcon
+                sx={{ cursor: "pointer", color: "#424242" }}
+              />
+            )}
+          </IconButton>
         </Box>
 
         {/* Title */}
@@ -135,6 +180,7 @@ const PlanDetails = ({
 export default PlanDetails;
 
 PlanDetails.propTypes = {
+  _id: PropTypes.string,
   title: PropTypes.string,
   rate: PropTypes.number,
   reviewCount: PropTypes.number,
@@ -160,4 +206,5 @@ PlanDetails.propTypes = {
       location: PropTypes.arrayOf(PropTypes.number),
     }),
   ),
+  isBookmarked: PropTypes.bool,
 };
