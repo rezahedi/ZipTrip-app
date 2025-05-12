@@ -20,6 +20,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   const dummyDiv = useRef(null);
   const [selected, setSelected] = useState(null);
   const [placeId, setPlaceId] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
   const isMobile = window.innerWidth < 600;
   const [placeSelect, setPlaceSelect] = useState(null);
   const map = useMap();
@@ -63,7 +64,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
           const lng = location.lng();
           const imageURL = place.photos?.[0]?.getUrl({ maxWidth: 400 }) || null;
 
-          onConfirm({
+          setSelectedPlace({
             name: place.name,
             address: place.formatted_address,
             location: [lat, lng],
@@ -75,6 +76,10 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
       },
     );
   }, [placeId]);
+
+  const handleAdd = () => {
+    onConfirm(selectedPlace);
+  };
 
   return (
     <Dialog
@@ -110,6 +115,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
                   <Marker position={{ lat: selected.lat, lng: selected.lng }} />
                 )}
               </Map>
+              <div ref={dummyDiv} style={{ display: "none" }} />
             </Box>
           </DialogContentText>
         </DialogContent>
@@ -124,7 +130,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
           >
             Cancel
           </Button>
-          <Button onClick={onConfirm} disabled={!placeId}>
+          <Button onClick={handleAdd} disabled={!placeId}>
             Add
           </Button>
         </DialogActions>
