@@ -26,7 +26,12 @@ To run the project locally, create a `.env` file in the root directory or use th
 
 ```
 VITE_API_BASE_URL=http://localhost:8000
+VITE_GOOGLE_MAP_API_KEY=<Google-map-api-key>
 ```
+
+### Google Maps Platform API Key
+
+Running the project locally requires a valid API key for the Google Maps Platform. See the official documentation on how to create and configure your own key. For this project to work you also need to enable both `Maps JavaScript API` and `Places API` in your Google Cloud Console.
 
 ### Installing
 

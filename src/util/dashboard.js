@@ -1,6 +1,8 @@
+const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
+
 const getMyPlans = async (token, onError) => {
   try {
-    let res = await fetch("/api/v1/account/plans", {
+    let res = await fetch(`${API_V1_BASE_URL}/account/plans`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -19,7 +21,7 @@ const getMyPlans = async (token, onError) => {
 
 const deletePlan = async (token, planId, onError) => {
   try {
-    let res = await fetch(`/api/v1/account/plans/${planId}`, {
+    let res = await fetch(`${API_V1_BASE_URL}/account/plans/${planId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -39,7 +41,7 @@ const deletePlan = async (token, planId, onError) => {
 
 const getPlan = async (token, planId, onError) => {
   try {
-    let res = await fetch(`/api/v1/account/plans/${planId}`, {
+    let res = await fetch(`${API_V1_BASE_URL}/account/plans/${planId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -58,7 +60,7 @@ const getPlan = async (token, planId, onError) => {
 
 const updatePlan = async (token, plan, onError) => {
   try {
-    let res = await fetch(`/api/v1/account/plans/${plan._id}`, {
+    let res = await fetch(`${API_V1_BASE_URL}/account/plans/${plan._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +82,7 @@ const updatePlan = async (token, plan, onError) => {
 
 const createPlan = async (token, plan, onError) => {
   try {
-    let res = await fetch("/api/v1/account/plans", {
+    let res = await fetch(`${API_V1_BASE_URL}/account/plans`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +104,7 @@ const createPlan = async (token, plan, onError) => {
 
 const getCategories = async (token, onError) => {
   try {
-    let res = await fetch("/api/v1/account/categories", {
+    let res = await fetch(`${API_V1_BASE_URL}/account/categories`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -122,7 +124,7 @@ const getCategories = async (token, onError) => {
 
 const AddBookmark = async (token, planId, onError) => {
   try {
-    let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
+    let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks/${planId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -142,7 +144,7 @@ const AddBookmark = async (token, planId, onError) => {
 
 const removeBookmark = async (token, planId, onError) => {
   try {
-    let res = await fetch(`/api/v1/account/bookmarks/${planId}`, {
+    let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks/${planId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -162,7 +164,7 @@ const removeBookmark = async (token, planId, onError) => {
 
 const getBookmarks = async (token, onError) => {
   try {
-    let res = await fetch("/api/v1/account/bookmarks", {
+    let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

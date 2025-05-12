@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -6,14 +6,22 @@ import {
   Paper,
   ImageList,
   ImageListItem,
+  IconButton,
+  Avatar,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ShareIcon from "@mui/icons-material/Share";
+import StopsOnMap from "./StopsOnMap";
 import { Link } from "react-router-dom";
 import Stops from "./Stops";
+import { useAuth } from "../../context/AuthContext";
+import { useAuthModal } from "../../context/AuthModalContext";
+import { AddBookmark, removeBookmark } from "../../util/dashboard";
 
 const PlanDetails = ({
+  _id: planId,
   title,
   rate,
   reviewCount,
@@ -26,7 +34,34 @@ const PlanDetails = ({
   userId,
   categoryId,
   stops,
+  isBookmarked,
 }) => {
+  const [bookmark, setBookmark] = useState(isBookmarked);
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
+
+  const handleBookmark = async (e) => {
+    e.preventDefault();
+
+    if (!token) return openLogin();
+
+    if (bookmark) {
+      const result = await removeBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(false);
+      }
+    } else {
+      const result = await AddBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(true);
+      }
+    }
+  };
+
+  const setError = (errorMessage) => {
+    console.log("error", errorMessage);
+  };
+
   return (
     <>
       {/* Plan Card */}
@@ -37,27 +72,70 @@ const PlanDetails = ({
           borderRadius: 4,
         }}
       >
-        {/* Icon Buttons */}
         <Box
-          sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 1 }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            mb: 2,
+          }}
         >
-          <FavoriteBorderIcon sx={{ cursor: "pointer", color: "#424242" }} />
-          <ShareIcon sx={{ cursor: "pointer", color: "#424242" }} />
-          <BookmarkBorderIcon sx={{ cursor: "pointer", color: "#424242" }} />
+          {/* Title */}
+          <Typography variant="h4">{title}</Typography>
+
+          {/* Icon Buttons */}
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              flex: { xs: "1 1 100%", sm: "unset" },
+              justifyContent: "flex-end",
+            }}
+          >
+            <IconButton disabled>
+              <FavoriteBorderIcon
+                sx={{ cursor: "pointer", color: "#424242" }}
+              />
+            </IconButton>
+            <IconButton disabled>
+              <ShareIcon sx={{ cursor: "pointer", color: "#424242" }} />
+            </IconButton>
+            <IconButton onClick={handleBookmark}>
+              {bookmark ? (
+                <BookmarkIcon style={{ cursor: "pointer", color: "orange" }} />
+              ) : (
+                <BookmarkBorderIcon
+                  sx={{ cursor: "pointer", color: "#424242" }}
+                />
+              )}
+            </IconButton>
+          </Box>
         </Box>
 
-        {/* Title */}
-        <Typography variant="h4" gutterBottom>
-          {title}
-        </Typography>
-
         {/* Title Details */}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, rowGap: 1 }}>
           <Typography
             variant="subtitle1"
-            sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
+            sx={{
+              color: "#616161",
+              fontSize: { xs: "14px", sm: "15px" },
+              display: "flex",
+              gap: 0.5,
+            }}
           >
-            Created by <Link to={`/user/${userId._id}`}>{userId.name}</Link>
+            Created by{" "}
+            <Link
+              to={`/user/${userId._id}`}
+              style={{ display: "flex", gap: "4px" }}
+            >
+              <Avatar
+                className="avatar-hover"
+                alt={userId.name}
+                src={userId.imageURL}
+                sx={{ width: 24, height: 24, bgcolor: "#4CAF50" }}
+              />
+              {userId.name}
+            </Link>
           </Typography>
           <Typography
             variant="subtitle1"
@@ -101,22 +179,11 @@ const PlanDetails = ({
             marginBottom: 4,
           }}
         >
-          {/* Large Placeholder Image */}
-          <Box
-            component="img"
-            src="/images/map.png"
-            alt="Main plan visual"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: 2,
-            }}
-          />
-
+          <StopsOnMap stops={stops} />
           <ImageList
             sx={{
-              width: { xs: "100%", sm: 300 },
+              m: 0,
+              width: "100%",
               height: { xs: 300, sm: 450 },
             }}
             cols={1}
@@ -145,6 +212,7 @@ const PlanDetails = ({
 export default PlanDetails;
 
 PlanDetails.propTypes = {
+  _id: PropTypes.string,
   title: PropTypes.string,
   rate: PropTypes.number,
   reviewCount: PropTypes.number,
@@ -157,6 +225,7 @@ PlanDetails.propTypes = {
   userId: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
+    imageURL: PropTypes.string,
   }),
   categoryId: PropTypes.shape({
     _id: PropTypes.string,
@@ -167,6 +236,8 @@ PlanDetails.propTypes = {
       name: PropTypes.string,
       imageURL: PropTypes.string,
       address: PropTypes.string,
+      location: PropTypes.arrayOf(PropTypes.number),
     }),
   ),
+  isBookmarked: PropTypes.bool,
 };
