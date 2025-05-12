@@ -1,8 +1,26 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { fetchPlans } from "../util";
 import { Typography, Box, Link } from "@mui/material";
 
 function Footer() {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      try {
+        const result = await fetchPlans(`plans/category`, "", setError);
+        setCategories(result || []);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+    fetchAllCategories();
+  }, []);
+
+  const setError = (errorMessage) => {
+    console.log("error", errorMessage);
+  };
+
   return (
     <Box
       sx={{
@@ -71,24 +89,16 @@ function Footer() {
           }}
         >
           <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
-            <Link href="/" color="primary" underline="none">
-              <li>Museum</li>
-            </Link>
-            <Link href="/" color="primary" underline="none">
-              <li>Dining Out</li>
-            </Link>
-            <Link href="/" color="primary" underline="none">
-              <li>Nature Hiking</li>
-            </Link>
-            <Link href="/" color="primary" underline="none">
-              <li>Beach</li>
-            </Link>
-            <Link href="/" color="primary" underline="none">
-              <li>Kid Friendly</li>
-            </Link>
-            <Link href="/" color="primary" underline="none">
-              <li>Night Life</li>
-            </Link>
+            {categories.map((category) => (
+              <Link
+                key={category._id}
+                href={`/category/${category._id}`}
+                color="primary"
+                underline="none"
+              >
+                <li>{category.name}</li>
+              </Link>
+            ))}
           </ul>
         </Typography>
       </Box>
