@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
+import { Box } from "@mui/material";
 
 const MarkersAndPath = ({ stops }) => {
   const map = useMap();
@@ -72,16 +73,20 @@ MarkersAndPath.propTypes = {
 const StopsOnMap = ({ stops }) => {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
-      <Map
-        style={{ width: "100%", height: "100%" }}
-        gestureHandling={"greedy"}
-        options={{
-          gestureHandling: "cooperative",
-          streetViewControl: false,
-          fullscreenControl: false,
-        }}
-      />
-      <MarkersAndPath stops={stops} />
+      <Box sx={{ width: "100%", height: { xs: "300px", sm: "100%" } }}>
+        <Map
+          defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
+          defaultZoom={4}
+          style={{ width: "100%", height: "100%" }}
+          gestureHandling={"greedy"}
+          options={{
+            gestureHandling: "cooperative",
+            streetViewControl: false,
+            fullscreenControl: false,
+          }}
+        />
+        <MarkersAndPath stops={stops} />
+      </Box>
     </APIProvider>
   );
 };
