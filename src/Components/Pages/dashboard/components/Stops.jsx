@@ -150,7 +150,7 @@ const Stops = ({ stops, setStops }) => {
             }}
           >
             <MapOutlinedIcon />
-            Google Map
+            Add via Map
           </Button>
           <Button
             onClick={handleOpenStop}
@@ -163,7 +163,7 @@ const Stops = ({ stops, setStops }) => {
             }}
           >
             <FormatColorTextOutlinedIcon />
-            Manually
+            Add Manually
           </Button>
           <Button
             onClick={handleOpenStop}
