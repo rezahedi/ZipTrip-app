@@ -9,7 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { Map, Marker } from "@vis.gl/react-google-maps";
 
 const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   const dummyDiv = useRef(null);
@@ -80,48 +80,41 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
-              <APIProvider
-                apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}
-                libraries={["places"]}
+              <Map
+                style={{ width: "100%", height: "100%" }}
+                onClick={handleMapClick}
+                gestureHandling="greedy"
+                disableDefaultUI={false}
+                options={{
+                  streetViewControl: false,
+                }}
               >
-                <Map
-                  style={{ width: "100%", height: "100%" }}
-                  onClick={handleMapClick}
-                  gestureHandling="greedy"
-                  disableDefaultUI={false}
-                  options={{
-                    streetViewControl: false,
-                  }}
-                >
-                  {selected && (
-                    <Marker
-                      position={{ lat: selected.lat, lng: selected.lng }}
+                {selected && (
+                  <Marker position={{ lat: selected.lat, lng: selected.lng }} />
+                )}
+              </Map>
+              <div ref={dummyDiv} style={{ display: "none" }} />
+              {selected && (
+                <div style={{ marginTop: "10px" }}>
+                  <strong>{selected.name}</strong>
+                  <br />
+                  Lat: {selected.lat}, Lng: {selected.lng}
+                  <br />
+                  {selected.address && (
+                    <>
+                      Address: {selected.address}
+                      <br />
+                    </>
+                  )}
+                  {selected.imageUrl && (
+                    <img
+                      src={selected.imageUrl}
+                      alt="Place"
+                      style={{ width: "300px", marginTop: "5px" }}
                     />
                   )}
-                </Map>
-                <div ref={dummyDiv} style={{ display: "none" }} />
-                {selected && (
-                  <div style={{ marginTop: "10px" }}>
-                    <strong>{selected.name}</strong>
-                    <br />
-                    Lat: {selected.lat}, Lng: {selected.lng}
-                    <br />
-                    {selected.address && (
-                      <>
-                        Address: {selected.address}
-                        <br />
-                      </>
-                    )}
-                    {selected.imageUrl && (
-                      <img
-                        src={selected.imageUrl}
-                        alt="Place"
-                        style={{ width: "300px", marginTop: "5px" }}
-                      />
-                    )}
-                  </div>
-                )}
-              </APIProvider>
+                </div>
+              )}
             </Box>
           </DialogContentText>
         </DialogContent>
