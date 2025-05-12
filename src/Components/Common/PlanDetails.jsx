@@ -7,6 +7,7 @@ import {
   ImageList,
   ImageListItem,
   IconButton,
+  Avatar,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -115,9 +116,26 @@ const PlanDetails = ({
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, rowGap: 1 }}>
           <Typography
             variant="subtitle1"
-            sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
+            sx={{
+              color: "#616161",
+              fontSize: { xs: "14px", sm: "15px" },
+              display: "flex",
+              gap: 0.5,
+            }}
           >
-            Created by <Link to={`/user/${userId._id}`}>{userId.name}</Link>
+            Created by{" "}
+            <Link
+              to={`/user/${userId._id}`}
+              style={{ display: "flex", gap: "4px" }}
+            >
+              <Avatar
+                className="avatar-hover"
+                alt={userId.name}
+                src={userId.imageURL}
+                sx={{ width: 24, height: 24, bgcolor: "#4CAF50" }}
+              />
+              {userId.name}
+            </Link>
           </Typography>
           <Typography
             variant="subtitle1"
@@ -207,6 +225,7 @@ PlanDetails.propTypes = {
   userId: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
+    imageURL: PropTypes.string,
   }),
   categoryId: PropTypes.shape({
     _id: PropTypes.string,
