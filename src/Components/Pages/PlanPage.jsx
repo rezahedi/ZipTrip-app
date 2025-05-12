@@ -3,16 +3,21 @@ import { useParams } from "react-router-dom";
 import { getData } from "../../util";
 import { Box, Typography } from "@mui/material";
 import PlanDetails from "../Common/PlanDetails";
+import { useAuth } from "../../context/AuthContext";
 
 const PlanPage = () => {
   const [plan, setPlan] = useState(null);
   const { planId } = useParams();
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchSinglePlan = async (planId) => {
       try {
         const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans/${planId}`;
-        const res = await getData(URL);
+        const params = token
+          ? { headers: { Authorization: `Bearer ${token}` } }
+          : {};
+        const res = await getData(URL, params);
         setPlan(res);
       } catch (error) {
         console.error("Error fetching a single plan:", error);
