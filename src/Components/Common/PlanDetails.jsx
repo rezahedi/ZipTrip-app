@@ -56,7 +56,7 @@ const PlanDetails = ({
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
           <Typography
             variant="subtitle1"
-            sx={{ color: "#616161", fontSize: "15px" }}
+            sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
           >
             Created by <Link to={`/user/${userId._id}`}>{userId.name}</Link>
           </Typography>
@@ -68,15 +68,15 @@ const PlanDetails = ({
           </Typography>
           <Typography
             variant="subtitle1"
-            sx={{ color: "#616161", fontSize: "15px" }}
+            sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
           >{`${type}`}</Typography>
           <Typography
             variant="subtitle1"
-            sx={{ color: "#616161", fontSize: "15px" }}
+            sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
           >{`${distance} miles`}</Typography>
           <Typography
             variant="subtitle1"
-            sx={{ color: "#616161", fontSize: "15px" }}
+            sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
           >{`${stopCount} places`}</Typography>
           <Typography
             variant="subtitle1"
@@ -96,28 +96,18 @@ const PlanDetails = ({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "1.5fr 1fr",
+            gridTemplateColumns: { xs: "1fr", sm: "1.5fr 1fr" },
             gap: 4,
             marginTop: 4,
             marginBottom: 4,
           }}
         >
-          {/* Large Placeholder Image */}
           <StopsOnMap stops={stops} />
-          {/* <Box
-            component="img"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: 2,
-            }}
-          /> */}
-
           <ImageList
             sx={{
-              width: 300,
-              height: 450,
+              m: 0,
+              width: "100%",
+              height: { xs: 300, sm: 450 },
             }}
             cols={1}
             rowHeight={200}
