@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -10,28 +10,15 @@ import {
 } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MapDialog from "./MapDialog";
+import StopDialog from "./StopDialog";
+import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import FormatColorTextOutlinedIcon from "@mui/icons-material/FormatColorTextOutlined";
+import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 
 const Stops = ({ stops, setStops }) => {
-  const nameRef = useRef(null);
-  const imageRef = useRef(null);
-  const addressRef = useRef(null);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
-
-  const handleAddStop = () => {
-    if (!nameRef || !imageRef || !addressRef) return;
-
-    const currentStop = {
-      name: nameRef.current.value,
-      imageURL: imageRef.current.value,
-      address: addressRef.current.value,
-    };
-
-    setStops([...stops, currentStop]);
-    nameRef.current.value = "";
-    imageRef.current.value = "";
-    addressRef.current.value = "";
-    nameRef.current.focus();
-  };
+  const [isStopDialogOpen, setIsStopDialogOpen] = useState(false);
 
   const handleDeleteStop = (stopIndex) => {
     const newStops = [...stops];
@@ -60,10 +47,21 @@ const Stops = ({ stops, setStops }) => {
     setIsMapDialogOpen(false);
   };
 
+  const handleOpenStop = () => {
+    setIsStopDialogOpen(true);
+  };
+  const handleCloseStop = () => {
+    setIsStopDialogOpen(false);
+  };
+  const handleAddManuallyConfirm = (stop) => {
+    setStops([...stops, stop]);
+    setIsStopDialogOpen(false);
+  };
+
   return (
     <FormControl fullWidth margin="normal">
       <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-        Stops * <Button onClick={handleOpenMap}>Add Stop Using Map</Button>
+        Stops *
       </FormLabel>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {stops.map((stop, index) => (
@@ -133,40 +131,69 @@ const Stops = ({ stops, setStops }) => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            gap: 0.5,
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 2,
             backgroundColor: "#f5f5f5",
             borderRadius: 2,
             padding: 2,
           }}
         >
-          <TextField
-            inputRef={nameRef}
-            required={stops.length === 0}
-            variant="outlined"
-            fullWidth
-            placeholder="Enter the name"
-            sx={{ "& input": { background: "white" } }}
-          />
-          <TextField
-            inputRef={imageRef}
-            required={stops.length === 0}
-            variant="outlined"
-            fullWidth
-            placeholder="Enter the image URL"
-            sx={{ "& input": { background: "white" } }}
-          />
-          <TextField
-            inputRef={addressRef}
-            required={stops.length === 0}
-            variant="outlined"
-            fullWidth
-            placeholder="Enter the address"
-            sx={{ "& input": { background: "white" } }}
-          />
-          <Button aria-label="Add Stop" onClick={handleAddStop}>
-            Add Stop Manually
+          <Button
+            onClick={handleOpenMap}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              p: 2,
+              width: 120,
+            }}
+          >
+            <MapOutlinedIcon />
+            Google Map
+          </Button>
+          <Button
+            onClick={handleOpenStop}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              p: 2,
+              width: 120,
+            }}
+          >
+            <FormatColorTextOutlinedIcon />
+            Manually
+          </Button>
+          <Button
+            onClick={handleOpenStop}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              p: 2,
+              width: 120,
+              backgroundColor: "#cfcfcf",
+            }}
+            disabled
+          >
+            <NotesOutlinedIcon />
+            Add Note
+          </Button>
+          <Button
+            onClick={handleOpenStop}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              p: 2,
+              width: 120,
+              backgroundColor: "#cfcfcf",
+            }}
+            disabled
+          >
+            <AddPhotoAlternateOutlinedIcon />
+            Add Photos
           </Button>
         </Box>
       </Box>
@@ -174,6 +201,11 @@ const Stops = ({ stops, setStops }) => {
         isOpen={isMapDialogOpen}
         onClose={handleCloseMap}
         onConfirm={handleAddPlaceConfirm}
+      />
+      <StopDialog
+        isOpen={isStopDialogOpen}
+        onClose={handleCloseStop}
+        onConfirm={handleAddManuallyConfirm}
       />
     </FormControl>
   );
