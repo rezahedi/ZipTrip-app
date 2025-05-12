@@ -71,34 +71,48 @@ const PlanDetails = ({
           borderRadius: 4,
         }}
       >
-        {/* Icon Buttons */}
         <Box
-          sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 1 }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            mb: 2,
+          }}
         >
-          <IconButton disabled>
-            <FavoriteBorderIcon sx={{ cursor: "pointer", color: "#424242" }} />
-          </IconButton>
-          <IconButton disabled>
-            <ShareIcon sx={{ cursor: "pointer", color: "#424242" }} />
-          </IconButton>
-          <IconButton onClick={handleBookmark}>
-            {bookmark ? (
-              <BookmarkIcon style={{ cursor: "pointer", color: "orange" }} />
-            ) : (
-              <BookmarkBorderIcon
+          {/* Title */}
+          <Typography variant="h4">{title}</Typography>
+
+          {/* Icon Buttons */}
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              flex: { xs: "1 1 100%", sm: "unset" },
+              justifyContent: "flex-end",
+            }}
+          >
+            <IconButton disabled>
+              <FavoriteBorderIcon
                 sx={{ cursor: "pointer", color: "#424242" }}
               />
-            )}
-          </IconButton>
+            </IconButton>
+            <IconButton disabled>
+              <ShareIcon sx={{ cursor: "pointer", color: "#424242" }} />
+            </IconButton>
+            <IconButton onClick={handleBookmark}>
+              {bookmark ? (
+                <BookmarkIcon style={{ cursor: "pointer", color: "orange" }} />
+              ) : (
+                <BookmarkBorderIcon
+                  sx={{ cursor: "pointer", color: "#424242" }}
+                />
+              )}
+            </IconButton>
+          </Box>
         </Box>
 
-        {/* Title */}
-        <Typography variant="h4" gutterBottom>
-          {title}
-        </Typography>
-
         {/* Title Details */}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, rowGap: 1 }}>
           <Typography
             variant="subtitle1"
             sx={{ color: "#616161", fontSize: { xs: "14px", sm: "15px" } }}
