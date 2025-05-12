@@ -19,7 +19,9 @@ const StopDialog = ({ isOpen, onClose, onConfirm }) => {
   const latRef = useRef(null);
   const lngRef = useRef(null);
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     onConfirm({
       name: nameRef.current.value,
       imageURL: imageRef.current.value,
