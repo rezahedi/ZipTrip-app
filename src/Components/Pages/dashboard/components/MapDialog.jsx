@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import { Map, Marker } from "@vis.gl/react-google-maps";
 
+// Default center and zoom level to show entire United States on the map
+const DEFAULT_CENTER = { lat: 39.8283, lng: -98.5795 };
+const DEFAULT_ZOOM = 4;
+
 const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   const dummyDiv = useRef(null);
   const [selected, setSelected] = useState(null);
@@ -81,11 +85,13 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
           <DialogContentText id="alert-dialog-description">
             <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
               <Map
+                defaultCenter={DEFAULT_CENTER}
+                defaultZoom={DEFAULT_ZOOM}
                 style={{ width: "100%", height: "100%" }}
                 onClick={handleMapClick}
-                gestureHandling="greedy"
                 disableDefaultUI={false}
                 options={{
+                  gestureHandling: "greedy",
                   streetViewControl: false,
                 }}
               >
