@@ -9,7 +9,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { Map, Marker } from "@vis.gl/react-google-maps";
+import { useMap, Map, Marker } from "@vis.gl/react-google-maps";
+import AutocompleteWebComponent from "./AutocompleteWebComponent";
 
 // Default center and zoom level to show entire United States on the map
 const DEFAULT_CENTER = { lat: 39.8283, lng: -98.5795 };
@@ -20,12 +21,17 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   const [selected, setSelected] = useState(null);
   const [placeId, setPlaceId] = useState(null);
   const isMobile = window.innerWidth < 600;
+  const [placeSelect, setPlaceSelect] = useState(null);
+  const map = useMap();
+
+  useEffect(() => {
+    if (!placeSelect || !placeSelect.viewport || !map) return;
+    map.fitBounds(placeSelect.viewport);
+  }, [placeSelect]);
 
   const handleMapClick = (e) => {
-    const lat = e.detail.latLng.lat;
-    const lng = e.detail.latLng.lng;
-    console.log(e.detail);
-    setSelected({ name: "Custom Location", lat, lng });
+    if (!e.detail.placeId) return;
+    setSelected(e.detail.latLng);
     setPlaceId(e.detail.placeId);
   };
 
@@ -84,10 +90,15 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
+              <AutocompleteWebComponent onPlaceSelect={setPlaceSelect} />
               <Map
-                defaultCenter={selected ? { lat: selected.lat, lng: selected.lng } : DEFAULT_CENTER}
+                defaultCenter={
+                  selected
+                    ? { lat: selected.lat, lng: selected.lng }
+                    : DEFAULT_CENTER
+                }
                 defaultZoom={selected ? 15 : DEFAULT_ZOOM}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "90%" }}
                 onClick={handleMapClick}
                 disableDefaultUI={false}
                 options={{
@@ -99,28 +110,6 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
                   <Marker position={{ lat: selected.lat, lng: selected.lng }} />
                 )}
               </Map>
-              <div ref={dummyDiv} style={{ display: "none" }} />
-              {selected && (
-                <div style={{ marginTop: "10px" }}>
-                  <strong>{selected.name}</strong>
-                  <br />
-                  Lat: {selected.lat}, Lng: {selected.lng}
-                  <br />
-                  {selected.address && (
-                    <>
-                      Address: {selected.address}
-                      <br />
-                    </>
-                  )}
-                  {selected.imageUrl && (
-                    <img
-                      src={selected.imageUrl}
-                      alt="Place"
-                      style={{ width: "300px", marginTop: "5px" }}
-                    />
-                  )}
-                </div>
-              )}
             </Box>
           </DialogContentText>
         </DialogContent>
@@ -135,7 +124,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
           >
             Cancel
           </Button>
-          <Button onClick={onConfirm} autoFocus>
+          <Button onClick={onConfirm} disabled={!placeId}>
             Add
           </Button>
         </DialogActions>
