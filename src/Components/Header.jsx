@@ -18,6 +18,7 @@ import {
   ListItemText,
   useMediaQuery,
   useTheme,
+  Avatar,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -169,7 +170,14 @@ const Header = () => {
                 }}
                 onClick={handleClickMenu}
               >
-                👋 Hello, {user.name.split(" ")[0]}! {<ArrowDropDownIcon />}
+                👋 Hello, {user.name.split(" ")[0]}
+                <Avatar
+                  className="avatar-hover"
+                  alt={user.name}
+                  src={user.imageURL}
+                  sx={{ width: 24, height: 24, bgcolor: "#4CAF50", ml: 1 }}
+                />
+                {<ArrowDropDownIcon />}
               </Button>
               <Menu
                 anchorEl={anchorElement}
