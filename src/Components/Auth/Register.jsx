@@ -330,7 +330,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
               }}
             >
               <Typography variant="h5" fontWeight="bold" gutterBottom>
-                Welcome to OneDayPlan!
+                Welcome to ZipTrip!
               </Typography>
               <Typography variant="body2" sx={{ mb: 5, p: 2 }}>
                 Get started now and make each day count by planning fun and
@@ -338,7 +338,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
               </Typography>
               <Box
                 sx={{
-                  backgroundImage: "url(/images/login.jpg)",
+                  backgroundImage: "url(/images/register.jpg)",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   width: "100%",
