@@ -24,6 +24,7 @@ import { useAuth } from "../../context/AuthContext";
 const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
 
 const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
+  const isMobile = window.innerWidth < 600;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -149,10 +150,11 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       open={open}
       onClose={handleDialogClose}
       maxWidth={false}
+      fullScreen={isMobile}
       slotProps={{
         sx: {
           width: { xs: "100%", sm: "90%", md: "80%" },
-          maxWidth: 600,
+          maxWidth: { xs: "100%", sm: 700 },
           borderRadius: 3,
         },
       }}
@@ -174,10 +176,11 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
 
       <DialogContent
         sx={{
-          p: { xs: 4, sm: 8 },
-          m: { xs: 2, sm: 3 },
+          p: { xs: 1, sm: 8 },
+          m: { xs: 0, sm: 3 },
           width: "100%",
-          maxWidth: { xs: 200, sm: 550, lg: 700 },
+          maxWidth: { xs: "100%", sm: 700 },
+          boxSizing: "border-box",
         }}
       >
         <Box>
