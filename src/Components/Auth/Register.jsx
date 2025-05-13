@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
 import { postData } from "../../util";
 import { useAuth } from "../../context/AuthContext";
 // import LoginPage from "./Login";
@@ -36,7 +35,6 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isValid, setIsValid] = useState(true);
 
-  const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleNameChange = (event) => {
@@ -130,7 +128,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
         console.log(data);
         const { token, _id: userId, name, email, imageURL } = data;
         await login(userId, name, email, imageURL, token);
-        navigate("/");
+        window.location.reload();
         handleDialogClose();
       }
     } catch (error) {

@@ -60,7 +60,7 @@ const Header = () => {
   const handleLogoutConfirm = () => {
     logout();
     setOpenLogoutDialog(false);
-    navigate("/");
+    window.location.reload();
   };
 
   const handleLogoutCancel = () => {
