@@ -116,8 +116,8 @@ const removeBookmark = async (token, planId, onError) => {
   }
 };
 
-const getBookmarks = async (token, onError) => {
-  return await getData(`/account/bookmarks`, token, onError);
+const getBookmarks = async (params, token, onError) => {
+  return await getData(`/account/bookmarks?${params}`, token, onError);
 };
 
 const getData = async (endpoint, token = "", onError) => {
