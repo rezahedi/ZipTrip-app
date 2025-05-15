@@ -1,7 +1,7 @@
 const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
-const getMyPlans = async (token, onError) => {
-  return await getData(`/account/plans`, token, onError);
+const getMyPlans = async (params, token, onError) => {
+  return await getData(`/account/plans?${params}`, token, onError);
 };
 
 const deletePlan = async (token, planId, onError) => {
