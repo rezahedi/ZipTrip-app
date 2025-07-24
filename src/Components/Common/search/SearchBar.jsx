@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, TextField, InputAdornment, IconButton } from "@mui/material";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -31,14 +31,7 @@ const SearchBar = () => {
   };
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        transform: "translate( 17%, -50%)",
-        // maxWidth: "80%",
-        width: "65%",
-      }}
-    >
+    <div className="max-w-3xl mx-auto p-2 -translate-y-1/2">
       <form onSubmit={handleSubmit}>
         <TextField
           placeholder="Search for a city, activity, or place"
@@ -79,7 +72,7 @@ const SearchBar = () => {
           }}
         />
       </form>
-    </Box>
+    </div>
   );
 };
 
