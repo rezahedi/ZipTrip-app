@@ -6,9 +6,6 @@ import SearchBar from "./Common/search/SearchBar";
 import {
   AppBar,
   Toolbar,
-  Typography,
-  Button,
-  Box,
   Menu,
   MenuItem,
   IconButton,
@@ -27,6 +24,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthModal } from "../context/AuthModalContext";
 import MenuIcon from "@mui/icons-material/Menu";
+import Button from "./Button";
 
 const Header = () => {
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
@@ -74,7 +72,7 @@ const Header = () => {
       open={drawerOpen}
       onClose={() => setDrawerOpen(false)}
     >
-      <Box sx={{ width: 250, padding: 2 }}>
+      <div className="w-64, p-0.5">
         <List>
           {user ? (
             <>
@@ -97,7 +95,7 @@ const Header = () => {
             </>
           )}
         </List>
-      </Box>
+      </div>
     </Drawer>
   );
 
@@ -113,7 +111,7 @@ const Header = () => {
         }}
       >
         <Toolbar sx={{ padding: 0 }}>
-          <Box sx={{ flexGrow: 1 }}>
+          <div className="grow">
             <Link to="/">
               <img
                 src="/images/logo-text-3.png"
@@ -121,7 +119,7 @@ const Header = () => {
                 alt="ZipTrip Logo"
               />
             </Link>
-          </Box>
+          </div>
 
           {isMobile ? (
             <>
@@ -137,30 +135,15 @@ const Header = () => {
           ) : user ? (
             <>
               <Button
-                sx={{
-                  mr: 1,
-                }}
+                type="primary"
                 onClick={() => {
                   navigate("/account");
                 }}
               >
                 {<SpaceDashboardOutlinedIcon sx={{ mr: 0.5 }} />} Dashboard
               </Button>
-              <Button
-                sx={{
-                  maxWidth: 180,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  justifyContent: "flex-start",
-                  minWidth: "6%",
-                  mr: "8px",
-                  backgroundColor: "white",
-                  color: "inherit",
-                  "&:hover": {
-                    backgroundColor: "white",
-                    color: "inherit",
-                  },
-                }}
+              <button
+                className="max-w-[180px] overflow-hidden text-ellipsis justify-start min-w-[6%] mr-2 bg-white text-inherit hover:bg-white hover:text-inherit"
                 onClick={handleClickMenu}
               >
                 👋 Hello, {user.name.split(" ")[0]}
@@ -171,7 +154,7 @@ const Header = () => {
                   sx={{ width: 24, height: 24, bgcolor: "#4CAF50", ml: 1 }}
                 />
                 {<ArrowDropDownIcon />}
-              </Button>
+              </button>
               <Menu
                 anchorEl={anchorElement}
                 open={Boolean(anchorElement)}
@@ -196,27 +179,10 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Button
-                sx={{
-                  minWidth: "6%",
-                  marginRight: "1%",
-                  backgroundColor: "white",
-                  color: "#45a049",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "white",
-                    color: "#45a049",
-                  },
-                }}
-                onClick={openLogin}
-              >
+              <Button type="secondary" onClick={openLogin}>
                 Login
               </Button>
-              <Button
-                color="inherit"
-                sx={{ minWidth: "6%" }}
-                onClick={openRegister}
-              >
+              <Button type="primary" onClick={openRegister}>
                 Register
               </Button>
             </>
@@ -244,21 +210,11 @@ const Header = () => {
       />
 
       {/* image */}
-      <Box
-        sx={{
-          backgroundImage: "url(/images/main-header.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "230px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant={isMobile ? "h5" : "h4"} color="white">
+      <div className="bg-[url('/images/main-header.jpg')] bg-cover bg-center h-56 flex justify-center items-center">
+        <h4 className="text-white text-center text-2xl sm:text-4xl">
           Plan your perfect day with ease!
-        </Typography>
-      </Box>
+        </h4>
+      </div>
 
       {/* Search Bar */}
       <SearchBar />
