@@ -3,50 +3,36 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/Components/ui/sheet";
 import { Button } from "@/Components/ui/button";
-import { Menu } from "@/ui/icons";
+import { Forward, Profile, PhotoPlus, Setting, Menu, Close } from "@/ui/icons";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 const DrawerSidebar = () => {
+  const { user, logout } = useAuth();
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger className="sm:hidden cursor-pointer">
+        <span className="sr-only">Open Menu</span>
         <Menu className="w-6" />
       </SheetTrigger>
       <SheetContent
         side="right"
         className={cn(
-          "w-full sm:max-w-sm h-full inset-y-0 right-0 border-l",
-          // 1. Kill transform from slide-in/out
-          "!transform-none !translate-x-0 !transition-none",
-          // 2. Your fade animation
-          "data-[state=open]:fade-in-0",
-          "data-[state=closed]:fade-out-0",
+          "sm:hidden w-full",
+          // Hide default close btn!
+          "[&>button:last-child]:hidden",
         )}
       >
-        <SheetClose className="absolute right-2 top-2">
+        <SheetClose className="absolute right-2 top-2 cursor-pointer">
           <span className="sr-only">Close</span>
-          <svg
-            className="size-8"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6 18L18 6M6 6L18 18"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <Close className="w-8 my-2 p-0" />
         </SheetClose>
         <SheetHeader className="px-2 py-1.5">
           <SheetTitle>
@@ -60,32 +46,55 @@ const DrawerSidebar = () => {
           </SheetTitle>
         </SheetHeader>
         <nav className="grow p-2 mt-4">
-          <ol className="flex flex-col gap-4 justify-center text-xl font-semibold">
+          <ol className="flex flex-col gap-1 justify-center text-lg [&_a]:px-2 [&_a]:py-3 [&_a]:hover:bg-accent [&_a]:rounded-md [&_a]:flex [&_a]:items-center [&_a]:gap-2">
             <li>
-              <a href="#">Home</a>
+              <a href="#">
+                <Forward className="w-6 text-ring" /> Home
+              </a>
             </li>
             <li>
-              <a href="#">Explore</a>
+              <a href="#">
+                <Forward className="w-6 text-ring" /> Explore
+              </a>
             </li>
             <li>
-              <a href="#">About</a>
+              <a href="#">
+                <Forward className="w-6 text-ring" /> About
+              </a>
             </li>
-            <li>
-              <hr />
-            </li>
-            <li>
-              <a href="#">Login</a>
-            </li>
-            <li>
-              <a href="#">Register</a>
-            </li>
+            {user && (
+              <>
+                <li className="border-t border-t-accent font-semibold text-2xl p-2 my-2">
+                  Account
+                </li>
+                <li>
+                  <Link to="/account/profile">
+                    <Profile className="w-6 text-ring" /> Show Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/account">
+                    <PhotoPlus className="w-6 text-ring" /> Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/account/settings">
+                    <Setting className="w-6 text-ring" /> Settings
+                  </Link>
+                </li>
+              </>
+            )}
           </ol>
         </nav>
         <SheetFooter>
-          <Button variant="default">Sign up</Button>
-          <Button variant="secondary" className="ml-2">
-            Login
-          </Button>
+          {!user && (
+            <>
+              <Button variant="default">Sign up</Button>
+              <Button variant="secondary" className="ml-2">
+                Login
+              </Button>
+            </>
+          )}
         </SheetFooter>
       </SheetContent>
     </Sheet>

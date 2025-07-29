@@ -1,24 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import RegisterPage from "../Auth/Register";
 import LoginPage from "../Auth/Login";
-import AlertDialog from "../Common/AlertDialog";
 import SearchBar from "../Common/search/SearchBar";
-import { useMediaQuery, useTheme } from "@mui/material";
-import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
-import { useAuth } from "@/context/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthModal } from "@/context/AuthModalContext";
-import { Button } from "@/Components/ui/button";
-import UserMenu from "./UserMenu";
-import DrawerSidebar from "./DrawerSidebar";
+import HeaderActions from "./HeaderActions";
 
 const Header = () => {
-  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const {
     isLoginOpen,
     isRegisterOpen,
@@ -27,20 +15,6 @@ const Header = () => {
     closeLogin,
     closeRegister,
   } = useAuthModal();
-
-  const handleLogoutClick = () => {
-    setOpenLogoutDialog(true);
-  };
-
-  const handleLogoutConfirm = () => {
-    logout();
-    setOpenLogoutDialog(false);
-    window.location.reload();
-  };
-
-  const handleLogoutCancel = () => {
-    setOpenLogoutDialog(false);
-  };
 
   return (
     <header>
@@ -67,31 +41,7 @@ const Header = () => {
             </li>
           </ol>
         </nav>
-
-        {isMobile ? (
-          <DrawerSidebar />
-        ) : user ? (
-          <>
-            <Button
-              variant="default"
-              onClick={() => {
-                navigate("/account");
-              }}
-            >
-              {<SpaceDashboardOutlinedIcon sx={{ mr: 0.5 }} />} Dashboard
-            </Button>
-            <UserMenu user={user} handleLogoutClick={handleLogoutClick} />
-          </>
-        ) : (
-          <>
-            <Button variant="secondary" onClick={openLogin}>
-              Login
-            </Button>
-            <Button variant="default" onClick={openRegister}>
-              Register
-            </Button>
-          </>
-        )}
+        <HeaderActions />
       </div>
 
       {/* Register Dialog */}
@@ -122,17 +72,6 @@ const Header = () => {
 
       {/* Search Bar */}
       <SearchBar />
-
-      {/* Alert Dialog for Logout */}
-      <AlertDialog
-        isOpen={openLogoutDialog}
-        onClose={handleLogoutCancel}
-        onConfirm={handleLogoutConfirm}
-        title="Log out?"
-        message="Are you sure you want to log out?"
-        confirmText="Log out"
-        cancelText="Cancel"
-      />
     </header>
   );
 };
