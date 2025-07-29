@@ -23,7 +23,7 @@ const UserMenu = ({
 }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger>
         <Button variant="ghost">
           {user.name.split(" ")[0]}
           <Avatar>
