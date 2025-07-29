@@ -9,7 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/Components/ui/alert-dialog"
+} from "@/Components/ui/alert-dialog";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -44,13 +44,13 @@ const AlertDialog = ({
       <AlertDialogContent className="px-3 py-8">
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {message}
-          </AlertDialogDescription>
+          <AlertDialogDescription>{message}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onClose}>{cancelText}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm} autoFocus>{confirmText}</AlertDialogAction>
+          <AlertDialogAction onClick={onConfirm} autoFocus>
+            {confirmText}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertD>

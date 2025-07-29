@@ -3,10 +3,7 @@ import RegisterPage from "../Auth/Register";
 import LoginPage from "../Auth/Login";
 import AlertDialog from "../Common/AlertDialog";
 import SearchBar from "../Common/search/SearchBar";
-import {
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
