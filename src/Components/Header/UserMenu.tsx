@@ -23,16 +23,14 @@ const UserMenu = ({
 }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant="ghost">
-          {user.name.split(" ")[0]}
-          <Avatar>
-            <AvatarImage src={user.imageURL} alt={user.name} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </Button>
+      <DropdownMenuTrigger className="hidden sm:flex items-center gap-2 cursor-pointer">
+        {user.name.split(" ")[0]}
+        <Avatar>
+          <AvatarImage src={user.imageURL} alt={user.name} />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="start">
+      <DropdownMenuContent className="hidden sm:block w-56" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>
