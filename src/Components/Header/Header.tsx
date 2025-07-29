@@ -4,22 +4,13 @@ import LoginPage from "../Auth/Login";
 import AlertDialog from "../Common/AlertDialog";
 import SearchBar from "../Common/search/SearchBar";
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import SpaceDashboardOutlinedIcon from "@mui/icons-material/SpaceDashboardOutlined";
-import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthModal } from "@/context/AuthModalContext";
-import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@/Components/ui/button";
 import UserMenu from "./UserMenu";
 import DrawerSidebar from "./DrawerSidebar";
@@ -55,66 +46,56 @@ const Header = () => {
   };
 
   return (
-    <div>
-      {/* Navbar */}
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: "primary.default",
-          boxShadow: "none",
-          "& .MuiToolbar-root": { padding: 0 },
-        }}
-      >
-        <Toolbar sx={{ padding: 0 }}>
-          <div>
-            <Link to="/">
-              <img
-                src="/images/logo-text-3.png"
-                width="140px"
-                alt="ZipTrip Logo"
-              />
-            </Link>
-          </div>
-          <nav className="grow">
-            <ol className="hidden sm:flex gap-8 justify-center text-lg font-semibold">
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li>
-                <a href="#">Explore</a>
-              </li>
-              <li>
-                <a href="#">About</a>
-              </li>
-            </ol>
-          </nav>
+    <header>
+      <div className="bg-background flex items-center py-2">
+        <div>
+          <Link to="/">
+            <img
+              src="/images/logo-text-3.png"
+              width="140px"
+              alt="ZipTrip Logo"
+            />
+          </Link>
+        </div>
+        <nav className="grow">
+          <ol className="hidden sm:flex gap-8 justify-center text-lg font-semibold">
+            <li>
+              <a href="#">Home</a>
+            </li>
+            <li>
+              <a href="#">Explore</a>
+            </li>
+            <li>
+              <a href="#">About</a>
+            </li>
+          </ol>
+        </nav>
 
-          {isMobile ? (
-            <DrawerSidebar />
-          ) : user ? (
-            <>
-              <Button
-                variant="default"
-                onClick={() => {
-                  navigate("/account");
-                }}
-              >
-                {<SpaceDashboardOutlinedIcon sx={{ mr: 0.5 }} />} Dashboard
-              </Button>
-              <UserMenu user={user} handleLogoutClick={handleLogoutClick} />
-            </>
-          ) : (
-            <>
-              <Button variant="secondary" onClick={openLogin}>
-                Login
-              </Button>
-              <Button variant="default" onClick={openRegister}>
-                Register
-              </Button>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
+        {isMobile ? (
+          <DrawerSidebar />
+        ) : user ? (
+          <>
+            <Button
+              variant="default"
+              onClick={() => {
+                navigate("/account");
+              }}
+            >
+              {<SpaceDashboardOutlinedIcon sx={{ mr: 0.5 }} />} Dashboard
+            </Button>
+            <UserMenu user={user} handleLogoutClick={handleLogoutClick} />
+          </>
+        ) : (
+          <>
+            <Button variant="secondary" onClick={openLogin}>
+              Login
+            </Button>
+            <Button variant="default" onClick={openRegister}>
+              Register
+            </Button>
+          </>
+        )}
+      </div>
 
       {/* Register Dialog */}
       <RegisterPage
@@ -155,7 +136,7 @@ const Header = () => {
         confirmText="Log out"
         cancelText="Cancel"
       />
-    </div>
+    </header>
   );
 };
 
