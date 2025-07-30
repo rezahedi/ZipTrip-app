@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Sheet,
   SheetClose,
@@ -9,7 +9,15 @@ import {
   SheetTrigger,
 } from "@/Components/ui/sheet";
 import { Button } from "@/Components/ui/button";
-import { Forward, Profile, PhotoPlus, Setting, Logout, Menu, Close } from "@/ui/icons";
+import {
+  Forward,
+  Profile,
+  PhotoPlus,
+  Setting,
+  Logout,
+  Menu,
+  Close,
+} from "@/ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
@@ -26,7 +34,7 @@ const DrawerSidebar = () => {
   useEffect(() => {
     closeDrawer();
   }, [location]);
-  
+
   const handleLogout = () => {
     logout();
     window.location.reload();
@@ -44,7 +52,7 @@ const DrawerSidebar = () => {
 
   const closeDrawer = () => {
     setSheetOpen(false);
-  }
+  };
 
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -124,8 +132,14 @@ const DrawerSidebar = () => {
         <SheetFooter>
           {!user && (
             <>
-              <Button variant="default" onClick={handleRegister}>Sign up</Button>
-              <Button variant="secondary" className="ml-2" onClick={handleLogin}>
+              <Button variant="default" onClick={handleRegister}>
+                Sign up
+              </Button>
+              <Button
+                variant="secondary"
+                className="ml-2"
+                onClick={handleLogin}
+              >
                 Login
               </Button>
             </>
