@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Sheet,
   SheetClose,
@@ -9,15 +9,45 @@ import {
   SheetTrigger,
 } from "@/Components/ui/sheet";
 import { Button } from "@/Components/ui/button";
-import { Forward, Profile, PhotoPlus, Setting, Menu, Close } from "@/ui/icons";
-import { Link } from "react-router-dom";
+import { Forward, Profile, PhotoPlus, Setting, Logout, Menu, Close } from "@/ui/icons";
+import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 const DrawerSidebar = () => {
+  const [sheetOpen, setSheetOpen] = React.useState(false);
   const { user, logout } = useAuth();
+
+  const { openLogin, openRegister } = useAuthModal();
+
+  // Close the drawer when the route changes
+  const location = useLocation();
+  useEffect(() => {
+    closeDrawer();
+  }, [location]);
+  
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
+
+  const handleLogin = () => {
+    closeDrawer();
+    openLogin();
+  };
+
+  const handleRegister = () => {
+    closeDrawer();
+    openRegister();
+  };
+
+  const closeDrawer = () => {
+    setSheetOpen(false);
+  }
+
   return (
-    <Sheet>
+    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger className="sm:hidden cursor-pointer">
         <span className="sr-only">Open Menu</span>
         <Menu className="w-6" />
@@ -82,6 +112,11 @@ const DrawerSidebar = () => {
                     <Setting className="w-6 text-ring" /> Settings
                   </Link>
                 </li>
+                <li>
+                  <Link to="#" onClick={handleLogout}>
+                    <Logout className="w-6 text-ring" /> Logout
+                  </Link>
+                </li>
               </>
             )}
           </ol>
@@ -89,8 +124,8 @@ const DrawerSidebar = () => {
         <SheetFooter>
           {!user && (
             <>
-              <Button variant="default">Sign up</Button>
-              <Button variant="secondary" className="ml-2">
+              <Button variant="default" onClick={handleRegister}>Sign up</Button>
+              <Button variant="secondary" className="ml-2" onClick={handleLogin}>
                 Login
               </Button>
             </>
