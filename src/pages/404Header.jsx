@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import RegisterPage from "../Auth/Register";
-import LoginPage from "../Auth/Login";
-import AlertDialog from "../Common/AlertDialog";
+import RegisterPage from "@/Components/Auth/Register";
+import LoginPage from "@/Components/Auth/Login";
+import AlertDialog from "@/Components/Common/AlertDialog";
 import {
   AppBar,
   Toolbar,
@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const NotFoundHeader = () => {

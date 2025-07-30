@@ -1,6 +1,6 @@
 import React from "react";
-import CardSection from "../Common/CardSection";
-import CategorySection from "../Common/CategorySection";
+import CardSection from "@/Components/Common/CardSection";
+import CategorySection from "@/Components/Common/CategorySection";
 
 const HomePage = () => {
   return (

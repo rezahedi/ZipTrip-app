@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -10,63 +10,73 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { getCategories, createPlan } from "../../../util/dashboard";
-import { useAuth } from "../../../context/AuthContext";
+import { getPlan, updatePlan, getCategories } from "@/util/dashboard";
+import { useAuth } from "@/context/AuthContext";
 import PlanImages from "./components/PlanImages";
 import Stops from "./components/Stops";
 
 const TYPES = ["Full day", "Half day", "Night"];
 
-function CreateNew() {
+function EditPlan() {
   const [plan, setPlan] = useState({});
-  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const { planId } = useParams();
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [isPlanExists, setIsPlanExists] = useState(false);
   const { token, user } = useAuth();
-
-  // TODO: Switch image URLs with actual multiple image upload feature.
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
     if (!token || !user) return navigate("/");
+    if (!planId) return navigate("/account");
 
     (async () => {
-      setPlan({ userId: user.userId, stops: [] });
-      const categoriesData = await getCategories(token, setError);
+      setIsLoading(true);
+      const data = await getPlan(token, planId, setError);
+      if (!data) return setIsPlanExists(false);
+      setIsPlanExists(true);
 
+      const categoriesData = await getCategories(token, setError);
       if (!categoriesData) return;
 
+      setPlan({
+        ...data,
+        categoryId: data.categoryId?._id,
+        userId: data.userId?._id,
+      });
       setCategories(categoriesData);
+      setIsLoading(false);
     })();
   }, []);
 
-  const handleCreate = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-
-    // A random number with one decimal greater than 0 and less than 5
-    const rate = Math.round(Math.random() * 49 + 1) / 10;
-    // A random number between 0 and 100
-    const reviewCount = Math.floor(Math.random() * 100);
-    // Adding fake review data to the plan
-    const extendedPlan = {
-      ...plan,
-      rate,
-      reviewCount,
-    };
-    const result = await createPlan(token, extendedPlan, setError);
+    const result = await updatePlan(token, plan, setError);
     if (!result) return;
 
     navigate("/account");
   };
 
+  if (!isLoading && !isPlanExists)
+    return (
+      <Typography color="error">
+        Plan not found or does not exist. Please go back to{" "}
+        <Link to="/account">your plans</Link>.
+      </Typography>
+    );
+
+  if (isLoading) return <Box>Loading ...</Box>;
+
   return (
     <>
       <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h4">Create a New Plan:</Typography>
+        <Typography variant="h4">Edit Plan:</Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 650 }}>
         {error && <p>{error}</p>}
-        <form onSubmit={handleCreate}>
+        <form onSubmit={handleUpdate}>
           {/* Title */}
           <FormControl fullWidth margin="normal">
             <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
@@ -89,6 +99,7 @@ function CreateNew() {
           />
 
           {/* Category */}
+          {/* TODO: Replace it with a select dropdown */}
           <FormControl fullWidth margin="normal">
             <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
               Category *
@@ -203,7 +214,7 @@ function CreateNew() {
               Cancel
             </Button>
             <Button variant="contained" color="primary" type="submit">
-              Publish
+              Save Changes
             </Button>
           </Box>
         </form>
@@ -212,4 +223,4 @@ function CreateNew() {
   );
 }
 
-export default CreateNew;
+export default EditPlan;

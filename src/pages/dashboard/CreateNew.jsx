@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -10,73 +10,63 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { getPlan, updatePlan, getCategories } from "../../../util/dashboard";
-import { useAuth } from "../../../context/AuthContext";
+import { getCategories, createPlan } from "@/util/dashboard";
+import { useAuth } from "@/context/AuthContext";
 import PlanImages from "./components/PlanImages";
 import Stops from "./components/Stops";
 
 const TYPES = ["Full day", "Half day", "Night"];
 
-function EditPlan() {
+function CreateNew() {
   const [plan, setPlan] = useState({});
-  const [error, setError] = useState(null);
-  const { planId } = useParams();
-  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [isPlanExists, setIsPlanExists] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const { token, user } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+
+  // TODO: Switch image URLs with actual multiple image upload feature.
 
   useEffect(() => {
     // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
     if (!token || !user) return navigate("/");
-    if (!planId) return navigate("/account");
 
     (async () => {
-      setIsLoading(true);
-      const data = await getPlan(token, planId, setError);
-      if (!data) return setIsPlanExists(false);
-      setIsPlanExists(true);
-
+      setPlan({ userId: user.userId, stops: [] });
       const categoriesData = await getCategories(token, setError);
+
       if (!categoriesData) return;
 
-      setPlan({
-        ...data,
-        categoryId: data.categoryId?._id,
-        userId: data.userId?._id,
-      });
       setCategories(categoriesData);
-      setIsLoading(false);
     })();
   }, []);
 
-  const handleUpdate = async (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
-    const result = await updatePlan(token, plan, setError);
+
+    // A random number with one decimal greater than 0 and less than 5
+    const rate = Math.round(Math.random() * 49 + 1) / 10;
+    // A random number between 0 and 100
+    const reviewCount = Math.floor(Math.random() * 100);
+    // Adding fake review data to the plan
+    const extendedPlan = {
+      ...plan,
+      rate,
+      reviewCount,
+    };
+    const result = await createPlan(token, extendedPlan, setError);
     if (!result) return;
 
     navigate("/account");
   };
 
-  if (!isLoading && !isPlanExists)
-    return (
-      <Typography color="error">
-        Plan not found or does not exist. Please go back to{" "}
-        <Link to="/account">your plans</Link>.
-      </Typography>
-    );
-
-  if (isLoading) return <Box>Loading ...</Box>;
-
   return (
     <>
       <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h4">Edit Plan:</Typography>
+        <Typography variant="h4">Create a New Plan:</Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 650 }}>
         {error && <p>{error}</p>}
-        <form onSubmit={handleUpdate}>
+        <form onSubmit={handleCreate}>
           {/* Title */}
           <FormControl fullWidth margin="normal">
             <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
@@ -99,7 +89,6 @@ function EditPlan() {
           />
 
           {/* Category */}
-          {/* TODO: Replace it with a select dropdown */}
           <FormControl fullWidth margin="normal">
             <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
               Category *
@@ -214,7 +203,7 @@ function EditPlan() {
               Cancel
             </Button>
             <Button variant="contained" color="primary" type="submit">
-              Save Changes
+              Publish
             </Button>
           </Box>
         </form>
@@ -223,4 +212,4 @@ function EditPlan() {
   );
 }
 
-export default EditPlan;
+export default CreateNew;

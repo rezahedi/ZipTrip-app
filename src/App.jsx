@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-import HomePage from "./Components/Pages/HomePage";
-import SearchPage from "./Components/Pages/SearchPage";
-import PlanPage from "./Components/Pages/PlanPage";
-import CategoryPage from "./Components/Pages/CategoryPage";
-import UserPage from "./Components/Pages/UserPage";
-import NotFound404 from "./Components/Pages/404NotFound";
+import { AuthProvider } from "@/context/AuthContext";
+import HomePage from "@/pages/HomePage";
+import SearchPage from "@/pages/SearchPage";
+import PlanPage from "@/pages/PlanPage";
+import CategoryPage from "@/pages/CategoryPage";
+import UserPage from "@/pages/UserPage";
+import NotFound404 from "@/pages/404NotFound";
 import {
   DashboardTheme,
   MyPlans,
@@ -15,11 +15,11 @@ import {
   Profile,
   CreateNew,
   EditPlan,
-} from "./Components/Pages/dashboard";
-import MainLayout from "./Components/Layout/MainLayout";
-import ForgotPassword from "./Components/Auth/ForgotPassword";
-import ResetPassword from "./Components/Auth/ResetPassword";
-import ProtectedRoute from "./Components/Auth/ProtectedRoute";
+} from "@/pages/dashboard";
+import MainLayout from "@/Components/Layout/MainLayout";
+import ForgotPassword from "@/Components/Auth/ForgotPassword";
+import ResetPassword from "@/Components/Auth/ResetPassword";
+import ProtectedRoute from "@/Components/Auth/ProtectedRoute";
 
 function App() {
   return (
