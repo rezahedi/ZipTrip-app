@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getData } from "../../util";
+import { getData } from "@/util";
 import { Box, Typography } from "@mui/material";
-import PlanDetails from "../Common/PlanDetails";
-import { useAuth } from "../../context/AuthContext";
+import PlanDetails from "@/Components/Common/PlanDetails";
+import { useAuth } from "@/context/AuthContext";
 
 const PlanPage = () => {
   const [plan, setPlan] = useState(null);

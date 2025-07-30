@@ -1,57 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { getQueryValue } from "../../util/url";
-import { Box, Typography, Grid, Avatar } from "@mui/material";
-import PlanCard from "../Common/PlanCard";
-import { fetchPlans } from "../../util";
-import Pagination from "../Common/Pagination";
-import PlanCardSkeleton from "../Common/PlanCardSkeleton";
-import { useAuth } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
+import { getQueryValue } from "@/util/url";
+import { Box, Typography, Grid } from "@mui/material";
+import PlanCard from "@/Components/Common/PlanCard";
+import { fetchPlans } from "@/util";
+import WelcomeMessage from "@/Components/Common/search/WelcomeMessage";
+import EmptyResultMessage from "@/Components/Common/search/EmptyResultMessage";
+import Pagination from "@/Components/Common/Pagination";
+import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
+import { useAuth } from "@/context/AuthContext";
 
 const PAGE_SIZE = 8;
 
-const UserPage = () => {
-  const { userId } = useParams();
+const SearchPage = () => {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState(
+    getQueryValue(location.search, "q"),
+  );
   let page = getQueryValue(location.search, "page") || "1";
   const [isLoading, setIsLoading] = useState(true);
   const [plans, setPlans] = useState([]);
   const [pagesCount, setPagesCount] = useState(0);
-  const [user, setUser] = useState({});
   const [error, setError] = useState(null);
   const { token } = useAuth();
 
   useEffect(() => {
     page = getQueryValue(location.search, "page") || "1";
+    setSearchQuery(getQueryValue(location.search, "q"));
   }, [location.search]);
 
   useEffect(() => {
     (async () => {
       setIsLoading(true);
       const params = new URLSearchParams(location.search);
+      params.set("search", searchQuery);
       params.set("page", page);
       params.set("size", PAGE_SIZE);
       const paramsString = params.toString();
 
       try {
-        const res = await fetchPlans(
-          `plans/user/${userId}?${paramsString}`,
-          token,
-          setError,
-        );
-        const { plans: userPlans, ...userDetails } = res;
-        console.log(userPlans, userDetails);
-        setPlans(userPlans.items || []);
-        setUser(userDetails || {});
-        setPagesCount(userPlans.pagesCount || 0);
+        const res = await fetchPlans(`plans?${paramsString}`, token, setError);
+        setPlans(res?.items || []);
+        setPagesCount(res?.pagesCount || 0);
         setIsLoading(false);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page]);
+  }, [searchQuery, page]);
 
-  if (!isLoading && plans.length === 0) return <>There is no plans.</>;
+  if (searchQuery === "") return <WelcomeMessage />;
+
+  if (!isLoading && plans.length === 0) return <EmptyResultMessage />;
 
   return (
     <Box
@@ -62,24 +62,9 @@ const UserPage = () => {
     >
       <Typography
         variant="h5"
-        sx={{
-          mb: 4,
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-        }}
+        sx={{ marginBottom: "16px", fontWeight: "bold" }}
       >
-        {user.name && (
-          <>
-            <Avatar
-              alt={user.name}
-              src={user.imageURL}
-              sx={{ bgcolor: "#4CAF50" }}
-            />
-            {user.name}
-          </>
-        )}
+        Search result for <u>{searchQuery}</u>:
       </Typography>
       <Box
         sx={{
@@ -110,4 +95,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default SearchPage;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { getQueryValue } from "../../util/url";
+import { getQueryValue } from "@/util/url";
 import { Box, Typography, Grid } from "@mui/material";
-import PlanCard from "../Common/PlanCard";
-import { fetchPlans } from "../../util";
-import Pagination from "../Common/Pagination";
-import PlanCardSkeleton from "../Common/PlanCardSkeleton";
-import { useAuth } from "../../context/AuthContext";
+import PlanCard from "@/Components/Common/PlanCard";
+import { fetchPlans } from "@/util";
+import Pagination from "@/Components/Common/Pagination";
+import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
+import { useAuth } from "@/context/AuthContext";
 
 const PAGE_SIZE = 8;
 
@@ -40,7 +40,6 @@ const CategoryPage = () => {
           setError,
         );
         const { plans: categoryPlans, ...categoryDetails } = res;
-        console.log(categoryPlans, categoryDetails);
         setPlans(categoryPlans.items || []);
         setCategory(categoryDetails || {});
         setPagesCount(categoryPlans.pagesCount || 0);
