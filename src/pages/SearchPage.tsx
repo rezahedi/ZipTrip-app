@@ -1,56 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
 import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "@/Components/Common/PlanCard";
 import { fetchPlans } from "@/util";
+import WelcomeMessage from "@/Components/Common/search/WelcomeMessage";
+import EmptyResultMessage from "@/Components/Common/search/EmptyResultMessage";
 import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
+import { Plan } from "@/types";
 
 const PAGE_SIZE = 8;
 
-const CategoryPage = () => {
-  const { categoryId } = useParams();
+const SearchPage = () => {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState(
+    getQueryValue(location.search, "q"),
+  );
   let page = getQueryValue(location.search, "page") || "1";
-  const [isLoading, setIsLoading] = useState(true);
-  const [plans, setPlans] = useState([]);
-  const [pagesCount, setPagesCount] = useState(0);
-  const [category, setCategory] = useState({});
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [pagesCount, setPagesCount] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
 
   useEffect(() => {
     page = getQueryValue(location.search, "page") || "1";
+    setSearchQuery(getQueryValue(location.search, "q"));
   }, [location.search]);
 
   useEffect(() => {
     (async () => {
       setIsLoading(true);
       const params = new URLSearchParams(location.search);
+      params.set("search", searchQuery);
       params.set("page", page);
-      params.set("size", PAGE_SIZE);
+      params.set("size", PAGE_SIZE.toString());
       const paramsString = params.toString();
 
       try {
-        const res = await fetchPlans(
-          `plans/category/${categoryId}?${paramsString}`,
-          token,
-          setError,
-        );
-        const { plans: categoryPlans, ...categoryDetails } = res;
-        setPlans(categoryPlans.items || []);
-        setCategory(categoryDetails || {});
-        setPagesCount(categoryPlans.pagesCount || 0);
+        const res = await fetchPlans(`plans?${paramsString}`, token, setError);
+        setPlans(res?.items || []);
+        setPagesCount(res?.pagesCount || 0);
         setIsLoading(false);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page]);
+  }, [searchQuery, page]);
 
-  if (!isLoading && plans.length === 0) return <>There is no plans.</>;
+  if (searchQuery === "") return <WelcomeMessage />;
+
+  if (!isLoading && plans.length === 0) return <EmptyResultMessage />;
 
   return (
     <Box
@@ -59,11 +61,11 @@ const CategoryPage = () => {
         marginBottom: 4,
       }}
     >
-      <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
-        {category.name}
-      </Typography>
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        {category.description}
+      <Typography
+        variant="h5"
+        sx={{ marginBottom: "16px", fontWeight: "bold" }}
+      >
+        Search result for <u>{searchQuery}</u>:
       </Typography>
       <Box
         sx={{
@@ -94,4 +96,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default SearchPage;

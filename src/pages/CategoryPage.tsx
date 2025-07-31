@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
-import { Box, Typography, Grid, Avatar } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "@/Components/Common/PlanCard";
 import { fetchPlans } from "@/util";
 import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
+import { Plan, Category } from "@/types";
 
 const PAGE_SIZE = 8;
 
-const UserPage = () => {
-  const { userId } = useParams();
+const CategoryPage = () => {
+  const { categoryId } = useParams();
   const location = useLocation();
   let page = getQueryValue(location.search, "page") || "1";
-  const [isLoading, setIsLoading] = useState(true);
-  const [plans, setPlans] = useState([]);
-  const [pagesCount, setPagesCount] = useState(0);
-  const [user, setUser] = useState({});
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [pagesCount, setPagesCount] = useState<number>(0);
+  const [category, setCategory] = useState<Category | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
 
   useEffect(() => {
@@ -30,26 +31,28 @@ const UserPage = () => {
       setIsLoading(true);
       const params = new URLSearchParams(location.search);
       params.set("page", page);
-      params.set("size", PAGE_SIZE);
+      params.set("size", PAGE_SIZE.toString());
       const paramsString = params.toString();
 
       try {
         const res = await fetchPlans(
-          `plans/user/${userId}?${paramsString}`,
+          `plans/category/${categoryId}?${paramsString}`,
           token,
           setError,
         );
-        const { plans: userPlans, ...userDetails } = res;
-        console.log(userPlans, userDetails);
-        setPlans(userPlans.items || []);
-        setUser(userDetails || {});
-        setPagesCount(userPlans.pagesCount || 0);
+        const { plans: categoryPlans, ...categoryDetails } = res;
+        setPlans(categoryPlans.items || []);
+        setCategory(categoryDetails || null);
+        setPagesCount(categoryPlans.pagesCount || 0);
         setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log("Error fetching data:", error);
       }
     })();
   }, [page]);
+
+  if (!isLoading && category === null) return <>Category not found.</>;
 
   if (!isLoading && plans.length === 0) return <>There is no plans.</>;
 
@@ -60,27 +63,16 @@ const UserPage = () => {
         marginBottom: 4,
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{
-          mb: 4,
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-        }}
-      >
-        {user.name && (
-          <>
-            <Avatar
-              alt={user.name}
-              src={user.imageURL}
-              sx={{ bgcolor: "#4CAF50" }}
-            />
-            {user.name}
-          </>
-        )}
-      </Typography>
+      {category && (
+        <>
+          <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
+            {category.name}
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 4 }}>
+            {category.description}
+          </Typography>
+        </>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -110,4 +102,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default CategoryPage;

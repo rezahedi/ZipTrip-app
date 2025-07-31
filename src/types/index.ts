@@ -39,10 +39,23 @@ export interface Stop {
   updatedAt?: Date;
 }
 
+export interface PlanWithStops extends Plan {
+  stops: Stop[];
+}
+
 export interface Category {
   _id: string;
   name: string;
   description: string;
+  imageURL: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
   imageURL: string;
   createdAt?: Date;
   updatedAt?: Date;

@@ -4,14 +4,15 @@ import { getData } from "@/util";
 import { Box, Typography } from "@mui/material";
 import PlanDetails from "@/Components/Common/PlanDetails";
 import { useAuth } from "@/context/AuthContext";
+import { PlanWithStops } from "@/types";
 
 const PlanPage = () => {
-  const [plan, setPlan] = useState(null);
+  const [plan, setPlan] = useState<PlanWithStops | null>(null);
   const { planId } = useParams();
   const { token } = useAuth();
 
   useEffect(() => {
-    const fetchSinglePlan = async (planId) => {
+    const fetchSinglePlan = async (planId: string) => {
       try {
         const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/plans/${planId}`;
         const params = token
@@ -32,7 +33,7 @@ const PlanPage = () => {
   return (
     <Box sx={{ paddingY: 4 }}>
       {plan ? (
-        <PlanDetails {...plan} />
+        <PlanDetails plan={plan} />
       ) : (
         <Typography variant="h6">Loading...</Typography>
       )}

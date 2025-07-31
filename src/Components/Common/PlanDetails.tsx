@@ -18,24 +18,25 @@ import Stops from "./Stops";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { AddBookmark, removeBookmark } from "@/util/dashboard";
-import { Plan, Stop as StopType } from "@/types";
+import { PlanWithStops } from "@/types";
 
-const PlanDetails = ({
-  _id: planId,
-  title,
-  rate,
-  reviewCount,
-  type,
-  distance,
-  stopCount,
-  images,
-  description,
-  duration,
-  userId,
-  categoryId,
-  stops,
-  isBookmarked,
-}: Plan & { stops: StopType[] }) => {
+const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
+  const {
+    _id: planId,
+    title,
+    description,
+    images,
+    stops,
+    type,
+    stopCount,
+    distance,
+    duration,
+    categoryId,
+    userId,
+    rate,
+    reviewCount,
+    isBookmarked,
+  } = plan;
   const [bookmark, setBookmark] = useState(isBookmarked);
   const { token } = useAuth();
   const { openLogin } = useAuthModal();

@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const NotFoundHeader = () => {
