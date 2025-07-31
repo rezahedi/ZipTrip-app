@@ -3,7 +3,7 @@ import axios from "axios";
 const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
 // Fetch data with query parameters
-const getData = async (url, params = {}) => {
+const getData = async (url: string, params = {}) => {
   try {
     let res = await axios.get(url, params);
     let data = await res.data;
@@ -15,7 +15,7 @@ const getData = async (url, params = {}) => {
 };
 
 // Fetch all data (without params) from a given URL
-const getAllData = async (url) => {
+const getAllData = async (url: string) => {
   try {
     let res = await axios.get(url);
     let data = await res.data;
@@ -32,7 +32,7 @@ const getAllData = async (url) => {
 //   password: "1234John",
 // };
 
-const postData = async (url, requestBody = {}, config = {}) => {
+const postData = async (url: string, requestBody = {}, config = {}) => {
   try {
     const res = await axios.post(url, requestBody, config);
     return res.data;
@@ -42,7 +42,11 @@ const postData = async (url, requestBody = {}, config = {}) => {
   }
 };
 
-const fetchPlans = async (endpoint, token = "", onError) => {
+const fetchPlans = async (
+  endpoint: string,
+  token = "",
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/${endpoint}`, {
       ...(token && {

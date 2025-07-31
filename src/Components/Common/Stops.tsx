@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Stop from "./Stop";
 import { Box, Typography } from "@mui/material";
 import {
@@ -11,8 +10,9 @@ import {
   TimelineContent,
 } from "@mui/lab";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
+import { Stop as StopType } from "@/types";
 
-const Stops = ({ stops }) => {
+const Stops = ({ stops }: { stops: StopType[] }) => {
   return (
     <Box sx={{ mt: 4, width: { md: 760, xs: "100%" } }}>
       <Typography variant="h4" sx={{ mb: 2 }}>
@@ -53,7 +53,7 @@ const Stops = ({ stops }) => {
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <Stop {...stop} />
+              <Stop detail={stop} />
             </TimelineContent>
           </TimelineItem>
         ))}
@@ -70,16 +70,6 @@ const Stops = ({ stops }) => {
       </Timeline>
     </Box>
   );
-};
-
-Stops.propTypes = {
-  stops: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      imageURL: PropTypes.string.isRequired,
-      address: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
 };
 
 export default Stops;

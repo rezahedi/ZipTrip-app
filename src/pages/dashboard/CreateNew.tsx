@@ -10,17 +10,32 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { getCategories, createPlan } from "@/util/dashboard";
+import {
+  getCategories,
+  createPlan,
+  PassingPlan,
+  PassingStop,
+} from "@/util/dashboard";
 import { useAuth } from "@/context/AuthContext";
 import PlanImages from "./components/PlanImages";
 import Stops from "./components/Stops";
+import { Category } from "@/types";
 
 const TYPES = ["Full day", "Half day", "Night"];
 
 function CreateNew() {
-  const [plan, setPlan] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
+  const [plan, setPlan] = useState<PassingPlan>({
+    title: "",
+    description: "",
+    images: [],
+    stops: [],
+    type: "",
+    distance: "",
+    duration: "",
+    categoryId: "",
+  });
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { token, user } = useAuth();
 
@@ -28,10 +43,12 @@ function CreateNew() {
 
   useEffect(() => {
     // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
-    if (!token || !user) return navigate("/");
+    if (!token || !user) {
+      navigate("/");
+      return;
+    }
 
     (async () => {
-      setPlan({ userId: user.userId, stops: [] });
       const categoriesData = await getCategories(token, setError);
 
       if (!categoriesData) return;
@@ -40,7 +57,7 @@ function CreateNew() {
     })();
   }, []);
 
-  const handleCreate = async (e) => {
+  const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // A random number with one decimal greater than 0 and less than 5
@@ -85,7 +102,7 @@ function CreateNew() {
           {/* Image */}
           <PlanImages
             images={plan.images || []}
-            setImages={(images) => setPlan({ ...plan, images })}
+            setImages={(images: string[]) => setPlan({ ...plan, images })}
           />
 
           {/* Category */}
@@ -183,7 +200,7 @@ function CreateNew() {
           {/* Stops */}
           <Stops
             stops={plan.stops || []}
-            setStops={(stops) => setPlan({ ...plan, stops })}
+            setStops={(stops: PassingStop[]) => setPlan({ ...plan, stops })}
           />
 
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>

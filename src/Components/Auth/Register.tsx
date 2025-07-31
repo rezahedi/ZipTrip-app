@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -16,28 +15,36 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-import { postData } from "../../util";
-import { useAuth } from "../../context/AuthContext";
+import { postData } from "@/util";
+import { useAuth } from "@/context/AuthContext";
 // import LoginPage from "./Login";
 
 const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
 
-const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
+const RegisterPage = ({
+  open,
+  handleClose,
+  onSwitchToLogin,
+}: {
+  open: boolean;
+  handleClose: () => void;
+  onSwitchToLogin: () => void;
+}) => {
   const isMobile = window.innerWidth < 600;
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [checkbox, setCheckbox] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [checkbox, setCheckbox] = useState<boolean>(false);
 
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isValid, setIsValid] = useState(true);
+  const [nameError, setNameError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean>(true);
 
   const { login } = useAuth();
 
-  const handleNameChange = (event) => {
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
     setName(newName);
 
@@ -50,7 +57,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     }
   };
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = event.target.value;
     setEmail(newEmail);
 
@@ -68,7 +75,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     }
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
 
@@ -86,7 +93,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
     }
   };
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckbox(event.target.checked);
   };
 
@@ -131,7 +138,7 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
         window.location.reload();
         handleDialogClose();
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         setErrorMessage(error.response.data.msg);
         console.log("Error message:", errorMessage);
@@ -356,12 +363,6 @@ const RegisterPage = ({ open, handleClose, onSwitchToLogin }) => {
       {/* Conditionally show LoginPage if showLogin is true */}
     </Dialog>
   );
-};
-
-RegisterPage.propTypes = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func,
-  onSwitchToLogin: PropTypes.func,
 };
 
 export default RegisterPage;

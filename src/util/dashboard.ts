@@ -1,10 +1,46 @@
+export interface PassingStop {
+  name: string;
+  imageURL: string;
+  address: string;
+  description: string;
+  location: [number, number];
+  sequence: number;
+}
+export interface PassingStopWithId extends PassingStop {
+  _id: string;
+}
+
+export interface PassingPlan {
+  title: string;
+  description: string;
+  images: string[];
+  type: string;
+  distance: string;
+  duration: string;
+  categoryId: string;
+  stops: PassingStop[];
+}
+
+export interface PassingPlanWithId extends PassingPlan {
+  _id: string;
+  stops: PassingStopWithId[];
+}
+
 const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
-const getMyPlans = async (params, token, onError) => {
+const getMyPlans = async (
+  params: string,
+  token = "",
+  onError: (error: string) => void,
+) => {
   return await getData(`/account/plans?${params}`, token, onError);
 };
 
-const deletePlan = async (token, planId, onError) => {
+const deletePlan = async (
+  token: string,
+  planId: string,
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/plans/${planId}`, {
       method: "DELETE",
@@ -24,11 +60,19 @@ const deletePlan = async (token, planId, onError) => {
   }
 };
 
-const getPlan = async (token, planId, onError) => {
+const getPlan = async (
+  token: string,
+  planId: string,
+  onError: (error: string) => void,
+) => {
   return await getData(`/account/plans/${planId}`, token, onError);
 };
 
-const updatePlan = async (token, plan, onError) => {
+const updatePlan = async (
+  token: string,
+  plan: PassingPlanWithId,
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/plans/${plan._id}`, {
       method: "PUT",
@@ -50,7 +94,11 @@ const updatePlan = async (token, plan, onError) => {
   }
 };
 
-const createPlan = async (token, plan, onError) => {
+const createPlan = async (
+  token: string,
+  plan: PassingPlan,
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/plans`, {
       method: "POST",
@@ -72,11 +120,18 @@ const createPlan = async (token, plan, onError) => {
   }
 };
 
-const getCategories = async (token, onError) => {
+const getCategories = async (
+  token: string,
+  onError: (error: string) => void,
+) => {
   return await getData(`/account/categories`, token, onError);
 };
 
-const AddBookmark = async (token, planId, onError) => {
+const AddBookmark = async (
+  token: string,
+  planId: string,
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks/${planId}`, {
       method: "POST",
@@ -96,7 +151,11 @@ const AddBookmark = async (token, planId, onError) => {
   }
 };
 
-const removeBookmark = async (token, planId, onError) => {
+const removeBookmark = async (
+  token: string,
+  planId: string,
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks/${planId}`, {
       method: "DELETE",
@@ -116,11 +175,19 @@ const removeBookmark = async (token, planId, onError) => {
   }
 };
 
-const getBookmarks = async (params, token, onError) => {
+const getBookmarks = async (
+  params: string,
+  token: string,
+  onError: (error: string) => void,
+) => {
   return await getData(`/account/bookmarks?${params}`, token, onError);
 };
 
-const getData = async (endpoint, token = "", onError) => {
+const getData = async (
+  endpoint: string,
+  token: string = "",
+  onError: (error: string) => void,
+) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}${endpoint}`, {
       ...(token && {

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Box, Typography, Avatar, Skeleton } from "@mui/material";
-import PropTypes from "prop-types";
-import { fetchPlans } from "../../util";
+import { fetchPlans } from "@/util";
 import { Link } from "react-router-dom";
+import { Category } from "@/types";
 
-const CategorySection = ({ title }) => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const CategorySection = ({ title }: { title: string }) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   // TODO: Add skeleton loading feature later
 
@@ -101,10 +101,6 @@ const CategorySection = ({ title }) => {
       </Box>
     </Box>
   );
-};
-
-CategorySection.propTypes = {
-  title: PropTypes.string.isRequired,
 };
 
 export default CategorySection;

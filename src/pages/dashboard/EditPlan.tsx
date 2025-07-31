@@ -10,27 +10,38 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { getPlan, updatePlan, getCategories } from "@/util/dashboard";
+import {
+  getPlan,
+  updatePlan,
+  getCategories,
+  PassingPlanWithId,
+} from "@/util/dashboard";
 import { useAuth } from "@/context/AuthContext";
 import PlanImages from "./components/PlanImages";
 import Stops from "./components/Stops";
+import { Category } from "@/types";
 
 const TYPES = ["Full day", "Half day", "Night"];
 
 function EditPlan() {
-  const [plan, setPlan] = useState({});
-  const [error, setError] = useState(null);
+  const [plan, setPlan] = useState<PassingPlanWithId>({});
+  const [error, setError] = useState<string | null>(null);
   const { planId } = useParams();
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
-  const [isPlanExists, setIsPlanExists] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isPlanExists, setIsPlanExists] = useState<boolean>(false);
   const { token, user } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
-    if (!token || !user) return navigate("/");
-    if (!planId) return navigate("/account");
+    if (!token || !user) {
+      navigate("/");
+      return;
+    }
+    if (!planId) {
+      navigate("/account");
+      return;
+    }
 
     (async () => {
       setIsLoading(true);
@@ -44,14 +55,13 @@ function EditPlan() {
       setPlan({
         ...data,
         categoryId: data.categoryId?._id,
-        userId: data.userId?._id,
       });
       setCategories(categoriesData);
       setIsLoading(false);
     })();
   }, []);
 
-  const handleUpdate = async (e) => {
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await updatePlan(token, plan, setError);
     if (!result) return;
@@ -95,7 +105,7 @@ function EditPlan() {
           {/* Image */}
           <PlanImages
             images={plan.images || []}
-            setImages={(images) => setPlan({ ...plan, images })}
+            setImages={(images: string[]) => setPlan({ ...plan, images })}
           />
 
           {/* Category */}

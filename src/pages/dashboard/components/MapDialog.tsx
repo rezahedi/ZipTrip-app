@@ -9,28 +9,40 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { useMap, Map, Marker } from "@vis.gl/react-google-maps";
+import { useMap, Map, Marker, MapMouseEvent } from "@vis.gl/react-google-maps";
 import AutocompleteWebComponent from "./AutocompleteWebComponent";
+import { PassingStop } from "@/util/dashboard";
 
 // Default center and zoom level to show entire United States on the map
 const DEFAULT_CENTER = { lat: 39.8283, lng: -98.5795 };
 const DEFAULT_ZOOM = 4;
 
-const MapDialog = ({ isOpen, onClose, onConfirm }) => {
+const MapDialog = ({
+  isOpen,
+  onClose,
+  onConfirm,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (stop: PassingStop) => void;
+}) => {
   const dummyDiv = useRef(null);
-  const [selected, setSelected] = useState(null);
-  const [placeId, setPlaceId] = useState(null);
-  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [selected, setSelected] = useState<google.maps.LatLngLiteral | null>(
+    null,
+  );
+  const [placeId, setPlaceId] = useState<string>("");
+  const [selectedPlace, setSelectedPlace] = useState<PassingStop | null>(null);
   const isMobile = window.innerWidth < 600;
-  const [placeSelect, setPlaceSelect] = useState(null);
+  const [autocompleteBounds, setAutocompleteBounds] =
+    useState<google.maps.LatLngBounds | null>(null);
   const map = useMap();
 
   useEffect(() => {
-    if (!placeSelect || !placeSelect.viewport || !map) return;
-    map.fitBounds(placeSelect.viewport);
-  }, [placeSelect]);
+    if (!autocompleteBounds || !map) return;
+    map.fitBounds(autocompleteBounds);
+  }, [autocompleteBounds]);
 
-  const handleMapClick = (e) => {
+  const handleMapClick = (e: MapMouseEvent) => {
     if (!e.detail.placeId) return;
     setSelected(e.detail.latLng);
     setPlaceId(e.detail.placeId);
@@ -57,18 +69,22 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
       (place, status) => {
         if (
           status === window.google.maps.places.PlacesServiceStatus.OK &&
-          place
+          place &&
+          place.geometry &&
+          place.geometry.location
         ) {
           const location = place.geometry.location;
           const lat = location.lat();
           const lng = location.lng();
-          const imageURL = place.photos?.[0]?.getUrl({ maxWidth: 400 }) || null;
+          const imageURL = place.photos?.[0]?.getUrl({ maxWidth: 400 }) || "";
 
           setSelectedPlace({
-            name: place.name,
-            address: place.formatted_address,
+            name: place.name || "",
+            address: place.formatted_address || "",
             location: [lat, lng],
             imageURL,
+            description: "",
+            sequence: 0,
           });
         } else {
           console.warn("Failed to fetch place details:", status);
@@ -78,6 +94,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
   }, [placeId]);
 
   const handleAdd = () => {
+    if (!selectedPlace) return;
     onConfirm(selectedPlace);
   };
 
@@ -95,7 +112,7 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
-              <AutocompleteWebComponent onPlaceSelect={setPlaceSelect} />
+              <AutocompleteWebComponent onPlaceSelect={setAutocompleteBounds} />
               <Map
                 defaultCenter={
                   selected
@@ -106,10 +123,8 @@ const MapDialog = ({ isOpen, onClose, onConfirm }) => {
                 style={{ width: "100%", height: "90%" }}
                 onClick={handleMapClick}
                 disableDefaultUI={false}
-                options={{
-                  gestureHandling: "greedy",
-                  streetViewControl: false,
-                }}
+                gestureHandling="greedy"
+                streetViewControl={false}
               >
                 {selected && (
                   <Marker position={{ lat: selected.lat, lng: selected.lng }} />

@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -10,23 +9,34 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { PassingStop } from "@/util/dashboard";
 
-const StopDialog = ({ isOpen, onClose, onConfirm }) => {
+const StopDialog = ({
+  isOpen,
+  onClose,
+  onConfirm,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (stop: PassingStop) => void;
+}) => {
   const isMobile = window.innerWidth < 600;
-  const nameRef = useRef(null);
-  const imageRef = useRef(null);
-  const addressRef = useRef(null);
-  const latRef = useRef(null);
-  const lngRef = useRef(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+  const addressRef = useRef<HTMLInputElement>(null);
+  const latRef = useRef<HTMLInputElement>(null);
+  const lngRef = useRef<HTMLInputElement>(null);
 
-  const handleAdd = (e) => {
+  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     onConfirm({
-      name: nameRef.current.value,
-      imageURL: imageRef.current.value,
-      address: addressRef.current.value,
-      location: [latRef.current.value, lngRef.current.value],
+      name: nameRef.current!.value || "",
+      imageURL: imageRef.current!.value || "",
+      address: addressRef.current!.value || "",
+      location: [Number(latRef.current!.value), Number(lngRef.current!.value)],
+      description: "",
+      sequence: 0,
     });
   };
 
@@ -42,7 +52,7 @@ const StopDialog = ({ isOpen, onClose, onConfirm }) => {
       <form onSubmit={handleAdd}>
         <Box style={{ padding: "10px 30px" }}>
           <DialogTitle id="alert-dialog-title">
-            Type in Your place Manually
+            Type in Your Place Manually
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -118,12 +128,6 @@ const StopDialog = ({ isOpen, onClose, onConfirm }) => {
       </form>
     </Dialog>
   );
-};
-
-StopDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
 };
 
 export default StopDialog;

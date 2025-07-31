@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { fetchPlans } from "../util";
+import { fetchPlans } from "@/util";
 import { Typography, Box, Link } from "@mui/material";
+import { Category } from "@/types";
 
 function Footer() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchAllCategories = async () => {
@@ -17,7 +18,7 @@ function Footer() {
     fetchAllCategories();
   }, []);
 
-  const setError = (errorMessage) => {
+  const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
   };
 

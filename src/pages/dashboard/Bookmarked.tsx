@@ -8,19 +8,20 @@ import AlertDialog from "@/Components/Common/AlertDialog";
 import { useAuth } from "@/context/AuthContext";
 import { getQueryValue } from "@/util/url";
 import Pagination from "@/Components/Common/Pagination";
+import { Plan } from "@/types";
 
 const PAGE_SIZE = 9;
 
 function Bookmarked() {
-  const [plans, setPlans] = useState([]);
-  const [error, setError] = useState(null);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [selectedPlanToRemove, setSelectedPlanToRemove] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [selectedPlanToRemove, setSelectedPlanToRemove] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { token } = useAuth();
   const navigate = useNavigate();
   let page = getQueryValue(location.search, "page") || "1";
-  const [pagesCount, setPagesCount] = useState(0);
+  const [pagesCount, setPagesCount] = useState<number>(0);
 
   useEffect(() => {
     page = getQueryValue(location.search, "page") || "1";
@@ -34,7 +35,7 @@ function Bookmarked() {
       setIsLoading(true);
       const params = new URLSearchParams(location.search);
       params.set("page", page);
-      params.set("size", PAGE_SIZE);
+      params.set("size", PAGE_SIZE.toString());
       const paramsString = params.toString();
 
       const data = await getBookmarks(paramsString, token, setError);
@@ -53,11 +54,11 @@ function Bookmarked() {
 
     // Filter out the removed plan from the state
     setPlans(plans.filter((plan) => plan._id !== selectedPlanToRemove));
-    setSelectedPlanToRemove(null);
+    setSelectedPlanToRemove("");
     setAlertOpen(false);
   };
 
-  const openDeleteDialog = (planId) => {
+  const openDeleteDialog = (planId: string) => {
     setSelectedPlanToRemove(planId);
     setAlertOpen(true);
   };
@@ -111,7 +112,7 @@ function Bookmarked() {
                 <PlanCard
                   image={plan.images[0]}
                   title={plan.title}
-                  rate={plan.rate}
+                  rating={plan.rating}
                   type={plan.type}
                   distance={plan.distance}
                   stopCount={plan.stopCount}

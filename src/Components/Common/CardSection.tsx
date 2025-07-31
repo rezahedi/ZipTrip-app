@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Box, Typography } from "@mui/material";
-import PropTypes from "prop-types";
 import PlanCard from "./PlanCard";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import PlanCardSkeleton from "./PlanCardSkeleton";
-import { fetchPlans } from "../../util";
+import { fetchPlans } from "@/util";
+import { Plan } from "@/types";
 
-const CardSection = ({ title, category = "", search = "", size = 4 }) => {
+const CardSection = ({
+  title,
+  category = "",
+  search = "",
+  size = 4,
+}: {
+  title: string;
+  category?: string;
+  search?: string;
+  size?: number;
+}) => {
   const { token } = useAuth();
-  const [plans, setPlans] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   // TODO: Add skeleton loading feature later
 
@@ -66,9 +76,9 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
                 {...plan}
                 planId={plan._id}
                 image={plan.images[0]}
-                rate={plan.rating}
-                distance={`${plan.distance}` + " " + `mi`}
-                stopCount={`${plan.stopCount}` + " " + `places`}
+                rating={plan.rating}
+                distance={plan.distance}
+                stopCount={plan.stopCount}
                 isBookmarked={plan.isBookmarked}
               />
             </Grid>
@@ -77,13 +87,6 @@ const CardSection = ({ title, category = "", search = "", size = 4 }) => {
       </Box>
     </Box>
   );
-};
-
-CardSection.propTypes = {
-  title: PropTypes.string.isRequired,
-  category: PropTypes.string,
-  search: PropTypes.string,
-  size: PropTypes.number,
 };
 
 export default CardSection;

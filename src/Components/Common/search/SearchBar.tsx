@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { TextField, InputAdornment, IconButton } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getQueryValue } from "../../../util/url";
+import { getQueryValue } from "@/util/url";
+import { Button } from "@/Components/ui/button";
 
 const SearchBar = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const SearchBar = () => {
     setSearchQuery(q);
   }, [location.search]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!searchQuery) return;
@@ -24,7 +25,7 @@ const SearchBar = () => {
     navigate(`/search?q=${searchQuery}`);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setSearchQuery("");
     navigate("/");
@@ -54,17 +55,17 @@ const SearchBar = () => {
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <IconButton onClick={handleSubmit}>
+                  <Button type="submit">
                     <SearchIcon />
-                  </IconButton>
+                  </Button>
                 </InputAdornment>
               ),
               ...(q && {
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={handleCancel}>
+                    <Button onClick={handleCancel}>
                       <CloseIcon />
-                    </IconButton>
+                    </Button>
                   </InputAdornment>
                 ),
               }),

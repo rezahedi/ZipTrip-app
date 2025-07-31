@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Typography,
@@ -16,9 +15,10 @@ import ShareIcon from "@mui/icons-material/Share";
 import StopsOnMap from "./StopsOnMap";
 import { Link } from "react-router-dom";
 import Stops from "./Stops";
-import { useAuth } from "../../context/AuthContext";
-import { useAuthModal } from "../../context/AuthModalContext";
-import { AddBookmark, removeBookmark } from "../../util/dashboard";
+import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
+import { AddBookmark, removeBookmark } from "@/util/dashboard";
+import { Plan, Stop as StopType } from "@/types";
 
 const PlanDetails = ({
   _id: planId,
@@ -35,12 +35,12 @@ const PlanDetails = ({
   categoryId,
   stops,
   isBookmarked,
-}) => {
+}: Plan & { stops: StopType[] }) => {
   const [bookmark, setBookmark] = useState(isBookmarked);
   const { token } = useAuth();
   const { openLogin } = useAuthModal();
 
-  const handleBookmark = async (e) => {
+  const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!token) return openLogin();
@@ -58,7 +58,7 @@ const PlanDetails = ({
     }
   };
 
-  const setError = (errorMessage) => {
+  const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
   };
 
@@ -210,34 +210,3 @@ const PlanDetails = ({
 };
 
 export default PlanDetails;
-
-PlanDetails.propTypes = {
-  _id: PropTypes.string,
-  title: PropTypes.string,
-  rate: PropTypes.number,
-  reviewCount: PropTypes.number,
-  type: PropTypes.string,
-  distance: PropTypes.number,
-  stopCount: PropTypes.number,
-  description: PropTypes.string,
-  images: PropTypes.arrayOf(PropTypes.string),
-  duration: PropTypes.number,
-  userId: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    imageURL: PropTypes.string,
-  }),
-  categoryId: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-  }),
-  stops: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      imageURL: PropTypes.string,
-      address: PropTypes.string,
-      location: PropTypes.arrayOf(PropTypes.number),
-    }),
-  ),
-  isBookmarked: PropTypes.bool,
-};

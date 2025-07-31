@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
 import { Box } from "@mui/material";
+import { Stop as StopType } from "@/types";
 
-const MarkersAndPath = ({ stops }) => {
+const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
   const map = useMap();
 
   useEffect(() => {
@@ -70,7 +71,7 @@ MarkersAndPath.propTypes = {
   ),
 };
 
-const StopsOnMap = ({ stops }) => {
+const StopsOnMap = ({ stops }: { stops: StopType[] }) => {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
       <Box sx={{ width: "100%", height: { xs: "300px", sm: "100%" } }}>
@@ -78,12 +79,9 @@ const StopsOnMap = ({ stops }) => {
           defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
           defaultZoom={4}
           style={{ width: "100%", height: "100%" }}
-          gestureHandling={"greedy"}
-          options={{
-            gestureHandling: "cooperative",
-            streetViewControl: false,
-            fullscreenControl: false,
-          }}
+          gestureHandling="cooperative"
+          streetViewControl={false}
+          fullscreenControl={false}
         />
         <MarkersAndPath stops={stops} />
       </Box>

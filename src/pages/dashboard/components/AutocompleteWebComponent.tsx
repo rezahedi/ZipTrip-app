@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { Dispatch, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 
-const AutocompleteWebComponent = ({ onPlaceSelect }) => {
-  const ref = useRef(null);
+const AutocompleteWebComponent = ({
+  onPlaceSelect,
+}: {
+  onPlaceSelect: Dispatch<google.maps.LatLngBounds | null>;
+}) => {
+  const ref = useRef<HTMLElement | null>(null);
 
   useMapsLibrary("places");
 
@@ -20,7 +24,7 @@ const AutocompleteWebComponent = ({ onPlaceSelect }) => {
         fields: ["displayName", "formattedAddress", "location", "viewport"],
       });
 
-      onPlaceSelect(place);
+      onPlaceSelect(place.viewport);
     };
 
     el.addEventListener("gmp-select", handleGmpSelect);
@@ -53,3 +57,15 @@ AutocompleteWebComponent.propTypes = {
 };
 
 export default AutocompleteWebComponent;
+
+// Add custom element type for TypeScript
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "gmp-place-autocomplete": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      > & { ref?: React.Ref<HTMLElement>; placeholder?: string };
+    }
+  }
+}

@@ -30,7 +30,7 @@ const UserMenu = ({
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="hidden sm:block w-56" align="start">
+      <DropdownMenuContent className="hidden sm:block w-56" align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -16,27 +15,35 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
-import { postData } from "../../util";
-import { useAuth } from "../../context/AuthContext";
+import { postData } from "@/util";
+import { useAuth } from "@/context/AuthContext";
 
 const LOGIN_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`;
 const FORGOT_PASSWORD_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/request-reset-password`;
 
-const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
+const LoginPage = ({
+  open,
+  handleClose,
+  onSwitchToRegister,
+}: {
+  open: boolean;
+  handleClose: () => void;
+  onSwitchToRegister: () => void;
+}) => {
   const isMobile = window.innerWidth < 600;
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [checkbox, setCheckbox] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [isValid, setIsValid] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [checkbox, setCheckbox] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const { login } = useAuth();
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = event.target.value;
     setEmail(newEmail);
     setErrorMessage("");
@@ -55,7 +62,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
     }
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
     setErrorMessage("");
@@ -74,7 +81,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
     }
   };
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckbox(event.target.checked);
   };
 
@@ -107,7 +114,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
         window.location.reload();
         handleDialogClose();
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error.response) {
         setErrorMessage(error.response.data.msg);
         console.log("Server error message:", error.response.data.msg);
@@ -127,7 +134,7 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
       await postData(FORGOT_PASSWORD_URL, { email });
       setSuccessMessage("Reset link sent. Check your email.");
       setErrorMessage("");
-    } catch (error) {
+    } catch (error: any) {
       setSuccessMessage("");
       setErrorMessage(
         error.response?.data?.msg || "Failed to send reset link.",
@@ -404,12 +411,6 @@ const LoginPage = ({ open, handleClose, onSwitchToRegister }) => {
       </DialogContent>
     </Dialog>
   );
-};
-
-LoginPage.propTypes = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func,
-  onSwitchToRegister: PropTypes.func,
 };
 
 export default LoginPage;

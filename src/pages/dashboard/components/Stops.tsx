@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   FormControl,
@@ -15,22 +14,35 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import FormatColorTextOutlinedIcon from "@mui/icons-material/FormatColorTextOutlined";
 import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
+import { PassingStop } from "@/util/dashboard";
 
-const Stops = ({ stops, setStops }) => {
+const Stops = ({
+  stops,
+  setStops,
+}: {
+  stops: PassingStop[];
+  setStops: (stops: PassingStop[]) => void;
+}) => {
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
   const [isStopDialogOpen, setIsStopDialogOpen] = useState(false);
 
-  const handleDeleteStop = (stopIndex) => {
+  const handleDeleteStop = (stopIndex: number) => {
     const newStops = [...stops];
     newStops.splice(stopIndex, 1);
     setStops(newStops);
   };
 
-  const handleStopChange = (event) => {
+  const handleStopChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const index = Number(event.target.dataset.index);
-    const type = event.target.dataset.type;
+    const type = event.target.dataset.type as keyof PassingStop | undefined;
+    if (index === undefined || type === undefined) return;
     const newStops = [...stops];
-    newStops[index][type] = event.target.value;
+    newStops[index] = {
+      ...newStops[index],
+      [type]: event.target.value,
+    };
     setStops(newStops);
   };
 
@@ -42,7 +54,7 @@ const Stops = ({ stops, setStops }) => {
     setIsMapDialogOpen(false);
   };
 
-  const handleAddPlaceConfirm = (stop) => {
+  const handleAddPlaceConfirm = (stop: PassingStop) => {
     setStops([...stops, stop]);
     setIsMapDialogOpen(false);
   };
@@ -53,7 +65,7 @@ const Stops = ({ stops, setStops }) => {
   const handleCloseStop = () => {
     setIsStopDialogOpen(false);
   };
-  const handleAddManuallyConfirm = (stop) => {
+  const handleAddManuallyConfirm = (stop: PassingStop) => {
     setStops([...stops, stop]);
     setIsStopDialogOpen(false);
   };
@@ -209,11 +221,6 @@ const Stops = ({ stops, setStops }) => {
       />
     </FormControl>
   );
-};
-
-Stops.propTypes = {
-  stops: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setStops: PropTypes.func.isRequired,
 };
 
 export default Stops;

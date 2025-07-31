@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   FormControl,
@@ -10,24 +9,30 @@ import {
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const PlanImages = ({ images, setImages }) => {
-  const inputRef = useRef(null);
+const PlanImages = ({
+  images,
+  setImages,
+}: {
+  images: string[];
+  setImages: (images: string[]) => void;
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleAddImage = () => {
     if (!inputRef) return;
 
-    setImages([...images, inputRef.current.value]);
-    inputRef.current.value = "";
-    inputRef.current.focus();
+    setImages([...images, inputRef.current!.value || ""]);
+    inputRef.current!.value = "";
+    inputRef.current!.focus();
   };
 
-  const handleDeleteImage = (imageIndex) => {
+  const handleDeleteImage = (imageIndex: number) => {
     const newImages = [...images];
     newImages.splice(imageIndex, 1);
     setImages(newImages);
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const index = Number(event.target.dataset.index);
     const newImages = [...images];
     newImages[index] = event.target.value;
@@ -77,11 +82,6 @@ const PlanImages = ({ images, setImages }) => {
       </Box>
     </FormControl>
   );
-};
-
-PlanImages.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setImages: PropTypes.func.isRequired,
 };
 
 export default PlanImages;

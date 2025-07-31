@@ -1,8 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import { Stop as StopType } from "@/types";
 
-const Stop = ({ name, imageURL, address }) => {
+const Stop = ({ detail }: { detail: StopType }) => {
+  const { name, imageURL, address } = detail;
   return (
     <Card
       sx={{
@@ -40,12 +41,6 @@ const Stop = ({ name, imageURL, address }) => {
       </CardContent>
     </Card>
   );
-};
-
-Stop.propTypes = {
-  name: PropTypes.string.isRequired,
-  imageURL: PropTypes.string,
-  address: PropTypes.string.isRequired,
 };
 
 export default Stop;
