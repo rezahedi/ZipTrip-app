@@ -52,7 +52,7 @@ function Bookmarked() {
 
   const handleRemovePlan = async () => {
     if (!token) return;
-    
+
     const result = await removeBookmark(token, selectedPlanToRemove, setError);
 
     if (!result) return;

@@ -2,25 +2,23 @@ import { createContext, useContext, useState } from "react";
 import React from "react";
 import PropTypes from "prop-types";
 import { AuthModalProvider } from "./AuthModalContext";
-import { User } from "@/types"
+import { User } from "@/types";
 
 type AuthContextType = {
   user: User | null;
   token: string | null;
   login: (userData: User) => void;
   logout: () => void;
-}
+};
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
   login: () => {},
-  logout: () => {}
+  logout: () => {},
 });
 
-const AuthProvider = ({ children }: {
-  children: React.ReactNode
-}) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;

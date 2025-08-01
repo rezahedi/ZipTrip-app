@@ -51,7 +51,7 @@ function MyPlans() {
   }, [page]);
 
   const handleRemovePlan = async () => {
-    if(!token) return;
+    if (!token) return;
 
     const result = await deletePlan(token, selectedPlanToRemove, setError);
 

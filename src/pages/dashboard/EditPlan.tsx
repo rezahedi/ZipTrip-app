@@ -72,7 +72,7 @@ function EditPlan() {
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!token) return;
+    if (!token) return;
 
     const result = await updatePlan(token, plan, setError);
     if (!result) return;

@@ -2,7 +2,10 @@ import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Pagination = ({ page = 1, pagesCount }: {
+const Pagination = ({
+  page = 1,
+  pagesCount,
+}: {
   page: number;
   pagesCount: number;
 }) => {

@@ -18,9 +18,11 @@ const AuthModalContext = createContext<AuthModalContextType>({
   closeRegister: () => {},
 });
 
-export const AuthModalProvider = ({ children }:
-  { children: React.ReactNode }
-) => {
+export const AuthModalProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false);
 
