@@ -10,15 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { User } from "@/types";
 
 const UserMenu = ({
   user,
   handleLogoutClick,
 }: {
-  user: {
-    name: string;
-    imageURL: string;
-  };
+  user: User;
   handleLogoutClick: () => void;
 }) => {
   return (
@@ -30,7 +28,7 @@ const UserMenu = ({
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="hidden sm:block w-56" align="start">
+      <DropdownMenuContent className="hidden sm:block w-56" align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>Profile</DropdownMenuItem>
