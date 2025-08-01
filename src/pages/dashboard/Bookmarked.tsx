@@ -29,7 +29,10 @@ function Bookmarked() {
 
   useEffect(() => {
     // FIXME: Instead of just redirecting user to home, show a not authorized message with login button or redirect to login page
-    if (!token) return navigate("/");
+    if (!token) {
+      navigate("/");
+      return;
+    }
 
     (async () => {
       setIsLoading(true);
@@ -48,6 +51,8 @@ function Bookmarked() {
   }, [page]);
 
   const handleRemovePlan = async () => {
+    if (!token) return;
+    
     const result = await removeBookmark(token, selectedPlanToRemove, setError);
 
     if (!result) return;
@@ -112,7 +117,7 @@ function Bookmarked() {
                 <PlanCard
                   image={plan.images[0]}
                   title={plan.title}
-                  rating={plan.rating}
+                  rate={plan.rate}
                   type={plan.type}
                   distance={plan.distance}
                   stopCount={plan.stopCount}

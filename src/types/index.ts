@@ -57,6 +57,5 @@ export interface User {
   name: string;
   email: string;
   imageURL: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  token: string;
 }

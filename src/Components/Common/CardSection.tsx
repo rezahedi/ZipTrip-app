@@ -76,7 +76,7 @@ const CardSection = ({
                 {...plan}
                 planId={plan._id}
                 image={plan.images[0]}
-                rating={plan.rating}
+                rate={plan.rate}
                 distance={plan.distance}
                 stopCount={plan.stopCount}
                 isBookmarked={plan.isBookmarked}

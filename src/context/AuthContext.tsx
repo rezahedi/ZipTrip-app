@@ -2,31 +2,40 @@ import { createContext, useContext, useState } from "react";
 import React from "react";
 import PropTypes from "prop-types";
 import { AuthModalProvider } from "./AuthModalContext";
+import { User } from "@/types"
 
-const AuthContext = createContext();
+type AuthContextType = {
+  user: User | null;
+  token: string | null;
+  login: (userData: User) => void;
+  logout: () => void;
+}
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  token: null,
+  login: () => {},
+  logout: () => {}
+});
+
+const AuthProvider = ({ children }: {
+  children: React.ReactNode
+}) => {
+  const [user, setUser] = useState<User | null>(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  const [token, setToken] = useState(() => {
+  const [token, setToken] = useState<string | null>(() => {
     return localStorage.getItem("token");
   });
 
   // TODO: Validate token and also check the expiration.
 
-  const login = (userId, name, email, imageURL, token) => {
-    const userData = {
-      userId,
-      name,
-      email,
-      imageURL,
-    };
+  const login = (userData: User) => {
     setUser(userData);
-    setToken(token);
+    setToken(userData.token);
     localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", userData.token);
   };
 
   const logout = () => {

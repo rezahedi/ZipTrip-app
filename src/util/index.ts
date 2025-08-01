@@ -44,7 +44,7 @@ const postData = async (url: string, requestBody = {}, config = {}) => {
 
 const fetchPlans = async (
   endpoint: string,
-  token = "",
+  token: string | null = null,
   onError: (error: string) => void,
 ) => {
   try {

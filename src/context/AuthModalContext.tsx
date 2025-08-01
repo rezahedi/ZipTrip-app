@@ -1,11 +1,28 @@
 import React, { createContext, useContext, useState } from "react";
-import PropTypes from "prop-types";
 
-const AuthModalContext = createContext();
+type AuthModalContextType = {
+  isLoginOpen: boolean;
+  isRegisterOpen: boolean;
+  openLogin: () => void;
+  openRegister: () => void;
+  closeLogin: () => void;
+  closeRegister: () => void;
+};
 
-export const AuthModalProvider = ({ children }) => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+const AuthModalContext = createContext<AuthModalContextType>({
+  isLoginOpen: false,
+  isRegisterOpen: false,
+  openLogin: () => {},
+  openRegister: () => {},
+  closeLogin: () => {},
+  closeRegister: () => {},
+});
+
+export const AuthModalProvider = ({ children }:
+  { children: React.ReactNode }
+) => {
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false);
 
   const openLogin = () => {
     setIsLoginOpen(true);
@@ -34,10 +51,6 @@ export const AuthModalProvider = ({ children }) => {
       {children}
     </AuthModalContext.Provider>
   );
-};
-
-AuthModalProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export const useAuthModal = () => useContext(AuthModalContext);

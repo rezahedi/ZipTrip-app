@@ -17,6 +17,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
 import { postData } from "@/util";
 import { useAuth } from "@/context/AuthContext";
+import { User } from "@/types";
 // import LoginPage from "./Login";
 
 const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
@@ -130,11 +131,9 @@ const RegisterPage = ({
     }
 
     try {
-      const data = await postData(URL, requestBody);
-      if (data) {
-        console.log(data);
-        const { token, _id: userId, name, email, imageURL } = data;
-        await login(userId, name, email, imageURL, token);
+      const userData: User = await postData(URL, requestBody);
+      if (userData) {
+        await login(userData);
         window.location.reload();
         handleDialogClose();
       }

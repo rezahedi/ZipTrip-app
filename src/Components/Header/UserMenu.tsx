@@ -10,15 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { User } from "@/types";
 
 const UserMenu = ({
   user,
   handleLogoutClick,
 }: {
-  user: {
-    name: string;
-    imageURL: string;
-  };
+  user: User;
   handleLogoutClick: () => void;
 }) => {
   return (

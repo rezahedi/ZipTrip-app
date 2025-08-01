@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
-  Box,
   Typography,
   FormControl,
   FormLabel,
@@ -14,7 +13,8 @@ import {
   getPlan,
   updatePlan,
   getCategories,
-  PassingPlanWithId,
+  PassingPlan,
+  PassingStop,
 } from "@/util/dashboard";
 import { useAuth } from "@/context/AuthContext";
 import PlanImages from "./components/PlanImages";
@@ -24,7 +24,16 @@ import { Category } from "@/types";
 const TYPES = ["Full day", "Half day", "Night"];
 
 function EditPlan() {
-  const [plan, setPlan] = useState<PassingPlanWithId>({});
+  const [plan, setPlan] = useState<PassingPlan>({
+    title: "",
+    description: "",
+    images: [],
+    stops: [],
+    type: "",
+    distance: "",
+    duration: "",
+    categoryId: "",
+  });
   const [error, setError] = useState<string | null>(null);
   const { planId } = useParams();
   const navigate = useNavigate();
@@ -63,6 +72,8 @@ function EditPlan() {
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!token) return;
+
     const result = await updatePlan(token, plan, setError);
     if (!result) return;
 
@@ -77,14 +88,14 @@ function EditPlan() {
       </Typography>
     );
 
-  if (isLoading) return <Box>Loading ...</Box>;
+  if (isLoading) return <div>Loading ...</div>;
 
   return (
     <>
-      <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h4">Edit Plan:</Typography>
-      </Box>
-      <Box sx={{ width: "100%", maxWidth: 650 }}>
+      <div className="mt-0.5">
+        <h4>Edit Plan:</h4>
+      </div>
+      <div className="w-full max-w-2xl">
         {error && <p>{error}</p>}
         <form onSubmit={handleUpdate}>
           {/* Title */}
@@ -169,7 +180,7 @@ function EditPlan() {
             </Select>
           </FormControl>
 
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+          <div className="flex flex-row gap-0.5">
             {/* Distance */}
             <FormControl fullWidth margin="normal">
               <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
@@ -199,15 +210,15 @@ function EditPlan() {
                 onChange={(e) => setPlan({ ...plan, duration: e.target.value })}
               />
             </FormControl>
-          </Box>
+          </div>
 
           {/* Stops */}
           <Stops
             stops={plan.stops || []}
-            setStops={(stops) => setPlan({ ...plan, stops })}
+            setStops={(stops: PassingStop[]) => setPlan({ ...plan, stops })}
           />
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+          <div className="flex justify-end gap-0.5">
             <Button
               variant="outlined"
               sx={{
@@ -226,9 +237,9 @@ function EditPlan() {
             <Button variant="contained" color="primary" type="submit">
               Save Changes
             </Button>
-          </Box>
+          </div>
         </form>
-      </Box>
+      </div>
     </>
   );
 }

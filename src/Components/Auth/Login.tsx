@@ -17,6 +17,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import CloseIcon from "@mui/icons-material/Close";
 import { postData } from "@/util";
 import { useAuth } from "@/context/AuthContext";
+import { User } from "@/types";
 
 const LOGIN_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`;
 const FORGOT_PASSWORD_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/request-reset-password`;
@@ -107,10 +108,9 @@ const LoginPage = ({
     }
 
     try {
-      const data = await postData(LOGIN_URL, { email, password });
-      if (data) {
-        const { token, _id: userId, name, email, imageURL } = data;
-        await login(userId, name, email, imageURL, token);
+      const userData: User = await postData(LOGIN_URL, { email, password });
+      if (userData) {
+        await login(userData);
         window.location.reload();
         handleDialogClose();
       }

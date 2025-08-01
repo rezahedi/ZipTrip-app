@@ -1,4 +1,5 @@
 export interface PassingStop {
+  _id?: string;
   name: string;
   imageURL: string;
   address: string;
@@ -6,11 +7,9 @@ export interface PassingStop {
   location: [number, number];
   sequence: number;
 }
-export interface PassingStopWithId extends PassingStop {
-  _id: string;
-}
 
 export interface PassingPlan {
+  _id?: string;
   title: string;
   description: string;
   images: string[];
@@ -19,11 +18,6 @@ export interface PassingPlan {
   duration: string;
   categoryId: string;
   stops: PassingStop[];
-}
-
-export interface PassingPlanWithId extends PassingPlan {
-  _id: string;
-  stops: PassingStopWithId[];
 }
 
 const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
@@ -55,7 +49,8 @@ const deletePlan = async (
     }
     return true;
   } catch (error) {
-    onError(error.message || "An error occurred while removing the plan");
+    console.error(error);
+    onError("An error occurred while removing the plan");
     return false;
   }
 };
@@ -70,7 +65,7 @@ const getPlan = async (
 
 const updatePlan = async (
   token: string,
-  plan: PassingPlanWithId,
+  plan: PassingPlan,
   onError: (error: string) => void,
 ) => {
   try {
@@ -89,7 +84,8 @@ const updatePlan = async (
     }
     return await res.json();
   } catch (error) {
-    onError(error.message || "An error occurred while updating the plan");
+    console.error(error);
+    onError("An error occurred while updating the plan");
     return null;
   }
 };
@@ -115,7 +111,8 @@ const createPlan = async (
     }
     return await res.json();
   } catch (error) {
-    onError(error.message || "An error occurred while creating the plan");
+    console.error(error);
+    onError("An error occurred while creating the plan");
     return null;
   }
 };
@@ -146,7 +143,8 @@ const AddBookmark = async (
     }
     return true;
   } catch (error) {
-    onError(error.message || "An error occurred while adding bookmark");
+    console.error(error);
+    onError("An error occurred while adding bookmark");
     return false;
   }
 };
@@ -170,7 +168,8 @@ const removeBookmark = async (
     }
     return true;
   } catch (error) {
-    onError(error.message || "An error occurred while removing bookmark");
+    console.error(error);
+    onError("An error occurred while removing bookmark");
     return false;
   }
 };
@@ -203,7 +202,8 @@ const getData = async (
     }
     return await res.json();
   } catch (error) {
-    onError(error.message || "An error occurred while fetching plans");
+    console.error(error);
+    onError("An error occurred while fetching plans");
     return null;
   }
 };

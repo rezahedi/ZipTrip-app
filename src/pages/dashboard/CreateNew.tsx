@@ -60,6 +60,8 @@ function CreateNew() {
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if(!token) return;
+
     // A random number with one decimal greater than 0 and less than 5
     const rate = Math.round(Math.random() * 49 + 1) / 10;
     // A random number between 0 and 100
