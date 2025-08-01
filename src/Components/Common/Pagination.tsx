@@ -1,15 +1,17 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 
-const Pagination = ({ page = 1, pagesCount }) => {
+const Pagination = ({ page = 1, pagesCount }: {
+  page: number;
+  pagesCount: number;
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const switchPage = (pageIncrement) => {
+  const switchPage = (pageIncrement: number) => {
     const params = new URLSearchParams(location.search);
-    params.set("page", page + pageIncrement);
+    params.set("page", (page + pageIncrement).toString());
     const paramsString = params.toString();
 
     navigate(`${location.pathname}?${paramsString}`);
@@ -68,11 +70,6 @@ const Pagination = ({ page = 1, pagesCount }) => {
       </Button>
     </Box>
   );
-};
-
-Pagination.propTypes = {
-  page: PropTypes.number,
-  pagesCount: PropTypes.number.isRequired,
 };
 
 export default Pagination;

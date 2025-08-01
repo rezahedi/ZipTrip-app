@@ -62,7 +62,8 @@ const fetchPlans = async (
     }
     return await res.json();
   } catch (error) {
-    onError(error.message || "An error occurred while fetching plans");
+    console.error(error);
+    onError("An error occurred while fetching plans");
     return null;
   }
 };
