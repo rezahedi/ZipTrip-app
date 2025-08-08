@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
-import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "@/Components/Common/PlanCard";
 import { fetchPlans } from "@/util";
 import WelcomeMessage from "@/Components/Common/search/WelcomeMessage";
@@ -55,44 +54,25 @@ const SearchPage = () => {
   if (!isLoading && plans.length === 0) return <EmptyResultMessage />;
 
   return (
-    <Box
-      sx={{
-        marginTop: 2,
-        marginBottom: 4,
-      }}
-    >
-      <Typography
-        variant="h5"
-        sx={{ marginBottom: "16px", fontWeight: "bold" }}
-      >
+    <div className="mt-0.5 mb-1">
+      <h5 className="text-lg font-bold mt-4">
         Search result for <u>{searchQuery}</u>:
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          gap: "16px",
-        }}
-      >
+      </h5>
+      <div className="flex flex-wrap justify-between gap-4">
         {!isLoading && error && <p>{error}</p>}
-        <Grid container spacing={3} sx={{ width: "100%" }}>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {isLoading &&
             Array.from({ length: 4 }).map((_, index) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-                <PlanCardSkeleton />
-              </Grid>
+              <PlanCardSkeleton key={index} />
             ))}
           {!isLoading &&
             plans.map((plan) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-                <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
-              </Grid>
+              <PlanCard key={plan._id} {...plan} image={plan.images[0]} />
             ))}
-        </Grid>
+        </div>
         <Pagination page={Number(page)} pagesCount={pagesCount} />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

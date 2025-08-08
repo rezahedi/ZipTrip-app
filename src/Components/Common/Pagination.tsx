@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Button } from "../ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Pagination = ({
@@ -36,42 +36,23 @@ const Pagination = ({
   if (pagesCount <= 1) return;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        width: "100%",
-        mt: 4,
-      }}
-    >
+    <div className="flex justify-between w-full mt-1">
       <Button
+        variant={isFirstPage ? "outline" : "default"}
         disabled={isFirstPage}
         onClick={handlePrev}
-        sx={{
-          "&.Mui-disabled": {
-            backgroundColor: "transparent",
-            border: "1px solid grey",
-          },
-        }}
       >
         Previous
       </Button>
-      <Typography sx={{ flexGrow: 1, textAlign: "center" }} variant="body1">
-        Page {page}
-      </Typography>
+      <p className="grow text-center">Page {page}</p>
       <Button
+        variant={isLastPage ? "outline" : "default"}
         disabled={isLastPage}
         onClick={handleNext}
-        sx={{
-          "&.Mui-disabled": {
-            backgroundColor: "transparent",
-            border: "1px solid grey",
-          },
-        }}
       >
         Next
       </Button>
-    </Box>
+    </div>
   );
 };
 

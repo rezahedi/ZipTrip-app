@@ -1,17 +1,13 @@
 import React from "react";
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton } from "../ui/skeleton";
 
 function PlanCardSkeleton() {
   return (
-    <Box>
-      <Skeleton variant="rectangular" height={195} sx={{ borderRadius: 3 }} />
-      <Skeleton
-        variant="text"
-        sx={{ marginTop: 1.5, width: "90%", height: 30 }}
-      />
-      <Skeleton variant="text" sx={{ width: "70%" }} />
-      <Skeleton variant="text" sx={{ width: "50%" }} />
-    </Box>
+    <div className="flex flex-col gap-2">
+      <Skeleton className="h-48 rounded-lg mb-2" />
+      <Skeleton className="w-11/12 h-7" />
+      <Skeleton className="w-10/12 h-5" />
+    </div>
   );
 }
 

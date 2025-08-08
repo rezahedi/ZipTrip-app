@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import BookmarkButton from "./BookmarkButton";
 
 const PlanCard = ({
-  planId,
+  _id: planId,
   image,
   title,
   rate,
@@ -13,7 +13,7 @@ const PlanCard = ({
   isBookmarked = false,
   showBookmarkBtn = true,
 }: {
-  planId: string;
+  _id: string;
   image: string;
   title: string;
   rate?: number;
@@ -41,7 +41,7 @@ const PlanCard = ({
         )}
         <div className="flex flex-col content-start p-4 gap-2">
           <h3 className="text-lg">{title}</h3>
-          <div className="flex justify-start w-full gap-2 text-muted-foreground text-xs">
+          <div className="flex justify-start w-full gap-2 text-foreground/70 text-xs">
             <span>{rate}⭐</span>
             <span>{type}</span>
             <span>{distance} miles</span>
