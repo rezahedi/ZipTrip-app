@@ -50,9 +50,8 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="create" element={<CreateNew />} />
             </Route>
+            <Route path="*" element={<NotFound404 />} />
           </Route>
-          {/* Standalone 404 route — no layout */}
-          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
