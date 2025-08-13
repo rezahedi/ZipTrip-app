@@ -79,7 +79,9 @@ function MyPlans() {
           Please create your first amazing plan!
         </p>
         <Link to="/account/create">
-          <Button color="inherit" className="mt-0.5">Create New Plan</Button>
+          <Button color="inherit" className="mt-0.5">
+            Create New Plan
+          </Button>
         </Link>
       </div>
     );
@@ -110,7 +112,11 @@ function MyPlans() {
                 <Link to={`/account/${plan._id}`}>
                   <Button className="mt-0.5">Edit</Button>
                 </Link>
-                <Button variant="destructive" onClick={() => openDeleteDialog(plan._id)} className="ml-0.5 mt-0.5">
+                <Button
+                  variant="destructive"
+                  onClick={() => openDeleteDialog(plan._id)}
+                  className="ml-0.5 mt-0.5"
+                >
                   Remove
                 </Button>
               </div>

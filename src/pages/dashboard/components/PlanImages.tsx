@@ -1,13 +1,7 @@
 import React, { useRef } from "react";
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  TextField,
-  IconButton,
-} from "@mui/material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { IconButton } from "@mui/material";
+import IB from "@/Components/ui/IconButton";
+import { PlusIcon, TrashIcon } from "lucide-react";
 
 const PlanImages = ({
   images,
@@ -40,47 +34,41 @@ const PlanImages = ({
   };
 
   return (
-    <FormControl fullWidth margin="normal">
-      <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-        Images *
-      </FormLabel>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <>
+      <label className="font-bold mb-0.5">Images *</label>
+      <div className="flex flex-col gap-2">
         {images.map((image, index) => (
-          <Box
-            key={index}
-            sx={{ display: "flex", alignItems: "flex-end", gap: 1 }}
-          >
-            <TextField
+          <div key={index} className="flex gap-0.5 items-end">
+            <input
+              type="text"
+              className="w-full border rounded-sm p-2"
               required
-              variant="outlined"
-              fullWidth
               placeholder="Enter the full image URL"
               value={image}
-              inputProps={{ "data-index": index }}
+              data-index={index}
               onChange={handleImageChange}
             />
-            <IconButton
+            <IB
               aria-label="Remove Image"
               onClick={() => handleDeleteImage(index)}
             >
-              <DeleteOutlineOutlinedIcon />
-            </IconButton>
-          </Box>
+              <TrashIcon />
+            </IB>
+          </div>
         ))}
-        <Box sx={{ display: "flex", alignItems: "flex-end", gap: 1 }}>
-          <TextField
-            inputRef={inputRef}
+        <div className="flex items-end gap-0.5">
+          <input
+            className="w-full border rounded-sm p-2"
+            ref={inputRef}
             required={images.length === 0}
-            variant="outlined"
-            fullWidth
             placeholder="Enter the full image URL"
           />
-          <IconButton aria-label="Add Image" onClick={handleAddImage}>
-            <AddOutlinedIcon />
-          </IconButton>
-        </Box>
-      </Box>
-    </FormControl>
+          <IB aria-label="Add Image" onClick={handleAddImage}>
+            <PlusIcon />
+          </IB>
+        </div>
+      </div>
+    </>
   );
 };
 

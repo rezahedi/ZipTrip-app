@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import {
-  Box,
-  Button,
   Dialog,
-  DialogActions,
+  DialogClose,
   DialogContent,
-  DialogContentText,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-} from "@mui/material";
+} from "@/Components/ui/dialog";
+import { Button } from "@/Components/ui/button";
+
 import { useMap, Map, Marker, MapMouseEvent } from "@vis.gl/react-google-maps";
 import AutocompleteWebComponent from "./AutocompleteWebComponent";
 import { PassingStop } from "@/util/dashboard";
@@ -32,7 +32,6 @@ const MapDialog = ({
   );
   const [placeId, setPlaceId] = useState<string>("");
   const [selectedPlace, setSelectedPlace] = useState<PassingStop | null>(null);
-  const isMobile = window.innerWidth < 600;
   const [autocompleteBounds, setAutocompleteBounds] =
     useState<google.maps.LatLngBounds | null>(null);
   const map = useMap();
@@ -99,65 +98,50 @@ const MapDialog = ({
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      maxWidth="md"
-      fullScreen={isMobile}
-    >
-      <Box style={{ padding: "10px 30px" }}>
-        <DialogTitle id="alert-dialog-title">Select a Place</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <Box sx={{ width: { sx: "100%", sm: "600px" }, height: "500px" }}>
-              <AutocompleteWebComponent onPlaceSelect={setAutocompleteBounds} />
-              <Map
-                defaultCenter={
-                  selected
-                    ? { lat: selected.lat, lng: selected.lng }
-                    : DEFAULT_CENTER
-                }
-                defaultZoom={selected ? 15 : DEFAULT_ZOOM}
-                style={{ width: "100%", height: "90%" }}
-                onClick={handleMapClick}
-                disableDefaultUI={false}
-                gestureHandling="greedy"
-                streetViewControl={false}
-              >
-                {selected && (
-                  <Marker position={{ lat: selected.lat, lng: selected.lng }} />
-                )}
-              </Map>
-              <div ref={dummyDiv} style={{ display: "none" }} />
-            </Box>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={onClose}
-            style={{
-              backgroundColor: "white",
-              color: "black",
-              border: "1px solid darkgray",
-            }}
+    <Dialog open={isOpen} onOpenChange={onClose} modal>
+      <DialogContent className="px-3 py-8 w-full h-full sm:max-w-xl max-w-full sm:h-auto rounded-none sm:rounded-lg">
+        <DialogHeader>
+          <DialogTitle>Select a Place</DialogTitle>
+        </DialogHeader>
+        <div className="h-[500px]">
+          <AutocompleteWebComponent onPlaceSelect={setAutocompleteBounds} />
+          <Map
+            defaultCenter={
+              selected
+                ? { lat: selected.lat, lng: selected.lng }
+                : DEFAULT_CENTER
+            }
+            defaultZoom={selected ? 15 : DEFAULT_ZOOM}
+            style={{ width: "100%", height: "90%" }}
+            onClick={handleMapClick}
+            disableDefaultUI={false}
+            gestureHandling="greedy"
+            streetViewControl={false}
           >
-            Cancel
-          </Button>
-          <Button onClick={handleAdd} disabled={!placeId}>
+            {selected && (
+              <Marker position={{ lat: selected.lat, lng: selected.lng }} />
+            )}
+          </Map>
+          <div ref={dummyDiv} style={{ display: "none" }} />
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            type="button"
+            onClick={handleAdd}
+            disabled={!placeId}
+            autoFocus
+          >
             Add
           </Button>
-        </DialogActions>
-      </Box>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
-};
-
-MapDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
 };
 
 export default MapDialog;

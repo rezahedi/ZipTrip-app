@@ -59,12 +59,8 @@ const CategoryPage = () => {
     <div className="mt-0.5 mb-1">
       {category && (
         <>
-          <h5 className="text-xl font-bold">
-            {category.name}
-          </h5>
-          <p className="mb-2">
-            {category.description}
-          </p>
+          <h5 className="text-xl font-bold">{category.name}</h5>
+          <p className="mb-2">{category.description}</p>
         </>
       )}
       <div className="flex flex-wrap justify-between gap-4">

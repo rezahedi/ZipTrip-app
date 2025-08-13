@@ -75,9 +75,7 @@ function Bookmarked() {
   if (!isLoading && !plans.length)
     return (
       <div className="text-center mt-1">
-        <p className="font-semibold text-lg">
-          Nothing bookmarked yet.
-        </p>
+        <p className="font-semibold text-lg">Nothing bookmarked yet.</p>
       </div>
     );
 

@@ -35,7 +35,7 @@ const AutocompleteWebComponent = ({
   }, [onPlaceSelect]);
 
   return (
-    <div className="autocomplete-container flex justify-center items-center gap-2.5">
+    <div className="autocomplete-container flex justify-center items-center gap-2.5 bg-background">
       <p>Search:</p>
       <div className="grow">
         <gmp-place-autocomplete ref={ref} placeholder="Enter an address" />

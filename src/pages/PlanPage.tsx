@@ -31,11 +31,7 @@ const PlanPage = () => {
 
   return (
     <div className="py-1">
-      {plan ? (
-        <PlanDetails plan={plan} />
-      ) : (
-        <h6>Loading...</h6>
-      )}
+      {plan ? <PlanDetails plan={plan} /> : <h6>Loading...</h6>}
     </div>
   );
 };
