@@ -3,7 +3,7 @@ import { Button, type buttonVariants } from "./button";
 import { type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const IB = ({
+const IconButton = ({
   children,
   className,
   type = "button",
@@ -29,4 +29,4 @@ const IB = ({
   );
 };
 
-export default IB;
+export default IconButton;

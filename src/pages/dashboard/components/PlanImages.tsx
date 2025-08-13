@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
-import { IconButton } from "@mui/material";
-import IB from "@/Components/ui/IconButton";
+import IconButton from "@/Components/ui/IconButton";
 import { PlusIcon, TrashIcon } from "lucide-react";
 
 const PlanImages = ({
@@ -48,12 +47,12 @@ const PlanImages = ({
               data-index={index}
               onChange={handleImageChange}
             />
-            <IB
+            <IconButton
               aria-label="Remove Image"
               onClick={() => handleDeleteImage(index)}
             >
               <TrashIcon />
-            </IB>
+            </IconButton>
           </div>
         ))}
         <div className="flex items-end gap-0.5">
@@ -63,9 +62,9 @@ const PlanImages = ({
             required={images.length === 0}
             placeholder="Enter the full image URL"
           />
-          <IB aria-label="Add Image" onClick={handleAddImage}>
+          <IconButton aria-label="Add Image" onClick={handleAddImage}>
             <PlusIcon />
-          </IB>
+          </IconButton>
         </div>
       </div>
     </>
