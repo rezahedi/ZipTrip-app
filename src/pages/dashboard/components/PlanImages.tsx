@@ -34,7 +34,7 @@ const PlanImages = ({
 
   return (
     <>
-      <label className="font-bold mb-0.5">Images *</label>
+      <label className="font-bold mb-1">Images *</label>
       <div className="flex flex-col gap-2">
         {images.map((image, index) => (
           <div key={index} className="flex gap-0.5 items-end">
