@@ -71,8 +71,8 @@ function CreateNew() {
 
   return (
     <>
-      <div className="mb-2">
-        <h4>Create a New Plan:</h4>
+      <div className="flex justify-between items-center mb-2">
+        <h4 className="text-xl font-semibold">Create a New Plan:</h4>
       </div>
       <div className="w-full max-w-2xl">
         {error && <p>{error}</p>}
