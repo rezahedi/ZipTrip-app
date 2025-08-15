@@ -8,6 +8,7 @@ const links = [
   { text: "Bookmarked", path: "/account/bookmarked" },
   { text: "Done", path: "/account/done" },
   { text: "Profile", path: "/account/profile" },
+  { text: "Settings", path: "/account/settings" },
 ];
 
 export default function DashboardTheme() {

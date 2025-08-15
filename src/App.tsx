@@ -15,6 +15,7 @@ import {
   Profile,
   CreateNew,
   EditPlan,
+  Settings,
 } from "@/pages/dashboard";
 import MainLayout from "@/Components/Layout/MainLayout";
 import ForgotPassword from "@/Components/Auth/ForgotPassword";
@@ -48,6 +49,7 @@ function App() {
               <Route path="bookmarked" element={<Bookmarked />} />
               <Route path="done" element={<Done />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="settings" element={<Settings />} />
               <Route path="create" element={<CreateNew />} />
             </Route>
             <Route path="*" element={<NotFound404 />} />
