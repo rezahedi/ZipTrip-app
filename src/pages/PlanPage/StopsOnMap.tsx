@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
-import PropTypes from "prop-types";
-import { Box } from "@mui/material";
 import { Stop as StopType } from "@/types";
 
 const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
@@ -60,21 +58,16 @@ const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
   return null;
 };
 
-MarkersAndPath.propTypes = {
-  stops: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      imageURL: PropTypes.string,
-      address: PropTypes.string,
-      location: PropTypes.arrayOf(PropTypes.number),
-    }),
-  ),
-};
-
-const StopsOnMap = ({ stops }: { stops: StopType[] }) => {
+const StopsOnMap = ({
+  className,
+  stops,
+}: {
+  className: string;
+  stops: StopType[];
+}) => {
   return (
-    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
-      <Box sx={{ width: "100%", height: { xs: "300px", sm: "100%" } }}>
+    <div className={className}>
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
         <Map
           defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
           defaultZoom={4}
@@ -84,20 +77,9 @@ const StopsOnMap = ({ stops }: { stops: StopType[] }) => {
           fullscreenControl={false}
         />
         <MarkersAndPath stops={stops} />
-      </Box>
-    </APIProvider>
+      </APIProvider>
+    </div>
   );
-};
-
-StopsOnMap.propTypes = {
-  stops: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      imageURL: PropTypes.string,
-      address: PropTypes.string,
-      location: PropTypes.arrayOf(PropTypes.number),
-    }),
-  ),
 };
 
 export default StopsOnMap;

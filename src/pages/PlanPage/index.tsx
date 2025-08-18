@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getData } from "@/util";
-import PlanDetails from "@/Components/Common/PlanDetails";
+import PlanDetails from "./PlanDetails";
 import { useAuth } from "@/context/AuthContext";
 import { PlanWithStops } from "@/types";
 

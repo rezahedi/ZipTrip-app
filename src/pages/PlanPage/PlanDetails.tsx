@@ -1,0 +1,128 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import IconButton from "@/Components/ui/IconButton";
+import { HeartIcon, Share2Icon, BookmarkIcon } from "lucide-react";
+import StopsOnMap from "./StopsOnMap";
+import Stops from "./Stops";
+import ImageGallery from "./ImageGallery";
+import { AddBookmark, removeBookmark } from "@/util/dashboard";
+import { PlanWithStops } from "@/types";
+
+const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
+  const {
+    _id: planId,
+    title,
+    description,
+    images,
+    stops,
+    type,
+    stopCount,
+    distance,
+    duration,
+    categoryId,
+    userId,
+    rate,
+    reviewCount,
+    isBookmarked,
+  } = plan;
+  const [bookmark, setBookmark] = useState(isBookmarked);
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
+
+  const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (!token) return openLogin();
+
+    if (bookmark) {
+      const result = await removeBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(false);
+      }
+    } else {
+      const result = await AddBookmark(token, planId, setError);
+      if (result) {
+        setBookmark(true);
+      }
+    }
+  };
+
+  const setError = (errorMessage: string) => {
+    console.log("error", errorMessage);
+  };
+
+  return (
+    <>
+      <article className="py-4">
+        <div className="flex justify-between flex-wrap mb-4">
+          {/* Title */}
+          <h4 className="text-3xl">{title}</h4>
+
+          {/* Icon Buttons */}
+          <div className="flex gap-1 flex-1 sm:flex-auto justify-end">
+            <IconButton variant="ghost" disabled>
+              <HeartIcon className="size-6" />
+            </IconButton>
+            <IconButton variant="ghost" disabled>
+              <Share2Icon className="size-6" />
+            </IconButton>
+            <IconButton variant="ghost" onClick={handleBookmark}>
+              {bookmark ? (
+                <BookmarkIcon className="size-6 text-accent fill-accent" />
+              ) : (
+                <BookmarkIcon className="size-6" />
+              )}
+            </IconButton>
+          </div>
+        </div>
+
+        {/* Title Details */}
+        <div className="flex flex-wrap gap-4 gap-y-0.5 text-sm sm:text-base text-foreground/65">
+          <Link to={`/user/${userId._id}`} className="flex gap-1">
+            <Avatar className="size-6">
+              <AvatarImage
+                src={userId.imageURL}
+                alt={userId.name}
+                className="bg-primary"
+              />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            {userId.name}
+          </Link>
+          <span>
+            {rate}⭐ ({reviewCount} reviews)
+          </span>
+          <span>{type}</span>
+          <span>{distance} miles</span>
+          <span>{stopCount} places</span>
+          <span>{duration} hours</span>
+          <span>
+            <Link to={`/category/${categoryId._id}`}>{categoryId.name}</Link>
+          </span>
+        </div>
+
+        {images?.length > 0 && (
+          <div className="flex gap-4 my-4 flex-col sm:flex-row h-[500px] sm:h-[450px]">
+            <ImageGallery
+              className="flex-1 sm:flex-2/3 overflow-hidden rounded-md"
+              images={images}
+            />
+            <StopsOnMap
+              className="flex-1 sm:flex-1/3 overflow-hidden rounded-md"
+              stops={stops}
+            />
+          </div>
+        )}
+
+        <p className="pt-4">{description}</p>
+
+        {stops.length > 0 && <Stops stops={stops} />}
+      </article>
+    </>
+  );
+};
+
+export default PlanDetails;
