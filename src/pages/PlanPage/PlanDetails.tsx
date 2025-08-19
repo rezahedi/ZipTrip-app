@@ -7,7 +7,7 @@ import IconButton from "@/Components/ui/IconButton";
 import { HeartIcon, Share2Icon, BookmarkIcon } from "lucide-react";
 import StopsOnMap from "./StopsOnMap";
 import Stops from "./Stops";
-import ImageGallery from "./ImageGallery";
+import ImageBlock from "./ImageBlock";
 import { AddBookmark, removeBookmark } from "@/util/dashboard";
 import { PlanWithStops } from "@/types";
 
@@ -106,8 +106,8 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
 
         {images?.length > 0 && (
           <div className="flex gap-4 my-4 flex-col sm:flex-row h-[500px] sm:h-[450px]">
-            <ImageGallery
-              className="flex-1 sm:flex-2/3 overflow-hidden rounded-md"
+            <ImageBlock
+              className="flex-1 sm:flex-2/3 overflow-hidden flex rounded-md"
               images={images}
             />
             <StopsOnMap
