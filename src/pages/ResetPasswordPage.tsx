@@ -49,7 +49,7 @@ const ResetPasswordPage = () => {
 
   return (
     <div className="mt-0.5 mb-1">
-      <div className="shadow-md rounded-md w-full sm:w-2xl mx-auto p-8 space-y-4">
+      <div className="shadow-[3px_3px_10px] shadow-foreground/30 rounded-md w-full sm:w-2xl mx-auto p-8 space-y-4">
         <h5 className="text-lg font-bold mt-4 text-center">Reset Password</h5>
         <p className="mt-2 text-center">
           Enter your new password below. It must be 8 to 128 characters long and
