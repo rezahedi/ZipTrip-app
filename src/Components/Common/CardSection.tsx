@@ -40,7 +40,7 @@ const CardSection = ({
 
   return (
     <div className="mt-2 mb-4">
-      <h3 className="mb-4 font-bold text-xl">{title}</h3>
+      <h3 className="mb-4 font-semibold text-2xl">{title}</h3>
       <div className="flex flex-wrap justify-between gap-4">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {!loading && error && <p>{error}</p>}
