@@ -31,7 +31,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-2 -translate-y-1/2">
+    <div className="max-w-3xl mx-auto p-2 -mt-9">
       <form onSubmit={handleSubmit} className="relative">
         <Input
           type="text"
