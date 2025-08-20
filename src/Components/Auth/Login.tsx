@@ -25,7 +25,7 @@ const LoginPage = ({
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const { login } = useAuth();
-  const { openRegister, openPasswordReset } = useAuthModal();
+  const { openRegister, openForgotPassword } = useAuthModal();
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = event.target.value;
@@ -155,7 +155,7 @@ const LoginPage = ({
               </label>
               <Button
                 variant="link"
-                onClick={openPasswordReset}
+                onClick={openForgotPassword}
                 className="p-0"
               >
                 Forgot password?

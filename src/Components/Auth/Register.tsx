@@ -16,7 +16,6 @@ const RegisterPage = ({
   open: boolean;
   handleClose: () => void;
 }) => {
-  const isMobile = window.innerWidth < 600;
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

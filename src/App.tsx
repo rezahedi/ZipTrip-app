@@ -7,6 +7,7 @@ import PlanPage from "@/pages/PlanPage";
 import CategoryPage from "@/pages/CategoryPage";
 import UserPage from "@/pages/UserPage";
 import NotFound404 from "@/pages/404NotFound";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import {
   DashboardTheme,
   MyPlans,
@@ -18,8 +19,6 @@ import {
   Settings,
 } from "@/pages/dashboard";
 import MainLayout from "@/Components/Layout/MainLayout";
-import ForgotPassword from "@/Components/Auth/ForgotPassword";
-import ResetPassword from "@/Components/Auth/ResetPassword";
 import ProtectedRoute from "@/Components/Auth/ProtectedRoute";
 
 function App() {
@@ -34,8 +33,11 @@ function App() {
             <Route path="/plans/:planId" element={<PlanPage />} />
             <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route path="/user/:userId" element={<UserPage />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/resetpassword/:token" element={<ResetPassword />} />
+            <Route path="/resetpassword" element={<ResetPasswordPage />} />
+            <Route
+              path="/resetpassword/:token"
+              element={<ResetPasswordPage />}
+            />
             <Route
               path="/account"
               element={

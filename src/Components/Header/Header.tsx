@@ -1,7 +1,7 @@
 import React from "react";
 import RegisterPage from "../Auth/Register";
 import LoginPage from "../Auth/Login";
-import ResetPassword from "../Auth/ResetPassword";
+import ForgotPassword from "../Auth/ForgotPassword";
 import SearchBar from "../Common/search/SearchBar";
 import { Link } from "react-router-dom";
 import { useAuthModal } from "@/context/AuthModalContext";
@@ -11,10 +11,10 @@ const Header = () => {
   const {
     isLoginOpen,
     isRegisterOpen,
-    isPasswordResetOpen,
+    isForgotPasswordOpen,
     closeLogin,
     closeRegister,
-    closePasswordReset,
+    closeForgotPassword,
   } = useAuthModal();
 
   return (
@@ -49,9 +49,9 @@ const Header = () => {
       <RegisterPage open={isRegisterOpen} handleClose={closeRegister} />
       {/* Login Dialog */}
       <LoginPage open={isLoginOpen} handleClose={closeLogin} />
-      <ResetPassword
-        open={isPasswordResetOpen}
-        handleClose={closePasswordReset}
+      <ForgotPassword
+        open={isForgotPasswordOpen}
+        handleClose={closeForgotPassword}
       />
 
       {/* image */}

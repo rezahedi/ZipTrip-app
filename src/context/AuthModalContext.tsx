@@ -3,25 +3,25 @@ import React, { createContext, useContext, useState } from "react";
 type AuthModalContextType = {
   isLoginOpen: boolean;
   isRegisterOpen: boolean;
-  isPasswordResetOpen: boolean;
+  isForgotPasswordOpen: boolean;
   openLogin: () => void;
   openRegister: () => void;
-  openPasswordReset: () => void;
+  openForgotPassword: () => void;
   closeLogin: () => void;
   closeRegister: () => void;
-  closePasswordReset: () => void;
+  closeForgotPassword: () => void;
 };
 
 const AuthModalContext = createContext<AuthModalContextType>({
   isLoginOpen: false,
   isRegisterOpen: false,
-  isPasswordResetOpen: false,
+  isForgotPasswordOpen: false,
   openLogin: () => {},
   openRegister: () => {},
-  openPasswordReset: () => {},
+  openForgotPassword: () => {},
   closeLogin: () => {},
   closeRegister: () => {},
-  closePasswordReset: () => {},
+  closeForgotPassword: () => {},
 });
 
 export const AuthModalProvider = ({
@@ -31,43 +31,43 @@ export const AuthModalProvider = ({
 }) => {
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false);
-  const [isPasswordResetOpen, setIsPasswordResetOpen] =
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] =
     useState<boolean>(false);
 
   const openLogin = () => {
     setIsLoginOpen(true);
     setIsRegisterOpen(false);
-    setIsPasswordResetOpen(false);
+    setIsForgotPasswordOpen(false);
   };
 
   const openRegister = () => {
     setIsRegisterOpen(true);
     setIsLoginOpen(false);
-    setIsPasswordResetOpen(false);
+    setIsForgotPasswordOpen(false);
   };
 
-  const openPasswordReset = () => {
-    setIsPasswordResetOpen(true);
+  const openForgotPassword = () => {
+    setIsForgotPasswordOpen(true);
     setIsLoginOpen(false);
     setIsRegisterOpen(false);
   };
 
   const closeLogin = () => setIsLoginOpen(false);
   const closeRegister = () => setIsRegisterOpen(false);
-  const closePasswordReset = () => setIsPasswordResetOpen(false);
+  const closeForgotPassword = () => setIsForgotPasswordOpen(false);
 
   return (
     <AuthModalContext.Provider
       value={{
         isLoginOpen,
         isRegisterOpen,
-        isPasswordResetOpen,
+        isForgotPasswordOpen,
         openLogin,
         openRegister,
-        openPasswordReset,
+        openForgotPassword,
         closeLogin,
         closeRegister,
-        closePasswordReset,
+        closeForgotPassword,
       }}
     >
       {children}
