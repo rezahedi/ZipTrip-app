@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchPlans } from "@/util";
-import { Typography, Box, Link } from "@mui/material";
 import { Category } from "@/types";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -26,7 +26,7 @@ function Footer() {
     <div className="bg-foreground/90 text-background mt-6 px-2 py-4">
       <div className="my-0 mx-auto w-full max-w-7xl box-border flex flex-row flex-wrap gap-y-2">
         <div className="p-0 sm:p-2 mb-2 sm:mb-0 w-full sm:w-auto">
-          <Link href="/">
+          <Link to="/">
             <img
               src="/images/logo-text-3-light.png"
               width={160}
@@ -44,46 +44,41 @@ function Footer() {
           <div className="p-0 sm:p-2 mb-2 sm:mb-0">
             <div className="text-sm text-background">
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
-                <Link href="/" color="primary" underline="none">
+                <Link to="/" color="primary">
                   <li className="font-bold text-lg">Home</li>
                 </Link>
                 <Link
-                  href="https://ii-practicum-team-5-back-1.onrender.com/api-docs"
+                  to="https://ii-practicum-team-5-back-1.onrender.com/api-docs"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>API Documentation</li>
                 </Link>
                 <Link
-                  href="https://github.com/Code-the-Dream-School/ii-practicum-team-5-back"
+                  to="https://github.com/Code-the-Dream-School/ii-practicum-team-5-back"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Backend Repository</li>
                 </Link>
                 <Link
-                  href="https://github.com/Code-the-Dream-School/ii-practicum-team-5-front"
+                  to="https://github.com/Code-the-Dream-School/ii-practicum-team-5-front"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Frontend Repository</li>
                 </Link>
                 <Link
-                  href="https://codethedream.org/classes/practicum"
+                  to="https://codethedream.org/classes/practicum"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Practicum Program</li>
                 </Link>
                 <Link
-                  href="https://codethedream.org"
+                  to="https://codethedream.org"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Code The Dream</li>
                 </Link>
@@ -96,12 +91,7 @@ function Footer() {
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
                 <li className="font-bold text-lg">Categories</li>
                 {categories.map((category) => (
-                  <Link
-                    key={category._id}
-                    href={`/category/${category._id}`}
-                    color="primary"
-                    underline="none"
-                  >
+                  <Link key={category._id} to={`/category/${category._id}`}>
                     <li>{category.name}</li>
                   </Link>
                 ))}

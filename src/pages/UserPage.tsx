@@ -50,7 +50,7 @@ const UserPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page]);
+  }, [page, userId]);
 
   if (!isLoading && user === null) return <>User not found.</>;
 

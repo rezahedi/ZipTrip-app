@@ -49,7 +49,7 @@ const CategoryPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page]);
+  }, [page, categoryId]);
 
   if (!isLoading && category === null) return <>Category not found.</>;
 
