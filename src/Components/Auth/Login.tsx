@@ -1,37 +1,21 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Typography,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-  Divider,
-  Alert,
-} from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import CloseIcon from "@mui/icons-material/Close";
+import { Google } from "@/ui/icons";
 import { postData } from "@/util";
 import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
 import { User } from "@/types";
+import { Dialog, DialogContent } from "@/Components/ui/dialog";
+import { Button } from "@/Components/ui/button";
 
 const LOGIN_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`;
-const FORGOT_PASSWORD_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/request-reset-password`;
 
 const LoginPage = ({
   open,
   handleClose,
-  onSwitchToRegister,
 }: {
   open: boolean;
   handleClose: () => void;
-  onSwitchToRegister: () => void;
 }) => {
-  const isMobile = window.innerWidth < 600;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [checkbox, setCheckbox] = useState<boolean>(false);
@@ -39,10 +23,9 @@ const LoginPage = ({
   const [passwordError, setPasswordError] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
-  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const { login } = useAuth();
+  const { openRegister, openPasswordReset } = useAuthModal();
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = event.target.value;
@@ -73,7 +56,7 @@ const LoginPage = ({
       setIsValid(false);
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(newPassword)) {
       setPasswordError(
-        "Password must include at least one uppercase letter, one lowercase letter, and one number.",
+        "Password must include at least one uppercase letter and number.",
       );
       setIsValid(false);
     } else {
@@ -93,9 +76,7 @@ const LoginPage = ({
     setEmailError("");
     setPasswordError("");
     setErrorMessage("");
-    setSuccessMessage("");
     setIsValid(true);
-    setShowForgotPassword(false);
     handleClose();
   };
 
@@ -124,290 +105,97 @@ const LoginPage = ({
     }
   };
 
-  const handleForgotPassword = async () => {
-    if (!email || emailError) {
-      setEmailError("Please enter a valid email.");
-      return;
-    }
-
-    try {
-      await postData(FORGOT_PASSWORD_URL, { email });
-      setSuccessMessage("Reset link sent. Check your email.");
-      setErrorMessage("");
-    } catch (error: any) {
-      setSuccessMessage("");
-      setErrorMessage(
-        error.response?.data?.msg || "Failed to send reset link.",
-      );
-    }
-  };
-
   return (
-    <Dialog
-      open={open}
-      onClose={handleDialogClose}
-      maxWidth={false}
-      fullScreen={isMobile}
-      slotProps={{
-        sx: {
-          width: { xs: "100%", sm: "90%", md: "80%" },
-          maxWidth: { xs: "100%", sm: 700 },
-          borderRadius: 3,
-        },
-      }}
-    >
-      <DialogTitle sx={{ m: 0, p: 2 }}>
-        <IconButton
-          aria-label="close"
-          onClick={handleDialogClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-
-      <DialogContent
-        sx={{
-          p: { xs: 1, sm: 8 },
-          m: { xs: 0, sm: 3 },
-          width: "100%",
-          maxWidth: { xs: "100%", sm: 700 },
-          boxSizing: "border-box",
-        }}
-      >
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-              gap: 2,
-            }}
-          >
-            {/* Left Section */}
-            <Box
-              sx={{
-                flexBasis: { xs: "100%", md: "50%" },
-                flexGrow: 1,
-                flexShrink: 1,
-                px: 2,
-                py: 3,
-              }}
+    <Dialog open={open} onOpenChange={handleDialogClose} modal>
+      <DialogContent className="px-3 py-8 w-full max-w-full h-full sm:w-auto sm:max-w-4xl sm:h-auto rounded-none sm:rounded-lg items-center">
+        <div className="flex gap-8 md:p-8 md:w-3xl">
+          {/* Left Section */}
+          <div className="flex-1 md:flex-1/2 px-2 py-3 space-y-2">
+            <h5 className="flex justify-center text-3xl">Sign In</h5>
+            <Button
+              variant="ghost"
+              className="my-2 w-full p-5 font-normal text-lg bg-foreground text-background hover:bg-foreground hover:text-background active:scale-95"
             >
-              {!showForgotPassword ? (
-                <>
-                  <Typography
-                    variant="h5"
-                    gutterBottom
-                    display="flex"
-                    justifyContent="center"
-                  >
-                    Sign In
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    startIcon={<GoogleIcon />}
-                    fullWidth
-                    sx={{ my: 2 }}
-                  >
-                    Sign in with Google
-                  </Button>
-                  <Divider sx={{ my: 1 }}>
-                    <Typography sx={{ color: "#8c8c8c" }}>OR</Typography>
-                  </Divider>
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    margin="normal"
-                    value={email}
-                    error={emailError !== ""}
-                    helperText={emailError}
-                    onChange={handleEmailChange}
-                    required
-                  />
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    type="password"
-                    margin="normal"
-                    value={password}
-                    error={passwordError !== ""}
-                    helperText={passwordError}
-                    onChange={handlePasswordChange}
-                    required
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={checkbox}
-                        onChange={handleCheckboxChange}
-                        sx={{
-                          "&.Mui-checked": {
-                            borderColor: "#333333",
-                            color: "#333333",
-                          },
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography variant="body2">
-                        Remember for 30 days
-                      </Typography>
-                    }
-                  />
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => setShowForgotPassword(true)}
-                    sx={{
-                      color: "#45a049",
-                      backgroundColor: "white",
-                      "&:hover": {
-                        backgroundColor: "white",
-                        color: "#45a049",
-                      },
-                    }}
-                  >
-                    Forgot password?
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    sx={{ mt: 3 }}
-                    onClick={handleLogin}
-                  >
-                    Sign in
-                  </Button>
-                  {errorMessage && (
-                    <Alert severity="error" sx={{ mt: 2 }}>
-                      {errorMessage}
-                    </Alert>
-                  )}
-                  <Typography
-                    variant="body2"
-                    sx={{ mt: 2, textAlign: "center" }}
-                  >
-                    Don`t have an account?{" "}
-                    <Button
-                      variant="text"
-                      onClick={() => {
-                        onSwitchToRegister();
-                        handleDialogClose();
-                      }}
-                      sx={{
-                        color: "text.primary",
-                        backgroundColor: "white",
-                        fontWeight: "bold",
-                        "&:hover": {
-                          backgroundColor: "white",
-                          color: "#45a049",
-                        },
-                      }}
-                    >
-                      Sign up
-                    </Button>
-                  </Typography>
-                </>
-              ) : (
-                <>
-                  <Typography
-                    variant="h5"
-                    gutterBottom
-                    display="flex"
-                    justifyContent="center"
-                  >
-                    Forgot Password
-                  </Typography>
-
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    margin="normal"
-                    value={email}
-                    error={emailError !== ""}
-                    helperText={emailError}
-                    onChange={handleEmailChange}
-                    required
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    sx={{ mt: 2 }}
-                    onClick={handleForgotPassword}
-                  >
-                    Send Reset Link
-                  </Button>
-                  <Button
-                    variant="text"
-                    fullWidth
-                    sx={{ mt: 2 }}
-                    onClick={() => {
-                      setShowForgotPassword(false);
-                      setSuccessMessage("");
-                      setErrorMessage("");
-                    }}
-                  >
-                    Back to Sign In
-                  </Button>
-                  {successMessage && (
-                    <Alert severity="success" sx={{ mt: 2 }}>
-                      {successMessage}
-                    </Alert>
-                  )}
-                  {errorMessage && (
-                    <Alert severity="error" sx={{ mt: 2 }}>
-                      {errorMessage}
-                    </Alert>
-                  )}
-                </>
-              )}
-            </Box>
-
-            {/* Right Section */}
-            <Box
-              sx={{
-                flexBasis: { xs: "100%", md: "50%" },
-                flexGrow: 1,
-                flexShrink: 1,
-                backgroundColor: "#484747",
-                color: "white",
-                px: 2,
-                py: 4,
-                display: { xs: "none", md: "flex" },
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              <Typography variant="h5" fontWeight="bold" gutterBottom>
-                Welcome to ZipTrip!
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 5, p: 2 }}>
-                Get started now and make each day count by planning fun and
-                meaningful activities that fit your lifestyle!
-              </Typography>
-              <Box
-                sx={{
-                  backgroundImage: "url(/images/login.jpg)",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  maxWidth: 350,
-                  height: { xs: 150, sm: 190 },
-                  mx: "auto",
-                  borderRadius: 2,
-                }}
+              <Google className="size-8" /> Sign in with Google
+            </Button>
+            <div className="my-4 text-foreground/60 text-center">OR</div>
+            <label className="block">
+              Email:
+              <input
+                className="w-full border rounded-sm bg-background py-2 px-3"
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                required
               />
-            </Box>
-          </Box>
-        </Box>
+              {emailError && <p className="text-destructive">{emailError}</p>}
+            </label>
+            <label className="block">
+              Password:
+              <input
+                className="w-full border rounded-sm bg-background py-2 px-3"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+              {passwordError && (
+                <span className="text-destructive">{passwordError}</span>
+              )}
+            </label>
+            <div className="flex justify-between items-center">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={checkbox}
+                  onChange={handleCheckboxChange}
+                  className="mr-1"
+                />
+                Remember for 30 days
+              </label>
+              <Button
+                variant="link"
+                onClick={openPasswordReset}
+                className="p-0"
+              >
+                Forgot password?
+              </Button>
+            </div>
+            <Button
+              variant="default"
+              className="w-full active:scale-95"
+              onClick={handleLogin}
+            >
+              Sign in
+            </Button>
+            {errorMessage && (
+              <p className="text-destructive mt-2">{errorMessage}</p>
+            )}
+            <p className="mt-2 text-center">
+              Don`t have an account?{" "}
+              <Button
+                variant="link"
+                onClick={openRegister}
+                className="p-0 font-semibold hover:text-primary"
+              >
+                Sign up
+              </Button>
+            </p>
+          </div>
+
+          {/* Right Section */}
+          <div className="flex-1/2 p-8 px-10 hidden md:flex flex-col justify-center items-center text-center bg-primary/20 rounded-sm">
+            <h5 className="font-bold text-2xl">Welcome to ZipTrip!</h5>
+            <p className="mb-5 p-2 font-semibold text-lg">
+              Get started now and make each day count by planning fun and
+              meaningful activities that fit your lifestyle!
+            </p>
+            <img
+              src="/images/login.jpg"
+              className="object-cover w-full max-w-[350px] h-[150px] sm:h-[190px] mx-auto rounded-sm"
+            />
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
