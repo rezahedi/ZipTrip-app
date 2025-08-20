@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
-import { Box, Typography, Grid, Avatar } from "@mui/material";
 import PlanCard from "@/Components/Common/PlanCard";
 import { fetchPlans } from "@/util";
 import Pagination from "@/Components/Common/Pagination";
@@ -51,66 +50,41 @@ const UserPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page]);
+  }, [page, userId]);
 
   if (!isLoading && user === null) return <>User not found.</>;
 
   if (!isLoading && plans.length === 0) return <>There is no plans.</>;
 
   return (
-    <Box
-      sx={{
-        marginTop: 2,
-        marginBottom: 4,
-      }}
-    >
-      <Typography
-        variant="h5"
-        sx={{
-          mb: 4,
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-        }}
-      >
+    <div className="mt-0.5 mb-1">
+      <h5 className="text-lg font-bold flex items-center">
         {user && user.name && (
           <>
-            <Avatar
+            <img
               alt={user.name}
               src={user.imageURL}
-              sx={{ bgcolor: "#4CAF50" }}
+              className="rounded-full size-10 mr-2"
             />
             {user.name}
           </>
         )}
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          gap: "16px",
-        }}
-      >
+      </h5>
+      <div className="flex flex-wrap justify-between gap-4">
         {!isLoading && error && <p>{error}</p>}
-        <Grid container spacing={3} sx={{ width: "100%" }}>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {isLoading &&
             Array.from({ length: 4 }).map((_, index) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-                <PlanCardSkeleton />
-              </Grid>
+              <PlanCardSkeleton key={index} />
             ))}
           {!isLoading &&
             plans.map((plan) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-                <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
-              </Grid>
+              <PlanCard {...plan} image={plan.images[0]} key={plan._id} />
             ))}
-        </Grid>
+        </div>
         <Pagination page={Number(page)} pagesCount={pagesCount} />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

@@ -7,6 +7,7 @@ import PlanPage from "@/pages/PlanPage";
 import CategoryPage from "@/pages/CategoryPage";
 import UserPage from "@/pages/UserPage";
 import NotFound404 from "@/pages/404NotFound";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import {
   DashboardTheme,
   MyPlans,
@@ -15,10 +16,9 @@ import {
   Profile,
   CreateNew,
   EditPlan,
+  Settings,
 } from "@/pages/dashboard";
 import MainLayout from "@/Components/Layout/MainLayout";
-import ForgotPassword from "@/Components/Auth/ForgotPassword";
-import ResetPassword from "@/Components/Auth/ResetPassword";
 import ProtectedRoute from "@/Components/Auth/ProtectedRoute";
 
 function App() {
@@ -33,8 +33,10 @@ function App() {
             <Route path="/plans/:planId" element={<PlanPage />} />
             <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route path="/user/:userId" element={<UserPage />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/resetpassword/:token" element={<ResetPassword />} />
+            <Route
+              path="/resetpassword/:token"
+              element={<ResetPasswordPage />}
+            />
             <Route
               path="/account"
               element={
@@ -48,11 +50,11 @@ function App() {
               <Route path="bookmarked" element={<Bookmarked />} />
               <Route path="done" element={<Done />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="settings" element={<Settings />} />
               <Route path="create" element={<CreateNew />} />
             </Route>
+            <Route path="*" element={<NotFound404 />} />
           </Route>
-          {/* Standalone 404 route — no layout */}
-          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

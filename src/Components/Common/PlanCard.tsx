@@ -1,21 +1,9 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import { useAuthModal } from "@/context/AuthModalContext";
-import { AddBookmark, removeBookmark } from "@/util/dashboard";
+import BookmarkButton from "./BookmarkButton";
 
 const PlanCard = ({
-  planId,
+  _id: planId,
   image,
   title,
   rate,
@@ -25,7 +13,7 @@ const PlanCard = ({
   isBookmarked = false,
   showBookmarkBtn = true,
 }: {
-  planId: string;
+  _id: string;
   image: string;
   title: string;
   rate?: number;
@@ -35,112 +23,32 @@ const PlanCard = ({
   isBookmarked?: boolean;
   showBookmarkBtn?: boolean;
 }) => {
-  const [bookmark, setBookmark] = useState(isBookmarked);
-  const { token } = useAuth();
-  const { openLogin } = useAuthModal();
-
-  const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (!token) return openLogin();
-
-    if (bookmark) {
-      const result = await removeBookmark(token, planId, setError);
-      if (result) {
-        setBookmark(false);
-      }
-    } else {
-      const result = await AddBookmark(token, planId, setError);
-      if (result) {
-        setBookmark(true);
-      }
-    }
-  };
-
   const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
   };
 
   return (
-    <Link
-      to={`/plans/${planId}`}
-      style={{ textDecoration: "none", width: "100%" }}
-    >
-      <Card
-        sx={{
-          height: "100%",
-          position: "relative",
-          transition: "box-shadow 0.2s ease",
-          "&:hover": {
-            boxShadow: 6,
-          },
-          "& .MuiCardMedia-root": {
-            transition: "scale 0.2s ease",
-          },
-          "&:hover .MuiCardMedia-root": {
-            scale: 1.05,
-          },
-        }}
-      >
-        {showBookmarkBtn && (
-          <IconButton
-            onClick={handleBookmark}
-            sx={{
-              position: "absolute",
-              backgroundColor: "white",
-              width: 35,
-              height: 35,
-              top: 10,
-              right: 10,
-              zIndex: 1,
-            }}
-          >
-            {bookmark ? (
-              <BookmarkIcon style={{ color: "orange" }} />
-            ) : (
-              <BookmarkBorderIcon />
-            )}
-          </IconButton>
-        )}
-        <CardMedia
-          component="img"
-          image={image}
+    <Link to={`/plans/${planId}`} className="no-underline w-full">
+      <div className="group h-full relative transition-shadow duration-200 ease-in-out shadow-md hover:shadow-lg rounded-lg overflow-hidden">
+        <img
+          src={image}
+          className="h-48 w-full object-cover group-hover:scale-105 transition-all duration-200"
           height="195"
           alt={title}
-          sx={{ borderRadius: "10px", objectFit: "cover" }}
-        ></CardMedia>
-        <CardContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignContent: "flex-start",
-            backgroundColor: "transparent",
-          }}
-        >
-          <Typography>{title}</Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              width: "100%",
-              gap: 1,
-            }}
-          >
-            <Typography sx={{ color: "#B0B0B0", fontSize: "12px" }}>
-              {rate}⭐
-            </Typography>
-            <Typography sx={{ color: "#B0B0B0", fontSize: "12px" }}>
-              {type}
-            </Typography>
-            <Typography sx={{ color: "#B0B0B0", fontSize: "12px" }}>
-              {distance} miles
-            </Typography>
-            <Typography sx={{ color: "#B0B0B0", fontSize: "12px" }}>
-              {stopCount} places
-            </Typography>
-          </Box>
-        </CardContent>
-      </Card>
+        />
+        {showBookmarkBtn && (
+          <BookmarkButton {...{ planId, isBookmarked, setError }} />
+        )}
+        <div className="flex flex-col content-start p-4 gap-2">
+          <h3 className="text-lg">{title}</h3>
+          <div className="flex justify-start w-full gap-2 text-foreground/70 text-xs">
+            <span>{rate}⭐</span>
+            <span>{type}</span>
+            <span>{distance} miles</span>
+            <span>{stopCount} places</span>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 };

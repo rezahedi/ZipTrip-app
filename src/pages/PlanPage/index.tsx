@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getData } from "@/util";
-import { Box, Typography } from "@mui/material";
-import PlanDetails from "@/Components/Common/PlanDetails";
+import PlanDetails from "./PlanDetails";
 import { useAuth } from "@/context/AuthContext";
 import { PlanWithStops } from "@/types";
 
@@ -31,13 +30,9 @@ const PlanPage = () => {
   }, [planId]);
 
   return (
-    <Box sx={{ paddingY: 4 }}>
-      {plan ? (
-        <PlanDetails plan={plan} />
-      ) : (
-        <Typography variant="h6">Loading...</Typography>
-      )}
-    </Box>
+    <div className="py-1">
+      {plan ? <PlanDetails plan={plan} /> : <h6>Loading...</h6>}
+    </div>
   );
 };
 

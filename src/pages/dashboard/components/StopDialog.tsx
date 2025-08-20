@@ -1,14 +1,13 @@
 import React, { useRef } from "react";
 import {
-  Box,
-  Button,
   Dialog,
-  DialogActions,
+  DialogClose,
   DialogContent,
-  DialogContentText,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-  TextField,
-} from "@mui/material";
+} from "@/Components/ui/dialog";
+import { Button } from "@/Components/ui/button";
 import { PassingStop } from "@/util/dashboard";
 
 const StopDialog = ({
@@ -27,9 +26,7 @@ const StopDialog = ({
   const latRef = useRef<HTMLInputElement>(null);
   const lngRef = useRef<HTMLInputElement>(null);
 
-  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleAdd = () => {
     onConfirm({
       name: nameRef.current!.value || "",
       imageURL: imageRef.current!.value || "",
@@ -41,91 +38,59 @@ const StopDialog = ({
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      maxWidth="md"
-      fullScreen={isMobile}
-    >
-      <form onSubmit={handleAdd}>
-        <Box style={{ padding: "10px 30px" }}>
-          <DialogTitle id="alert-dialog-title">
-            Type in Your Place Manually
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <Box sx={{ width: { sx: "100%", sm: "600px" } }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 0.5,
-                    backgroundColor: "#f5f5f5",
-                    borderRadius: 2,
-                    padding: 2,
-                  }}
-                >
-                  <TextField
-                    inputRef={nameRef}
-                    required
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Enter the name *"
-                    sx={{ "& input": { background: "white" } }}
-                  />
-                  <TextField
-                    inputRef={imageRef}
-                    required
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Enter the image URL *"
-                    sx={{ "& input": { background: "white" } }}
-                  />
-                  <TextField
-                    inputRef={addressRef}
-                    required
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Enter the address *"
-                    sx={{ "& input": { background: "white" } }}
-                  />
-                  <Box sx={{ display: "flex", gap: 1 }}>
-                    <TextField
-                      inputRef={latRef}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Enter the latitude"
-                      sx={{ "& input": { background: "white" } }}
-                    />
-                    <TextField
-                      inputRef={lngRef}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Enter the longitude"
-                      sx={{ "& input": { background: "white" } }}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={onClose}
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                border: "1px solid darkgray",
-              }}
-            >
+    <Dialog open={isOpen} onOpenChange={onClose} modal>
+      <DialogContent className="px-3 py-8 w-full h-full sm:max-w-xl max-w-full sm:h-auto rounded-none sm:rounded-lg">
+        <DialogHeader>
+          <DialogTitle>Type in Your Place Manually</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            ref={nameRef}
+            required
+            placeholder="Enter the name *"
+            className="w-full border rounded-md p-2"
+          />
+          <input
+            type="text"
+            ref={imageRef}
+            required
+            placeholder="Enter the image URL *"
+            className="w-full border rounded-md p-2"
+          />
+          <input
+            type="text"
+            ref={addressRef}
+            required
+            placeholder="Enter the address *"
+            className="w-full border rounded-md p-2"
+          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              ref={latRef}
+              placeholder="Enter the latitude"
+              className="w-full border rounded-md p-2"
+            />
+            <input
+              type="text"
+              ref={lngRef}
+              placeholder="Enter the longitude"
+              className="w-full border rounded-md p-2"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">
               Cancel
             </Button>
-            <Button type="submit">Add</Button>
-          </DialogActions>
-        </Box>
-      </form>
+          </DialogClose>
+          <Button type="button" onClick={handleAdd}>
+            Add
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 };

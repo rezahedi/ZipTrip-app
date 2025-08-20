@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
-import { Box, Typography, Grid } from "@mui/material";
 import PlanCard from "@/Components/Common/PlanCard";
 import { fetchPlans } from "@/util";
 import Pagination from "@/Components/Common/Pagination";
@@ -50,55 +49,35 @@ const CategoryPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page]);
+  }, [page, categoryId]);
 
   if (!isLoading && category === null) return <>Category not found.</>;
 
   if (!isLoading && plans.length === 0) return <>There is no plans.</>;
 
   return (
-    <Box
-      sx={{
-        marginTop: 2,
-        marginBottom: 4,
-      }}
-    >
+    <div className="mt-0.5 mb-1">
       {category && (
         <>
-          <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
-            {category.name}
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 4 }}>
-            {category.description}
-          </Typography>
+          <h5 className="text-xl font-bold">{category.name}</h5>
+          <p className="mb-2">{category.description}</p>
         </>
       )}
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          gap: "16px",
-        }}
-      >
+      <div className="flex flex-wrap justify-between gap-4">
         {!isLoading && error && <p>{error}</p>}
-        <Grid container spacing={3} sx={{ width: "100%" }}>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {isLoading &&
             Array.from({ length: 4 }).map((_, index) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-                <PlanCardSkeleton />
-              </Grid>
+              <PlanCardSkeleton key={index} />
             ))}
           {!isLoading &&
             plans.map((plan) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={plan._id}>
-                <PlanCard {...plan} planId={plan._id} image={plan.images[0]} />
-              </Grid>
+              <PlanCard key={plan._id} {...plan} image={plan.images[0]} />
             ))}
-        </Grid>
+        </div>
         <Pagination page={Number(page)} pagesCount={pagesCount} />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

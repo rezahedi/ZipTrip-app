@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { deletePlan, getMyPlans } from "@/util/dashboard";
 import PlanCard from "@/Components/Common/PlanCard";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
-import { Box, Grid, Button, Typography } from "@mui/material";
 import AlertDialog from "@/Components/Common/AlertDialog";
+import Pagination from "@/Components/Common/Pagination";
+import { Button } from "@/Components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { getQueryValue } from "@/util/url";
-import Pagination from "@/Components/Common/Pagination";
 import { Plan } from "@/types";
 
 const PAGE_SIZE = 9;
@@ -74,84 +74,55 @@ function MyPlans() {
 
   if (!isLoading && !plans.length)
     return (
-      <Box sx={{ textAlign: "center", marginTop: 4 }}>
-        <Typography variant="h5" color="textSecondary">
+      <div className="text-center mt-1">
+        <p className="font-semibold text-lg">
           Please create your first amazing plan!
-        </Typography>
-        <Button
-          component={Link}
-          to="/account/create"
-          color="inherit"
-          sx={{ marginTop: 3 }}
-        >
-          Create New Plan
-        </Button>
-      </Box>
+        </p>
+        <Link to="/account/create">
+          <Button color="inherit" className="mt-0.5">
+            Create New Plan
+          </Button>
+        </Link>
+      </div>
     );
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 2,
-        }}
-      >
-        <Typography variant="h4">My Plans</Typography>
-        <Button component={Link} to="/account/create" color="inherit">
-          Create New Plan
-        </Button>
-      </Box>
+      <div className="flex justify-between items-center mb-2">
+        <h4 className="text-xl font-semibold">My Plans</h4>
+        <Link to="/account/create">
+          <Button color="inherit">Create New Plan</Button>
+        </Link>
+      </div>
       {!isLoading && error && <p>{error}</p>}
-      <Grid container spacing={3} sx={{ width: "100%" }}>
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading &&
           Array.from({ length: 6 }).map((_, index) => (
-            <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }} key={index}>
-              <PlanCardSkeleton />
-            </Grid>
+            <PlanCardSkeleton key={index} />
           ))}
         {!isLoading &&
           plans.map((plan) => (
-            <Grid
-              size={{ xs: 12, sm: 12, md: 6, lg: 4 }}
-              key={plan._id}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+            <div key={plan._id}>
               <PlanCard
+                {...plan}
                 image={plan.images[0]}
-                title={plan.title}
-                rate={plan.rate}
-                type={plan.type}
-                distance={plan.distance}
-                stopCount={plan.stopCount}
-                planId={plan._id}
                 showBookmarkBtn={false}
               />
-              <Box>
+              <div>
+                <Link to={`/account/${plan._id}`}>
+                  <Button className="mt-0.5">Edit</Button>
+                </Link>
                 <Button
-                  component={Link}
-                  to={`/account/${plan._id}`}
-                  sx={{ marginTop: 1 }}
-                >
-                  Edit
-                </Button>
-                <Button
+                  variant="destructive"
                   onClick={() => openDeleteDialog(plan._id)}
-                  style={{ backgroundColor: "#f44336", color: "white" }}
-                  sx={{ marginLeft: 1, marginTop: 1 }}
+                  className="ml-0.5 mt-0.5"
                 >
                   Remove
                 </Button>
-              </Box>
-            </Grid>
+              </div>
+            </div>
           ))}
-      </Grid>
+      </div>
       <Pagination page={Number(page)} pagesCount={pagesCount} />
       <AlertDialog
         isOpen={alertOpen}

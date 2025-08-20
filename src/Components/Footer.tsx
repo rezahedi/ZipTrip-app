@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchPlans } from "@/util";
-import { Typography, Box, Link } from "@mui/material";
 import { Category } from "@/types";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -23,171 +23,84 @@ function Footer() {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#333333",
-        color: "white",
-        mt: 6,
-        px: 2,
-        py: 4,
-      }}
-    >
-      <Box
-        sx={{
-          m: "0 auto",
-          width: "100%",
-          maxWidth: "1300px",
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          rowGap: 2,
-        }}
-      >
-        <Box
-          sx={{
-            p: { xs: 0, sm: 2 },
-            mb: { xs: 2, sm: 0 },
-            width: { xs: "100%", sm: "auto" },
-          }}
-        >
-          <Link href="/">
+    <div className="bg-foreground/90 text-background mt-6 px-2 py-4">
+      <div className="my-0 mx-auto w-full max-w-7xl box-border flex flex-row flex-wrap gap-y-2">
+        <div className="p-0 sm:p-2 mb-2 sm:mb-0 w-full sm:w-auto">
+          <Link to="/">
             <img
               src="/images/logo-text-3-light.png"
               width={160}
-              style={{ opacity: 0.7, marginBottom: 10 }}
+              className="opacity-70 mb-10"
             />
           </Link>
-          <Typography variant="body2" maxWidth="300px">
+          <p className="max-w-2xs">
             ZipTrip helps you plan fun and efficient one-day trips in cities
             across the U.S. Discover attractions, food spots, and walking paths
             all in one place.
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 6 }}>
-            &copy; 2025 ZipTrip, All rights reserved.
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            flexGrow: 1,
-            width: { xs: "100%", sm: "auto" },
-            display: "flex",
-            justifyContent: { xs: "space-between", sm: "space-around" },
-            flexDirection: "row",
-          }}
-        >
-          <Box
-            sx={{
-              p: { xs: 0, sm: 2 },
-              mb: { xs: 2, sm: 0 },
-            }}
-          >
-            <Typography
-              component="div"
-              sx={{
-                fontSize: 12,
-                color: "white",
-              }}
-            >
-              <ul
-                style={{
-                  listStyleType: "none",
-                  padding: 0,
-                  margin: 0,
-                  fontSize: 14,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 8,
-                }}
-              >
-                <Link href="/" color="primary" underline="none">
-                  <li style={{ fontWeight: "bold", fontSize: 18 }}>Home</li>
+          </p>
+          <p className="mt-6">&copy; 2025 ZipTrip, All rights reserved.</p>
+        </div>
+        <div className="grow w-full sm:w-auto flex justify-between sm:justify-around">
+          <div className="p-0 sm:p-2 mb-2 sm:mb-0">
+            <div className="text-sm text-background">
+              <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
+                <Link to="/" color="primary">
+                  <li className="font-bold text-lg">Home</li>
                 </Link>
                 <Link
-                  href="https://ii-practicum-team-5-back-1.onrender.com/api-docs"
+                  to="https://ii-practicum-team-5-back-1.onrender.com/api-docs"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>API Documentation</li>
                 </Link>
                 <Link
-                  href="https://github.com/Code-the-Dream-School/ii-practicum-team-5-back"
+                  to="https://github.com/Code-the-Dream-School/ii-practicum-team-5-back"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Backend Repository</li>
                 </Link>
                 <Link
-                  href="https://github.com/Code-the-Dream-School/ii-practicum-team-5-front"
+                  to="https://github.com/Code-the-Dream-School/ii-practicum-team-5-front"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Frontend Repository</li>
                 </Link>
                 <Link
-                  href="https://codethedream.org/classes/practicum"
+                  to="https://codethedream.org/classes/practicum"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Practicum Program</li>
                 </Link>
                 <Link
-                  href="https://codethedream.org"
+                  to="https://codethedream.org"
                   target="_blank"
                   color="primary"
-                  underline="none"
                 >
                   <li>Code The Dream</li>
                 </Link>
               </ul>
-            </Typography>
-          </Box>
+            </div>
+          </div>
 
-          <Box
-            sx={{
-              p: { xs: 0, sm: 2 },
-              mb: { xs: 2, sm: 0 },
-            }}
-          >
-            <Typography
-              component="div"
-              sx={{
-                fontSize: 12,
-                color: "white",
-              }}
-            >
-              <ul
-                style={{
-                  listStyleType: "none",
-                  padding: 0,
-                  margin: 0,
-                  fontSize: 14,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 8,
-                }}
-              >
-                <li style={{ fontWeight: "bold", fontSize: 18 }}>Categories</li>
+          <div className="p-0 sm:p-2 mb-2 sm:mb-0">
+            <div className="text-sm text-background">
+              <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
+                <li className="font-bold text-lg">Categories</li>
                 {categories.map((category) => (
-                  <Link
-                    key={category._id}
-                    href={`/category/${category._id}`}
-                    color="primary"
-                    underline="none"
-                  >
+                  <Link key={category._id} to={`/category/${category._id}`}>
                     <li>{category.name}</li>
                   </Link>
                 ))}
               </ul>
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 export default Footer;

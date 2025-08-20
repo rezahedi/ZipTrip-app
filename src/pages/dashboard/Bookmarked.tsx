@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { removeBookmark, getBookmarks } from "@/util/dashboard";
 import PlanCard from "@/Components/Common/PlanCard";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
-import { Box, Grid, Button, Typography } from "@mui/material";
 import AlertDialog from "@/Components/Common/AlertDialog";
+import Pagination from "@/Components/Common/Pagination";
+import { Button } from "@/Components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { getQueryValue } from "@/util/url";
-import Pagination from "@/Components/Common/Pagination";
 import { Plan } from "@/types";
 
 const PAGE_SIZE = 9;
@@ -74,70 +74,44 @@ function Bookmarked() {
 
   if (!isLoading && !plans.length)
     return (
-      <Box sx={{ textAlign: "center", marginTop: 4 }}>
-        <Typography variant="h5" color="textSecondary">
-          Bookmarked Plans!
-        </Typography>
-      </Box>
+      <div className="text-center mt-1">
+        <p className="font-semibold text-lg">Nothing bookmarked yet.</p>
+      </div>
     );
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 2,
-        }}
-      >
-        <Typography variant="h4">Bookmarked Plans</Typography>
-      </Box>
+      <div className="flex justify-between items-center mb-2">
+        <h4 className="text-xl font-semibold">Bookmarked Plans</h4>
+      </div>
 
       {!isLoading && error && <p>{error}</p>}
-      <Grid container spacing={3}>
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading &&
           Array.from({ length: 6 }).map((_, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-              <PlanCardSkeleton />
-            </Grid>
+            <PlanCardSkeleton key={index} />
           ))}
         {!isLoading &&
           plans.map((plan) => {
             return (
-              <Grid
-                size={{ xs: 12, sm: 6, md: 4 }}
-                key={plan._id}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+              <div key={plan._id}>
                 <PlanCard
+                  {...plan}
                   image={plan.images[0]}
-                  title={plan.title}
-                  rate={plan.rate}
-                  type={plan.type}
-                  distance={plan.distance}
-                  stopCount={plan.stopCount}
-                  planId={plan._id}
                   isBookmarked={true}
                   showBookmarkBtn={false}
                 />
-                <Box>
-                  <Button
-                    onClick={() => openDeleteDialog(plan._id)}
-                    style={{ backgroundColor: "#f44336", color: "white" }}
-                    sx={{ marginLeft: 1, marginTop: 1 }}
-                  >
-                    Remove
-                  </Button>
-                </Box>
-              </Grid>
+                <Button
+                  variant="destructive"
+                  onClick={() => openDeleteDialog(plan._id)}
+                  className="ml-0.5 mt-0.5"
+                >
+                  Remove
+                </Button>
+              </div>
             );
           })}
-      </Grid>
+      </div>
       <Pagination page={Number(page)} pagesCount={pagesCount} />
       <AlertDialog
         isOpen={alertOpen}

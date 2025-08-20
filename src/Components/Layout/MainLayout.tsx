@@ -6,7 +6,7 @@ import Footer from "@/Components/Footer";
 function MainLayout() {
   return (
     <>
-      <div className="relative mx-auto px-2 sm:px-3 pb-5 w-full max-w-[1300px] box-border">
+      <div className="relative mx-auto px-2 sm:px-3 w-full max-w-[1300px] box-border">
         <Header />
       </div>
 

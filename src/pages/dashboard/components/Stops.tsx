@@ -1,20 +1,16 @@
 import React, { useState } from "react";
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  TextField,
-  IconButton,
-  Button,
-} from "@mui/material";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { Button } from "@/Components/ui/button";
+import IconButton from "@/Components/ui/IconButton";
 import MapDialog from "./MapDialog";
 import StopDialog from "./StopDialog";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import FormatColorTextOutlinedIcon from "@mui/icons-material/FormatColorTextOutlined";
-import NotesOutlinedIcon from "@mui/icons-material/NotesOutlined";
-import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import { PassingStop } from "@/util/dashboard";
+import {
+  TrashIcon,
+  MapIcon,
+  BaselineIcon,
+  NotebookPenIcon,
+  ImagePlusIcon,
+} from "lucide-react";
 
 const Stops = ({
   stops,
@@ -71,144 +67,91 @@ const Stops = ({
   };
 
   return (
-    <FormControl fullWidth margin="normal">
-      <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-        Stops *
-      </FormLabel>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <>
+      <label className="font-bold mb-1">Stops *</label>
+      <div className="flex flex-col gap-2">
         {stops.map((stop, index) => (
-          <Box
+          <div
+            className="flex items-center gap-1 bg-foreground/5 rounded-sm p-2"
             key={index}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              backgroundColor: "#f5f5f5",
-              borderRadius: 2,
-              padding: 2,
-            }}
           >
             <img
               src={stop.imageURL}
               alt={stop.name}
-              style={{ width: "100px", height: "100px" }}
+              className="rounded-md w-[120px] h-[110px] object-contain bg-foreground"
             />
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: "flex",
-                flexDirection: "column",
-                gap: 0.5,
-              }}
-            >
-              <TextField
+            <div className="flex flex-col gap-1 grow">
+              <input
                 required
-                variant="outlined"
-                fullWidth
                 placeholder="Enter the name"
                 value={stop.name}
-                inputProps={{ "data-index": index, "data-type": "name" }}
+                data-type="name"
+                data-index={index}
                 onChange={handleStopChange}
-                sx={{ "& input": { background: "white", padding: "6px 12px" } }}
+                className="w-full border rounded-sm bg-background py-1 px-2"
               />
-              <TextField
+              <input
                 required
-                variant="outlined"
-                fullWidth
                 placeholder="Enter the image URL"
                 value={stop.imageURL}
-                inputProps={{ "data-index": index, "data-type": "imageURL" }}
+                data-type="imageURL"
+                data-index={index}
                 onChange={handleStopChange}
-                sx={{ "& input": { background: "white", padding: "6px 12px" } }}
+                className="w-full border rounded-sm bg-background py-1 px-2"
               />
-              <TextField
+              <input
                 required
-                variant="outlined"
-                fullWidth
                 placeholder="Enter the address"
                 value={stop.address}
-                inputProps={{ "data-index": index, "data-type": "address" }}
+                data-type="address"
+                data-index={index}
                 onChange={handleStopChange}
-                sx={{ "& input": { background: "white", padding: "6px 12px" } }}
+                className="w-full border rounded-sm bg-background py-1 px-2"
               />
-            </Box>
+            </div>
             <IconButton
               aria-label="Remove Stop"
               onClick={() => handleDeleteStop(index)}
             >
-              <DeleteOutlineOutlinedIcon />
+              <TrashIcon />
             </IconButton>
-          </Box>
+          </div>
         ))}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: 2,
-            backgroundColor: "#f5f5f5",
-            borderRadius: 2,
-            padding: 2,
-          }}
-        >
+        <div className="flex flex-wrap justify-center gap-2 bg-foreground/5 rounded-md p-2">
           <Button
+            type="button"
             onClick={handleOpenMap}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-              p: 2,
-              width: 120,
-            }}
+            className="flex flex-col gap-1 p-4 w-32 h-fit"
           >
-            <MapOutlinedIcon />
+            <MapIcon className="size-8" />
             Add via Map
           </Button>
           <Button
+            type="button"
             onClick={handleOpenStop}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-              p: 2,
-              width: 120,
-            }}
+            className="flex flex-col gap-1 p-4 w-32 h-fit"
           >
-            <FormatColorTextOutlinedIcon />
+            <BaselineIcon className="size-8" />
             Add Manually
           </Button>
           <Button
-            onClick={handleOpenStop}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-              p: 2,
-              width: 120,
-              backgroundColor: "#cfcfcf",
-            }}
+            type="button"
+            className="flex flex-col gap-1 p-4 w-32 h-fit"
             disabled
           >
-            <NotesOutlinedIcon />
+            <NotebookPenIcon className="size-8" />
             Add Note
           </Button>
           <Button
-            onClick={handleOpenStop}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-              p: 2,
-              width: 120,
-              backgroundColor: "#cfcfcf",
-            }}
+            type="button"
+            className="flex flex-col gap-1 p-4 w-32 h-fit"
             disabled
           >
-            <AddPhotoAlternateOutlinedIcon />
+            <ImagePlusIcon className="size-8" />
             Add Photos
           </Button>
-        </Box>
-      </Box>
+        </div>
+      </div>
       <MapDialog
         isOpen={isMapDialogOpen}
         onClose={handleCloseMap}
@@ -219,7 +162,7 @@ const Stops = ({
         onClose={handleCloseStop}
         onConfirm={handleAddManuallyConfirm}
       />
-    </FormControl>
+    </>
   );
 };
 

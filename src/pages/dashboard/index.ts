@@ -5,6 +5,7 @@ import CreateNew from "./CreateNew";
 import Done from "./Done";
 import Profile from "./Profile";
 import EditPlan from "./EditPlan";
+import Settings from "./Settings";
 
 export {
   DashboardTheme,
@@ -14,4 +15,5 @@ export {
   Done,
   Profile,
   EditPlan,
+  Settings,
 };

@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Typography,
-  FormControl,
-  FormLabel,
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Button } from "@/Components/ui/button";
 import {
   getCategories,
   createPlan,
@@ -80,153 +71,104 @@ function CreateNew() {
 
   return (
     <>
-      <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h4">Create a New Plan:</Typography>
-      </Box>
-      <Box sx={{ width: "100%", maxWidth: 650 }}>
+      <div className="flex justify-between items-center mb-2">
+        <h4 className="text-xl font-semibold">Create a New Plan:</h4>
+      </div>
+      <div className="w-full max-w-2xl">
         {error && <p>{error}</p>}
         <form onSubmit={handleCreate}>
-          {/* Title */}
-          <FormControl fullWidth margin="normal">
-            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-              Title *
-            </FormLabel>
-            <TextField
-              required
-              variant="outlined"
-              fullWidth
-              placeholder="Enter the title of your plan"
-              value={plan.title || ""}
-              onChange={(e) => setPlan({ ...plan, title: e.target.value })}
-            />
-          </FormControl>
+          <label className="block font-bold mb-2">Title *</label>
+          <input
+            type="text"
+            required
+            placeholder="Enter the title of your plan"
+            value={plan.title || ""}
+            onChange={(e) => setPlan({ ...plan, title: e.target.value })}
+            className="w-full border rounded-md p-2 mb-2"
+          />
 
-          {/* Image */}
           <PlanImages
             images={plan.images || []}
             setImages={(images: string[]) => setPlan({ ...plan, images })}
           />
 
-          {/* Category */}
-          <FormControl fullWidth margin="normal">
-            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-              Category *
-            </FormLabel>
-            <Select
-              required
-              variant="outlined"
-              fullWidth
-              value={plan.categoryId || ""}
-              onChange={(e) => setPlan({ ...plan, categoryId: e.target.value })}
-            >
-              <MenuItem value="">Select a category</MenuItem>
-              {categories.map((category) => (
-                <MenuItem key={category._id} value={category._id}>
-                  {category.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <label className="block font-bold mb-2">Category *</label>
+          <select
+            required
+            value={plan.categoryId || ""}
+            onChange={(e) => setPlan({ ...plan, categoryId: e.target.value })}
+            className="w-full border rounded-md p-2 mb-2"
+          >
+            <option value="">Select a category</option>
+            {categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
 
-          {/* Description */}
-          <FormControl fullWidth margin="normal">
-            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-              Description *
-            </FormLabel>
-            <TextField
-              required
-              variant="outlined"
-              fullWidth
-              multiline
-              placeholder="Write a brief description of your plan"
-              minRows={4}
-              value={plan.description || ""}
-              onChange={(e) =>
-                setPlan({ ...plan, description: e.target.value })
-              }
-            />
-          </FormControl>
+          <label className="block font-bold mb-2">Description *</label>
+          <textarea
+            required
+            placeholder="Write a brief description of your plan"
+            rows={4}
+            value={plan.description || ""}
+            onChange={(e) => setPlan({ ...plan, description: e.target.value })}
+            className="w-full border rounded-md p-2 mb-2"
+          />
 
-          {/* Type */}
-          <FormControl fullWidth margin="normal">
-            <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-              Type
-            </FormLabel>
-            <Select
-              variant="outlined"
-              fullWidth
-              value={plan.type || ""}
-              onChange={(e) => setPlan({ ...plan, type: e.target.value })}
-            >
-              <MenuItem value="">Select a plan type</MenuItem>
-              {TYPES.map((type, index) => (
-                <MenuItem key={index} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <label className="block font-bold mb-2">Type</label>
+          <select
+            value={plan.type || ""}
+            onChange={(e) => setPlan({ ...plan, type: e.target.value })}
+            className="w-full border rounded-md p-2 mb-2"
+          >
+            <option value="">Select a plan type</option>
+            {TYPES.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
 
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-            {/* Distance */}
-            <FormControl fullWidth margin="normal">
-              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-                Distance
-              </FormLabel>
-              <TextField
-                variant="outlined"
-                fullWidth
+          <div className="flex gap-2">
+            <div className="grow">
+              <label className="block font-bold mb-2">Distance</label>
+              <input
                 placeholder="Distance in miles"
                 type="number"
                 value={plan.distance || ""}
                 onChange={(e) => setPlan({ ...plan, distance: e.target.value })}
+                className="w-full border rounded-md p-2 mb-2"
               />
-            </FormControl>
-
-            {/* Duration */}
-            <FormControl fullWidth margin="normal">
-              <FormLabel sx={{ fontWeight: "bold", mb: 1, color: "#000" }}>
-                Duration
-              </FormLabel>
-              <TextField
-                variant="outlined"
-                fullWidth
+            </div>
+            <div className="grow">
+              <label className="block font-bold mb-2">Duration</label>
+              <input
                 placeholder="Duration in hours"
                 type="number"
                 value={plan.duration || ""}
                 onChange={(e) => setPlan({ ...plan, duration: e.target.value })}
+                className="w-full border rounded-md p-2 mb-2"
               />
-            </FormControl>
-          </Box>
+            </div>
+          </div>
 
-          {/* Stops */}
           <Stops
             stops={plan.stops || []}
             setStops={(stops: PassingStop[]) => setPlan({ ...plan, stops })}
           />
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-            <Button
-              variant="outlined"
-              sx={{
-                backgroundColor: "white",
-                color: "#4CAF50",
-                borderColor: "#4CAF50",
-                ":hover": {
-                  backgroundColor: "#388e3c30",
-                  borderColor: "#388e3c",
-                },
-              }}
-              onClick={() => navigate("/account")}
-            >
+          <div className="flex justify-end gap-2 mt-2">
+            <Button variant="secondary" onClick={() => navigate("/account")}>
               Cancel
             </Button>
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant="default" type="submit">
               Publish
             </Button>
-          </Box>
+          </div>
         </form>
-      </Box>
+      </div>
     </>
   );
 }
