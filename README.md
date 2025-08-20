@@ -1,6 +1,6 @@
 # One Day Planner App (Practicum Project)
 
-This is the frontend part of the **One Day Planner** application — a planning application where users could search for one-day plans or create their own one-day itineraries plans with multiple stops such as parks, museums, cafes, and restaurants. Built with **React**, **Vite.js**, **MUI - Material UI**, **React Router** and **Axios**, this application serves users-generated plans for public, plans are searchable and categorized, and user could sign up or sign in, bookmark plans, or create their own plans from scratch and share it with others.
+This is the frontend part of the **One Day Planner** application — a planning application where users could search for one-day plans or create their own one-day itineraries plans with multiple stops such as parks, museums, cafes, and restaurants. Built with **React**, **Vite.js**, **shadcn/ui**, **React Router** and **Axios**, this application serves users-generated plans for public, plans are searchable and categorized, and user could sign up or sign in, bookmark plans, or create their own plans from scratch and share it with others.
 
 The **backend team** is developing the API in a separate [repository](https://github.com/Code-the-Dream-School/ii-practicum-team-5-back), using **Express.js**, **MongoDB/Mongoose** and **JWT**.
 
