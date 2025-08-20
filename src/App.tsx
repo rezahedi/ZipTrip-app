@@ -33,7 +33,6 @@ function App() {
             <Route path="/plans/:planId" element={<PlanPage />} />
             <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route path="/user/:userId" element={<UserPage />} />
-            <Route path="/resetpassword" element={<ResetPasswordPage />} />
             <Route
               path="/resetpassword/:token"
               element={<ResetPasswordPage />}
