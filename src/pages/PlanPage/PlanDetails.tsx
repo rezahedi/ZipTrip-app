@@ -94,11 +94,11 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
             </Avatar>
             {userId.name}
           </Link>
-          {plan.updatedAt && (
+          {updatedAt && (
             <>
               ·{" "}
-              <time dateTime={new Date(plan.updatedAt).toISOString()}>
-                {new Date(plan.updatedAt).toLocaleDateString("en-US", {
+              <time dateTime={new Date(updatedAt).toISOString()}>
+                {new Date(updatedAt).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
                   year: "numeric",
