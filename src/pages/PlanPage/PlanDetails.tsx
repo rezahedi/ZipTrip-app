@@ -10,6 +10,7 @@ import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
 import { AddBookmark, removeBookmark } from "@/util/dashboard";
 import { PlanWithStops } from "@/types";
+import StatsBlock from "./StatsBlock";
 
 const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
   const {
@@ -27,6 +28,8 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     rate,
     reviewCount,
     isBookmarked,
+    createdAt,
+    updatedAt,
   } = plan;
   const [bookmark, setBookmark] = useState(isBookmarked);
   const { token } = useAuth();
@@ -79,9 +82,8 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
           </div>
         </div>
 
-        {/* Title Details */}
-        <div className="flex flex-wrap gap-4 gap-y-0.5 text-sm sm:text-base text-foreground/65">
-          <Link to={`/user/${userId._id}`} className="flex gap-1">
+        <div className="flex gap-4 text-sm text-foreground/80 items-center">
+          <Link to={`/user/${userId._id}`} className="flex gap-2 items-center">
             <Avatar className="size-6">
               <AvatarImage
                 src={userId.imageURL}
@@ -92,16 +94,18 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
             </Avatar>
             {userId.name}
           </Link>
-          <span>
-            {rate}⭐ ({reviewCount} reviews)
-          </span>
-          <span>{type}</span>
-          <span>{distance} miles</span>
-          <span>{stopCount} places</span>
-          <span>{duration} hours</span>
-          <span>
-            <Link to={`/category/${categoryId._id}`}>{categoryId.name}</Link>
-          </span>
+          {plan.updatedAt && (
+            <>
+              ·{" "}
+              <time dateTime={new Date(plan.updatedAt).toISOString()}>
+                {new Date(plan.updatedAt).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </time>
+            </>
+          )}
         </div>
 
         {images?.length > 0 && (
@@ -117,7 +121,20 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
           </div>
         )}
 
-        <p className="pt-4">{description}</p>
+        <StatsBlock
+          className="py-6"
+          stats={{
+            rate,
+            reviewCount,
+            type,
+            distance,
+            stopCount,
+            duration,
+            categoryId,
+          }}
+        />
+
+        <p className="py-6">{description}</p>
 
         {stops.length > 0 && <Stops stops={stops} />}
       </article>
