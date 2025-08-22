@@ -23,6 +23,7 @@ const ShareDialog = ({
   const [canShare, setCanShare] = useState(
     window.navigator.canShare({ title: "", url: "" }) || false,
   );
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleShare = async () => {
     if (canShare) {
@@ -40,6 +41,24 @@ const ShareDialog = ({
     }
   };
 
+  const handleCopyLink = async () => {
+    try {
+      await window.navigator.clipboard.writeText(window.location.href);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 3000);
+    } catch (error) {
+      console.error("Failed to copy link:", error);
+    }
+  };
+
+  const handleEmail = () => {
+    const subject = encodeURIComponent(window.document.title);
+    const body = encodeURIComponent(
+      `Check out this link: ${window.location.href}`,
+    );
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose} modal>
       <DialogContent className="px-3 py-8 w-full h-full sm:max-w-xl max-w-full sm:h-auto rounded-none sm:rounded-lg">
@@ -49,17 +68,18 @@ const ShareDialog = ({
         <div className="flex flex-col gap-2">
           <ul className="divide-y space-y-4 [&_button]:flex [&_button]:gap-3 [&_button]:items-center [&_button]:text-xl [&_button]:text-foreground [&_li]:pb-4">
             <li>
-              <Button variant="link">
+              <Button variant="link" onClick={handleCopyLink}>
                 <CopyIcon className="size-6 text-foreground/40" /> Copy link
+                {isCopied && <i className="text-base text-accent">Copied!</i>}
               </Button>
             </li>
             <li>
-              <Button variant="link">
+              <Button variant="link" disabled>
                 <TextIcon className="size-6 text-foreground/40" /> Text
               </Button>
             </li>
             <li>
-              <Button variant="link">
+              <Button variant="link" onClick={handleEmail}>
                 <MailIcon className="size-6 text-foreground/40" /> Email
               </Button>
             </li>
