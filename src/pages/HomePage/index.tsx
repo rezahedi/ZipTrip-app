@@ -14,7 +14,7 @@ const HomePage = () => {
       <CardSection title="Local Favorites Near San Francisco" search="tour" />
       <ExploreBlock />
       <CategorySection title="Browse by Category" />
-      <SignupBlock />
+      {/* <SignupBlock /> */}
     </>
   );
 };
