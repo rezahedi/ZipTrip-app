@@ -12,7 +12,7 @@ const NotificationBar = () => {
     })();
   }, []);
 
-  if (!isVisible) return;
+  if (!isVisible) return null;
 
   return (
     <div className="top-0 w-full bg-primary text-background flex justify-between p-2 items-center">

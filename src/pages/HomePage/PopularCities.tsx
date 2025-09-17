@@ -13,7 +13,7 @@ const DUMMY_CITIES = [
   { name: "Seattle", plans: 704 },
 ];
 
-const PopularCities = ({ className = "" }: { className: string }) => {
+const PopularCities = ({ className = "" }: { className?: string }) => {
   return (
     <div
       className={cn(
@@ -24,9 +24,12 @@ const PopularCities = ({ className = "" }: { className: string }) => {
       <h3 className="font-semibold text-2xl">Popular Cities</h3>
       <ul className="my-8 text-xl flex md:flex-col md:flex-nowrap flex-wrap gap-3 md:gap-1">
         {DUMMY_CITIES.map((city) => (
-          <li>
+          <li key={city.name}>
             <Link
-              to={`/search?q=${city.name}`}
+              to={{
+                pathname: "/search",
+                search: `?q=${encodeURIComponent(city.name)}`,
+              }}
               className="flex gap-2 justify-between bg-primary/10 p-2 md:bg-transparent hover:bg-primary/30 md:hover:px-3 md:hover:-mx-2 transition-all duration-100 md:px-0 md:py-2 rounded-md"
             >
               {city.name} : <span>{city.plans}</span>
