@@ -12,10 +12,8 @@ const SignupBlock = () => {
         src="./images/chicago-signup-block.jpg"
       />
       <div className="flex-4/6 p-10 md:p-20 bg-primary/15 text-foreground flex flex-col gap-2 items-start justify-center">
-        <h2 className="font-medium text-4xl md:text-6xl text-shadow-md">
-          Start Planning
-        </h2>
-        <h5 className="text-xl md:text-2xl mt-4 text-shadow-md">
+        <h2 className="font-medium text-4xl md:text-6xl">Start Planning</h2>
+        <h5 className="text-xl md:text-2xl mt-4">
           Join ZipTrip, make your own fantastic plan, share it with the world.
           And become your neighborhood favorite tour guide.
         </h5>
