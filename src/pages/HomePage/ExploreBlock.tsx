@@ -16,7 +16,7 @@ const ExploreBlock = () => {
           </h5>
         </div>
         <Link
-          className="group rounded-full bg-white py-2 px-4 font-semibold text-lg flex items-center gap-1"
+          className="group rounded-full bg-background py-2 px-4 font-semibold text-lg flex items-center gap-1"
           to="/search?q=Manhattan"
         >
           Explore{" "}
