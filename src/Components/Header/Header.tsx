@@ -30,7 +30,7 @@ const Header = () => {
           </Link>
         </div>
         <nav className="grow">
-          <ol className="hidden sm:flex gap-8 justify-center text-lg font-semibold">
+          <ol className="hidden sm:flex gap-1 justify-center text-lg font-semibold [&_a]:px-4 [&_a]:py-2 [&_a]:rounded-full [&_a]:hover:bg-primary/15 [&_a]:transition-all [&_a]:duration-200">
             <li>
               <a href="#">Home</a>
             </li>
@@ -55,8 +55,8 @@ const Header = () => {
       />
 
       {/* image */}
-      <div className="bg-[url('/images/main-header.jpg')] bg-cover bg-center h-56 flex justify-center items-center">
-        <h4 className="text-white text-center text-2xl sm:text-4xl">
+      <div className="bg-[url('/images/main-header.jpg')] bg-cover bg-center h-56 flex justify-center items-center rounded-lg">
+        <h4 className="text-white text-center text-2xl sm:text-4xl w-full h-full flex items-center justify-center bg-foreground/20">
           Plan your perfect day with ease!
         </h4>
       </div>

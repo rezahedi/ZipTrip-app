@@ -85,7 +85,7 @@ const DrawerSidebar = () => {
           </SheetTitle>
         </SheetHeader>
         <nav className="grow p-2 mt-4">
-          <ol className="flex flex-col gap-1 justify-center text-lg [&_a]:px-2 [&_a]:py-3 [&_a]:hover:bg-accent [&_a]:rounded-md [&_a]:flex [&_a]:items-center [&_a]:gap-2">
+          <ol className="flex flex-col gap-1 justify-center text-lg [&_a]:px-2 [&_a]:py-3 [&_a]:hover:bg-primary/15 [&_a]:rounded-md [&_a]:flex [&_a]:items-center [&_a]:gap-2">
             <li>
               <a href="#">
                 <Forward className="w-6 text-ring" /> Home
@@ -103,7 +103,7 @@ const DrawerSidebar = () => {
             </li>
             {user && (
               <>
-                <li className="border-t border-t-accent font-semibold text-2xl p-2 my-2">
+                <li className="border-t border-t-primary font-semibold text-2xl p-2 my-2">
                   Account
                 </li>
                 <li>
@@ -136,11 +136,7 @@ const DrawerSidebar = () => {
               <Button variant="default" onClick={handleRegister}>
                 Sign up
               </Button>
-              <Button
-                variant="secondary"
-                className="ml-2"
-                onClick={handleLogin}
-              >
+              <Button variant="secondary" onClick={handleLogin}>
                 Login
               </Button>
             </>
