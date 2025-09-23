@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import HomePage from "@/pages/HomePage";
 import SearchPage from "@/pages/SearchPage";
+import MapViewPage from "@/pages/MapView";
 import PlanPage from "@/pages/PlanPage";
 import CategoryPage from "@/pages/CategoryPage";
 import UserPage from "@/pages/UserPage";
@@ -19,6 +20,7 @@ import {
   Settings,
 } from "@/pages/dashboard";
 import MainLayout from "@/Components/Layout/MainLayout";
+import MapLayout from "@/Components/Layout/MapLayout";
 import ProtectedRoute from "@/Components/Auth/ProtectedRoute";
 
 function App() {
@@ -26,6 +28,9 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          <Route element={<MapLayout />}>
+            <Route path="/map" element={<MapViewPage />} />
+          </Route>
           {/* Routes wrapped in main layout */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
