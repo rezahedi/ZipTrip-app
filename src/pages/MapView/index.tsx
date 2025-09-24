@@ -14,6 +14,7 @@ const INITIAL_CAMERA = {
 };
 
 const MapViewPage = () => {
+  // TODO: Get user's location from local storage
   const [cameraProps, setCameraProps] =
     useState<MapCameraProps>(INITIAL_CAMERA);
 
