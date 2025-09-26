@@ -19,7 +19,11 @@ const LocateMeButton = () => {
         const { latitude: lat, longitude: lng } = pos.coords;
         map?.panTo({ lat, lng });
         map?.setZoom(ZOOMED_MAP);
-        // TODO: Store user's location in local storage
+
+        localStorage.setItem(
+          "userLocation",
+          JSON.stringify({ center: { lat, lng }, zoom: ZOOMED_MAP }),
+        );
       };
       const error = (err: GeolocationPositionError) => {
         if (err.code === GeolocationPositionError.PERMISSION_DENIED)

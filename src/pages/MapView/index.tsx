@@ -17,9 +17,11 @@ const INITIAL_CAMERA = {
 
 const MapViewPage = () => {
   const map = useMap();
-  // TODO: Get user's location from local storage
-  const [cameraProps, setCameraProps] =
-    useState<MapCameraProps>(INITIAL_CAMERA);
+
+  const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
+  const [cameraProps, setCameraProps] = useState<MapCameraProps>(
+    userLocation || INITIAL_CAMERA,
+  );
 
   const handleCameraChange = useCallback((ev: MapCameraChangedEvent) => {
     return setCameraProps(ev.detail);
