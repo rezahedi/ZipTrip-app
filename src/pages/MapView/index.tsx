@@ -11,9 +11,10 @@ import LocateMeButton from "./LocateMeButton";
 import { debounce } from "@/lib/utils";
 import Markers from "./Markers";
 
+// Bay Area
 const INITIAL_CAMERA = {
-  center: { lat: 39.8283, lng: -98.5795 },
-  zoom: 5,
+  center: { lat: 37.7197499272203, lng: -122.31540987748134 },
+  zoom: 11,
 };
 
 const MapViewPage = () => {
