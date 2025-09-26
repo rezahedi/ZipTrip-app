@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Map,
   useMap,
@@ -9,6 +9,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import LocateMeButton from "./LocateMeButton";
 import { debounce } from "@/lib/utils";
+import Markers from "./Markers";
 
 const INITIAL_CAMERA = {
   center: { lat: 39.8283, lng: -98.5795 },
@@ -22,24 +23,20 @@ const MapViewPage = () => {
   const [cameraProps, setCameraProps] = useState<MapCameraProps>(
     userLocation || INITIAL_CAMERA,
   );
+  const [bounds, setBounds] = useState<google.maps.LatLngBounds | undefined>();
 
   const handleCameraChange = useCallback((ev: MapCameraChangedEvent) => {
     return setCameraProps(ev.detail);
   }, []);
 
-  const handleBoundsChange = () => {
-    const bounds = map?.getBounds();
-    // TODO: fetch data and show as pointers on map
-    // TODO: Debounce api calls
-    console.log(
-      `/plans/nearby/?latmin=${bounds?.getSouthWest().lat()}&lngmin=${bounds?.getNorthEast().lng()}&latmax=${bounds?.getNorthEast().lat()}&lngmax=${bounds?.getSouthWest().lng()}`,
-    );
-  };
-
-  const debouncedHandleBoundsChange = useMemo(
-    () => debounce(handleBoundsChange, 300),
-    [],
+  const debouncedHandleBoundsChange = useCallback(
+    debounce(() => setBounds(map?.getBounds()), 300),
+    [map],
   );
+
+  useEffect(() => {
+    debouncedHandleBoundsChange();
+  }, []);
 
   return (
     <div className="h-full">
@@ -52,6 +49,7 @@ const MapViewPage = () => {
         streetViewControl={false}
         onBoundsChanged={debouncedHandleBoundsChange}
       >
+        {bounds && <Markers bounds={bounds} />}
         <MapControl position={ControlPosition.RIGHT_BOTTOM}>
           <LocateMeButton />
         </MapControl>
