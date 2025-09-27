@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Plan } from "@/types";
-import { Marker as GMapMarker, useMap } from "@vis.gl/react-google-maps";
+import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
 
 const Marker = ({
   plan,

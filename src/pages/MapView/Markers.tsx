@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { fetchPlans } from "@/util";
 import { Plan } from "@/types";
 import Marker from "./Marker";
 import { InfoWindow } from "@vis.gl/react-google-maps";
+import { XIcon } from "lucide-react";
 
 const Markers = ({
   bounds,
@@ -56,25 +57,40 @@ const Markers = ({
       ))}
       {selectedMarker && (
         <InfoWindow
+          headerDisabled
           position={{
             lat: selectedMarker.startLocation[0],
             lng: selectedMarker.startLocation[1],
           }}
           onClose={() => setSelectedMarker(null)}
-          maxWidth={260}
         >
-          <div className="max-w-3xs flex gap-1">
-            <img
-              className="flex-1/5"
-              src={selectedMarker.images[0]}
-              alt={selectedMarker.title}
-              style={{ width: "100%", height: "auto", borderRadius: "4px" }}
-            />
-            <div className="flex-4/5 max-h-40">
-              <h3 className="font-semibold text-md">{selectedMarker.title}</h3>
-              <p>{selectedMarker.description}</p>
+          <button
+            className="absolute top-2 right-2 text-foreground/60 cursor-pointer"
+            onClick={() => setSelectedMarker(null)}
+          >
+            <XIcon />
+          </button>
+          <Link to={`/plans/${selectedMarker._id}`}>
+            <div className="flex gap-1 w-xs h-32">
+              <img
+                className="w-24 h-full object-cover rounded-sm"
+                src={selectedMarker.images[0]}
+                alt={selectedMarker.title}
+              />
+              <div className="flex-4/5 max-h-40 px-2">
+                <h5 className="text-foreground/70 font-normal text-sm">
+                  {selectedMarker.categoryId.name}
+                </h5>
+                <h3 className="font-medium text-base/snug text-balance py-1">
+                  {selectedMarker.title}
+                </h3>
+                <p className="text-foreground/70 font-normal text-sm">
+                  {selectedMarker.stopCount} stops . {selectedMarker.distance}{" "}
+                  ml . {selectedMarker.duration} hr
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         </InfoWindow>
       )}
     </>
