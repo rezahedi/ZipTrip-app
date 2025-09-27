@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { fetchPlans } from "@/util";
 import { Plan } from "@/types";
 import Marker from "./Marker";
+import { InfoWindow } from "@vis.gl/react-google-maps";
 
 const Markers = ({
   bounds,
@@ -15,6 +16,7 @@ const Markers = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [selectedMarker, setSelectedMarker] = useState<Plan | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -50,8 +52,31 @@ const Markers = ({
   return (
     <>
       {plans.map((plan) => (
-        <Marker key={plan._id} plan={plan} />
+        <Marker key={plan._id} plan={plan} onClick={setSelectedMarker} />
       ))}
+      {selectedMarker && (
+        <InfoWindow
+          position={{
+            lat: selectedMarker.startLocation[0],
+            lng: selectedMarker.startLocation[1],
+          }}
+          onClose={() => setSelectedMarker(null)}
+          maxWidth={260}
+        >
+          <div className="max-w-3xs flex gap-1">
+            <img
+              className="flex-1/5"
+              src={selectedMarker.images[0]}
+              alt={selectedMarker.title}
+              style={{ width: "100%", height: "auto", borderRadius: "4px" }}
+            />
+            <div className="flex-4/5 max-h-40">
+              <h3 className="font-semibold text-md">{selectedMarker.title}</h3>
+              <p>{selectedMarker.description}</p>
+            </div>
+          </div>
+        </InfoWindow>
+      )}
     </>
   );
 };
