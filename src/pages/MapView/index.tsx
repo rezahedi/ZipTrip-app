@@ -10,6 +10,7 @@ import {
 import LocateMeButton from "./LocateMeButton";
 import { debounce } from "@/lib/utils";
 import Markers from "./Markers";
+import SidebarOverlay from "./SidebarOverlay";
 
 // Bay Area
 const INITIAL_CAMERA = {
@@ -50,6 +51,9 @@ const MapViewPage = () => {
         streetViewControl={false}
         onBoundsChanged={debouncedHandleBoundsChange}
       >
+        <MapControl position={ControlPosition.LEFT_TOP}>
+          <SidebarOverlay plans={[]} />
+        </MapControl>
         {bounds && <Markers bounds={bounds} />}
         <MapControl position={ControlPosition.RIGHT_BOTTOM}>
           <LocateMeButton />
