@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import {
   Map,
   useMap,
-  MapCameraChangedEvent,
   MapCameraProps,
   MapControl,
   ControlPosition,
@@ -14,17 +13,15 @@ import SidebarOverlay from "./SidebarOverlay";
 
 // Bay Area
 const INITIAL_CAMERA = {
-  center: { lat: 37.7197499272203, lng: -122.31540987748134 },
-  zoom: 11,
+  defaultCenter: { lat: 37.7197499272203, lng: -122.31540987748134 },
+  defaultZoom: 11,
 };
 
 const MapViewPage = () => {
   const map = useMap();
 
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
-  const [cameraProps, setCameraProps] = useState<MapCameraProps>(
-    userLocation || INITIAL_CAMERA,
-  );
+  const cameraProps: MapCameraProps = userLocation || INITIAL_CAMERA;
   const [bounds, setBounds] = useState<google.maps.LatLngBounds | undefined>();
 
   const handleCameraChange = useCallback((ev: MapCameraChangedEvent) => {
@@ -44,7 +41,6 @@ const MapViewPage = () => {
     <div className="h-full">
       <Map
         {...cameraProps}
-        onCameraChanged={handleCameraChange}
         style={{ width: "100%", height: "100%" }}
         disableDefaultUI={false}
         gestureHandling="greedy"

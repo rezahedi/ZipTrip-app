@@ -22,7 +22,7 @@ const LocateMeButton = () => {
 
         localStorage.setItem(
           "userLocation",
-          JSON.stringify({ center: { lat, lng }, zoom: ZOOMED_MAP }),
+          JSON.stringify({ defaultCenter: { lat, lng }, defaultZoom: ZOOMED_MAP }),
         );
       };
       const error = (err: GeolocationPositionError) => {
