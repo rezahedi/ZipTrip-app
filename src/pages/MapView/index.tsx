@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import {
   Map,
   useMap,
@@ -13,19 +13,19 @@ import SidebarOverlay from "./SidebarOverlay";
 import { usePlans } from "./PlansContext";
 
 // Bay Area
-const INITIAL_CAMERA = {
+const MAP_INITIAL_VIEW = {
   defaultCenter: { lat: 37.7197499272203, lng: -122.31540987748134 },
   defaultZoom: 11,
 };
 
 const MapViewPage = () => {
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
-  const cameraProps: MapCameraProps = userLocation || INITIAL_CAMERA;
+  const cameraProps: MapCameraProps = userLocation || MAP_INITIAL_VIEW;
   const map = useMap();
-  const { plans, setBounds } = usePlans();
+  const { setBoundingBox } = usePlans();
 
-  const debouncedHandleBoundsChange = useCallback(
-    debounce(() => setBounds(map?.getBounds()), 300),
+  const debouncedSetBoundingBox = useCallback(
+    debounce(() => setBoundingBox(map?.getBounds()), 300),
     [map],
   );
 
@@ -37,7 +37,7 @@ const MapViewPage = () => {
         disableDefaultUI={false}
         gestureHandling="greedy"
         streetViewControl={false}
-        onBoundsChanged={debouncedHandleBoundsChange}
+        onBoundsChanged={debouncedSetBoundingBox}
       >
         <Markers />
         <MapControl position={ControlPosition.LEFT_TOP}>

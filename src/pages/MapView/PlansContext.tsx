@@ -14,17 +14,21 @@ import { useMap } from "@vis.gl/react-google-maps";
 type PlansContextType = {
   plans: Plan[];
   isLoading: boolean;
+  error: string | null;
   selectedPlan: Plan | null;
   setSelectedPlan: Dispatch<SetStateAction<Plan | null>>;
-  setBounds: Dispatch<SetStateAction<google.maps.LatLngBounds | undefined>>;
+  setBoundingBox: Dispatch<
+    SetStateAction<google.maps.LatLngBounds | undefined>
+  >;
 };
 
 const PlansContext = createContext<PlansContextType>({
   plans: [],
   isLoading: false,
+  error: null,
   selectedPlan: null,
   setSelectedPlan: () => {},
-  setBounds: () => {},
+  setBoundingBox: () => {},
 });
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,13 +36,15 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [bounds, setBounds] = useState<google.maps.LatLngBounds | undefined>();
+  const [boundingBox, setBoundingBox] = useState<
+    google.maps.LatLngBounds | undefined
+  >();
   const { token } = useAuth();
   const map = useMap();
 
   // TODO: If want to add loading, error handler or other stuff then better to create a hook like useFetchPlans()
   useEffect(() => {
-    const currentBounds = bounds || map?.getBounds();
+    const currentBounds = boundingBox || map?.getBounds();
     if (!currentBounds) return;
 
     (async () => {
@@ -57,18 +63,31 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [map, bounds]);
+  }, [map, boundingBox]);
 
   return (
     <PlansContext.Provider
-      value={{ plans, isLoading, selectedPlan, setSelectedPlan, setBounds }}
+      value={{
+        plans,
+        isLoading,
+        error,
+        selectedPlan,
+        setSelectedPlan,
+        setBoundingBox,
+      }}
     >
       {children}
     </PlansContext.Provider>
   );
 };
 
-const usePlans = () => useContext(PlansContext);
+const usePlans = () => {
+  const context = useContext(PlansContext);
+  if (!context) {
+    throw new Error("usePlans must be used within a PlansProvider");
+  }
+  return context;
+};
 
 export { PlansProvider, usePlans };
 
