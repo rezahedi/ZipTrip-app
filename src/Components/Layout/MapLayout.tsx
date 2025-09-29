@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Header from "@/Components/Header";
 import NotificationBar from "@/pages/HomePage/NotificationBar";
 import { APIProvider } from "@vis.gl/react-google-maps";
+import { PlansProvider } from "@/pages/MapView/PlansContext";
 
 function MapLayout() {
   return (
@@ -14,7 +15,9 @@ function MapLayout() {
 
       <div className="flex-1">
         <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
-          <Outlet />
+          <PlansProvider>
+            <Outlet />
+          </PlansProvider>
         </APIProvider>
       </div>
     </div>

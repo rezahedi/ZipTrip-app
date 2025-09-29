@@ -10,6 +10,7 @@ import LocateMeButton from "./LocateMeButton";
 import { debounce } from "@/lib/utils";
 import Markers from "./Markers";
 import SidebarOverlay from "./SidebarOverlay";
+import { usePlans } from "./PlansContext";
 
 // Bay Area
 const INITIAL_CAMERA = {
@@ -18,24 +19,15 @@ const INITIAL_CAMERA = {
 };
 
 const MapViewPage = () => {
-  const map = useMap();
-
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
   const cameraProps: MapCameraProps = userLocation || INITIAL_CAMERA;
-  const [bounds, setBounds] = useState<google.maps.LatLngBounds | undefined>();
-
-  const handleCameraChange = useCallback((ev: MapCameraChangedEvent) => {
-    return setCameraProps(ev.detail);
-  }, []);
+  const map = useMap();
+  const { plans, setBounds } = usePlans();
 
   const debouncedHandleBoundsChange = useCallback(
     debounce(() => setBounds(map?.getBounds()), 300),
     [map],
   );
-
-  useEffect(() => {
-    debouncedHandleBoundsChange();
-  }, []);
 
   return (
     <div className="h-full">
@@ -47,10 +39,10 @@ const MapViewPage = () => {
         streetViewControl={false}
         onBoundsChanged={debouncedHandleBoundsChange}
       >
+        <Markers />
         <MapControl position={ControlPosition.LEFT_TOP}>
-          <SidebarOverlay plans={[]} />
+          <SidebarOverlay />
         </MapControl>
-        {bounds && <Markers bounds={bounds} />}
         <MapControl position={ControlPosition.RIGHT_BOTTOM}>
           <LocateMeButton />
         </MapControl>
