@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import PlanCard from "@/Components/Common/PlanCard";
 import { usePlans } from "./PlansContext";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
@@ -18,14 +18,17 @@ const SidebarOverlay = () => {
   const planRefs = useRef(new Map());
 
   // Function to set the ref for a list plan
-  const setPlanRef = (id: string, element: HTMLDivElement | null) => {
-    if (element) {
-      planRefs.current.set(id, element);
-    } else {
-      // Clean up the ref when the component unmounts or the plan is removed
-      planRefs.current.delete(id);
-    }
-  };
+  const setPlanRef = useCallback(
+    (id: string, element: HTMLDivElement | null) => {
+      if (element) {
+        planRefs.current.set(id, element);
+      } else {
+        // Clean up the ref when the component unmounts or the plan is removed
+        planRefs.current.delete(id);
+      }
+    },
+    [],
+  );
 
   // Function to get a specific ref
   const getPlanRef = (id: string) => {
