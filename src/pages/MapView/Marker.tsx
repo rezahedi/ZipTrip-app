@@ -1,4 +1,4 @@
-import React, { memo, useRef, Dispatch, SetStateAction } from "react";
+import React, { memo, Dispatch, SetStateAction } from "react";
 import { Plan } from "@/types";
 import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
 
@@ -10,8 +10,6 @@ const Marker = memo(
     plan: Plan;
     onClick: Dispatch<SetStateAction<Plan | null>>;
   }) => {
-    const markerRef = useRef<google.maps.Marker | null>(null);
-
     const handleClick = () => {
       onClick(plan);
     };
@@ -19,7 +17,6 @@ const Marker = memo(
     return (
       <GMapMarker
         key={plan._id}
-        ref={markerRef}
         title={plan.title}
         position={{ lat: plan.startLocation[0], lng: plan.startLocation[1] }}
         onClick={handleClick}
