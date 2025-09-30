@@ -17,11 +17,19 @@ const HeaderActions = () => {
   if (!user) {
     return (
       <>
-        <div className="hidden sm:flex">
-          <Button variant="secondary" onClick={openLogin}>
+        <div className="hidden sm:flex gap-2">
+          <Button
+            variant="secondary"
+            className="rounded-lg"
+            onClick={openLogin}
+          >
             Login
           </Button>
-          <Button variant="default" onClick={openRegister}>
+          <Button
+            variant="default"
+            className="rounded-lg"
+            onClick={openRegister}
+          >
             Register
           </Button>
         </div>
