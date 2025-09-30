@@ -6,6 +6,7 @@ import SearchBar from "../Common/search/SearchBar";
 import { Link } from "react-router-dom";
 import { useAuthModal } from "@/context/AuthModalContext";
 import HeaderActions from "./HeaderActions";
+import Banner from "./Banner";
 
 const Header = ({ withBanner = true }: { withBanner?: boolean }) => {
   const {
@@ -54,18 +55,7 @@ const Header = ({ withBanner = true }: { withBanner?: boolean }) => {
         handleClose={closeForgotPassword}
       />
 
-      {withBanner && (
-        <>
-          {/* image */}
-          <div className="bg-[url('/images/main-header.jpg')] bg-cover bg-center h-56 flex justify-center items-center rounded-lg overflow-hidden">
-            <h4 className="text-white text-center text-2xl sm:text-4xl w-full h-full flex items-center justify-center bg-foreground/20">
-              Plan your perfect day with ease!
-            </h4>
-          </div>
-          {/* Search Bar */}
-          <SearchBar />
-        </>
-      )}
+      {withBanner && <Banner />}
     </header>
   );
 };
