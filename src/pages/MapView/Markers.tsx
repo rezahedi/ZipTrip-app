@@ -12,13 +12,15 @@ const Markers = () => {
   const activePlan = selectedPlanCard || selectedPlanMarker;
 
   useEffect(() => {
-    if (!selectedPlanCard) return;
+    if (!selectedPlanCard || !map) return;
 
-    map?.panTo({
+    map.panTo({
       lat: selectedPlanCard.startLocation[0],
       lng: selectedPlanCard.startLocation[1],
     });
-  }, [selectedPlanCard]);
+    // Pan by half the width of the sidebar to the left to center the marker in the visible area.
+    map.panBy(-160, 0);
+  }, [selectedPlanCard, map]);
 
   if (!plans.length) return null;
 
