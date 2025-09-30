@@ -51,7 +51,9 @@ const SidebarOverlay = () => {
     if (!map) return;
 
     const currentZoomLevel = map.getZoom();
-    if (currentZoomLevel) map.setZoom(currentZoomLevel - 1);
+    if (currentZoomLevel && currentZoomLevel > 1) {
+      map.setZoom(currentZoomLevel - 1);
+    }
   };
 
   if (isMobile) return null;
