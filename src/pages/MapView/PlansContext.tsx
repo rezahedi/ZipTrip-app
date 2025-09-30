@@ -15,8 +15,10 @@ type PlansContextType = {
   plans: Plan[];
   isLoading: boolean;
   error: string | null;
-  selectedPlan: Plan | null;
-  setSelectedPlan: Dispatch<SetStateAction<Plan | null>>;
+  selectedPlanMarker: Plan | null;
+  setSelectedPlanMarker: Dispatch<SetStateAction<Plan | null>>;
+  selectedPlanCard: Plan | null;
+  setSelectedPlanCard: Dispatch<SetStateAction<Plan | null>>;
   setBoundingBox: Dispatch<
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
@@ -26,14 +28,19 @@ const PlansContext = createContext<PlansContextType>({
   plans: [],
   isLoading: false,
   error: null,
-  selectedPlan: null,
-  setSelectedPlan: () => {},
+  selectedPlanMarker: null,
+  setSelectedPlanMarker: () => {},
+  selectedPlanCard: null,
+  setSelectedPlanCard: () => {},
   setBoundingBox: () => {},
 });
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [selectedPlanMarker, setSelectedPlanMarker] = useState<Plan | null>(
+    null,
+  );
+  const [selectedPlanCard, setSelectedPlanCard] = useState<Plan | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
@@ -71,8 +78,10 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         plans,
         isLoading,
         error,
-        selectedPlan,
-        setSelectedPlan,
+        selectedPlanMarker,
+        setSelectedPlanMarker,
+        selectedPlanCard,
+        setSelectedPlanCard,
         setBoundingBox,
       }}
     >

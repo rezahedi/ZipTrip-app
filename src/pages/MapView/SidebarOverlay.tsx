@@ -9,9 +9,9 @@ import { Plan } from "@/types";
 
 const SidebarOverlay = () => {
   const isMobile = useIsMobile();
-  if (isMobile) return null;
 
-  const { plans, isLoading, selectedPlan, setSelectedPlan } = usePlans();
+  const { plans, isLoading, selectedPlanMarker, setSelectedPlanCard } =
+    usePlans();
   const map = useMap();
 
   // Create a ref to store a Map of plan IDs to their DOM element references
@@ -34,15 +34,15 @@ const SidebarOverlay = () => {
 
   // Scroll effect
   useEffect(() => {
-    if (!selectedPlan) return;
-    const targetElement = getPlanRef(selectedPlan._id);
+    if (!selectedPlanMarker) return;
+    const targetElement = getPlanRef(selectedPlanMarker._id);
     if (!targetElement) return;
 
     targetElement.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
-  }, [selectedPlan]);
+  }, [selectedPlanMarker]);
 
   const handleZoomOut = () => {
     if (!map) return;
@@ -50,6 +50,8 @@ const SidebarOverlay = () => {
     const currentZoomLevel = map.getZoom();
     if (currentZoomLevel) map.setZoom(currentZoomLevel - 1);
   };
+
+  if (isMobile) return null;
 
   return (
     <div className="bg-background p-4 m-3 w-xs lg:w-sm h-[calc(100vh-170px)] rounded-lg shadow-md flex flex-col">
@@ -68,8 +70,8 @@ const SidebarOverlay = () => {
             <div
               key={plan._id}
               ref={(element) => setPlanRef(plan._id, element)}
-              onMouseOver={() => setSelectedPlan(plan)}
-              onMouseLeave={() => setSelectedPlan(null)}
+              onMouseOver={() => setSelectedPlanCard(plan)}
+              onMouseLeave={() => setSelectedPlanCard(null)}
             >
               <PlanCard {...plan} image={plan.images[0]} />
             </div>
