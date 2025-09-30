@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import {
-  Map,
+  Map as GMap,
   useMap,
   MapCameraProps,
   MapControl,
@@ -31,7 +31,7 @@ const MapViewPage = () => {
 
   return (
     <div className="h-full">
-      <Map
+      <GMap
         {...cameraProps}
         style={{ width: "100%", height: "100%" }}
         disableDefaultUI={false}
@@ -47,7 +47,7 @@ const MapViewPage = () => {
         <MapControl position={ControlPosition.RIGHT_BOTTOM}>
           <LocateMeButton />
         </MapControl>
-      </Map>
+      </GMap>
     </div>
   );
 };
