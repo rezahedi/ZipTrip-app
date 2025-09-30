@@ -28,6 +28,7 @@ const LocateMeButton = () => {
           }),
         );
       };
+      // TODO: Consider using a toast notification or inline message to inform users when geolocation fails
       const error = (err: GeolocationPositionError) => {
         if (err.code === GeolocationPositionError.PERMISSION_DENIED)
           console.log("Permission Denied");
