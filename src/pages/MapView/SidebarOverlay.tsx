@@ -1,10 +1,11 @@
+import React, { useRef, useEffect } from "react";
 import PlanCard from "@/Components/Common/PlanCard";
-import React from "react";
 import { usePlans } from "./PlansContext";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { Button } from "@/Components/ui/button";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Plan } from "@/types";
 
 const SidebarOverlay = () => {
   const isMobile = useIsMobile();
@@ -12,6 +13,36 @@ const SidebarOverlay = () => {
 
   const { plans, isLoading, selectedPlan, setSelectedPlan } = usePlans();
   const map = useMap();
+
+  // Create a ref to store a Map of plan IDs to their DOM element references
+  const planRefs = useRef(new Map());
+
+  // Function to set the ref for a list plan
+  const setPlanRef = (id: string, element: HTMLDivElement | null) => {
+    if (element) {
+      planRefs.current.set(id, element);
+    } else {
+      // Clean up the ref when the component unmounts or the plan is removed
+      planRefs.current.delete(id);
+    }
+  };
+
+  // Function to get a specific ref
+  const getPlanRef = (id: string) => {
+    return planRefs.current.get(id);
+  };
+
+  // Scroll effect
+  useEffect(() => {
+    if (!selectedPlan) return;
+    const targetElement = getPlanRef(selectedPlan._id);
+    if (!targetElement) return;
+
+    targetElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [selectedPlan]);
 
   const handleZoomOut = () => {
     if (!map) return;
@@ -34,7 +65,14 @@ const SidebarOverlay = () => {
         {!isLoading &&
           plans.length > 0 &&
           plans.map((plan) => (
-            <PlanCard key={plan._id} {...plan} image={plan.images[0]} />
+            <div
+              key={plan._id}
+              ref={(element) => setPlanRef(plan._id, element)}
+              onMouseOver={() => setSelectedPlan(plan)}
+              onMouseLeave={() => setSelectedPlan(null)}
+            >
+              <PlanCard {...plan} image={plan.images[0]} />
+            </div>
           ))}
         {!isLoading && plans.length === 0 && (
           <div className="h-full flex flex-col gap-4 justify-center items-center mb-20">

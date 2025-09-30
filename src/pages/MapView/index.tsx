@@ -37,7 +37,8 @@ const MapViewPage = () => {
         disableDefaultUI={false}
         gestureHandling="greedy"
         streetViewControl={false}
-        onBoundsChanged={debouncedSetBoundingBox}
+        onDrag={debouncedSetBoundingBox}
+        onZoomChanged={debouncedSetBoundingBox}
       >
         <Markers />
         <MapControl position={ControlPosition.LEFT_TOP}>
