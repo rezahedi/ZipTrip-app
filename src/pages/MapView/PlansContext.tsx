@@ -67,7 +67,9 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        console.log("Error fetching data:", error);
+        setError(
+          error instanceof Error ? error.message : "Failed to fetch plans",
+        );
       }
     })();
   }, [map, boundingBox]);
@@ -102,10 +104,18 @@ export { PlansProvider, usePlans };
 
 const createNearbyQueries = (bounds: google.maps.LatLngBounds) => {
   const params = new URLSearchParams(location.search);
-  const latmin = bounds?.getSouthWest().lat() || 0;
-  const lngmin = bounds?.getNorthEast().lng() || 0;
-  const latmax = bounds?.getNorthEast().lat() || 0;
-  const lngmax = bounds?.getSouthWest().lng() || 0;
+  const sw = bounds.getSouthWest();
+  const ne = bounds.getNorthEast();
+
+  if (!sw || !ne) {
+    throw new Error("Invalid bounding box");
+  }
+
+  const latmin = sw.lat();
+  const lngmin = sw.lng();
+  const latmax = ne.lat();
+  const lngmax = ne.lng();
+
   params.set("latmin", latmin.toString());
   params.set("lngmin", lngmin.toString());
   params.set("latmax", latmax.toString());
