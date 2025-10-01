@@ -49,6 +49,11 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const { token } = useAuth();
   const map = useMap();
 
+  useEffect(()=>{
+    setSelectedPlanCard(null);
+    setSelectedPlanMarker(null);
+  }, [boundingBox]);
+
   // TODO: If want to add loading, error handler or other stuff then better to create a hook like useFetchPlans()
   useEffect(() => {
     const currentBounds = boundingBox || map?.getBounds();
