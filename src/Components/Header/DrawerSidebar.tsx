@@ -88,7 +88,7 @@ const DrawerSidebar = () => {
         <nav className="grow p-2 mt-4">
           <ol className="flex flex-col gap-1 justify-center text-lg [&_a]:px-2 [&_a]:py-3 [&_a]:hover:bg-primary/15 [&_a]:rounded-md [&_a]:flex [&_a]:items-center [&_a]:gap-2">
             {NAV_MENU.map((item) => (
-              <li>
+              <li key={item.text}>
                 <Link to={item.link}>
                   <Forward className="w-6 text-ring" /> {item.text}
                 </Link>
