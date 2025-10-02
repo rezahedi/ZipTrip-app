@@ -8,6 +8,12 @@ import { useAuthModal } from "@/context/AuthModalContext";
 import HeaderActions from "./HeaderActions";
 import Banner from "./Banner";
 
+export const NAV_MENU = [
+  { text: "Home", link: "/" },
+  { text: "Explore", link: "/map" },
+  { text: "About", link: "#" },
+];
+
 const Header = ({ withBanner = true }: { withBanner?: boolean }) => {
   const {
     isLoginOpen,
@@ -32,15 +38,11 @@ const Header = ({ withBanner = true }: { withBanner?: boolean }) => {
         </div>
         <nav className="grow">
           <ol className="hidden sm:flex gap-1 justify-center text-lg font-semibold [&_a]:px-4 [&_a]:py-2 [&_a]:rounded-full [&_a]:hover:bg-primary/15 [&_a]:transition-all [&_a]:duration-200">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/map">Explore</Link>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
+            {NAV_MENU.map((item) => (
+              <li>
+                <Link to={item.link}>{item.text}</Link>
+              </li>
+            ))}
           </ol>
         </nav>
         <HeaderActions />

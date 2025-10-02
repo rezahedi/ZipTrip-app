@@ -23,6 +23,7 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
+import { NAV_MENU } from "./Header";
 
 const DrawerSidebar = () => {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
@@ -86,21 +87,13 @@ const DrawerSidebar = () => {
         </SheetHeader>
         <nav className="grow p-2 mt-4">
           <ol className="flex flex-col gap-1 justify-center text-lg [&_a]:px-2 [&_a]:py-3 [&_a]:hover:bg-primary/15 [&_a]:rounded-md [&_a]:flex [&_a]:items-center [&_a]:gap-2">
-            <li>
-              <Link to="/">
-                <Forward className="w-6 text-ring" /> Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/map">
-                <Forward className="w-6 text-ring" /> Explore
-              </Link>
-            </li>
-            <li>
-              <a href="#">
-                <Forward className="w-6 text-ring" /> About
-              </a>
-            </li>
+            {NAV_MENU.map((item) => (
+              <li>
+                <Link to={item.link}>
+                  <Forward className="w-6 text-ring" /> {item.text}
+                </Link>
+              </li>
+            ))}
             {user && (
               <>
                 <li className="border-t border-t-primary font-semibold text-2xl p-2 my-2">
