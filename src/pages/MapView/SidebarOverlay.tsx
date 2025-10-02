@@ -5,13 +5,11 @@ import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { Button } from "@/Components/ui/button";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Plan } from "@/types";
 
 const SidebarOverlay = () => {
   const isMobile = useIsMobile();
 
-  const { plans, isLoading, selectedPlanMarker, setSelectedPlanCard } =
-    usePlans();
+  const { plans, isLoading, selection, setSelection } = usePlans();
   const map = useMap();
 
   // Create a ref to store a Map of plan IDs to their DOM element references
@@ -35,17 +33,18 @@ const SidebarOverlay = () => {
     return planRefs.current.get(id);
   };
 
-  // Scroll effect
+  // Scroll to the plan card that selected by clicking on related marker
   useEffect(() => {
-    if (!selectedPlanMarker) return;
-    const targetElement = getPlanRef(selectedPlanMarker._id);
+    if (!selection || selection.source === "card") return;
+
+    const targetElement = getPlanRef(selection.plan._id);
     if (!targetElement) return;
 
     targetElement.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
-  }, [selectedPlanMarker]);
+  }, [selection]);
 
   const handleZoomOut = () => {
     if (!map) return;
@@ -75,8 +74,7 @@ const SidebarOverlay = () => {
             <div
               key={plan._id}
               ref={(element) => setPlanRef(plan._id, element)}
-              onMouseOver={() => setSelectedPlanCard(plan)}
-              onMouseLeave={() => setSelectedPlanCard(null)}
+              onMouseEnter={() => setSelection({ plan, source: "card" })}
             >
               <PlanCard {...plan} image={plan.images[0]} />
             </div>

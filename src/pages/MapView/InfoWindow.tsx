@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { InfoWindow as GMapInfoWindow } from "@vis.gl/react-google-maps";
 import { XIcon } from "lucide-react";
 import { Plan } from "@/types";
+import { SelectionType } from "./PlansContext";
 
 const InfoWindow = ({
   plan,
-  setSelected,
+  setSelection,
 }: {
   plan: Plan;
-  setSelected: Dispatch<SetStateAction<Plan | null>>;
+  setSelection: Dispatch<SetStateAction<SelectionType | null>>;
 }) => {
   return (
     <GMapInfoWindow
@@ -19,11 +20,11 @@ const InfoWindow = ({
         lat: plan.startLocation[0],
         lng: plan.startLocation[1],
       }}
-      onClose={() => setSelected(null)}
+      onClose={() => setSelection(null)}
     >
       <button
         className="absolute top-2 right-2 text-foreground/60 cursor-pointer"
-        onClick={() => setSelected(null)}
+        onClick={() => setSelection(null)}
       >
         <XIcon />
       </button>
