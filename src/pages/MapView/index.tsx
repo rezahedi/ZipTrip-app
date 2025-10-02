@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Map as GMap,
   useMap,
@@ -29,6 +29,10 @@ const MapViewPage = () => {
     [map],
   );
 
+  useEffect(() => {
+    if (map) debouncedSetBoundingBox();
+  }, [map]);
+
   return (
     <div className="h-full">
       <GMap
@@ -37,7 +41,7 @@ const MapViewPage = () => {
         disableDefaultUI={false}
         gestureHandling="greedy"
         streetViewControl={false}
-        onDrag={debouncedSetBoundingBox}
+        onDragend={debouncedSetBoundingBox}
         onZoomChanged={debouncedSetBoundingBox}
       >
         <Markers />
