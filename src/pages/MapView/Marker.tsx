@@ -1,17 +1,18 @@
 import React, { memo, Dispatch, SetStateAction } from "react";
 import { Plan } from "@/types";
 import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
+import { SelectionType } from "./PlansContext";
 
 const Marker = memo(
-  ({
+  function Marker({
     plan,
     onClick,
   }: {
     plan: Plan;
-    onClick: Dispatch<SetStateAction<Plan | null>>;
-  }) => {
+    onClick: Dispatch<SetStateAction<SelectionType | null>>;
+  }) {
     const handleClick = () => {
-      onClick(plan);
+      onClick({ plan, source: "marker" });
     };
 
     return (

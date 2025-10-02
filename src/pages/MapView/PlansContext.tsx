@@ -11,14 +11,17 @@ import { fetchPlans } from "@/util";
 import { Plan } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 
+export type SelectionType = {
+  plan: Plan;
+  source: "card" | "marker";
+};
+
 type PlansContextType = {
   plans: Plan[];
   isLoading: boolean;
   error: string | null;
-  selectedPlanMarker: Plan | null;
-  setSelectedPlanMarker: Dispatch<SetStateAction<Plan | null>>;
-  selectedPlanCard: Plan | null;
-  setSelectedPlanCard: Dispatch<SetStateAction<Plan | null>>;
+  selection: SelectionType | null;
+  setSelection: Dispatch<SetStateAction<SelectionType | null>>;
   setBoundingBox: Dispatch<
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
@@ -28,19 +31,14 @@ const PlansContext = createContext<PlansContextType>({
   plans: [],
   isLoading: false,
   error: null,
-  selectedPlanMarker: null,
-  setSelectedPlanMarker: () => {},
-  selectedPlanCard: null,
-  setSelectedPlanCard: () => {},
+  selection: null,
+  setSelection: () => {},
   setBoundingBox: () => {},
 });
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
-  const [selectedPlanMarker, setSelectedPlanMarker] = useState<Plan | null>(
-    null,
-  );
-  const [selectedPlanCard, setSelectedPlanCard] = useState<Plan | null>(null);
+  const [selection, setSelection] = useState<SelectionType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
@@ -49,9 +47,8 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const { token } = useAuth();
   const map = useMap();
 
-  useEffect(()=>{
-    setSelectedPlanCard(null);
-    setSelectedPlanMarker(null);
+  useEffect(() => {
+    setSelection(null);
   }, [boundingBox]);
 
   // TODO: If want to add loading, error handler or other stuff then better to create a hook like useFetchPlans()
@@ -85,10 +82,8 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         plans,
         isLoading,
         error,
-        selectedPlanMarker,
-        setSelectedPlanMarker,
-        selectedPlanCard,
-        setSelectedPlanCard,
+        selection,
+        setSelection,
         setBoundingBox,
       }}
     >
