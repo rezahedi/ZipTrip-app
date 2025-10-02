@@ -14,7 +14,7 @@ import { usePlans } from "./PlansContext";
 
 // Bay Area
 const MAP_INITIAL_VIEW = {
-  defaultCenter: { lat: 37.7197499272203, lng: -122.31540987748134 },
+  defaultCenter: { lat: 37.70580795161106, lng: -122.51368137617244 },
   defaultZoom: 11,
 };
 
