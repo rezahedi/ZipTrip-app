@@ -83,7 +83,6 @@ const MapDialog = ({
             location: [lat, lng],
             imageURL,
             description: "",
-            sequence: 0,
           });
         } else {
           console.warn("Failed to fetch place details:", status);

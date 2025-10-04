@@ -5,7 +5,6 @@ export interface PassingStop {
   address: string;
   description: string;
   location: [number, number];
-  sequence: number;
 }
 
 export interface PassingPlan {
