@@ -11,24 +11,20 @@ export default [
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
-      ecmaVersion: "latest",
-      sourceType: "module",
       parser: tsParser,
       parserOptions: {
-        ecmaFeatures: {
-          jsx: true, // Enable JSX support
-        },
-        project: './tsconfig.json',
+        project: "./tsconfig.json",
+        sourceType: "module",
       },
     },
   },
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
-    plugins: { js, '@typescript-eslint': tsPlugin },
+    plugins: { js, "@typescript-eslint": tsPlugin },
     rules: {
       ...js.configs.recommended.rules,
       ...tsPlugin.configs.recommended.rules,
-    }
+    },
   },
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
