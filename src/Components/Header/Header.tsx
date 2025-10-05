@@ -2,7 +2,6 @@ import React from "react";
 import RegisterPage from "../Auth/Register";
 import LoginPage from "../Auth/Login";
 import ForgotPassword from "../Auth/ForgotPassword";
-import SearchBar from "../Common/search/SearchBar";
 import { Link } from "react-router-dom";
 import { useAuthModal } from "@/context/AuthModalContext";
 import HeaderActions from "./HeaderActions";

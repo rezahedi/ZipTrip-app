@@ -13,6 +13,8 @@ import {
   Share2Icon,
 } from "lucide-react";
 
+const canShare = window.navigator.canShare({ title: "", url: "" }) || false;
+
 const ShareDialog = ({
   isOpen,
   onClose,
@@ -20,9 +22,6 @@ const ShareDialog = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const [canShare, setCanShare] = useState(
-    window.navigator.canShare({ title: "", url: "" }) || false,
-  );
   const [isCopied, setIsCopied] = useState(false);
 
   const handleShare = async () => {
