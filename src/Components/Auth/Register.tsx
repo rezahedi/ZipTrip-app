@@ -7,8 +7,6 @@ import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { User } from "@/types";
 
-const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/register`;
-
 const RegisterPage = ({
   open,
   handleClose,
@@ -116,21 +114,20 @@ const RegisterPage = ({
     }
 
     try {
-      const userData: User = await postData(URL, requestBody);
+      const userData: User = await postData(
+        "auth/register",
+        requestBody,
+        setErrorMessage,
+      );
       if (userData) {
         await login(userData);
         window.location.reload();
         handleDialogClose();
       }
-    } catch (error: any) {
-      if (error.response) {
-        setErrorMessage(error.response.data.msg);
-        console.log("Error message:", errorMessage);
-      } else {
-        setErrorMessage("Something went wrong. Please try again.");
-      }
-      console.log("Error Message in state:", errorMessage);
-      console.error("Registration failed", error);
+    } catch (err: unknown) {
+      let errorMessage = "";
+      if (err instanceof Error) errorMessage = err.message;
+      setErrorMessage(`Error sending data to server: ${errorMessage}`);
     }
   };
 
