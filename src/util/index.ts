@@ -52,4 +52,4 @@ const fetchPlans = async (
   }
 };
 
-export { getData, getAllData, postData, fetchPlans };
+export { postData, fetchPlans };
