@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
 import PlanCard from "@/Components/Common/PlanCard";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import WelcomeMessage from "@/Components/Common/search/WelcomeMessage";
 import EmptyResultMessage from "@/Components/Common/search/EmptyResultMessage";
 import Pagination from "@/Components/Common/Pagination";
@@ -39,7 +39,7 @@ const SearchPage = () => {
       const paramsString = params.toString();
 
       try {
-        const res = await fetchPlans(`plans?${paramsString}`, token, setError);
+        const res = await fetchData(`plans?${paramsString}`, token, setError);
         setPlans(res?.items || []);
         setPagesCount(res?.pagesCount || 0);
         setIsLoading(false);

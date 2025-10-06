@@ -26,7 +26,7 @@ const postData = async (
   }
 };
 
-const fetchPlans = async (
+const fetchData = async (
   endpoint: string,
   token: string | null = null,
   onError: (error: string) => void,
@@ -41,15 +41,15 @@ const fetchPlans = async (
     });
     if (!res.ok) {
       const errorData = await res.json();
-      onError(errorData.msg || "Failed to fetch plans");
+      onError(errorData.msg || "Failed to fetch data");
       return null;
     }
     return await res.json();
   } catch (error) {
     console.error(error);
-    onError("An error occurred while fetching plans");
+    onError("An error occurred while fetching data");
     return null;
   }
 };
 
-export { postData, fetchPlans };
+export { postData, fetchData };

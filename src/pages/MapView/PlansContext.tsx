@@ -7,7 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import { Plan } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 
@@ -62,7 +62,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(true);
       const paramsString = createNearbyQueries(currentBounds);
       try {
-        const fetchResult = await fetchPlans(
+        const fetchResult = await fetchData(
           `plans/nearby/?${paramsString}`,
           token,
           setError,

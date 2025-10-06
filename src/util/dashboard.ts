@@ -1,3 +1,5 @@
+import { fetchData } from "@/util";
+
 export interface PassingStop {
   _id?: string;
   name: string;
@@ -27,7 +29,7 @@ const getMyPlans = async (
   token = "",
   onError: (error: string) => void,
 ) => {
-  return await getData(`/account/plans?${params}`, token, onError);
+  return await fetchData(`/account/plans?${params}`, token, onError);
 };
 
 const deletePlan = async (
@@ -60,7 +62,7 @@ const getPlan = async (
   planId: string,
   onError: (error: string) => void,
 ) => {
-  return await getData(`/account/plans/${planId}`, token, onError);
+  return await fetchData(`/account/plans/${planId}`, token, onError);
 };
 
 const updatePlan = async (
@@ -121,7 +123,7 @@ const getCategories = async (
   token: string,
   onError: (error: string) => void,
 ) => {
-  return await getData(`/account/categories`, token, onError);
+  return await fetchData(`/account/categories`, token, onError);
 };
 
 const AddBookmark = async (
@@ -179,33 +181,7 @@ const getBookmarks = async (
   token: string,
   onError: (error: string) => void,
 ) => {
-  return await getData(`/account/bookmarks?${params}`, token, onError);
-};
-
-const getData = async (
-  endpoint: string,
-  token: string = "",
-  onError: (error: string) => void,
-) => {
-  try {
-    let res = await fetch(`${API_V1_BASE_URL}${endpoint}`, {
-      ...(token && {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-    });
-    if (!res.ok) {
-      const errorData = await res.json();
-      onError(errorData.msg || "Failed to fetch plans");
-      return null;
-    }
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-    onError("An error occurred while fetching plans");
-    return null;
-  }
+  return await fetchData(`/account/bookmarks?${params}`, token, onError);
 };
 
 export {
