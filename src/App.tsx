@@ -1,6 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/context/AuthContext";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {AuthProvider} from "@/context/AuthContext";
 import HomePage from "@/pages/HomePage";
 import SearchPage from "@/pages/SearchPage";
 import MapViewPage from "@/pages/MapView";
@@ -22,6 +22,7 @@ import {
 import MainLayout from "@/Components/Layout/MainLayout";
 import MapLayout from "@/Components/Layout/MapLayout";
 import ProtectedRoute from "@/Components/Auth/ProtectedRoute";
+import CreatePage from "@/pages/dashboard/create";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route element={<MapLayout />}>
             <Route path="/map" element={<MapViewPage />} />
+            <Route path="/create" element={<CreatePage />} />
           </Route>
           {/* Routes wrapped in main layout */}
           <Route element={<MainLayout />}>
