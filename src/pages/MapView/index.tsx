@@ -1,57 +1,19 @@
-import React, { useCallback, useEffect } from "react";
-import {
-  Map as GMap,
-  useMap,
-  MapCameraProps,
-  MapControl,
-  ControlPosition,
-} from "@vis.gl/react-google-maps";
-import LocateMeButton from "./LocateMeButton";
-import { debounce } from "@/lib/utils";
-import Markers from "./Markers";
+import React from "react";
+import {PlansProvider} from "@/pages/MapView/PlansContext";
+import Map from "./Map";
+import {MapControl, ControlPosition} from "@vis.gl/react-google-maps";
 import SidebarOverlay from "./SidebarOverlay";
-import { usePlans } from "./PlansContext";
-
-// Bay Area
-const MAP_INITIAL_VIEW = {
-  defaultCenter: { lat: 37.70580795161106, lng: -122.51368137617244 },
-  defaultZoom: 11,
-};
 
 const MapViewPage = () => {
-  const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
-  const cameraProps: MapCameraProps = userLocation || MAP_INITIAL_VIEW;
-  const map = useMap();
-  const { setBoundingBox } = usePlans();
-
-  const debouncedSetBoundingBox = useCallback(
-    debounce(() => setBoundingBox(map?.getBounds()), 300),
-    [map],
-  );
-
-  useEffect(() => {
-    if (map) debouncedSetBoundingBox();
-  }, [map]);
-
   return (
     <div className="h-full">
-      <GMap
-        {...cameraProps}
-        style={{ width: "100%", height: "100%" }}
-        disableDefaultUI={false}
-        gestureHandling="greedy"
-        streetViewControl={false}
-        onDragend={debouncedSetBoundingBox}
-        onZoomChanged={debouncedSetBoundingBox}
-      >
-        <Markers />
-        <MapControl position={ControlPosition.LEFT_TOP}>
-          <SidebarOverlay />
-        </MapControl>
-        <MapControl position={ControlPosition.RIGHT_BOTTOM}>
-          <LocateMeButton />
-        </MapControl>
-      </GMap>
+      <PlansProvider>
+        <Map>
+          <MapControl position={ControlPosition.LEFT_TOP}>
+            <SidebarOverlay />
+          </MapControl>
+        </Map>
+      </PlansProvider>
     </div>
   );
 };
