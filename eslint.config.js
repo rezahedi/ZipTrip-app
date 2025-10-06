@@ -12,10 +12,6 @@ export default [
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       parser: tsParser,
-      parserOptions: {
-        project: "./tsconfig.json",
-        sourceType: "module",
-      },
     },
   },
   {
