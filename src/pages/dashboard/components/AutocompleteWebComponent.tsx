@@ -5,6 +5,7 @@ import { useMapsLibrary } from "@vis.gl/react-google-maps";
 const AutocompleteWebComponent = ({
   onPlaceSelect,
 }: {
+  // eslint-disable-next-line no-undef
   onPlaceSelect: Dispatch<google.maps.LatLngBounds | null>;
 }) => {
   const ref = useRef<HTMLElement | null>(null);
@@ -15,7 +16,8 @@ const AutocompleteWebComponent = ({
     const el = ref.current;
     if (!el) return;
 
-    const handleGmpSelect = async (ev) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleGmpSelect = async (ev: any) => {
       const placePrediction = ev.placePrediction;
       if (!placePrediction) return;
 
@@ -52,6 +54,7 @@ export default AutocompleteWebComponent;
 
 // Add custom element type for TypeScript
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       "gmp-place-autocomplete": React.DetailedHTMLProps<

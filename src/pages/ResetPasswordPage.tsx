@@ -26,8 +26,10 @@ const ResetPasswordPage = () => {
       } else {
         setErrorMessage(data.msg || "Reset failed.");
       }
-    } catch (err) {
-      setErrorMessage("Error resetting password.");
+    } catch (err: unknown) {
+      let errorMessage = "";
+      if (err instanceof Error) errorMessage = err.message;
+      setErrorMessage(`Error resetting password: ${errorMessage}`);
     }
   };
 

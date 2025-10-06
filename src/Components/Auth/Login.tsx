@@ -7,8 +7,6 @@ import { User } from "@/types";
 import { Dialog, DialogContent } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
 
-const LOGIN_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`;
-
 const LoginPage = ({
   open,
   handleClose,
@@ -89,19 +87,20 @@ const LoginPage = ({
     }
 
     try {
-      const userData: User = await postData(LOGIN_URL, { email, password });
+      const userData: User = await postData(
+        "auth/login",
+        { email, password },
+        setErrorMessage,
+      );
       if (userData) {
         await login(userData);
         window.location.reload();
         handleDialogClose();
       }
-    } catch (error: any) {
-      if (error.response) {
-        setErrorMessage(error.response.data.msg);
-        console.log("Server error message:", error.response.data.msg);
-      } else {
-        setErrorMessage("Something went wrong. Please try again.");
-      }
+    } catch (err: unknown) {
+      let errorMessage = "";
+      if (err instanceof Error) errorMessage = err.message;
+      setErrorMessage(`Error sending data to server: ${errorMessage}`);
     }
   };
 

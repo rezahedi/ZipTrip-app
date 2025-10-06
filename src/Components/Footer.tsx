@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import { Category } from "@/types";
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ function Footer() {
   useEffect(() => {
     const fetchAllCategories = async () => {
       try {
-        const result = await fetchPlans(`plans/category`, "", setError);
+        const result = await fetchData(`plans/category`, "", setError);
         setCategories(result || []);
       } catch (error) {
         console.log("Error fetching data:", error);

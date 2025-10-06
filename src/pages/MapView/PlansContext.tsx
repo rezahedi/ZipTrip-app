@@ -7,7 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import { Plan } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 
@@ -23,6 +23,7 @@ type PlansContextType = {
   selection: SelectionType | null;
   setSelection: Dispatch<SetStateAction<SelectionType | null>>;
   setBoundingBox: Dispatch<
+    // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
 };
@@ -42,6 +43,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
+    // eslint-disable-next-line no-undef
     google.maps.LatLngBounds | undefined
   >();
   const { token } = useAuth();
@@ -60,7 +62,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(true);
       const paramsString = createNearbyQueries(currentBounds);
       try {
-        const fetchResult = await fetchPlans(
+        const fetchResult = await fetchData(
           `plans/nearby/?${paramsString}`,
           token,
           setError,
@@ -102,6 +104,7 @@ const usePlans = () => {
 
 export { PlansProvider, usePlans };
 
+// eslint-disable-next-line no-undef
 const createNearbyQueries = (bounds: google.maps.LatLngBounds) => {
   const params = new URLSearchParams(location.search);
   const sw = bounds.getSouthWest();

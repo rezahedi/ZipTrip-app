@@ -30,7 +30,6 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     rate,
     reviewCount,
     isBookmarked,
-    createdAt,
     updatedAt,
   } = plan;
   const [bookmark, setBookmark] = useState(isBookmarked);
@@ -58,12 +57,6 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
 
   const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
-  };
-
-  const openShareDialog = () => {
-    // Logic to open the ShareDialog
-    // This could be a modal or a new page
-    console.log("Share dialog opened");
   };
 
   return (

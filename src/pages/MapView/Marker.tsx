@@ -23,8 +23,8 @@ const Marker = memo(
         onClick={handleClick}
         icon={{
           url: "./images/MarkerIcon.svg",
-          scaledSize: new google.maps.Size(32, 32),
-          anchor: new google.maps.Point(16, 32),
+          scaledSize: new window.google.maps.Size(32, 32),
+          anchor: new window.google.maps.Point(16, 32),
         }}
       />
     );

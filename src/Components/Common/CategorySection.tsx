@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/Components/ui/skeleton";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import { Link } from "react-router-dom";
 import { Category } from "@/types";
 
@@ -14,7 +14,7 @@ const CategorySection = ({ title }: { title: string }) => {
   useEffect(() => {
     const fetchAllCategories = async () => {
       try {
-        const result = await fetchPlans(`plans/category`, "", setError);
+        const result = await fetchData(`plans/category`, "", setError);
         setCategories(result || []);
         setLoading(false);
       } catch (error) {
