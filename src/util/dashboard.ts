@@ -29,7 +29,7 @@ const getMyPlans = async (
   token = "",
   onError: (error: string) => void,
 ) => {
-  return await fetchData(`/account/plans?${params}`, token, onError);
+  return await fetchData(`account/plans?${params}`, token, onError);
 };
 
 const deletePlan = async (
@@ -62,7 +62,7 @@ const getPlan = async (
   planId: string,
   onError: (error: string) => void,
 ) => {
-  return await fetchData(`/account/plans/${planId}`, token, onError);
+  return await fetchData(`account/plans/${planId}`, token, onError);
 };
 
 const updatePlan = async (
@@ -123,7 +123,7 @@ const getCategories = async (
   token: string,
   onError: (error: string) => void,
 ) => {
-  return await fetchData(`/account/categories`, token, onError);
+  return await fetchData(`account/categories`, token, onError);
 };
 
 const AddBookmark = async (
@@ -181,7 +181,7 @@ const getBookmarks = async (
   token: string,
   onError: (error: string) => void,
 ) => {
-  return await fetchData(`/account/bookmarks?${params}`, token, onError);
+  return await fetchData(`account/bookmarks?${params}`, token, onError);
 };
 
 export {
