@@ -1,15 +1,21 @@
 import React from "react";
-import {PlansProvider} from "@/pages/MapView/PlansContext";
 import Map from "@/pages/MapView/Map";
+import Sidebar from "./Sidebar";
+import {PlacesProvider} from "@/context/PlacesContext";
+import Markers from "@/pages/MapView/Markers";
+import {ControlPosition, MapControl} from "@vis.gl/react-google-maps";
+import LocateMeButton from "@/pages/MapView/LocateMeButton";
+import PlacePopup from "./PlacePopup";
+import MapBox from "./MapBox";
 
 const CreatePage = () => {
   return (
-    <PlansProvider>
-      <div className="h-full flex">
-        <div className="w-lg">Block-based plan creator in sidebar</div>
-        <Map />
-      </div>
-    </PlansProvider>
+    <div className="h-full flex">
+      <Sidebar />
+      <PlacesProvider>
+        <MapBox />
+      </PlacesProvider>
+    </div>
   );
 };
 
