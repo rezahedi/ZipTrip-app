@@ -10,18 +10,14 @@ import {useAuth} from "@/context/AuthContext";
 import {fetchPlans} from "@/util";
 import {Place} from "@/types";
 import {useMap} from "@vis.gl/react-google-maps";
-
-export type SelectionType = {
-  item: Place;
-  source: "card" | "marker";
-};
+import {selectionType} from "@/Components/Map/types";
 
 type PlacesContextType = {
   places: Place[];
   isLoading: boolean;
   error: string | null;
-  selection: SelectionType | null;
-  setSelection: Dispatch<SetStateAction<SelectionType | null>>;
+  selection: selectionType | null;
+  setSelection: Dispatch<SetStateAction<selectionType | null>>;
   setBoundingBox: Dispatch<
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
@@ -38,7 +34,7 @@ const PlacesContext = createContext<PlacesContextType>({
 
 const PlacesProvider = ({children}: {children: React.ReactNode}) => {
   const [places, setPlaces] = useState<Place[]>([]);
-  const [selection, setSelection] = useState<SelectionType | null>(null);
+  const [selection, setSelection] = useState<selectionType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<

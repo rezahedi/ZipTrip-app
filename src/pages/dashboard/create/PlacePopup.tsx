@@ -1,9 +1,10 @@
 import {usePlaces} from "@/context/PlacesContext";
 import React from "react";
+import {Place} from "@/types";
 
 const PlacePopup = () => {
   const {selection} = usePlaces();
-  const place = selection?.item;
+  const place = selection?.item as Place | undefined;
 
   if (!place) return null;
 
