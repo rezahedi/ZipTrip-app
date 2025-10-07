@@ -4,7 +4,7 @@ import ItineraryList from "./ItineraryList";
 const Sidebar = () => {
   const editMode = false;
   return (
-    <div className="w-lg p-3">
+    <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       <h2 className="font-semibold text-2xl" contentEditable={editMode}>
         Your Plan
       </h2>
