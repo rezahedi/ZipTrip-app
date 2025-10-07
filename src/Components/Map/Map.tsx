@@ -5,7 +5,12 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import {Map as GMap, useMap, MapCameraProps} from "@vis.gl/react-google-maps";
+import {
+  Map as GMap,
+  useMap,
+  MapCameraProps,
+  MapMouseEvent,
+} from "@vis.gl/react-google-maps";
 import {debounce} from "@/lib/utils";
 
 // Bay Area
@@ -17,11 +22,13 @@ const MAP_INITIAL_VIEW = {
 const Map = ({
   children,
   setBoundingBox,
+  onClick,
 }: {
   children?: ReactNode;
   setBoundingBox: Dispatch<
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
+  onClick?: (e: MapMouseEvent) => void;
 }) => {
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
   const cameraProps: MapCameraProps = userLocation || MAP_INITIAL_VIEW;
@@ -46,6 +53,7 @@ const Map = ({
       mapTypeControl={false}
       onDragend={debouncedSetBoundingBox}
       onZoomChanged={debouncedSetBoundingBox}
+      onClick={onClick}
     >
       {children}
     </GMap>
