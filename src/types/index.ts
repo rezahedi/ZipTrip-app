@@ -26,6 +26,16 @@ export interface Plan {
   updatedAt?: Date;
 }
 
+export interface Place {
+  _id: string;
+  name: string;
+  imageURL: string;
+  address: string;
+  location: [number, number];
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export interface Stop {
   _id: string;
   planId: string;
