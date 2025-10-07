@@ -1,14 +1,14 @@
 import React, {memo} from "react";
 import {Marker as GMapMarker} from "@vis.gl/react-google-maps";
-import {Place, Plan} from "@/types";
+import {itemType, setSelectionType} from "./types";
 
 const Marker = memo(
   function Marker({
     item,
     onClick,
   }: {
-    item: Plan | Place;
-    onClick: (item: any) => void;
+    item: itemType;
+    onClick: setSelectionType;
   }) {
     const handleClick = () => {
       onClick({item, source: "marker"});

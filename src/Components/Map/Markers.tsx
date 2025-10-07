@@ -1,7 +1,7 @@
 import React, {memo, useEffect} from "react";
 import Marker from "./Marker";
 import {useMap} from "@vis.gl/react-google-maps";
-import {Place, Plan} from "@/types";
+import {itemsType, selectionType, setSelectionType} from "./types";
 
 const Markers = memo(function Markers({
   items,
@@ -9,9 +9,9 @@ const Markers = memo(function Markers({
   setSelection,
   children: infoWindow,
 }: {
-  items: Place[] | Plan[];
-  selection: any;
-  setSelection: (item: any) => void;
+  items: itemsType;
+  selection: selectionType | null;
+  setSelection: setSelectionType;
   children?: React.ReactNode;
 }) {
   const map = useMap();
@@ -19,9 +19,14 @@ const Markers = memo(function Markers({
   useEffect(() => {
     if (!map || !selection || selection.source === "marker") return;
 
+    const position =
+      "location" in selection.item
+        ? selection.item.location
+        : selection.item.startLocation;
+
     map.panTo({
-      lat: selection.plan.startLocation[0],
-      lng: selection.plan.startLocation[1],
+      lat: position[0],
+      lng: position[1],
     });
     // Pan by half the width of the sidebar to the left to center the marker in the visible area.
     map.panBy(-160, 0);
