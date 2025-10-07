@@ -1,10 +1,19 @@
 import {usePlaces} from "@/context/PlacesContext";
 import React from "react";
 import {Place} from "@/types";
+import {Button} from "@/Components/ui/button";
+import {useItinerary} from "@/context/ItineraryContext";
 
 const PlacePopup = () => {
   const {selection} = usePlaces();
   const place = selection?.item as Place | undefined;
+  const {addNewPlace} = useItinerary();
+
+  const handleAddToItinerary = () => {
+    if (!place) return;
+
+    addNewPlace(place);
+  };
 
   if (!place) return null;
 
@@ -19,6 +28,9 @@ const PlacePopup = () => {
         <h3 className="font-medium text-base/snug text-balance py-1">
           {place.name}
         </h3>
+        <Button size="sm" className="mt-2" onClick={handleAddToItinerary}>
+          Add to Itinerary
+        </Button>
       </div>
     </div>
   );

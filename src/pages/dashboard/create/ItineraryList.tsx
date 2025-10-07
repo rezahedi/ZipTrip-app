@@ -1,13 +1,16 @@
 import React from "react";
 import ItineraryItem from "./ItineraryItem";
+import {useItinerary} from "@/context/ItineraryContext";
 
 const ItineraryList = () => {
+  const {places} = useItinerary();
+
   return (
-    <div>
-      <ItineraryItem />
-      <ItineraryItem />
-      <ItineraryItem />
-    </div>
+    <>
+      {places.map((place) => (
+        <ItineraryItem key={place._id} place={place} />
+      ))}
+    </>
   );
 };
 

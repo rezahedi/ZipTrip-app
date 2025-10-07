@@ -1,7 +1,45 @@
 import React from "react";
+import {Place} from "@/types";
+import {useItinerary} from "@/context/ItineraryContext";
+import {XIcon} from "lucide-react";
+import IconButton from "@/Components/ui/IconButton";
 
-const ItineraryItem = () => {
-  return <div>ItineraryItem</div>;
+const ItineraryItem = ({place}: {place: Place}) => {
+  const {removePlace} = useItinerary();
+
+  const handleClick = () => {
+    if (removePlace) {
+      removePlace(place._id);
+    }
+  };
+
+  return (
+    <div className="flex gap-1 my-4 bg-foreground/5 rounded-sm items-stretch relative group">
+      <IconButton
+        onClick={handleClick}
+        className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        size="sm"
+        variant="ghost"
+      >
+        <XIcon />
+      </IconButton>
+      <div className="w-22 shrink-0">
+        <img
+          className="w-full h-full object-cover rounded-l-sm"
+          src={place.imageURL}
+          alt={place.name}
+        />
+      </div>
+      <div className="p-2">
+        <h3 className="font-medium text-base/snug text-balance py-1">
+          {place.name}
+        </h3>
+        <p className="text-foreground/70 font-normal text-xs">
+          {place.address}
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default ItineraryItem;
