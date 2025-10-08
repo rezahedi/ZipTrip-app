@@ -12,6 +12,10 @@ type contextType = {
   setPlaces: Dispatch<SetStateAction<Place[]>>;
   addNewPlace: (place: Place) => void;
   removePlace?: (placeId: string) => void;
+  title: string;
+  setTitle: Dispatch<SetStateAction<string>>;
+  description: string;
+  setDescription: Dispatch<SetStateAction<string>>;
 };
 
 const ItineraryContext = createContext<contextType>({
@@ -19,10 +23,16 @@ const ItineraryContext = createContext<contextType>({
   setPlaces: () => {},
   addNewPlace: () => {},
   removePlace: () => {},
+  title: "",
+  setTitle: () => {},
+  description: "",
+  setDescription: () => {},
 });
 
 const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   const [places, setPlaces] = useState<Place[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const addNewPlace = (place: Place) => {
     setPlaces((prev) => {
@@ -45,6 +55,10 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
         setPlaces,
         addNewPlace,
         removePlace,
+        title,
+        setTitle,
+        description,
+        setDescription,
       }}
     >
       {children}
