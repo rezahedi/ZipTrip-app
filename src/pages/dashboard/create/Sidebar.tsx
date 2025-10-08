@@ -16,7 +16,6 @@ const Sidebar = () => {
   return (
     <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       <h2 className="font-semibold text-2xl">
-        {title}
         <Editable onSave={handleTitleChange}>{title}</Editable>
       </h2>
       <p className="text-base mt-2">
