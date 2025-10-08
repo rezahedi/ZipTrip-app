@@ -71,7 +71,7 @@ const Editable = function Editable({
           onKeyDown={handleKeyDown}
           contentEditable={editable}
           title="Click to inline edit"
-          className={`peer inline-block focus:outline-none focus:border focus:border-gray-300 focus:rounded ${editable === "false" ? `cursor-pointer` : `cursor-text`}`}
+          className={`peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded ${editable === "false" ? `cursor-pointer` : `cursor-text`}`}
         >
           {text}
         </div>
