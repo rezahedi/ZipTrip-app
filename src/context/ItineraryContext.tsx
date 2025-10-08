@@ -4,6 +4,7 @@ import React, {
   useState,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from "react";
 import {Place} from "@/types";
 
@@ -34,19 +35,25 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  const addNewPlace = (place: Place) => {
-    setPlaces((prev) => {
-      // Avoid adding duplicates
-      if (prev.find((p) => p._id === place._id)) {
-        return prev;
-      }
-      return [...prev, place];
-    });
-  };
+  const addNewPlace = useCallback(
+    (place: Place) => {
+      setPlaces((prev) => {
+        // Avoid adding duplicates
+        if (prev.find((p) => p._id === place._id)) {
+          return prev;
+        }
+        return [...prev, place];
+      });
+    },
+    [setPlaces]
+  );
 
-  const removePlace = (placeId: string) => {
-    setPlaces((prev) => prev.filter((p) => p._id !== placeId));
-  };
+  const removePlace = useCallback(
+    (placeId: string) => {
+      setPlaces((prev) => prev.filter((p) => p._id !== placeId));
+    },
+    [setPlaces]
+  );
 
   return (
     <ItineraryContext.Provider
