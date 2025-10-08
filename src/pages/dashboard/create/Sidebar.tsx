@@ -1,5 +1,5 @@
 import React from "react";
-import ItineraryList from "./ItineraryList";
+import {ItineraryList} from "./itinerary";
 import Editable from "./Editable";
 
 const Sidebar = () => {
