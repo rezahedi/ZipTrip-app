@@ -46,6 +46,8 @@ const Editable = function Editable({
     }
   }, [editable]);
 
+  // TODO: Feature: Make editable active on mouse over and disable on mouseout, so when user click cursor pointer goes where user clicked on text.
+  // TODO: But make sure it works on mobile too, as we don't have mouse over in mobile, so active edit mode on touch (onClick).
   // Edit mode if clicked
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
@@ -73,7 +75,7 @@ const Editable = function Editable({
           title="Click to inline edit"
           className={`peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded ${editable === "false" ? `cursor-pointer` : `cursor-text`}`}
         >
-          {text}
+          {children}
         </div>
         <PenIcon className="hidden peer-hover:inline w-4 text-gray-400" />
       </div>
