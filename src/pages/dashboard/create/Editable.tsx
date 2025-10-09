@@ -10,40 +10,28 @@ const Editable = function Editable({
 }) {
   const [message, setMessage] = useState<string>("");
   const [editable, setEditable] = useState<"false" | "plaintext-only">("false");
-  const [text, setText] = useState(children);
   const editableRef = useRef<HTMLDivElement>(null);
 
   // Exit edit mode when focus is lost
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (!editable) return;
+    const value = editableRef.current?.textContent || "";
+    if (value === children) {
+      setMessage("");
+      return setEditable("false");
+    }
 
+    onSave(value);
     setEditable("false");
-    setMessage("");
+    setMessage("Saved!");
+    setTimeout(() => setMessage(""), 2000);
   };
-
-  // Call save action when text changes
-  useEffect(() => {
-    (async () => {
-      if (text === children) return;
-
-      onSave(text);
-      setMessage("Saved!");
-      setTimeout(() => setMessage(""), 2000);
-    })();
-  }, [text]);
 
   // Edit mode status actions
   useEffect(() => {
     if (editable === "plaintext-only")
       // Focus input if enabled
       editableRef.current?.focus();
-    else {
-      // Set text state if disabled
-      let newText = editableRef.current!.textContent || "";
-      newText = newText.trim();
-
-      setText(newText);
-    }
   }, [editable]);
 
   // TODO: Feature: Make editable active on mouse over and disable on mouseout, so when user click cursor pointer goes where user clicked on text.
@@ -53,7 +41,6 @@ const Editable = function Editable({
     e.preventDefault();
     setEditable("plaintext-only");
     setMessage("Autosave, Hit Enter or Esc to exit.");
-    e.currentTarget.focus();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -73,7 +60,7 @@ const Editable = function Editable({
           onKeyDown={handleKeyDown}
           contentEditable={editable}
           title="Click to inline edit"
-          className={`peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded ${editable === "false" ? `cursor-pointer` : `cursor-text`}`}
+          className={`peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded ${editable === "false" ? `hover:bg-foreground/5 cursor-pointer` : `cursor-text`}`}
         >
           {children}
         </div>
