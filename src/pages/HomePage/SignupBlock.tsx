@@ -1,20 +1,18 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {ChevronRightIcon} from "lucide-react";
 import {useAuthModal} from "@/context/AuthModalContext";
 import {useAuth} from "@/context/AuthContext";
-import StartPrompt from "../dashboard/create/StartPrompt";
+import {Button} from "@/Components/ui/button";
 
 const SignupBlock = () => {
   const {user} = useAuth();
   const {openRegister} = useAuthModal();
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (!user) return openRegister();
-
-    // Open StartPrompt
-    setIsOpen(true);
+    navigate("/create");
   };
 
   return (
@@ -29,18 +27,15 @@ const SignupBlock = () => {
           Join ZipTrip, make your own fantastic plan, share it with the world.
           And become your neighborhood favorite tour guide.
         </h5>
-        <Link
-          className="group rounded-full text-background bg-primary mt-8 md:mt-14 py-2 px-4 font-semibold text-lg flex items-center gap-1"
-          to=""
+        <Button
+          size={"lg"}
+          className="group rounded-full text-background bg-primary mt-8 md:mt-14 font-semibold text-lg flex items-center gap-1"
           onClick={handleButtonClick}
         >
           Start a Plan{" "}
           <ChevronRightIcon className="size-6 -mr-1 w-0 transition-all duration-100 group-hover:w-6" />
-        </Link>
+        </Button>
       </div>
-      {isOpen && (
-        <StartPrompt isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      )}
     </div>
   );
 };
