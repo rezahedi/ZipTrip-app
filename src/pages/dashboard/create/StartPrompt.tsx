@@ -1,15 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import {Button} from "@/Components/ui/button";
 import Modal from "@/Components/Common/Modal";
 import {useItinerary} from "@/context/ItineraryContext";
 
-const StartPrompt = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-  const {title, description, setTitle, setDescription} = useItinerary();
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+const StartPrompt = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  const {setTitle, setDescription} = useItinerary();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,11 +19,11 @@ const StartPrompt = () => {
     setTitle(formData.get("title") as string);
     setDescription(formData.get("description") as string);
 
-    handleClose();
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Create Plan">
+    <Modal isOpen={isOpen} onClose={onClose} title="Create Plan">
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <input
           name="title"
