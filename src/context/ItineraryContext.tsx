@@ -1,71 +1,220 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {Place} from "@/types";
+import {PlanType} from "./PlanTypes";
+import {useAuth} from "./AuthContext";
+import {useParams} from "react-router-dom";
 
 type contextType = {
-  places: Place[];
-  setPlaces: Dispatch<SetStateAction<Place[]>>;
-  addNewPlace: (place: Place) => void;
-  removePlace?: (placeId: string) => void;
-  title: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-  description: string;
-  setDescription: Dispatch<SetStateAction<string>>;
+  plan: PlanType | null;
+  setTitle: (title: string) => void;
+  setDescription: (description: string) => void;
+  addPlace: (place: Place) => void;
+  removePlace: (placeId: string) => void;
+  createPlan: (plan: PlanType) => void;
+  loading: boolean;
+  error: string | null;
 };
 
 const ItineraryContext = createContext<contextType>({
-  places: [],
-  setPlaces: () => {},
-  addNewPlace: () => {},
-  removePlace: () => {},
-  title: "",
+  plan: null,
   setTitle: () => {},
-  description: "",
   setDescription: () => {},
+  addPlace: () => {},
+  removePlace: () => {},
+  createPlan: () => {},
+  loading: false,
+  error: null,
 });
 
 const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [plan, setPlan] = useState<PlanType | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const {user} = useAuth();
+  const {planId} = useParams();
 
-  const addNewPlace = useCallback(
-    (place: Place) => {
-      setPlaces((prev) => {
-        // Avoid adding duplicates
-        if (prev.find((p) => p._id === place._id)) {
-          return prev;
+  useEffect(() => {
+    if (!planId) return;
+
+    getPlan(planId);
+  }, [planId]);
+
+  useEffect(() => {
+    if (!plan && !planId) return;
+    // TODO: Find another way to update plan, because first time plan set after createPlan() this will run and it's pointless
+    updatePlan();
+  }, [plan]);
+
+  const setTitle = (title: string) => {
+    console.log("setTitle()");
+    if (!plan && !title) return;
+    setPlan((prev) => (prev ? {...prev, title} : null));
+  };
+
+  const setDescription = (description: string) => {
+    console.log("setDescription()");
+    if (!plan && !description) return;
+
+    setPlan((prev) => (prev ? {...prev, description} : null));
+  };
+
+  const addPlace = (place: Place) => {
+    console.log("addPlace()");
+    if (!plan) return;
+
+    setPlan((prev) => {
+      if (!prev) return null;
+
+      // First stop
+      if (!prev.stops)
+        return {
+          ...prev,
+          stops: [place],
+        };
+
+      // Avoid adding duplicates
+      if (prev.stops.find((p) => p._id === place._id)) {
+        return prev;
+      }
+
+      // Add new stop to the end
+      return {
+        ...prev,
+        stops: [...prev.stops, place],
+      };
+    });
+  };
+
+  const removePlace = (placeId: string) => {
+    console.log("removePlace()");
+    if (!plan) return;
+
+    setPlan((prev) => {
+      if (!prev) return null;
+      if (!prev.stops)
+        return {
+          ...prev,
+          stops: [],
+        };
+      return {...prev, stops: prev.stops?.filter((p) => p._id !== placeId)};
+    });
+  };
+
+  const createPlan = async (plan: PlanType) => {
+    console.log("createPlan()");
+    if (!user) return setError("You must be logged in to create a plan");
+    setLoading(true);
+    setError(null);
+    try {
+      let res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/account/plans`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify(plan),
         }
-        return [...prev, place];
-      });
-    },
-    [setPlaces]
-  );
+      );
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.msg || "Failed to create plan");
+      }
+      setPlan(await res.json());
+      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error)
+        setError(error.message || "Failed to create plan");
+      else if (typeof error === "string") setError(error);
+      else setError("Failed to create plan");
+      setLoading(false);
+    }
+  };
 
-  const removePlace = useCallback(
-    (placeId: string) => {
-      setPlaces((prev) => prev.filter((p) => p._id !== placeId));
-    },
-    [setPlaces]
-  );
+  const getPlan = async (planId: string) => {
+    console.log("getPlan()");
+    if (!user) return setError("You must be logged in to edit a plan");
+    setLoading(true);
+    setError(null);
+    try {
+      let res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/account/plans/${planId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.msg || "Failed to get plan");
+      }
+      setPlan(await res.json());
+      setLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error)
+        setError(error.message || "Failed to get plan");
+      else if (typeof error === "string") setError(error);
+      else setError("Failed to get plan");
+      setLoading(false);
+    }
+  };
+
+  const updatePlan = async (): Promise<boolean> => {
+    console.log("updatePlan()");
+    if (!user) {
+      setError("You must be logged in to edit a plan");
+      return false;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      let res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/account/plans/${planId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            title: plan?.title,
+            description: plan?.description,
+            stops: plan?.stops,
+          }),
+        }
+      );
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.msg || "Failed to create plan");
+      }
+      await res.json();
+      setLoading(false);
+      return true;
+    } catch (error: unknown) {
+      if (error instanceof Error)
+        setError(error.message || "Failed to create plan");
+      else if (typeof error === "string") setError(error);
+      else setError("Failed to create plan");
+      setLoading(false);
+      return false;
+    }
+  };
 
   return (
     <ItineraryContext.Provider
       value={{
-        places,
-        setPlaces,
-        addNewPlace,
-        removePlace,
-        title,
+        plan,
         setTitle,
-        description,
         setDescription,
+        addPlace,
+        removePlace,
+        createPlan,
+        loading,
+        error,
       }}
     >
       {children}

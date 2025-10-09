@@ -32,6 +32,7 @@ function App() {
           <Route element={<MapLayout />}>
             <Route path="/map" element={<MapViewPage />} />
             <Route path="/create" element={<CreatePage />} />
+            <Route path="/create/:planId" element={<CreatePage />} />
           </Route>
           {/* Routes wrapped in main layout */}
           <Route element={<MainLayout />}>

@@ -7,13 +7,14 @@ import AddButton from "./AddButton";
 const PlacePopup = () => {
   const {selection} = usePlaces();
   const place = selection?.item as Place | undefined;
-  const {places, addNewPlace} = useItinerary();
+  const {plan, addPlace} = useItinerary();
+  const places = plan?.stops || [];
   const isAdded = place ? !!places.find((p) => p._id === place._id) : false;
 
   const handleAddToItinerary = () => {
     if (!place) return;
 
-    addNewPlace(place);
+    addPlace(place);
   };
 
   if (!place) return null;

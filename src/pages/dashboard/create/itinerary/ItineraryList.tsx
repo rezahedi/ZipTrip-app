@@ -5,7 +5,8 @@ import EmptySlate from "./EmptySlate";
 import AddNewPlace from "./AddNewPlace";
 
 const ItineraryList = () => {
-  const {places} = useItinerary();
+  const {plan} = useItinerary();
+  const places = plan?.stops || [];
 
   return (
     <div className="space-y-4">
