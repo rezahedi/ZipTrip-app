@@ -1,7 +1,7 @@
 import React from "react";
-import {ControlPosition, MapControl, useMap} from "@vis.gl/react-google-maps";
-import {LocateFixedIcon} from "lucide-react";
-import {Button} from "@/Components/ui/button";
+import { ControlPosition, MapControl, useMap } from "@vis.gl/react-google-maps";
+import { LocateFixedIcon } from "lucide-react";
+import { Button } from "@/Components/ui/button";
 
 const ZOOMED_MAP = 13;
 
@@ -20,16 +20,16 @@ const LocateMeButton = ({
         maximumAge: 0,
       };
       const success = (pos: GeolocationPosition) => {
-        const {latitude: lat, longitude: lng} = pos.coords;
-        map?.panTo({lat, lng});
+        const { latitude: lat, longitude: lng } = pos.coords;
+        map?.panTo({ lat, lng });
         map?.setZoom(zoomOnLocate);
 
         localStorage.setItem(
           "userLocation",
           JSON.stringify({
-            defaultCenter: {lat, lng},
+            defaultCenter: { lat, lng },
             defaultZoom: zoomOnLocate,
-          })
+          }),
         );
       };
       // TODO: Consider using a toast notification or inline message to inform users when geolocation fails

@@ -1,13 +1,13 @@
 import React from "react";
-import {usePlaces} from "@/context/PlacesContext";
-import {Map, Markers, LocateMeButton, InfoWindow} from "@/Components/Map";
+import { usePlaces } from "@/context/PlacesContext";
+import { Map, Markers, LocateMeButton, InfoWindow } from "@/Components/Map";
 import PlacePopup from "./PlacePopup";
-import {Place} from "@/types";
-import {MapMouseEvent} from "@vis.gl/react-google-maps";
-import {getData} from "@/util";
+import { Place } from "@/types";
+import { MapMouseEvent } from "@vis.gl/react-google-maps";
+import { getData } from "@/util";
 
 const MapBox = () => {
-  const {places, setBoundingBox, selection, setSelection} = usePlaces();
+  const { places, setBoundingBox, selection, setSelection } = usePlaces();
   const place = selection?.item as Place | undefined;
 
   const handlePopupClose = () => {

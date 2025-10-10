@@ -1,8 +1,8 @@
-import React, {createContext, useContext, useEffect, useState} from "react";
-import {Place} from "@/types";
-import {PlanType} from "./PlanTypes";
-import {useAuth} from "./AuthContext";
-import {useParams} from "react-router-dom";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Place } from "@/types";
+import { PlanType } from "./PlanTypes";
+import { useAuth } from "./AuthContext";
+import { useParams } from "react-router-dom";
 
 type contextType = {
   plan: PlanType | null;
@@ -26,12 +26,12 @@ const ItineraryContext = createContext<contextType>({
   error: null,
 });
 
-const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
+const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const [plan, setPlan] = useState<PlanType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const {user} = useAuth();
-  const {planId} = useParams();
+  const { user } = useAuth();
+  const { planId } = useParams();
 
   useEffect(() => {
     if (!planId) return;
@@ -47,13 +47,13 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
 
   const setTitle = (title: string) => {
     if (!plan && !title) return;
-    setPlan((prev) => (prev ? {...prev, title} : null));
+    setPlan((prev) => (prev ? { ...prev, title } : null));
   };
 
   const setDescription = (description: string) => {
     if (!plan && !description) return;
 
-    setPlan((prev) => (prev ? {...prev, description} : null));
+    setPlan((prev) => (prev ? { ...prev, description } : null));
   };
 
   const addPlace = (place: Place) => {
@@ -92,7 +92,10 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
           ...prev,
           stops: [],
         };
-      return {...prev, stops: prev.stops.filter((p) => p.placeId !== placeId)};
+      return {
+        ...prev,
+        stops: prev.stops.filter((p) => p.placeId !== placeId),
+      };
     });
   };
 
@@ -110,7 +113,7 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
             Authorization: `Bearer ${user.token}`,
           },
           body: JSON.stringify(plan),
-        }
+        },
       );
       if (!res.ok) {
         const errorData = await res.json();
@@ -140,7 +143,7 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
-        }
+        },
       );
       if (!res.ok) {
         const errorData = await res.json();
@@ -178,7 +181,7 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
             description: plan?.description,
             stops: plan?.stops,
           }),
-        }
+        },
       );
       if (!res.ok) {
         const errorData = await res.json();
@@ -223,4 +226,4 @@ const useItinerary = () => {
   return context;
 };
 
-export {ItineraryProvider, useItinerary};
+export { ItineraryProvider, useItinerary };

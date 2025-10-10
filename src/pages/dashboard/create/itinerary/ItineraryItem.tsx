@@ -1,11 +1,11 @@
 import React from "react";
-import {useItinerary} from "@/context/ItineraryContext";
-import {XIcon} from "lucide-react";
+import { useItinerary } from "@/context/ItineraryContext";
+import { XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
-import {PlaceType} from "@/context/PlanTypes";
+import { PlaceType } from "@/context/PlanTypes";
 
-const ItineraryItem = ({place}: {place: PlaceType}) => {
-  const {removePlace} = useItinerary();
+const ItineraryItem = ({ place }: { place: PlaceType }) => {
+  const { removePlace } = useItinerary();
 
   const handleClick = () => {
     if (!place || !place.placeId) return;

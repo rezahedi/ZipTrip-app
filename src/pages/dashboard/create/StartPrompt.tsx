@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Button} from "@/Components/ui/button";
+import React, { useEffect, useState } from "react";
+import { Button } from "@/Components/ui/button";
 import Modal from "@/Components/Common/Modal";
-import {useItinerary} from "@/context/ItineraryContext";
-import {useAuth} from "@/context/AuthContext";
-import {useNavigate} from "react-router-dom";
+import { useItinerary } from "@/context/ItineraryContext";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const StartPrompt = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const {plan, createPlan, loading, error} = useItinerary();
-  const {user} = useAuth();
+  const { plan, createPlan, loading, error } = useItinerary();
+  const { user } = useAuth();
   const redirect = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

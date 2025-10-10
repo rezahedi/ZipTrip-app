@@ -6,7 +6,7 @@ import {
   ClockIcon as HalfDayIcon,
   Clock10Icon as NightIcon,
 } from "lucide-react";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 const StatsBlock = ({
   stats,
@@ -23,12 +23,12 @@ const StatsBlock = ({
   };
   className?: string;
 }) => {
-  const {rate, reviewCount, type, distance, stopCount, duration} = stats;
+  const { rate, reviewCount, type, distance, stopCount, duration } = stats;
   return (
     <div
       className={cn(
         "flex flex-wrap gap-10 gap-y-0.5 text-sm sm:text-base text-foreground/65",
-        className
+        className,
       )}
     >
       {type && (

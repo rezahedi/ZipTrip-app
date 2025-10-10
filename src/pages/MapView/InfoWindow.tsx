@@ -1,9 +1,9 @@
-import React, {Dispatch, SetStateAction} from "react";
-import {Link} from "react-router-dom";
-import {InfoWindow as GMapInfoWindow} from "@vis.gl/react-google-maps";
-import {XIcon} from "lucide-react";
-import {Plan} from "@/types";
-import {SelectionType} from "./PlansContext";
+import React, { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
+import { InfoWindow as GMapInfoWindow } from "@vis.gl/react-google-maps";
+import { XIcon } from "lucide-react";
+import { Plan } from "@/types";
+import { SelectionType } from "./PlansContext";
 
 const InfoWindow = ({
   plan,

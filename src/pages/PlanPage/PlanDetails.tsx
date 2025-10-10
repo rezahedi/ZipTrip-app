@@ -1,20 +1,20 @@
-import React, {useState, lazy, Suspense} from "react";
-import {Link} from "react-router-dom";
-import {useAuth} from "@/context/AuthContext";
-import {useAuthModal} from "@/context/AuthModalContext";
-import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
+import React, { useState, lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import IconButton from "@/Components/ui/IconButton";
-import {Share2Icon, BookmarkIcon} from "lucide-react";
+import { Share2Icon, BookmarkIcon } from "lucide-react";
 import StopsOnMap from "./StopsOnMap";
 import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
-import {AddBookmark, removeBookmark} from "@/util/dashboard";
-import {PlanWithStops} from "@/types";
+import { AddBookmark, removeBookmark } from "@/util/dashboard";
+import { PlanWithStops } from "@/types";
 import StatsBlock from "./StatsBlock";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
-const PlanDetails = ({plan}: {plan: PlanWithStops}) => {
+const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
   const {
     _id: planId,
     title,
@@ -32,8 +32,8 @@ const PlanDetails = ({plan}: {plan: PlanWithStops}) => {
     updatedAt,
   } = plan;
   const [bookmark, setBookmark] = useState(isBookmarked);
-  const {token} = useAuth();
-  const {openLogin} = useAuthModal();
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 
   const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,6 +1,6 @@
 import React from "react";
-import {InfoWindow as GMapInfoWindow} from "@vis.gl/react-google-maps";
-import {XIcon} from "lucide-react";
+import { InfoWindow as GMapInfoWindow } from "@vis.gl/react-google-maps";
+import { XIcon } from "lucide-react";
 
 const InfoWindow = ({
   position,

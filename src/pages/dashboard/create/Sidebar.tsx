@@ -1,10 +1,10 @@
 import React from "react";
-import {ItineraryList} from "./itinerary";
+import { ItineraryList } from "./itinerary";
 import Editable from "./Editable";
-import {useItinerary} from "@/context/ItineraryContext";
+import { useItinerary } from "@/context/ItineraryContext";
 
 const Sidebar = () => {
-  const {plan, setTitle, setDescription, loading, error} = useItinerary();
+  const { plan, setTitle, setDescription, loading, error } = useItinerary();
 
   return (
     <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">

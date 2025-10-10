@@ -11,11 +11,11 @@ import {
   MapCameraProps,
   MapMouseEvent,
 } from "@vis.gl/react-google-maps";
-import {debounce} from "@/lib/utils";
+import { debounce } from "@/lib/utils";
 
 // Bay Area
 const MAP_INITIAL_VIEW = {
-  defaultCenter: {lat: 37.70580795161106, lng: -122.51368137617244},
+  defaultCenter: { lat: 37.70580795161106, lng: -122.51368137617244 },
   defaultZoom: 11,
 };
 
@@ -36,7 +36,7 @@ const Map = ({
 
   const debouncedSetBoundingBox = useCallback(
     debounce(() => setBoundingBox(map?.getBounds()), 300),
-    [map]
+    [map],
   );
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Map = ({
   return (
     <GMap
       {...cameraProps}
-      style={{width: "100%", height: "100%"}}
+      style={{ width: "100%", height: "100%" }}
       disableDefaultUI={false}
       gestureHandling="greedy"
       streetViewControl={false}

@@ -1,6 +1,6 @@
-import React, {memo} from "react";
-import {Marker as GMapMarker} from "@vis.gl/react-google-maps";
-import {itemType, setSelectionType} from "./types";
+import React, { memo } from "react";
+import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
+import { itemType, setSelectionType } from "./types";
 
 const Marker = memo(
   function Marker({
@@ -11,7 +11,7 @@ const Marker = memo(
     onClick: setSelectionType;
   }) {
     const handleClick = () => {
-      onClick({item, source: "marker"});
+      onClick({ item, source: "marker" });
     };
 
     const position = "location" in item ? item.location : item.startLocation;
@@ -19,7 +19,7 @@ const Marker = memo(
     return (
       <GMapMarker
         title={"name" in item ? item.name : item.title}
-        position={{lat: position[0], lng: position[1]}}
+        position={{ lat: position[0], lng: position[1] }}
         onClick={handleClick}
         icon={{
           url: "/images/MarkerIcon.svg",
@@ -29,7 +29,7 @@ const Marker = memo(
       />
     );
   },
-  (prevProps, nextProps) => prevProps.item._id === nextProps.item._id
+  (prevProps, nextProps) => prevProps.item._id === nextProps.item._id,
 );
 
 export default Marker;

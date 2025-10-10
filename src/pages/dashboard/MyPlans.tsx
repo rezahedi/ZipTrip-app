@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {deletePlan, getMyPlans} from "@/util/dashboard";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { deletePlan, getMyPlans } from "@/util/dashboard";
 import PlanCard from "@/Components/Common/PlanCard";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import AlertDialog from "@/Components/Common/AlertDialog";
 import Pagination from "@/Components/Common/Pagination";
-import {Button} from "@/Components/ui/button";
-import {useAuth} from "@/context/AuthContext";
-import {getQueryValue} from "@/util/url";
-import {Plan} from "@/types";
+import { Button } from "@/Components/ui/button";
+import { useAuth } from "@/context/AuthContext";
+import { getQueryValue } from "@/util/url";
+import { Plan } from "@/types";
 
 const PAGE_SIZE = 9;
 
@@ -18,7 +18,7 @@ function MyPlans() {
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [selectedPlanToRemove, setSelectedPlanToRemove] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const {token} = useAuth();
+  const { token } = useAuth();
   const navigate = useNavigate();
   let page = getQueryValue(location.search, "page") || "1";
   const [pagesCount, setPagesCount] = useState<number>(0);
@@ -97,7 +97,7 @@ function MyPlans() {
       {!isLoading && error && <p>{error}</p>}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading &&
-          Array.from({length: 6}).map((_, index) => (
+          Array.from({ length: 6 }).map((_, index) => (
             <PlanCardSkeleton key={index} />
           ))}
         {!isLoading &&

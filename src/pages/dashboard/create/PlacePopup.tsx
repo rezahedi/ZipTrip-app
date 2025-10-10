@@ -1,13 +1,13 @@
-import {usePlaces} from "@/context/PlacesContext";
+import { usePlaces } from "@/context/PlacesContext";
 import React from "react";
-import {Place} from "@/types";
-import {useItinerary} from "@/context/ItineraryContext";
+import { Place } from "@/types";
+import { useItinerary } from "@/context/ItineraryContext";
 import AddButton from "./AddButton";
 
 const PlacePopup = () => {
-  const {selection} = usePlaces();
+  const { selection } = usePlaces();
   const place = selection?.item as Place | undefined;
-  const {plan, addPlace} = useItinerary();
+  const { plan, addPlace } = useItinerary();
   const places = plan?.stops || [];
   const isAdded = place
     ? !!places.find((p) => p.placeId === place.placeId)

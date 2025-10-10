@@ -1,7 +1,7 @@
-import React, {memo, useEffect} from "react";
+import React, { memo, useEffect } from "react";
 import Marker from "./Marker";
-import {useMap} from "@vis.gl/react-google-maps";
-import {itemsType, selectionType, setSelectionType} from "./types";
+import { useMap } from "@vis.gl/react-google-maps";
+import { itemsType, selectionType, setSelectionType } from "./types";
 
 const Markers = memo(function Markers({
   items,

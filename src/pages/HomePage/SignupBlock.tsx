@@ -1,13 +1,13 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
-import {ChevronRightIcon} from "lucide-react";
-import {useAuthModal} from "@/context/AuthModalContext";
-import {useAuth} from "@/context/AuthContext";
-import {Button} from "@/Components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { ChevronRightIcon } from "lucide-react";
+import { useAuthModal } from "@/context/AuthModalContext";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/Components/ui/button";
 
 const SignupBlock = () => {
-  const {user} = useAuth();
-  const {openRegister} = useAuthModal();
+  const { user } = useAuth();
+  const { openRegister } = useAuthModal();
   const navigate = useNavigate();
 
   const handleButtonClick = () => {

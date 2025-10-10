@@ -1,11 +1,11 @@
 import React from "react";
 import ItineraryItem from "./ItineraryItem";
-import {useItinerary} from "@/context/ItineraryContext";
+import { useItinerary } from "@/context/ItineraryContext";
 import EmptySlate from "./EmptySlate";
 import AddNewPlace from "./AddNewPlace";
 
 const ItineraryList = () => {
-  const {plan} = useItinerary();
+  const { plan } = useItinerary();
   const places = plan?.stops || [];
 
   return (

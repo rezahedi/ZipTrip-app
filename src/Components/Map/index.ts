@@ -4,4 +4,4 @@ import Marker from "./Marker";
 import InfoWindow from "./InfoWindow";
 import LocateMeButton from "./LocateMeButton";
 
-export {Map, Markers, Marker, InfoWindow, LocateMeButton};
+export { Map, Markers, Marker, InfoWindow, LocateMeButton };

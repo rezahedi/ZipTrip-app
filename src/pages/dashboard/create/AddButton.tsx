@@ -1,6 +1,6 @@
-import {Button} from "@/Components/ui/button";
+import { Button } from "@/Components/ui/button";
 import React from "react";
-import {CheckIcon} from "lucide-react";
+import { CheckIcon } from "lucide-react";
 
 const AddButton = ({
   isAdded = false,

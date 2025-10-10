@@ -1,5 +1,5 @@
-import {Dispatch, SetStateAction} from "react";
-import {Plan, Place} from "@/types";
+import { Dispatch, SetStateAction } from "react";
+import { Plan, Place } from "@/types";
 
 type itemType = Plan | Place;
 
@@ -12,4 +12,4 @@ type selectionType = {
 
 type setSelectionType = Dispatch<SetStateAction<selectionType | null>>;
 
-export {itemType, itemsType, selectionType, setSelectionType};
+export { itemType, itemsType, selectionType, setSelectionType };

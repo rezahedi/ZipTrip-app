@@ -6,11 +6,11 @@ import React, {
   SetStateAction,
   useEffect,
 } from "react";
-import {useAuth} from "@/context/AuthContext";
-import {fetchPlans} from "@/util";
-import {Place} from "@/types";
-import {useMap} from "@vis.gl/react-google-maps";
-import {selectionType} from "@/Components/Map/types";
+import { useAuth } from "@/context/AuthContext";
+import { fetchPlans } from "@/util";
+import { Place } from "@/types";
+import { useMap } from "@vis.gl/react-google-maps";
+import { selectionType } from "@/Components/Map/types";
 
 type PlacesContextType = {
   places: Place[];
@@ -32,7 +32,7 @@ const PlacesContext = createContext<PlacesContextType>({
   setBoundingBox: () => {},
 });
 
-const PlacesProvider = ({children}: {children: React.ReactNode}) => {
+const PlacesProvider = ({ children }: { children: React.ReactNode }) => {
   const [places, setPlaces] = useState<Place[]>([]);
   const [selection, setSelection] = useState<selectionType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -40,7 +40,7 @@ const PlacesProvider = ({children}: {children: React.ReactNode}) => {
   const [boundingBox, setBoundingBox] = useState<
     google.maps.LatLngBounds | undefined
   >();
-  const {token} = useAuth();
+  const { token } = useAuth();
   const map = useMap();
 
   useEffect(() => {
@@ -59,14 +59,14 @@ const PlacesProvider = ({children}: {children: React.ReactNode}) => {
         const fetchResult = await fetchPlans(
           `places/nearby/?${paramsString}`,
           token,
-          setError
+          setError,
         );
         setPlaces(fetchResult.items || []);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
         setError(
-          error instanceof Error ? error.message : "Failed to fetch places"
+          error instanceof Error ? error.message : "Failed to fetch places",
         );
       }
     })();
@@ -96,7 +96,7 @@ const usePlaces = () => {
   return context;
 };
 
-export {PlacesProvider, usePlaces};
+export { PlacesProvider, usePlaces };
 
 const createNearbyQueries = (bounds: google.maps.LatLngBounds) => {
   const params = new URLSearchParams(location.search);

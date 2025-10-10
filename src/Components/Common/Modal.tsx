@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/Components/ui/dialog";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 export default function Modal({
   title = "",
@@ -25,7 +25,7 @@ export default function Modal({
       <DialogContent
         className={cn(
           className,
-          `px-3 py-8 w-full h-full sm:max-w-xl max-w-full sm:h-auto rounded-none sm:rounded-lg`
+          `px-3 py-8 w-full h-full sm:max-w-xl max-w-full sm:h-auto rounded-none sm:rounded-lg`,
         )}
       >
         <DialogHeader>
