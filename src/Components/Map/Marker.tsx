@@ -22,7 +22,7 @@ const Marker = memo(
         position={{lat: position[0], lng: position[1]}}
         onClick={handleClick}
         icon={{
-          url: "./images/MarkerIcon.svg",
+          url: "/images/MarkerIcon.svg",
           scaledSize: new google.maps.Size(32, 32),
           anchor: new google.maps.Point(16, 32),
         }}
