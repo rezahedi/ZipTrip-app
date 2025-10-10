@@ -37,7 +37,11 @@ const Markers = memo(function Markers({
   return (
     <>
       {items.map((item) => (
-        <Marker key={item._id} item={item} onClick={setSelection} />
+        <Marker
+          key={"placeId" in item ? item.placeId : item._id}
+          item={item}
+          onClick={setSelection}
+        />
       ))}
       {infoWindow}
     </>

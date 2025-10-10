@@ -27,7 +27,8 @@ export interface Plan {
 }
 
 export interface Place {
-  _id: string;
+  _id?: string;
+  placeId: string;
   name: string;
   imageURL: string;
   address: string;

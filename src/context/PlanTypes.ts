@@ -1,5 +1,6 @@
 export interface PlaceType {
   _id?: string;
+  placeId: string;
   name: string;
   imageURL: string;
   address: string;

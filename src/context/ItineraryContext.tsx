@@ -59,7 +59,7 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   const addPlace = (place: Place) => {
-    console.log("addPlace()");
+    console.log("addPlace()", place);
     if (!plan) return;
 
     setPlan((prev) => {
@@ -73,7 +73,7 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
         };
 
       // Avoid adding duplicates
-      if (prev.stops.find((p) => p._id === place._id)) {
+      if (prev.stops.find((p) => p.placeId === place.placeId)) {
         return prev;
       }
 
@@ -96,7 +96,7 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
           ...prev,
           stops: [],
         };
-      return {...prev, stops: prev.stops?.filter((p) => p._id !== placeId)};
+      return {...prev, stops: prev.stops.filter((p) => p.placeId !== placeId)};
     });
   };
 

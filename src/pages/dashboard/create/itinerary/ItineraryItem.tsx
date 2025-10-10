@@ -8,9 +8,9 @@ const ItineraryItem = ({place}: {place: PlaceType}) => {
   const {removePlace} = useItinerary();
 
   const handleClick = () => {
-    if (!place || !place._id) return;
+    if (!place || !place.placeId) return;
 
-    removePlace(place._id);
+    removePlace(place.placeId);
   };
 
   return (

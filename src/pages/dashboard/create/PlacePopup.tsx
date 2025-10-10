@@ -9,7 +9,11 @@ const PlacePopup = () => {
   const place = selection?.item as Place | undefined;
   const {plan, addPlace} = useItinerary();
   const places = plan?.stops || [];
-  const isAdded = place ? !!places.find((p) => p._id === place._id) : false;
+  console.log("isAdded stops", places);
+  console.log("isAdded place", place);
+  const isAdded = place
+    ? !!places.find((p) => p.placeId === place.placeId)
+    : false;
 
   const handleAddToItinerary = () => {
     if (!place) return;
