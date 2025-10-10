@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PenIcon } from "lucide-react";
 
 const Editable = function Editable({
@@ -13,7 +13,7 @@ const Editable = function Editable({
   const editableRef = useRef<HTMLDivElement>(null);
 
   // Exit edit mode when focus is lost
-  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+  const handleBlur = () => {
     if (!editable) return;
     const value = editableRef.current?.textContent || "";
     if (value === children) {
