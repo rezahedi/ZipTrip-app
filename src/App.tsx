@@ -5,7 +5,6 @@ import HomePage from "@/pages/HomePage";
 import SearchPage from "@/pages/SearchPage";
 import MapViewPage from "@/pages/MapView";
 import PlanPage from "@/pages/PlanPage";
-import CategoryPage from "@/pages/CategoryPage";
 import UserPage from "@/pages/UserPage";
 import NotFound404 from "@/pages/404NotFound";
 import ResetPasswordPage from "@/pages/ResetPasswordPage";
@@ -39,7 +38,6 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
-            <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route path="/user/:userId" element={<UserPage />} />
             <Route
               path="/resetpassword/:token"

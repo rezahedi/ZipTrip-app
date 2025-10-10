@@ -15,7 +15,6 @@ export interface PassingPlan {
   type: string;
   distance: string;
   duration: string;
-  categoryId: string;
   stops: PassingStop[];
 }
 
@@ -24,7 +23,7 @@ const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 const getMyPlans = async (
   params: string,
   token = "",
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   return await getData(`/account/plans?${params}`, token, onError);
 };
@@ -32,7 +31,7 @@ const getMyPlans = async (
 const deletePlan = async (
   token: string,
   planId: string,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/plans/${planId}`, {
@@ -57,7 +56,7 @@ const deletePlan = async (
 const getPlan = async (
   token: string,
   planId: string,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   return await getData(`/account/plans/${planId}`, token, onError);
 };
@@ -65,7 +64,7 @@ const getPlan = async (
 const updatePlan = async (
   token: string,
   plan: PassingPlan,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/plans/${plan._id}`, {
@@ -92,7 +91,7 @@ const updatePlan = async (
 const createPlan = async (
   token: string,
   plan: PassingPlan,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/plans`, {
@@ -118,7 +117,7 @@ const createPlan = async (
 
 const getCategories = async (
   token: string,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   return await getData(`/account/categories`, token, onError);
 };
@@ -126,7 +125,7 @@ const getCategories = async (
 const AddBookmark = async (
   token: string,
   planId: string,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks/${planId}`, {
@@ -151,7 +150,7 @@ const AddBookmark = async (
 const removeBookmark = async (
   token: string,
   planId: string,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}/account/bookmarks/${planId}`, {
@@ -176,7 +175,7 @@ const removeBookmark = async (
 const getBookmarks = async (
   params: string,
   token: string,
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   return await getData(`/account/bookmarks?${params}`, token, onError);
 };
@@ -184,7 +183,7 @@ const getBookmarks = async (
 const getData = async (
   endpoint: string,
   token: string = "",
-  onError: (error: string) => void,
+  onError: (error: string) => void
 ) => {
   try {
     let res = await fetch(`${API_V1_BASE_URL}${endpoint}`, {
