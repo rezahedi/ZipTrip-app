@@ -40,8 +40,8 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   }, [planId]);
 
   useEffect(() => {
-    if (!plan && !planId) return;
-    // TODO: Find another way to update plan, because first time plan set after createPlan() this will run and it's pointless
+    if (!plan || !planId) return;
+    // TODO: Find another way to update plan, because first time plan set after createPlan() or getPlan() this will run and it's pointless
     updatePlan();
   }, [plan]);
 

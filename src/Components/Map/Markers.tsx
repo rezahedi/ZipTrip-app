@@ -32,17 +32,16 @@ const Markers = memo(function Markers({
     map.panBy(-160, 0);
   }, [selection, map]);
 
-  if (!items.length) return null;
-
   return (
     <>
-      {items.map((item) => (
-        <Marker
-          key={"placeId" in item ? item.placeId : item._id}
-          item={item}
-          onClick={setSelection}
-        />
-      ))}
+      {items.length > 0 &&
+        items.map((item) => (
+          <Marker
+            key={"placeId" in item ? item.placeId : item._id}
+            item={item}
+            onClick={setSelection}
+          />
+        ))}
       {infoWindow}
     </>
   );
