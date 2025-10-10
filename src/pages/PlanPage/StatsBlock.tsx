@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+// import {Link} from "react-router-dom";
+// import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
 import {
   HistoryIcon as FullDayIcon,
   ClockIcon as HalfDayIcon,
@@ -19,12 +19,11 @@ const StatsBlock = ({
     distance: number;
     stopCount: number;
     duration: string;
-    categoryId: { _id: string; name: string; imageURL: string };
+    // categoryId: { _id: string; name: string; imageURL: string };
   };
   className?: string;
 }) => {
-  const { rate, reviewCount, type, distance, stopCount, duration, categoryId } =
-    stats;
+  const { rate, reviewCount, type, distance, stopCount, duration } = stats;
   return (
     <div
       className={cn(
@@ -76,7 +75,7 @@ const StatsBlock = ({
           </span>
         </div>
       )}
-      <span>
+      {/* <span>
         <Link
           to={`/category/${categoryId._id}`}
           className="flex flex-col gap-1"
@@ -93,7 +92,7 @@ const StatsBlock = ({
             {categoryId.name}
           </span>
         </Link>
-      </span>
+      </span> */}
     </div>
   );
 };

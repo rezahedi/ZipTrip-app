@@ -36,9 +36,9 @@ const InfoWindow = ({
             alt={plan.title}
           />
           <div className="flex-4/5 max-h-40 px-2">
-            <h5 className="text-foreground/70 font-normal text-sm">
+            {/* <h5 className="text-foreground/70 font-normal text-sm">
               {plan.categoryId.name}
-            </h5>
+            </h5> */}
             <h3 className="font-medium text-base/snug text-balance py-1">
               {plan.title}
             </h3>

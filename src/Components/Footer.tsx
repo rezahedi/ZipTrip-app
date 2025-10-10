@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { fetchData } from "@/util";
-import { Category } from "@/types";
+import React from "react";
+// import { fetchData } from "@/util";
+// import { Category } from "@/types";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  /*  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchAllCategories = async () => {
@@ -21,7 +21,7 @@ function Footer() {
   const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
   };
-
+*/
   return (
     <div className="bg-foreground/90 text-background mt-6 px-2 py-4">
       <div className="my-0 mx-auto w-full max-w-7xl box-border flex flex-row flex-wrap gap-y-2">
@@ -89,12 +89,12 @@ function Footer() {
           <div className="p-0 sm:p-2 mb-2 sm:mb-0">
             <div className="text-sm text-background">
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
-                <li className="font-bold text-lg">Categories</li>
+                {/* <li className="font-bold text-lg">Categories</li>
                 {categories.map((category) => (
                   <Link key={category._id} to={`/category/${category._id}`}>
                     <li>{category.name}</li>
                   </Link>
-                ))}
+                ))} */}
               </ul>
             </div>
           </div>

@@ -32,7 +32,6 @@ const StopDialog = ({
       address: addressRef.current!.value || "",
       location: [Number(latRef.current!.value), Number(lngRef.current!.value)],
       description: "",
-      sequence: 0,
     });
   };
 

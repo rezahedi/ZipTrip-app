@@ -25,7 +25,6 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     stopCount,
     distance,
     duration,
-    categoryId,
     userId,
     rate,
     reviewCount,
@@ -140,7 +139,6 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
             distance,
             stopCount,
             duration,
-            categoryId,
           }}
         />
 

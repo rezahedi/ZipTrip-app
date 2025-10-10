@@ -78,7 +78,7 @@ function MyPlans() {
         <p className="font-semibold text-lg">
           Please create your first amazing plan!
         </p>
-        <Link to="/account/create">
+        <Link to="/create">
           <Button color="inherit" className="mt-0.5">
             Create New Plan
           </Button>
@@ -90,7 +90,7 @@ function MyPlans() {
     <>
       <div className="flex justify-between items-center mb-2">
         <h4 className="text-xl font-semibold">My Plans</h4>
-        <Link to="/account/create">
+        <Link to="/create">
           <Button color="inherit">Create New Plan</Button>
         </Link>
       </div>
@@ -109,7 +109,7 @@ function MyPlans() {
                 showBookmarkBtn={false}
               />
               <div>
-                <Link to={`/account/${plan._id}`}>
+                <Link to={`/create/${plan._id}`}>
                   <Button className="mt-0.5">Edit</Button>
                 </Link>
                 <Button

@@ -7,7 +7,6 @@ export interface PassingStop {
   address: string;
   description: string;
   location: [number, number];
-  sequence: number;
 }
 
 export interface PassingPlan {
@@ -18,7 +17,6 @@ export interface PassingPlan {
   type: string;
   distance: string;
   duration: string;
-  categoryId: string;
   stops: PassingStop[];
 }
 

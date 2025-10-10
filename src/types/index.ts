@@ -16,12 +16,18 @@ export interface Plan {
     name: string;
     imageURL: string;
   };
-  categoryId: {
-    _id: string;
-    name: string;
-    imageURL: string;
-  };
   isBookmarked: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface Place {
+  _id?: string;
+  placeId: string;
+  name: string;
+  imageURL: string;
+  address: string;
+  location: [number, number];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -41,15 +47,6 @@ export interface Stop {
 
 export interface PlanWithStops extends Plan {
   stops: Stop[];
-}
-
-export interface Category {
-  _id: string;
-  name: string;
-  description: string;
-  imageURL: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface User {
