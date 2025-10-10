@@ -46,20 +46,17 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   }, [plan]);
 
   const setTitle = (title: string) => {
-    console.log("setTitle()");
     if (!plan && !title) return;
     setPlan((prev) => (prev ? {...prev, title} : null));
   };
 
   const setDescription = (description: string) => {
-    console.log("setDescription()");
     if (!plan && !description) return;
 
     setPlan((prev) => (prev ? {...prev, description} : null));
   };
 
   const addPlace = (place: Place) => {
-    console.log("addPlace()", place);
     if (!plan) return;
 
     setPlan((prev) => {
@@ -86,7 +83,6 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   const removePlace = (placeId: string) => {
-    console.log("removePlace()");
     if (!plan) return;
 
     setPlan((prev) => {
@@ -101,7 +97,6 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   const createPlan = async (plan: PlanType) => {
-    console.log("createPlan()");
     if (!user) return setError("You must be logged in to create a plan");
     setLoading(true);
     setError(null);
@@ -133,7 +128,6 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   const getPlan = async (planId: string) => {
-    console.log("getPlan()");
     if (!user) return setError("You must be logged in to edit a plan");
     setLoading(true);
     setError(null);
@@ -164,7 +158,6 @@ const ItineraryProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   const updatePlan = async (): Promise<boolean> => {
-    console.log("updatePlan()");
     if (!user) {
       setError("You must be logged in to edit a plan");
       return false;
