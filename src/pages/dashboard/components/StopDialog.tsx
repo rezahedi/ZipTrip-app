@@ -19,7 +19,6 @@ const StopDialog = ({
   onClose: () => void;
   onConfirm: (stop: PassingStop) => void;
 }) => {
-  const isMobile = window.innerWidth < 600;
   const nameRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);

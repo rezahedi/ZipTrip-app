@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PlanCard from "./PlanCard";
 import { useAuth } from "@/context/AuthContext";
 import PlanCardSkeleton from "./PlanCardSkeleton";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import { Plan } from "@/types";
 
 const CardSection = ({
@@ -24,7 +24,7 @@ const CardSection = ({
   useEffect(() => {
     const fetchAllPlans = async () => {
       try {
-        const result = await fetchPlans(
+        const result = await fetchData(
           `plans?categoryId=${category}&search=${search}&size=${size}`,
           token,
           setError,

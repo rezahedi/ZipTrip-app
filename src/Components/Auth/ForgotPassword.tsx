@@ -32,8 +32,10 @@ const ForgotPassword = ({
         const data = await res.json();
         setErrorMessage(data.msg || "Something went wrong.");
       }
-    } catch (err) {
-      setErrorMessage("Error sending reset request.");
+    } catch (err: unknown) {
+      let errorMessage = "";
+      if (err instanceof Error) errorMessage = err.message;
+      setErrorMessage(`Error sending reset request: ${errorMessage}`);
     }
   };
 

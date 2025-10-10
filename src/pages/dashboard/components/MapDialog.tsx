@@ -27,12 +27,14 @@ const MapDialog = ({
   onConfirm: (stop: PassingStop) => void;
 }) => {
   const dummyDiv = useRef(null);
+  // eslint-disable-next-line no-undef
   const [selected, setSelected] = useState<google.maps.LatLngLiteral | null>(
     null,
   );
   const [placeId, setPlaceId] = useState<string>("");
   const [selectedPlace, setSelectedPlace] = useState<PassingStop | null>(null);
   const [autocompleteBounds, setAutocompleteBounds] =
+    // eslint-disable-next-line no-undef
     useState<google.maps.LatLngBounds | null>(null);
   const map = useMap();
 

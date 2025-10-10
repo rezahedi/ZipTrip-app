@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
 import PlanCard from "@/Components/Common/PlanCard";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
@@ -34,7 +34,7 @@ const UserPage = () => {
       const paramsString = params.toString();
 
       try {
-        const res = await fetchPlans(
+        const res = await fetchData(
           `plans/user/${userId}?${paramsString}`,
           token,
           setError,
