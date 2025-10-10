@@ -7,7 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { fetchPlans } from "@/util";
+import { fetchData } from "@/util";
 import { Place } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 import { selectionType } from "@/Components/Map/types";
@@ -19,6 +19,7 @@ type PlacesContextType = {
   selection: selectionType | null;
   setSelection: Dispatch<SetStateAction<selectionType | null>>;
   setBoundingBox: Dispatch<
+    // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
 };
@@ -38,6 +39,7 @@ const PlacesProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
+    // eslint-disable-next-line no-undef
     google.maps.LatLngBounds | undefined
   >();
   const { token } = useAuth();
@@ -56,7 +58,7 @@ const PlacesProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(true);
       const paramsString = createNearbyQueries(currentBounds);
       try {
-        const fetchResult = await fetchPlans(
+        const fetchResult = await fetchData(
           `places/nearby/?${paramsString}`,
           token,
           setError,
@@ -98,6 +100,7 @@ const usePlaces = () => {
 
 export { PlacesProvider, usePlaces };
 
+// eslint-disable-next-line no-undef
 const createNearbyQueries = (bounds: google.maps.LatLngBounds) => {
   const params = new URLSearchParams(location.search);
   const sw = bounds.getSouthWest();

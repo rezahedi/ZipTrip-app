@@ -23,7 +23,9 @@ const Marker = memo(
         onClick={handleClick}
         icon={{
           url: "/images/MarkerIcon.svg",
+          // eslint-disable-next-line no-undef
           scaledSize: new google.maps.Size(32, 32),
+          // eslint-disable-next-line no-undef
           anchor: new google.maps.Point(16, 32),
         }}
       />

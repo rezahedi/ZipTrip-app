@@ -4,7 +4,7 @@ import { Map, Markers, LocateMeButton, InfoWindow } from "@/Components/Map";
 import PlacePopup from "./PlacePopup";
 import { Place } from "@/types";
 import { MapMouseEvent } from "@vis.gl/react-google-maps";
-import { getData } from "@/util";
+import { fetchData } from "@/util";
 
 const MapBox = () => {
   const { places, setBoundingBox, selection, setSelection } = usePlaces();
@@ -20,8 +20,8 @@ const MapBox = () => {
     const placeLocation = e.detail.latLng;
     if (!placeId || !placeLocation) return;
 
-    const URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/places/fetch/${placeId}`;
-    const place = await getData(URL);
+    const URL = `/places/fetch/${placeId}`;
+    const place = await fetchData(URL, null, () => {});
     if (!place || !place.id) return;
 
     setSelection({

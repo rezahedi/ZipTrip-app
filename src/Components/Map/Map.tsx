@@ -26,6 +26,7 @@ const Map = ({
 }: {
   children?: ReactNode;
   setBoundingBox: Dispatch<
+    // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
   onClick?: (e: MapMouseEvent) => void;
