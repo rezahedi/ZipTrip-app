@@ -64,7 +64,7 @@ const Editable = function Editable({
         >
           {children}
         </div>
-        <PenIcon className="hidden peer-hover:inline w-4 text-gray-400" />
+        <PenIcon className="invisible shrink-0 peer-hover:visible w-4 text-gray-400" />
       </div>
       {message && <i className="text-xs text-gray-600">{message}</i>}
     </span>
