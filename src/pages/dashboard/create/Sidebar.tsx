@@ -2,6 +2,7 @@ import React from "react";
 import { ItineraryList } from "./itinerary";
 import Editable from "./Editable";
 import { useItinerary } from "@/context/ItineraryContext";
+import ImageUploader from "./itinerary/ImageUploader";
 
 const Sidebar = () => {
   const { plan, setTitle, setDescription, loading, error } = useItinerary();
@@ -22,6 +23,7 @@ const Sidebar = () => {
               {plan?.description || "Write something about your trip..."}
             </Editable>
           </p>
+          <ImageUploader />
           <h3 className="font-semibold text-xl mt-4">Itinerary</h3>
           <ItineraryList />
         </>
