@@ -8,6 +8,7 @@ type contextType = {
   plan: PlanType | null;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
+  addImage: (image: string) => void;
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
   createPlan: (plan: PlanType) => void;
@@ -19,6 +20,7 @@ const ItineraryContext = createContext<contextType>({
   plan: null,
   setTitle: () => {},
   setDescription: () => {},
+  addImage: () => {},
   addPlace: () => {},
   removePlace: () => {},
   createPlan: () => {},
@@ -54,6 +56,23 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     if (!plan && !description) return;
 
     setPlan((prev) => (prev ? { ...prev, description } : null));
+  };
+
+  const addImage = (image: string) => {
+    if (!plan) return;
+
+    setPlan((prev) => {
+      if (!prev) return null;
+      if (!prev.images)
+        return {
+          ...prev,
+          images: [image],
+        };
+      return {
+        ...prev,
+        images: [...prev.images, image],
+      };
+    });
   };
 
   const addPlace = (place: Place) => {
@@ -206,6 +225,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         plan,
         setTitle,
         setDescription,
+        addImage,
         addPlace,
         removePlace,
         createPlan,
