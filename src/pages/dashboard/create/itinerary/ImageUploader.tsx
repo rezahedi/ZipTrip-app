@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useItinerary } from "@/context/ItineraryContext";
 import { useAuth } from "@/context/AuthContext";
 
 const MAX_SIZE_2MB = 2097152;
 
 const ImageUploader = () => {
+  const inputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [imageDataURL, setImageDataURL] = useState<string | null>(null);
   const { plan, addImage } = useItinerary();
   const { user } = useAuth();
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!plan || !user) return;
+  const handleUpload = async (file: File) => {
+    if (!file || !plan || !user) return;
 
     setError(null);
-    const file = e.target.files?.[0];
-
-    if (!file) return;
 
     if (file.size > MAX_SIZE_2MB) {
       return setError(
@@ -46,16 +45,49 @@ const ImageUploader = () => {
     setImageDataURL(null);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleUpload(file);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (file) handleUpload(file);
+  };
+
+  const handleClick = () => {
+    if (!inputRef?.current) return;
+    (inputRef?.current as HTMLInputElement).click();
+  };
+
   return (
     <>
-      <label htmlFor="file-upload">Upload an image for your trip:</label>
-      <input
-        id="file-upload"
-        onChange={handleUpload}
-        type="file"
-        accept="image/*"
-      />
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div
+        onClick={handleClick}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={handleDrop}
+        className={`my-2 border-2 border-dashed rounded-sm p-6 text-center cursor-pointer transition
+        ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-blue-400"}`}
+      >
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        <p className="text-gray-600">
+          {isDragging ? "Drop image here..." : "Drag & drop photos here"}
+        </p>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </div>
       <div className="grid grid-cols-3 gap-4 mt-4">
         {plan &&
           plan.images &&
