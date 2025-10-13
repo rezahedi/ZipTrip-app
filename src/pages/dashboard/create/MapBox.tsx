@@ -20,7 +20,7 @@ const MapBox = () => {
     const placeLocation = e.detail.latLng;
     if (!placeId || !placeLocation) return;
 
-    const URL = `/places/fetch/${placeId}`;
+    const URL = `places/fetch/${placeId}`;
     const place = await fetchData(URL, null, () => {});
     if (!place || !place.id) return;
 
