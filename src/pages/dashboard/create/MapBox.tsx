@@ -28,7 +28,7 @@ const MapBox = () => {
       item: {
         placeId: place.id,
         name: place.displayName.text,
-        imageURL: place.photos[0].imageURL,
+        imageURL: place.photos?.[0]?.imageURL || "",
         location: [placeLocation.lat, placeLocation.lng],
         address: place.formattedAddress,
       },
