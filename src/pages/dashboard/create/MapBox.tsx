@@ -28,7 +28,7 @@ const MapBox = () => {
       item: {
         placeId: place.id,
         name: place.displayName.text,
-        imageURL: `https://places.googleapis.com/v1/${place.photos[0].name}/media?maxHeightPx=400&maxWidthPx=400&key=${import.meta.env.VITE_GOOGLE_MAP_API_KEY}`,
+        imageURL: place.photos?.[0]?.imageURL || "",
         location: [placeLocation.lat, placeLocation.lng],
         address: place.formattedAddress,
       },
