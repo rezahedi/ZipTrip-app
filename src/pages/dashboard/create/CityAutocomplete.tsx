@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AutoComplete } from "@/ui/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 
 const googlePlaceAutoComplete_URL = `https://places.googleapis.com/v1/places:autocomplete?key=${import.meta.env.VITE_GOOGLE_MAP_API_KEY}`;
 
-type CityType = {
+type itemType = {
   value: string; // placeId
   label: string; // City Name
 };
 
-const CityAutocomplete = () => {
+const CityAutocomplete = ({
+  onSelect,
+}: {
+  onSelect: (value: itemType) => void;
+}) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<string>("");
+
+  useEffect(() => {
+    if (selectedValue) {
+      setSearchValue("");
+      onSelect({ value: selectedValue, label: searchValue });
+    }
+  }, [selectedValue]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["data", searchValue],
@@ -38,7 +49,7 @@ const CityAutocomplete = () => {
       return;
     }
     const { suggestions } = await res.json();
-    let citiesList: CityType[] = [];
+    let citiesList: itemType[] = [];
     suggestions.forEach((suggestion: any) => {
       const { placePrediction } = suggestion;
       citiesList.push({

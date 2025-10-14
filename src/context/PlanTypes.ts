@@ -12,5 +12,11 @@ export interface PlanType {
   title?: string;
   description?: string;
   images?: string[];
+  cities?: CityType[];
   stops?: PlaceType[];
+}
+
+export interface CityType {
+  placeId: string;
+  name: string;
 }

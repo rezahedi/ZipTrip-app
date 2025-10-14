@@ -17,10 +17,12 @@ const StartPrompt = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-
+    const cities = JSON.parse(formData.get("cities") as string);
+    console.log("cities", cities);
     await createPlan({
       title: title,
       description: description,
+      cities: cities,
       stops: [],
     });
   };
@@ -33,7 +35,7 @@ const StartPrompt = () => {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-2 w-lg" onSubmit={handleSubmit}>
         <input
           name="title"
           type="text"
@@ -41,7 +43,7 @@ const StartPrompt = () => {
           className=""
         />
         <textarea name="description" placeholder="Describe your plan" />
-        <SelectCity />
+        <SelectCity name="cities" />
         <Button type="submit" disabled={loading}>
           Create Plan
         </Button>
