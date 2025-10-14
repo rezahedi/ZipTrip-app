@@ -3,6 +3,7 @@ import { ItineraryList } from "./itinerary";
 import Editable from "./Editable";
 import { useItinerary } from "@/context/ItineraryContext";
 import ImageUploader from "./itinerary/ImageUploader";
+import Cities from "./Cities";
 
 const Sidebar = () => {
   const { plan, setTitle, setDescription, loading, error } = useItinerary();
@@ -24,6 +25,9 @@ const Sidebar = () => {
             </Editable>
           </p>
           <ImageUploader />
+          <div className="flex gap-2 flex-wrap">
+            <Cities cities={plan.cities || []} />
+          </div>
           <h3 className="font-semibold text-xl mt-4">Itinerary</h3>
           <ItineraryList />
         </>
