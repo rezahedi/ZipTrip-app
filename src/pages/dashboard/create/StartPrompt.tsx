@@ -3,6 +3,7 @@ import { Button } from "@/Components/ui/button";
 import { useItinerary } from "@/context/ItineraryContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import SelectCity from "./SelectCity";
 
 const StartPrompt = () => {
   const { plan, createPlan, loading, error } = useItinerary();
@@ -40,6 +41,7 @@ const StartPrompt = () => {
           className=""
         />
         <textarea name="description" placeholder="Describe your plan" />
+        <SelectCity />
         <Button type="submit" disabled={loading}>
           Create Plan
         </Button>
