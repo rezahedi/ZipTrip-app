@@ -1,6 +1,6 @@
 import React from "react";
 import CardSection from "@/Components/Common/CardSection";
-import CategorySection from "@/Components/Common/CategorySection";
+import CitiesSection from "@/Components/Common/CitiesSection";
 import ExploreBlock from "./ExploreBlock";
 import SignupBlock from "./SignupBlock";
 
@@ -13,7 +13,7 @@ const HomePage = () => {
       />
       <CardSection title="Our Best City Exploration Plans" search="r" />
       <ExploreBlock />
-      <CategorySection title="Browse by Category" />
+      <CitiesSection title="Browse by Cities" />
       <SignupBlock />
     </>
   );

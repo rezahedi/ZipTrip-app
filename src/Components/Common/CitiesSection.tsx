@@ -2,26 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/Components/ui/skeleton";
 import { fetchData } from "@/util";
 import { Link } from "react-router-dom";
-import { Category } from "@/types";
+import { CityType } from "@/context/PlanTypes";
 
-const CategorySection = ({ title }: { title: string }) => {
-  const [categories, setCategories] = useState<Category[]>([]);
+const CitiesSection = ({ title }: { title: string }) => {
+  const [cities, setCities] = useState<CityType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   // TODO: Add skeleton loading feature later
 
   useEffect(() => {
-    const fetchAllCategories = async () => {
+    const fetchCities = async () => {
       try {
-        const result = await fetchData(`plans/category`, "", setError);
-        setCategories(result || []);
+        const result = await fetchData(
+          `plans/city?size=6&sort=-createdAt`,
+          "",
+          setError,
+        );
+        setCities(result.items);
         setLoading(false);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
     };
-    fetchAllCategories();
+    fetchCities();
   }, []);
 
   if (error) return;
@@ -39,22 +43,22 @@ const CategorySection = ({ title }: { title: string }) => {
                 <Skeleton className="mx-4 h-7" />
               </div>
             ))}
-          {categories.map((category) => (
+          {cities.map((city) => (
             <Link
-              to={`/category/${category._id}`}
+              to={`/city/${city.placeId}`}
               style={{ textDecoration: "none" }}
-              key={category._id}
+              key={city.placeId}
               className="group flex flex-col items-center gap-2"
             >
               <div className="rounded-full size-[180px] overflow-hidden">
                 <img
                   className="size-full group-hover:scale-110 transition-all duration-200"
-                  alt={category.name}
-                  src={category.imageURL}
+                  alt={city.name}
+                  src={city.imageURL}
                 />
               </div>
               <h6 className="text-center text-xl group-hover:text-accent transition-all duration-200">
-                {category.name}
+                {city.name.split(",")[0]}
               </h6>
             </Link>
           ))}
@@ -64,4 +68,4 @@ const CategorySection = ({ title }: { title: string }) => {
   );
 };
 
-export default CategorySection;
+export default CitiesSection;
