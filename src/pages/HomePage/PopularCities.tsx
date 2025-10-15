@@ -3,17 +3,6 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { CityType } from "@/context/PlanTypes";
 
-const DUMMY_CITIES = [
-  { name: "San Francisco", plans: 2302 },
-  { name: "Los Angeles", plans: 1830 },
-  { name: "Las Vegas", plans: 1472 },
-  { name: "Boston", plans: 1359 },
-  { name: "Chicago", plans: 1072 },
-  { name: "Austin", plans: 1020 },
-  { name: "Denver", plans: 857 },
-  { name: "Seattle", plans: 704 },
-];
-
 const PopularCities = ({
   cities,
   className = "",
