@@ -1,27 +1,31 @@
-import React from "react";
-// import { fetchData } from "@/util";
-// import { Category } from "@/types";
+import React, { useEffect, useState } from "react";
+import { fetchData } from "@/util";
+import { CityType } from "@/context/PlanTypes";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  /*  const [categories, setCategories] = useState<Category[]>([]);
+  const [cities, setCities] = useState<CityType[]>([]);
 
   useEffect(() => {
-    const fetchAllCategories = async () => {
+    const fetchCities = async () => {
       try {
-        const result = await fetchData(`plans/category`, "", setError);
-        setCategories(result || []);
+        const result = await fetchData(
+          `plans/city?size=5&sort=-updatedAt`,
+          null,
+          setError,
+        );
+        setCities(result.items);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
     };
-    fetchAllCategories();
+    fetchCities();
   }, []);
 
   const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
   };
-*/
+
   return (
     <div className="bg-foreground/90 text-background mt-6 px-2 py-4">
       <div className="my-0 mx-auto w-full max-w-7xl box-border flex flex-row flex-wrap gap-y-2">
@@ -89,12 +93,12 @@ function Footer() {
           <div className="p-0 sm:p-2 mb-2 sm:mb-0">
             <div className="text-sm text-background">
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
-                {/* <li className="font-bold text-lg">Categories</li>
-                {categories.map((category) => (
-                  <Link key={category._id} to={`/category/${category._id}`}>
-                    <li>{category.name}</li>
+                <li className="font-bold text-lg">Last Updated Cities</li>
+                {cities.map((city: CityType) => (
+                  <Link key={city.placeId} to={`/city/${city.placeId}`}>
+                    <li>{city.name}</li>
                   </Link>
-                ))} */}
+                ))}
               </ul>
             </div>
           </div>
