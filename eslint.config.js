@@ -5,7 +5,7 @@ import tsParser from "@typescript-eslint/parser";
 import pluginReact from "eslint-plugin-react";
 import prettierPlugin from "eslint-plugin-prettier";
 import prettierConfig from "eslint-config-prettier";
-import pluginQuery from '@tanstack/eslint-plugin-query'
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default [
   {
@@ -33,7 +33,7 @@ export default [
       },
     },
   },
-  ...pluginQuery.configs['flat/recommended'],
+  ...pluginQuery.configs["flat/recommended"],
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     plugins: { prettier: prettierPlugin },
