@@ -1,6 +1,4 @@
 import React from "react";
-// import {Link} from "react-router-dom";
-// import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
 import {
   HistoryIcon as FullDayIcon,
   ClockIcon as HalfDayIcon,
@@ -19,7 +17,6 @@ const StatsBlock = ({
     distance: number;
     stopCount: number;
     duration: string;
-    // categoryId: { _id: string; name: string; imageURL: string };
   };
   className?: string;
 }) => {
@@ -75,24 +72,6 @@ const StatsBlock = ({
           </span>
         </div>
       )}
-      {/* <span>
-        <Link
-          to={`/category/${categoryId._id}`}
-          className="flex flex-col gap-1"
-        >
-          <Avatar className="size-10">
-            <AvatarImage
-              src={categoryId.imageURL}
-              alt={categoryId.name}
-              className="bg-primary"
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <span className="text-sm font-normal text-foreground/80">
-            {categoryId.name}
-          </span>
-        </Link>
-      </span> */}
     </div>
   );
 };

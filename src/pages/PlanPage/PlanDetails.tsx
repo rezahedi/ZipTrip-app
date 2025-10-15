@@ -11,6 +11,7 @@ import ImageBlock from "./ImageBlock";
 import { AddBookmark, removeBookmark } from "@/util/dashboard";
 import { PlanWithStops } from "@/types";
 import StatsBlock from "./StatsBlock";
+import Cities from "../dashboard/create/Cities";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
@@ -20,6 +21,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     title,
     description,
     images,
+    cities,
     stops,
     type,
     stopCount,
@@ -113,6 +115,16 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
                   year: "numeric",
                 })}
               </time>
+            </>
+          )}
+          {cities && (
+            <>
+              ·{" "}
+              <Cities
+                cities={cities}
+                linked
+                className="p-1 px-2 bg-primary/10 hover:bg-primary/20"
+              />
             </>
           )}
         </div>

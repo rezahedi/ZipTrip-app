@@ -22,6 +22,7 @@ import MainLayout from "@/Components/Layout/MainLayout";
 import MapLayout from "@/Components/Layout/MapLayout";
 import ProtectedRoute from "@/Components/Auth/ProtectedRoute";
 import CreatePage from "@/pages/dashboard/create";
+import CityPage from "./pages/CityPage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/plans/:planId" element={<PlanPage />} />
+            <Route path="/city/:cityId" element={<CityPage />} />
             <Route path="/user/:userId" element={<UserPage />} />
             <Route
               path="/resetpassword/:token"

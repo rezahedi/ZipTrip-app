@@ -1,19 +1,19 @@
 import React from "react";
 import CardSection from "@/Components/Common/CardSection";
-import CategorySection from "@/Components/Common/CategorySection";
+import CitiesSection from "@/Components/Common/CitiesSection";
 import ExploreBlock from "./ExploreBlock";
 import SignupBlock from "./SignupBlock";
 
 const HomePage = () => {
   return (
     <>
-      {/* <CardSection
-        title="Our Best City Exploration Plans"
-        category="680819f66e7cdbc049ab3f57"
-      /> */}
-      <CardSection title="Local Favorites Near San Francisco" search="r" />
+      <CardSection
+        title="Local Favorites Near San Jose, California"
+        cityId="ChIJ9T_5iuTKj4ARe3GfygqMnbk"
+      />
+      <CardSection title="Our Best City Exploration Plans" search="r" />
       <ExploreBlock />
-      <CategorySection title="Browse by Category" />
+      <CitiesSection title="Browse by Cities" />
       <SignupBlock />
     </>
   );
