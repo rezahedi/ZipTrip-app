@@ -56,3 +56,12 @@ export interface User {
   imageURL: string;
   token: string;
 }
+
+export interface City {
+  _id: string;
+  placeId: string;
+  name: string;
+  imageURL: string;
+  location: [number, number];
+  plans: number;
+}
