@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CityAutocomplete from "./CityAutocomplete";
-import { XIcon } from "lucide-react";
-import IconButton from "@/Components/ui/IconButton";
 import Cities from "./Cities";
 
 // Create a client

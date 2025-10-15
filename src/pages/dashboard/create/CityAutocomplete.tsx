@@ -50,13 +50,17 @@ const CityAutocomplete = ({
     }
     const { suggestions } = await res.json();
     let citiesList: itemType[] = [];
-    suggestions.forEach((suggestion: any) => {
-      const { placePrediction } = suggestion;
-      citiesList.push({
-        value: placePrediction.placeId,
-        label: placePrediction.text.text,
-      });
-    });
+    suggestions.forEach(
+      (suggestion: {
+        placePrediction: { placeId: string; text: { text: string } };
+      }) => {
+        const { placePrediction } = suggestion;
+        citiesList.push({
+          value: placePrediction.placeId,
+          label: placePrediction.text.text,
+        });
+      },
+    );
     return citiesList;
   };
 
