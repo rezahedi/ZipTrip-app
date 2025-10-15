@@ -19,4 +19,7 @@ export interface PlanType {
 export interface CityType {
   placeId: string;
   name: string;
+  imageURL?: string;
+  location?: [number, number];
+  plans?: number;
 }
