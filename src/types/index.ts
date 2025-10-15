@@ -62,7 +62,13 @@ export interface City {
   _id: string;
   placeId: string;
   name: string;
+  state?: string;
+  country: string;
   imageURL: string;
   location: [number, number];
+  viewport: {
+    low: [number, number];
+    high: [number, number];
+  };
   plans: number;
 }

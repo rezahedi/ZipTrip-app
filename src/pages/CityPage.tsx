@@ -57,7 +57,11 @@ const CityPage = () => {
 
   return (
     <div className="mt-0.5 mb-1">
-      {city && <h5 className="text-xl font-bold">{city.name}</h5>}
+      {city && (
+        <h5 className="text-xl font-bold">
+          {city.country} » {city.state && `${city.state} » `} {city.name}
+        </h5>
+      )}
       <div className="flex flex-wrap justify-between gap-4">
         {!isLoading && error && <p>{error}</p>}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
