@@ -7,12 +7,12 @@ import { Plan } from "@/types";
 
 const CardSection = ({
   title,
-  category = "",
+  cityId = "",
   search = "",
   size = 4,
 }: {
   title: string;
-  category?: string;
+  cityId?: string;
   search?: string;
   size?: number;
 }) => {
@@ -25,7 +25,7 @@ const CardSection = ({
     const fetchAllPlans = async () => {
       try {
         const result = await fetchData(
-          `plans?categoryId=${category}&search=${search}&size=${size}`,
+          `plans?cityId=${cityId}&search=${search}&size=${size}`,
           token,
           setError,
         );
