@@ -3,6 +3,7 @@ export interface Plan {
   title: string;
   description?: string;
   images: string[];
+  cities: City[];
   type?: "Full day" | "Half day" | "Night";
   stopCount: number;
   rate: number;
