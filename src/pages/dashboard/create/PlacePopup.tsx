@@ -8,7 +8,7 @@ import PlacePopupSkeleton from "./PlacePopupSkeleton";
 
 const PlacePopup = () => {
   const { selection } = usePlaces();
-  const [placeLoading, setPlaceLoading] = useState<boolean>(true);
+  const [detailLoading, setDetailLoading] = useState<boolean>(true);
   const [place, setPlace] = useState<Place | null>(null);
   // const place = selection?.item as Place | undefined;
   const { plan, addPlace } = useItinerary();
@@ -28,7 +28,7 @@ const PlacePopup = () => {
     const placeId = (selection?.item as Place)?.placeId;
 
     (async () => {
-      setPlaceLoading(true);
+      setDetailLoading(true);
 
       // If name had value, mean the place is already exist in db
       // if not fetch place's detail from G-Places API
@@ -38,16 +38,16 @@ const PlacePopup = () => {
           : `places/${placeId}`;
       console.log("URL", URL, selection);
       const res = await fetchData(URL, null, () => {});
-      if (!res) return setPlaceLoading(false);
+      if (!res) return setDetailLoading(false);
 
       setPlace(res);
-      setPlaceLoading(false);
+      setDetailLoading(false);
     })();
   }, [selection]);
 
   if (!selection) return null;
 
-  if (placeLoading) return <PlacePopupSkeleton />;
+  if (detailLoading) return <PlacePopupSkeleton />;
 
   return (
     <div className="flex gap-1 w-xs h-32">
