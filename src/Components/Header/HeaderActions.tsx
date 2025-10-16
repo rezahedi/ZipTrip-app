@@ -4,6 +4,7 @@ import { Button } from "@/Components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import UserMenu from "./UserMenu";
+import { Link } from "react-router-dom";
 
 const HeaderActions = () => {
   const { user, logout } = useAuth();
@@ -40,6 +41,11 @@ const HeaderActions = () => {
 
   return (
     <>
+      <Link to="/create">
+        <Button className="rounded-full text-background bg-primary mr-4 font-semibold text-base">
+          Create
+        </Button>
+      </Link>
       <UserMenu user={user} handleLogoutClick={handleLogoutClick} />
       <DrawerSidebar />
     </>
