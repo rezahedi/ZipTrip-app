@@ -55,6 +55,7 @@ const PlacePopup = () => {
         <h3 className="font-medium text-base/snug text-balance py-1">
           {place.name}
         </h3>
+        <p>{place.address}</p>
         <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
       </div>
     </div>
