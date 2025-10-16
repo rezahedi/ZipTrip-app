@@ -15,6 +15,9 @@ const Marker = memo(
     };
 
     const position = "location" in item ? item.location : item.startLocation;
+    const iconURL =
+      "iconURL" in item ? `${item.iconURL}.svg` : "/images/MarkerIcon.svg";
+    const iconBackground = "iconBackground" in item ? item.iconBackground : "";
 
     return (
       <GMapMarker
@@ -22,7 +25,7 @@ const Marker = memo(
         position={{ lat: position[0], lng: position[1] }}
         onClick={handleClick}
         icon={{
-          url: "/images/MarkerIcon.svg",
+          url: iconURL,
           // eslint-disable-next-line no-undef
           scaledSize: new google.maps.Size(32, 32),
           // eslint-disable-next-line no-undef
