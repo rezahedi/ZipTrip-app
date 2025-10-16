@@ -18,7 +18,6 @@ const StartPrompt = () => {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const cities = JSON.parse(formData.get("cities") as string);
-    console.log("cities", cities);
     await createPlan({
       title: title,
       description: description,

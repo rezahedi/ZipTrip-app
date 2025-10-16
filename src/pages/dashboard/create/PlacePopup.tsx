@@ -36,7 +36,6 @@ const PlacePopup = () => {
         "name" in selection.item && selection.item.name === ""
           ? `places/fetch/${placeId}`
           : `places/${placeId}`;
-      console.log("URL", URL, selection);
       const res = await fetchData(URL, null, () => {});
       if (!res) return setDetailLoading(false);
 

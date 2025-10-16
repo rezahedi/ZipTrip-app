@@ -30,7 +30,6 @@ const CityAutocomplete = ({
   });
 
   const getList = async (searchQuery: string) => {
-    console.log("searchQuery", searchQuery);
     if (!searchQuery) return [];
 
     const res = await fetch(googlePlaceAutoComplete_URL, {
