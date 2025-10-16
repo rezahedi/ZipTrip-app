@@ -27,6 +27,7 @@ const MapBox = () => {
         country: "",
         imageURL: "",
         address: "",
+        type: "",
         iconURL: "",
         iconBackground: "",
         summary: "",

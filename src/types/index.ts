@@ -31,6 +31,7 @@ export interface Place {
   imageURL: string;
   address: string;
   location: [number, number];
+  type: string;
   iconURL: string;
   iconBackground: string;
   summary: string;
