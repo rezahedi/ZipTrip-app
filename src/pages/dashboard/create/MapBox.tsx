@@ -17,21 +17,14 @@ const MapBox = () => {
   const handleMapClick = async (e: MapMouseEvent) => {
     e.stop();
     const placeId = e.detail.placeId;
-    const placeLocation = e.detail.latLng;
-    if (!placeId || !placeLocation) return;
+    if (!placeId) return;
 
     const URL = `places/fetch/${placeId}`;
     const place = await fetchData(URL, null, () => {});
-    if (!place || !place.id) return;
+    if (!place) return;
 
     setSelection({
-      item: {
-        placeId: place.id,
-        name: place.displayName.text,
-        imageURL: place.photos?.[0]?.imageURL || "",
-        location: [placeLocation.lat, placeLocation.lng],
-        address: place.formattedAddress,
-      },
+      item: place,
       source: "marker",
     });
   };

@@ -26,9 +26,17 @@ export interface Place {
   _id?: string;
   placeId: string;
   name: string;
+  state?: string;
+  country: string;
   imageURL: string;
   address: string;
   location: [number, number];
+  iconURL: string;
+  iconBackground: string;
+  summary: string;
+  reviewSummary: string;
+  rating: number;
+  userRatingCount: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
