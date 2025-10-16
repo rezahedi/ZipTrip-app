@@ -4,9 +4,10 @@ import { Place } from "@/types";
 import { useItinerary } from "@/context/ItineraryContext";
 import AddButton from "./AddButton";
 import { fetchData } from "@/util";
+import PlacePopupSkeleton from "./PlacePopupSkeleton";
 
 const PlacePopup = () => {
-  const { selection, setSelection } = usePlaces();
+  const { selection } = usePlaces();
   const [placeLoading, setPlaceLoading] = useState<boolean>(false);
   const [place, setPlace] = useState<Place | null>(null);
   // const place = selection?.item as Place | undefined;
@@ -41,7 +42,7 @@ const PlacePopup = () => {
 
   if (!place) return null;
 
-  if (placeLoading) return <p>Loading...</p>;
+  if (placeLoading) return <PlacePopupSkeleton />;
 
   return (
     <div className="flex gap-1 w-xs h-32">
