@@ -8,7 +8,7 @@ import PlacePopupSkeleton from "./PlacePopupSkeleton";
 
 const PlacePopup = () => {
   const { selection } = usePlaces();
-  const [placeLoading, setPlaceLoading] = useState<boolean>(false);
+  const [placeLoading, setPlaceLoading] = useState<boolean>(true);
   const [place, setPlace] = useState<Place | null>(null);
   // const place = selection?.item as Place | undefined;
   const { plan, addPlace } = useItinerary();
@@ -30,8 +30,13 @@ const PlacePopup = () => {
     (async () => {
       setPlaceLoading(true);
 
-      // fetch /api/v1/places/:placeId
-      const URL = `places/${placeId}`;
+      // If name had value, mean the place is already exist in db
+      // if not fetch place's detail from G-Places API
+      const URL =
+        "name" in selection.item && selection.item.name === ""
+          ? `places/fetch/${placeId}`
+          : `places/${placeId}`;
+      console.log("URL", URL, selection);
       const res = await fetchData(URL, null, () => {});
       if (!res) return setPlaceLoading(false);
 
@@ -40,7 +45,7 @@ const PlacePopup = () => {
     })();
   }, [selection]);
 
-  if (!place) return null;
+  if (!selection) return null;
 
   if (placeLoading) return <PlacePopupSkeleton />;
 
@@ -48,14 +53,14 @@ const PlacePopup = () => {
     <div className="flex gap-1 w-xs h-32">
       <img
         className="w-24 h-full object-cover rounded-sm"
-        src={place.imageURL}
-        alt={place.name}
+        src={place?.imageURL}
+        alt={place?.name}
       />
       <div className="flex-4/5 max-h-40 px-2">
         <h3 className="font-medium text-base/snug text-balance py-1">
-          {place.name}
+          {place?.name}
         </h3>
-        <p>{place.address}</p>
+        <p>{place?.address}</p>
         <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
       </div>
     </div>
