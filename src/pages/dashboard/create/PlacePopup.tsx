@@ -1,12 +1,15 @@
 import { usePlaces } from "@/context/PlacesContext";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Place } from "@/types";
 import { useItinerary } from "@/context/ItineraryContext";
 import AddButton from "./AddButton";
+import { fetchData } from "@/util";
 
 const PlacePopup = () => {
-  const { selection } = usePlaces();
-  const place = selection?.item as Place | undefined;
+  const { selection, setSelection } = usePlaces();
+  const [placeLoading, setPlaceLoading] = useState<boolean>(false);
+  const [place, setPlace] = useState<Place | null>(null);
+  // const place = selection?.item as Place | undefined;
   const { plan, addPlace } = useItinerary();
   const places = plan?.stops || [];
   const isAdded = place
@@ -19,7 +22,26 @@ const PlacePopup = () => {
     addPlace(place);
   };
 
+  useEffect(() => {
+    if (!selection || !selection.item) return;
+    const placeId = (selection?.item as Place)?.placeId;
+
+    (async () => {
+      setPlaceLoading(true);
+
+      // fetch /api/v1/places/:placeId
+      const URL = `places/${placeId}`;
+      const res = await fetchData(URL, null, () => {});
+      if (!res) return setPlaceLoading(false);
+
+      setPlace(res);
+      setPlaceLoading(false);
+    })();
+  }, [selection]);
+
   if (!place) return null;
+
+  if (placeLoading) return <p>Loading...</p>;
 
   return (
     <div className="flex gap-1 w-xs h-32">
