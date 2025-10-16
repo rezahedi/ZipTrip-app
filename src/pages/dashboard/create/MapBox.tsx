@@ -4,7 +4,6 @@ import { Map, Markers, LocateMeButton, InfoWindow } from "@/Components/Map";
 import PlacePopup from "./PlacePopup";
 import { Place } from "@/types";
 import { MapMouseEvent } from "@vis.gl/react-google-maps";
-import { fetchData } from "@/util";
 
 const MapBox = () => {
   const { places, setBoundingBox, selection, setSelection } = usePlaces();
