@@ -36,14 +36,20 @@ const InfoWindow = ({
             alt={plan.title}
           />
           <div className="flex-4/5 max-h-40 px-2">
-            {/* <h5 className="text-foreground/70 font-normal text-sm">
-              {plan.categoryId.name}
-            </h5> */}
+            {plan.cities && (
+              <p className="line-clamp-2 text-foreground/70 font-normal text-xs pt-2">
+                {plan.cities.map((city) => (
+                  <span>{city.name}</span>
+                ))}
+              </p>
+            )}
             <h3 className="font-medium text-base/snug text-balance py-1">
               {plan.title}
             </h3>
             <p className="text-foreground/70 font-normal text-sm">
-              {plan.stopCount} stops . {plan.distance} ml . {plan.duration} hr
+              {plan.stopCount} stops
+              {plan.distance ? ` . ${plan.distance} ml` : ""}
+              {plan.duration ? ` . ${plan.duration} hr` : ""}
             </p>
           </div>
         </div>
