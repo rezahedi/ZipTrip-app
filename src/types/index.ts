@@ -26,24 +26,35 @@ export interface Place {
   _id?: string;
   placeId: string;
   name: string;
+  state?: string;
+  country: string;
   imageURL: string;
   address: string;
   location: [number, number];
+  type: string;
+  iconURL: string;
+  iconBackground: string;
+  summary: string;
+  reviewSummary: string;
+  rating: number;
+  userRatingCount: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface Stop {
-  _id: string;
-  planId: string;
+  placeId: string;
   name: string;
-  imageURL: string;
+  summary: string;
+  type: string;
+  state: string;
+  country: string;
   address: string;
-  description: string;
+  imageURL: string;
   location: [number, number];
-  sequence: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  rating: number;
+  userRatingCount: number;
+  reviewSummary: string;
 }
 
 export interface PlanWithStops extends Plan {
@@ -62,7 +73,13 @@ export interface City {
   _id: string;
   placeId: string;
   name: string;
+  state?: string;
+  country: string;
   imageURL: string;
   location: [number, number];
+  viewport: {
+    low: [number, number];
+    high: [number, number];
+  };
   plans: number;
 }

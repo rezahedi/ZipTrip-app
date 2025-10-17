@@ -4,7 +4,6 @@ import { Map, Markers, LocateMeButton, InfoWindow } from "@/Components/Map";
 import PlacePopup from "./PlacePopup";
 import { Place } from "@/types";
 import { MapMouseEvent } from "@vis.gl/react-google-maps";
-import { fetchData } from "@/util";
 
 const MapBox = () => {
   const { places, setBoundingBox, selection, setSelection } = usePlaces();
@@ -20,17 +19,21 @@ const MapBox = () => {
     const placeLocation = e.detail.latLng;
     if (!placeId || !placeLocation) return;
 
-    const URL = `places/fetch/${placeId}`;
-    const place = await fetchData(URL, null, () => {});
-    if (!place || !place.id) return;
-
     setSelection({
       item: {
-        placeId: place.id,
-        name: place.displayName.text,
-        imageURL: place.photos?.[0]?.imageURL || "",
+        placeId,
+        name: "",
         location: [placeLocation.lat, placeLocation.lng],
-        address: place.formattedAddress,
+        country: "",
+        imageURL: "",
+        address: "",
+        type: "",
+        iconURL: "",
+        iconBackground: "",
+        summary: "",
+        reviewSummary: "",
+        rating: 0,
+        userRatingCount: 0,
       },
       source: "marker",
     });

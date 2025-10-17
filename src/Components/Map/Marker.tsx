@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
 import { itemType, setSelectionType } from "./types";
+import { getMarkerIcon } from "@/types/map";
 
 const Marker = memo(
   function Marker({
@@ -15,18 +16,21 @@ const Marker = memo(
     };
 
     const position = "location" in item ? item.location : item.startLocation;
+    const iconURL = "/places/emoji_marker.svg"; //`/places/${getMarkerIcon(("type" in item && item.type) || "")}`;
+    const emoji = getMarkerIcon(("type" in item && item.type) || "");
 
     return (
       <GMapMarker
+        label={emoji}
         title={"name" in item ? item.name : item.title}
         position={{ lat: position[0], lng: position[1] }}
         onClick={handleClick}
         icon={{
-          url: "/images/MarkerIcon.svg",
+          url: iconURL,
           // eslint-disable-next-line no-undef
-          scaledSize: new google.maps.Size(32, 32),
+          scaledSize: new google.maps.Size(40, 40),
           // eslint-disable-next-line no-undef
-          anchor: new google.maps.Point(16, 32),
+          anchor: new google.maps.Point(20, 40),
         }}
       />
     );

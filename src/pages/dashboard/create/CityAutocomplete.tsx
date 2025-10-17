@@ -30,7 +30,6 @@ const CityAutocomplete = ({
   });
 
   const getList = async (searchQuery: string) => {
-    console.log("searchQuery", searchQuery);
     if (!searchQuery) return [];
 
     const res = await fetch(googlePlaceAutoComplete_URL, {
@@ -110,7 +109,7 @@ const CityAutocomplete = ({
         items={data ?? []}
         isLoading={isLoading}
         emptyMessage="No city found."
-        placeholder="Search and select a city to start your plan"
+        placeholder="Search and select cities"
       />
     </div>
   );

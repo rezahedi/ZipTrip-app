@@ -40,7 +40,6 @@ const UserPage = () => {
           setError,
         );
         const { plans: userPlans, ...userDetails } = res;
-        console.log(userPlans, userDetails);
         setPlans(userPlans.items || []);
         setUser(userDetails || {});
         setPagesCount(userPlans.pagesCount || 0);

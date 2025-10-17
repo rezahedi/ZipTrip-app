@@ -8,10 +8,10 @@ const HomePage = () => {
   return (
     <>
       <CardSection
-        title="Local Favorites Near San Jose, California"
-        cityId="ChIJ9T_5iuTKj4ARe3GfygqMnbk"
+        title="Local Favorites Near San Francisco, California"
+        cityId="ChIJIQBpAG2ahYAR_6128GcTUEo"
       />
-      <CardSection title="Our Best City Exploration Plans" search="r" />
+      <CardSection title="Most Liked City Exploration Plans" search="r" />
       <ExploreBlock />
       <CitiesSection title="Browse by Cities" />
       <SignupBlock />
