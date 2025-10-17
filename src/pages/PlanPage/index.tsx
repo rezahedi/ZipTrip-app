@@ -4,6 +4,7 @@ import { fetchData } from "@/util";
 import PlanDetails from "./PlanDetails";
 import { useAuth } from "@/context/AuthContext";
 import { PlanWithStops } from "@/types";
+import CardSection from "@/Components/Common/CardSection";
 
 const PlanPage = () => {
   const [plan, setPlan] = useState<PlanWithStops | null>(null);
@@ -28,6 +29,12 @@ const PlanPage = () => {
   return (
     <div className="py-1">
       {plan ? <PlanDetails plan={plan} /> : <h6>Loading...</h6>}
+      {plan && plan.cities.length > 0 && (
+        <CardSection
+          title={`More plans around ${plan.cities[0].name}`}
+          cityId={plan?.cities[0].placeId}
+        />
+      )}
     </div>
   );
 };
