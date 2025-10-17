@@ -47,7 +47,7 @@ const SearchPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [searchQuery, page]);
+  }, [searchQuery, page, token]);
 
   if (searchQuery === "") return <WelcomeMessage />;
 
