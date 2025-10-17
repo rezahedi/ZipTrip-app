@@ -49,7 +49,7 @@ const CityPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page, cityId]);
+  }, [page, cityId, token]);
 
   if (!isLoading && city === null) return <>City not found.</>;
 

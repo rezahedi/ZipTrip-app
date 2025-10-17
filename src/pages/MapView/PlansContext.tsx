@@ -76,7 +76,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         );
       }
     })();
-  }, [map, boundingBox]);
+  }, [map, boundingBox, token]);
 
   return (
     <PlansContext.Provider

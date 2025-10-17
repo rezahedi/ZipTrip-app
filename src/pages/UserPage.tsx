@@ -49,7 +49,7 @@ const UserPage = () => {
         console.log("Error fetching data:", error);
       }
     })();
-  }, [page, userId]);
+  }, [page, userId, token]);
 
   if (!isLoading && user === null) return <>User not found.</>;
 

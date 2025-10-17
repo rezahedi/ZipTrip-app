@@ -4,13 +4,14 @@ import Editable from "./Editable";
 import { useItinerary } from "@/context/ItineraryContext";
 import ImageUploader from "./itinerary/ImageUploader";
 import Cities from "./Cities";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 const Sidebar = () => {
   const { plan, setTitle, setDescription, loading, error } = useItinerary();
 
   return (
     <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-      {loading && <div>Loading ...</div>}
+      {loading && <SidebarSkeleton />}
       {!loading && error && <div>Error: {error}</div>}
       {plan && (
         <>
@@ -25,7 +26,7 @@ const Sidebar = () => {
             </Editable>
           </p>
           <ImageUploader />
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap my-2">
             <Cities cities={plan.cities || []} />
           </div>
           <h3 className="font-semibold text-xl mt-4">Itinerary</h3>

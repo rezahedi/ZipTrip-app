@@ -94,7 +94,6 @@ const LoginPage = ({
       );
       if (userData) {
         await login(userData);
-        window.location.reload();
         handleDialogClose();
       }
     } catch (err: unknown) {

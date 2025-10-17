@@ -4,15 +4,17 @@ import { useItinerary } from "@/context/ItineraryContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import SelectCity from "./SelectCity";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 const StartPrompt = () => {
   const { plan, createPlan, loading, error } = useItinerary();
   const { user } = useAuth();
+  const { openLogin } = useAuthModal();
   const redirect = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user) return openLogin();
 
     const formData = new FormData(e.target as HTMLFormElement);
     const title = formData.get("title") as string;

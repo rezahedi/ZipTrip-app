@@ -32,14 +32,14 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const [plan, setPlan] = useState<PlanType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const { planId } = useParams();
 
   useEffect(() => {
     if (!planId) return;
 
     getPlan(planId);
-  }, [planId]);
+  }, [planId, token]);
 
   useEffect(() => {
     if (!plan || !planId) return;
@@ -119,7 +119,11 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const createPlan = async (plan: PlanType) => {
-    if (!user) return setError("You must be logged in to create a plan");
+    if (!user) {
+      setPlan(null);
+      return setError("You must be logged in to create a plan");
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -150,7 +154,11 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getPlan = async (planId: string) => {
-    if (!user) return setError("You must be logged in to edit a plan");
+    if (!user) {
+      setPlan(null);
+      return setError("You must be logged in to edit a plan");
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -181,6 +189,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updatePlan = async (): Promise<boolean> => {
     if (!user) {
+      setPlan(null);
       setError("You must be logged in to edit a plan");
       return false;
     }
