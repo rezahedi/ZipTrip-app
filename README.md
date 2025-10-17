@@ -1,16 +1,14 @@
-# One Day Planner App (Practicum Project)
+# ZipTrip - One Day Planner App
 
-This is the frontend part of the **One Day Planner** application — a planning application where users could search for one-day plans or create their own one-day itineraries plans with multiple stops such as parks, museums, cafes, and restaurants. Built with **React**, **Vite.js**, **shadcn/ui**, **React Router**, this application serves users-generated plans for public, plans are searchable and categorized, and user could sign up or sign in, bookmark plans, or create their own plans from scratch and share it with others.
+<img width="1352" height="955" alt="Screenshot 2025-10-17 145819" src="https://github.com/user-attachments/assets/3773d607-f160-4ad4-a4d5-88518d649f2d" />
 
-The **backend team** is developing the API in a separate [repository](https://github.com/Code-the-Dream-School/ii-practicum-team-5-back), using **Express.js**, **MongoDB/Mongoose** and **JWT**.
+This is the frontend part of the **ZipTrip** application, a planning application where users could search for one-day plans or create their own itineraries plans with multiple stops such as parks, museums, cafes, and restaurants. Built with **React**, **Vite.js**, **shadcn/ui**, **React Router**, this application serves users-generated plans for public, plans are searchable and categorized, and user could sign up or sign in, bookmark plans, or easily create their own plans from scratch and share it with others.
 
-## About the Advanced Practicum program and Code the Dream
+The **backend API** is on a seperate [repo](https://github.com/rezahedi/ZipTrip-api) and developed using **Express.js**, **MongoDB/Mongoose** and **JWT** and etc.
 
-The **[Advanced Practicum program](https://codethedream.org/classes/practicum/)** at **Code the Dream** is an 8–10 week hands-on experience where a team of 4-6 students work in teams to build real-world software using Agile practices, GitHub, and project management tools. It’s designed to bridge the gap between learning and working in a professional tech environment.
+The app idea started when I joined the **[Advanced Practicum program](https://codethedream.org/classes/practicum/)** at **Code the Dream** a 8–10 week hands-on program where a team of 4-6 students work in teams to build real-world software using Agile practices. After building the MVP I forked the project, refactored, changed some tech stacks, polished and added many features specially all the Google Map related features.
 
-**[Code the Dream](https://codethedream.org)** is a nonprofit offering free, remote advanced coding classes to people from diverse backgrounds, aiming to make tech careers more accessible and inclusive.
-
-Special thanks to **Code the Dream** and all the **volunteer mentors** for giving us the opportunity to grow, and gain valuable experience in a supportive and inclusive environment. 🙏🏽
+<img width="1352" height="882" alt="Screenshot 2025-10-17 150047" src="https://github.com/user-attachments/assets/7a4bebd7-707a-4270-8e6a-57f89f67308f" />
 
 ---
 
@@ -18,7 +16,7 @@ Special thanks to **Code the Dream** and all the **volunteer mentors** for givin
 
 ### Backend
 
-To deploy this app locally, find our [backend codebase here](https://github.com/Code-the-Dream-School/ii-practicum-team-5-back), clone the repository locally and follow the setup instructions, then run it.
+To deploy this app locally, find our [backend codebase here](https://github.com/rezahedi/ZipTrip-api), clone the repository locally and follow the setup instructions, then run it.
 
 ### Frontend Environment Setup
 
