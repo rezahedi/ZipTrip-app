@@ -10,8 +10,8 @@ const Stops = ({ stops }: { stops: StopType[] }) => {
       <MarkedBlock>
         <h5 className="text-2xl">Start Point</h5>
       </MarkedBlock>
-      {stops.map((stop, index) => (
-        <MarkedBlock key={index}>
+      {stops.map((stop) => (
+        <MarkedBlock key={stop.placeId}>
           <Stop detail={stop} />
         </MarkedBlock>
       ))}

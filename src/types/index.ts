@@ -43,16 +43,18 @@ export interface Place {
 }
 
 export interface Stop {
-  _id: string;
-  planId: string;
+  placeId: string;
   name: string;
-  imageURL: string;
+  summary: string;
+  type: string;
+  state: string;
+  country: string;
   address: string;
-  description: string;
+  imageURL: string;
   location: [number, number];
-  sequence: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  rating: number;
+  userRatingCount: number;
+  reviewSummary: string;
 }
 
 export interface PlanWithStops extends Plan {
