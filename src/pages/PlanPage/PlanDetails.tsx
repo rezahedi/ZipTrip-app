@@ -1,17 +1,15 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import { useAuthModal } from "@/context/AuthModalContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import IconButton from "@/Components/ui/IconButton";
-import { Share2Icon, BookmarkIcon } from "lucide-react";
+import { Share2Icon } from "lucide-react";
 import StopsOnMap from "./StopsOnMap";
 import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
-import { AddBookmark, removeBookmark } from "@/util/dashboard";
 import { PlanWithStops } from "@/types";
 import StatsBlock from "./StatsBlock";
 import Cities from "../dashboard/create/Cities";
+import BookmarkButton from "@/Components/Common/BookmarkButton";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
@@ -33,28 +31,9 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     isBookmarked,
     updatedAt,
   } = plan;
-  const [bookmark, setBookmark] = useState(isBookmarked);
-  const { token } = useAuth();
-  const { openLogin } = useAuthModal();
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 
-  const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (!token) return openLogin();
-
-    if (bookmark) {
-      const result = await removeBookmark(token, planId, setError);
-      if (result) {
-        setBookmark(false);
-      }
-    } else {
-      const result = await AddBookmark(token, planId, setError);
-      if (result) {
-        setBookmark(true);
-      }
-    }
-  };
+  useEffect(() => {}, [isBookmarked]);
 
   const setError = (errorMessage: string) => {
     console.log("error", errorMessage);
@@ -83,13 +62,12 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
                 />
               </Suspense>
             )}
-            <IconButton variant="ghost" onClick={handleBookmark}>
-              {bookmark ? (
-                <BookmarkIcon className="size-6 text-accent fill-accent" />
-              ) : (
-                <BookmarkIcon className="size-6" />
-              )}
-            </IconButton>
+            <BookmarkButton
+              planId={planId}
+              isBookmarked={isBookmarked}
+              setError={setError}
+              className=""
+            />
           </div>
         </div>
 

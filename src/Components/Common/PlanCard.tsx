@@ -37,7 +37,12 @@ const PlanCard = ({
           alt={title}
         />
         {showBookmarkBtn && (
-          <BookmarkButton {...{ planId, isBookmarked, setError }} />
+          <BookmarkButton
+            planId={planId}
+            isBookmarked={isBookmarked}
+            setError={setError}
+            className="absolute top-2.5 right-2.5"
+          />
         )}
         <div className="flex flex-col content-start p-4 gap-2">
           <h3 className="text-lg">{title}</h3>
