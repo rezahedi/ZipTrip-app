@@ -109,7 +109,7 @@ const CityAutocomplete = ({
         items={data ?? []}
         isLoading={isLoading}
         emptyMessage="No city found."
-        placeholder="Search and select a city to start your plan"
+        placeholder="Search and select cities"
       />
     </div>
   );
