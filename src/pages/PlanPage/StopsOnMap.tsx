@@ -12,7 +12,9 @@ const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
     const bounds = new gmaps.LatLngBounds();
 
     // Create markers and info windows for each stop
-    const infoWindow = new gmaps.InfoWindow();
+    const infoWindow = new gmaps.InfoWindow({
+      maxWidth: 340,
+    });
     stops.forEach((stop, index) => {
       if (stop.location.length !== 2) return;
 
@@ -45,14 +47,27 @@ const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
 
       // Set custom content (can be HTML)
       const content = `
-        <div style="max-width:260px">
-          <img src="${stop.imageURL}" alt="${stop.name}" style="width:100%;height:auto;border-radius:4px;" />
-          <h3>${stop.name}</h3>
+        <div style="display:flex;gap:4px;width:100%;height:100px">
+        <div style="flex-shrink:1">
+          <img
+            style="width:80px;height:100%;border-radius:4px;object-fit:cover"
+            src="${stop.imageURL}"
+            alt="${stop.name}"
+          /></div>
+          <div style="flex-shrink:4;max-height:160px;padding:0 8px">
+            <p style="font-weight:400;font-size:16px;padding:4px 0">${stop.address}</p>
+            <p>${stop.rating} / ${stop.userRatingCount} reviews</p>
+          </div>
         </div>
       `;
 
+      const headerElement = document.createElement("h3");
+      headerElement.textContent = stop.name;
+      headerElement.style = "font-weight:500;font-size:18px;text-wrap:balance";
+
       // Add click listener to marker
       marker.addListener("click", () => {
+        infoWindow.setHeaderContent(headerElement);
         infoWindow.setContent(content);
         infoWindow.open(map, marker);
       });
