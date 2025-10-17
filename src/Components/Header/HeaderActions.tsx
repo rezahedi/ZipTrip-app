@@ -10,11 +10,6 @@ const HeaderActions = () => {
   const { user, logout } = useAuth();
   const { openLogin, openRegister } = useAuthModal();
 
-  const handleLogoutClick = () => {
-    logout();
-    window.location.reload();
-  };
-
   if (!user) {
     return (
       <>
@@ -46,7 +41,7 @@ const HeaderActions = () => {
           Create
         </Button>
       </Link>
-      <UserMenu user={user} handleLogoutClick={handleLogoutClick} />
+      <UserMenu user={user} handleLogoutClick={logout} />
       <DrawerSidebar />
     </>
   );
