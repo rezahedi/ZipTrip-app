@@ -1,5 +1,4 @@
 import React from "react";
-import { MapPinIcon } from "lucide-react";
 
 const MarkedBlock = ({
   isLastOne = false,

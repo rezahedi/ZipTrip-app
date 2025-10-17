@@ -39,7 +39,7 @@ const StartPrompt = () => {
         onSubmit={handleSubmit}
       >
         <h3 className="font-semibold text-2xl mb-4 text-center">
-          What's your plan about?
+          What&apos;s your plan about?
         </h3>
         <input
           name="title"

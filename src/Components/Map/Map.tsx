@@ -31,6 +31,7 @@ const Map = ({
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
   onClick?: (e: MapMouseEvent) => void;
+  // eslint-disable-next-line no-undef
   defaultBounds?: google.maps.LatLngBoundsLiteral | null;
 }) => {
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");

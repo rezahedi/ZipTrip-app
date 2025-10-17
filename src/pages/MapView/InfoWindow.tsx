@@ -39,7 +39,7 @@ const InfoWindow = ({
             {plan.cities && (
               <p className="line-clamp-2 text-foreground/70 font-normal text-xs pt-2">
                 {plan.cities.map((city) => (
-                  <span>{city.name}</span>
+                  <span key={city.placeId}>{city.name}</span>
                 ))}
               </p>
             )}
