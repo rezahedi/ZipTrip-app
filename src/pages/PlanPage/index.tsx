@@ -23,7 +23,7 @@ const PlanPage = () => {
     if (planId) {
       fetchSinglePlan(planId);
     }
-  }, [planId]);
+  }, [planId, token]);
 
   return (
     <div className="py-1">
