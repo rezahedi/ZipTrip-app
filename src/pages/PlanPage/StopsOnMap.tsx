@@ -23,16 +23,23 @@ const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
 
       // Extend bounds to include this stop
       bounds.extend(position);
+      const labelText =
+        index === 0 ? "A" : index === stops.length - 1 ? "B" : `${index + 1}`;
 
       const marker = new gmaps.Marker({
         position,
         map,
         title: stop.name,
+        icon: {
+          url: "/places/emoji_marker_red.svg",
+          scaledSize: new window.google.maps.Size(38, 38),
+          anchor: new window.google.maps.Point(19, 38),
+        },
         label: {
-          text: `${index + 1}`,
-          color: "#ffffff",
+          text: labelText,
+          color: "#000",
           fontWeight: "bold",
-          fontSize: "14px",
+          fontSize: "16px",
         },
       });
 
