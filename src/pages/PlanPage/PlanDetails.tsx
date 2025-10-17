@@ -129,34 +129,36 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
           )}
         </div>
 
-        {images?.length > 0 && (
-          <div className="flex gap-4 my-4 flex-col sm:flex-row h-[500px] sm:h-[450px]">
-            <ImageBlock
-              className="flex-1 sm:flex-2/3 overflow-hidden flex rounded-md"
-              images={images}
+        <div className="flex gap-4 my-4 flex-col md:flex-row-reverse">
+          <StopsOnMap
+            className="sticky top-0 md:top-4 z-1 grow md:flex-1/3 h-[300px] sm:h-[450px] overflow-hidden rounded-md"
+            stops={stops}
+          />
+          <div className="grow md:flex-2/3">
+            {images?.length > 0 && (
+              <ImageBlock
+                className="overflow-hidden flex rounded-md h-[300px] sm:h-[450px]"
+                images={images}
+              />
+            )}
+
+            <StatsBlock
+              className="py-6"
+              stats={{
+                rate,
+                reviewCount,
+                type,
+                distance,
+                stopCount,
+                duration,
+              }}
             />
-            <StopsOnMap
-              className="flex-1 sm:flex-1/3 overflow-hidden rounded-md"
-              stops={stops}
-            />
+
+            <p className="py-6">{description}</p>
+
+            {stops.length > 0 && <Stops stops={stops} />}
           </div>
-        )}
-
-        <StatsBlock
-          className="py-6"
-          stats={{
-            rate,
-            reviewCount,
-            type,
-            distance,
-            stopCount,
-            duration,
-          }}
-        />
-
-        <p className="py-6">{description}</p>
-
-        {stops.length > 0 && <Stops stops={stops} />}
+        </div>
       </article>
     </>
   );

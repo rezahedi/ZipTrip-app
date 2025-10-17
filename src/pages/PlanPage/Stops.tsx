@@ -5,7 +5,7 @@ import MarkedBlock from "./MarkedBlock";
 
 const Stops = ({ stops }: { stops: StopType[] }) => {
   return (
-    <div className="mt-4 w-full md:w-3xl">
+    <div className="mt-4 w-full max-w-3xl">
       <h4 className="text-4xl mb-2">Activities</h4>
       <MarkedBlock>
         <h5 className="text-2xl">Start Point</h5>
