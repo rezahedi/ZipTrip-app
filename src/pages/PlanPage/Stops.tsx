@@ -15,7 +15,7 @@ const Stops = ({ stops }: { stops: StopType[] }) => {
           <Stop detail={stop} />
         </MarkedBlock>
       ))}
-      <MarkedBlock>
+      <MarkedBlock isLastOne>
         <h5 className="text-2xl">Finish Point</h5>
       </MarkedBlock>
     </div>
