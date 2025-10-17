@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { AddBookmark, removeBookmark } from "@/util/dashboard";
 import { BookmarkIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import IconButton from "../ui/IconButton";
 
 const BookmarkButton = ({
   planId,
@@ -43,20 +43,14 @@ const BookmarkButton = ({
   };
 
   return (
-    <button
-      onClick={handleBookmark}
-      className={cn(
-        "size-9 bg-background/80 rounded-full flex items-center justify-center cursor-pointer hover:bg-background",
-        className,
-      )}
-    >
+    <IconButton onClick={handleBookmark} variant="ghost" className={className}>
       <BookmarkIcon
         className={bookmark ? "text-accent fill-accent" : "text-ring"}
       />
       <div className="sr-only">
         {bookmark ? "Remove Bookmark" : "Add Bookmark"}
       </div>
-    </button>
+    </IconButton>
   );
 };
 

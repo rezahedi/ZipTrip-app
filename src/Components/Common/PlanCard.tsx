@@ -41,7 +41,7 @@ const PlanCard = ({
             planId={planId}
             isBookmarked={isBookmarked}
             setError={setError}
-            className="absolute top-2.5 right-2.5"
+            className="absolute top-2.5 right-2.5 size-9 bg-background/70 hover:bg-background"
           />
         )}
         <div className="flex flex-col content-start p-4 gap-2">

@@ -52,7 +52,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
               variant="ghost"
               onClick={() => setIsShareDialogOpen(true)}
             >
-              <Share2Icon className="size-6" />
+              <Share2Icon />
             </IconButton>
             {isShareDialogOpen && (
               <Suspense>
