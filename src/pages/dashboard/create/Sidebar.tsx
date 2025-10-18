@@ -13,7 +13,7 @@ const Sidebar = () => {
     <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {loading && <SidebarSkeleton />}
       {!loading && error && <div>Error: {error}</div>}
-      {plan && (
+      {!loading && plan && (
         <>
           <h2 className="font-semibold text-2xl">
             <Editable onSave={setTitle}>
