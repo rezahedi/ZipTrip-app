@@ -67,10 +67,6 @@ const DrawerSidebar = () => {
     }
   };
 
-  const isThemeDark = () => {
-    return document.body.classList.contains("dark");
-  };
-
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger className="sm:hidden cursor-pointer">
@@ -111,11 +107,8 @@ const DrawerSidebar = () => {
             ))}
             <li>
               <Link to="#" onClick={handleThemeSwitch}>
-                {isThemeDark() ? (
-                  <SunIcon className="w-6 text-ring" />
-                ) : (
-                  <MoonIcon className="w-6 text-ring" />
-                )}
+                <SunIcon className="w-6 text-ring hidden dark:block" />
+                <MoonIcon className="w-6 text-ring block dark:hidden" />
                 Switch Theme
               </Link>
             </li>
@@ -141,11 +134,8 @@ const DrawerSidebar = () => {
                 </li>
                 <li>
                   <Link to="#" onClick={handleThemeSwitch}>
-                    {isThemeDark() ? (
-                      <SunIcon className="w-6 text-ring" />
-                    ) : (
-                      <MoonIcon className="w-6 text-ring" />
-                    )}
+                    <SunIcon className="w-6 text-ring hidden dark:block" />
+                    <MoonIcon className="w-6 text-ring block dark:hidden" />
                     Switch Theme
                   </Link>
                 </li>

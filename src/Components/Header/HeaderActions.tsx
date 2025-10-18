@@ -23,10 +23,6 @@ const HeaderActions = () => {
     }
   };
 
-  const isThemeDark = () => {
-    return document.body.classList.contains("dark");
-  };
-
   if (!user) {
     return (
       <>
@@ -46,7 +42,8 @@ const HeaderActions = () => {
             Register
           </Button>
           <IconButton onClick={handleThemeSwitch}>
-            {isThemeDark() ? <SunIcon /> : <MoonIcon />}
+            <SunIcon className="hidden dark:block" />
+            <MoonIcon className="block dark:hidden" />
           </IconButton>
         </div>
         <DrawerSidebar />
