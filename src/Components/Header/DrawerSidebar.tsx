@@ -18,6 +18,7 @@ import {
   Menu,
   Close,
 } from "@/ui/icons";
+import { SunIcon, MoonIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
@@ -53,6 +54,21 @@ const DrawerSidebar = () => {
 
   const closeDrawer = () => {
     setSheetOpen(false);
+  };
+
+  const handleThemeSwitch = () => {
+    const body = document.body;
+    if (body.classList.contains("dark")) {
+      body.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
+  const isThemeDark = () => {
+    return document.body.classList.contains("dark");
   };
 
   return (
@@ -93,6 +109,16 @@ const DrawerSidebar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link to="#" onClick={handleThemeSwitch}>
+                {isThemeDark() ? (
+                  <SunIcon className="w-6 text-ring" />
+                ) : (
+                  <MoonIcon className="w-6 text-ring" />
+                )}
+                Switch Theme
+              </Link>
+            </li>
             {user && (
               <>
                 <li className="border-t border-t-primary font-semibold text-2xl p-2 my-2">
@@ -111,6 +137,16 @@ const DrawerSidebar = () => {
                 <li>
                   <Link to="/account/settings">
                     <Setting className="w-6 text-ring" /> Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" onClick={handleThemeSwitch}>
+                    {isThemeDark() ? (
+                      <SunIcon className="w-6 text-ring" />
+                    ) : (
+                      <MoonIcon className="w-6 text-ring" />
+                    )}
+                    Switch Theme
                   </Link>
                 </li>
                 <li>

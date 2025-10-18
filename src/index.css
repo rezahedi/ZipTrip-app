@@ -65,7 +65,7 @@ body {
 
   /* Accent - orange */
   --accent: oklch(0.79 0.17 70.6);
-  --accent-foreground:var(--foreground);
+  --accent-foreground: var(--foreground);
 
   /* Secondary */
   --secondary: oklch(0.92 0.01 270); /* soft bluish gray */
@@ -103,7 +103,6 @@ body {
 }
 
 .dark {
-
   /* Base */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -117,10 +116,10 @@ body {
   /* Primary - green */
   --primary: oklch(0.67 0.16 144.2);
   --primary-foreground: var(--background);
-  
+
   /* Accent - orange */
   --accent: oklch(0.79 0.17 70.6);
-  --accent-foreground:var(--foreground);
+  --accent-foreground: var(--foreground);
 
   /* Secondary */
   --secondary: oklch(0.269 0 0);

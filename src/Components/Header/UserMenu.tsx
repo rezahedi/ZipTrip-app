@@ -20,6 +20,12 @@ const UserMenu = ({
 }) => {
   const navigate = useNavigate();
 
+  const handleThemeSwitch = () => {
+    const body = document.body;
+    if (body.classList.contains("dark")) body.classList.remove("dark");
+    else body.classList.add("dark");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="hidden sm:flex items-center gap-2 cursor-pointer">
@@ -51,6 +57,9 @@ const UserMenu = ({
             }}
           >
             Settings
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleThemeSwitch}>
+            Switch Theme
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

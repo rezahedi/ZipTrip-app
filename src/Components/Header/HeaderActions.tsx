@@ -5,10 +5,27 @@ import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import UserMenu from "./UserMenu";
 import { Link } from "react-router-dom";
+import IconButton from "../ui/IconButton";
+import { MoonIcon, SunIcon } from "lucide-react";
 
 const HeaderActions = () => {
   const { user, logout } = useAuth();
   const { openLogin, openRegister } = useAuthModal();
+
+  const handleThemeSwitch = () => {
+    const body = document.body;
+    if (body.classList.contains("dark")) {
+      body.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
+  const isThemeDark = () => {
+    return document.body.classList.contains("dark");
+  };
 
   if (!user) {
     return (
@@ -28,6 +45,9 @@ const HeaderActions = () => {
           >
             Register
           </Button>
+          <IconButton onClick={handleThemeSwitch}>
+            {isThemeDark() ? <SunIcon /> : <MoonIcon />}
+          </IconButton>
         </div>
         <DrawerSidebar />
       </>
