@@ -10,6 +10,7 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import { User } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { handleThemeSwitch } from "@/lib/utils";
 
 const UserMenu = ({
   user,
@@ -19,12 +20,6 @@ const UserMenu = ({
   handleLogoutClick: () => void;
 }) => {
   const navigate = useNavigate();
-
-  const handleThemeSwitch = () => {
-    const body = document.body;
-    if (body.classList.contains("dark")) body.classList.remove("dark");
-    else body.classList.add("dark");
-  };
 
   return (
     <DropdownMenu>

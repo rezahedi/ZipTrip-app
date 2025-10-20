@@ -7,21 +7,11 @@ import UserMenu from "./UserMenu";
 import { Link } from "react-router-dom";
 import IconButton from "../ui/IconButton";
 import { MoonIcon, SunIcon } from "lucide-react";
+import { handleThemeSwitch } from "@/lib/utils";
 
 const HeaderActions = () => {
   const { user, logout } = useAuth();
   const { openLogin, openRegister } = useAuthModal();
-
-  const handleThemeSwitch = () => {
-    const body = document.body;
-    if (body.classList.contains("dark")) {
-      body.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    } else {
-      body.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    }
-  };
 
   if (!user) {
     return (

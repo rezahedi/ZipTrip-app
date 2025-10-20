@@ -20,7 +20,7 @@ import {
 } from "@/ui/icons";
 import { SunIcon, MoonIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn, handleThemeSwitch } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { NAV_MENU } from "./Header";
@@ -54,17 +54,6 @@ const DrawerSidebar = () => {
 
   const closeDrawer = () => {
     setSheetOpen(false);
-  };
-
-  const handleThemeSwitch = () => {
-    const body = document.body;
-    if (body.classList.contains("dark")) {
-      body.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    } else {
-      body.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    }
   };
 
   return (
