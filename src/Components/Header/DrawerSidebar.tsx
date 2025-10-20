@@ -87,12 +87,11 @@ const DrawerSidebar = () => {
         </SheetClose>
         <SheetHeader className="px-2 py-1.5">
           <SheetTitle>
-            <Link to="/">
-              <img
-                src="/images/logo-text-3.png"
-                width="140px"
-                alt="ZipTrip Logo"
-              />
+            <Link
+              to="/"
+              className="inline-block w-32 h-11 bg-[url('/images/logo-text-3.png')] dark:bg-[url('/images/logo-text-3-light.png')] bg-cover"
+            >
+              <span className="sr-only">ZipTrip</span>
             </Link>
           </SheetTitle>
         </SheetHeader>
