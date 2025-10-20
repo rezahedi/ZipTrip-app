@@ -26,15 +26,12 @@ const Header = ({ withBanner = true }: { withBanner?: boolean }) => {
   return (
     <header>
       <div className="bg-background flex items-center py-2">
-        <div>
-          <Link to="/">
-            <img
-              src="/images/logo-text-3.png"
-              width="140px"
-              alt="ZipTrip Logo"
-            />
-          </Link>
-        </div>
+        <Link
+          to="/"
+          className="w-32 h-11 bg-[url('/images/logo-text-3.png')] dark:bg-[url('/images/logo-text-3-light.png')] bg-cover"
+        >
+          <span className="sr-only">ZipTrip</span>
+        </Link>
         <nav className="grow">
           <ol className="hidden sm:flex gap-1 justify-center text-lg font-semibold [&_a]:px-4 [&_a]:py-2 [&_a]:rounded-full [&_a]:hover:bg-primary/15 [&_a]:transition-all [&_a]:duration-200">
             {NAV_MENU.map((item) => (

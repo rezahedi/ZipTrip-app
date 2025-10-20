@@ -74,7 +74,7 @@ const ImageUploader = () => {
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         className={`my-2 border-2 border-dashed rounded-sm p-6 text-center cursor-pointer transition
-        ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-blue-400"}`}
+        ${isDragging ? "border-primary bg-primary/20" : "border-border hover:border-primary"}`}
       >
         <input
           ref={inputRef}
@@ -84,7 +84,7 @@ const ImageUploader = () => {
           className="hidden"
         />
         <p className="text-gray-600">
-          {isDragging ? "Drop image here..." : "Drag & drop photos here"}
+          {isDragging ? "Drop it here!" : "Drag & drop photos here."}
         </p>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>

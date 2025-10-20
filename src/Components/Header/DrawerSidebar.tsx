@@ -18,8 +18,9 @@ import {
   Menu,
   Close,
 } from "@/ui/icons";
+import { SunIcon, MoonIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn, handleThemeSwitch } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { NAV_MENU } from "./Header";
@@ -75,12 +76,11 @@ const DrawerSidebar = () => {
         </SheetClose>
         <SheetHeader className="px-2 py-1.5">
           <SheetTitle>
-            <Link to="/">
-              <img
-                src="/images/logo-text-3.png"
-                width="140px"
-                alt="ZipTrip Logo"
-              />
+            <Link
+              to="/"
+              className="inline-block w-32 h-11 bg-[url('/images/logo-text-3.png')] dark:bg-[url('/images/logo-text-3-light.png')] bg-cover"
+            >
+              <span className="sr-only">ZipTrip</span>
             </Link>
           </SheetTitle>
         </SheetHeader>
@@ -93,6 +93,13 @@ const DrawerSidebar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link to="#" onClick={handleThemeSwitch}>
+                <SunIcon className="w-6 text-ring hidden dark:block" />
+                <MoonIcon className="w-6 text-ring block dark:hidden" />
+                Switch Theme
+              </Link>
+            </li>
             {user && (
               <>
                 <li className="border-t border-t-primary font-semibold text-2xl p-2 my-2">
@@ -111,6 +118,13 @@ const DrawerSidebar = () => {
                 <li>
                   <Link to="/account/settings">
                     <Setting className="w-6 text-ring" /> Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" onClick={handleThemeSwitch}>
+                    <SunIcon className="w-6 text-ring hidden dark:block" />
+                    <MoonIcon className="w-6 text-ring block dark:hidden" />
+                    Switch Theme
                   </Link>
                 </li>
                 <li>

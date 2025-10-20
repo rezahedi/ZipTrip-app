@@ -5,6 +5,9 @@ import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import UserMenu from "./UserMenu";
 import { Link } from "react-router-dom";
+import IconButton from "../ui/IconButton";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { handleThemeSwitch } from "@/lib/utils";
 
 const HeaderActions = () => {
   const { user, logout } = useAuth();
@@ -28,6 +31,10 @@ const HeaderActions = () => {
           >
             Register
           </Button>
+          <IconButton onClick={handleThemeSwitch}>
+            <SunIcon className="hidden dark:block" />
+            <MoonIcon className="block dark:hidden" />
+          </IconButton>
         </div>
         <DrawerSidebar />
       </>

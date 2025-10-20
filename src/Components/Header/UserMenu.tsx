@@ -10,6 +10,7 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import { User } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { handleThemeSwitch } from "@/lib/utils";
 
 const UserMenu = ({
   user,
@@ -51,6 +52,9 @@ const UserMenu = ({
             }}
           >
             Settings
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleThemeSwitch}>
+            Switch Theme
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

@@ -14,7 +14,7 @@ const ItineraryItem = ({ place }: { place: PlaceType }) => {
   };
 
   return (
-    <div className="flex gap-1 my-4 bg-foreground/5 rounded-sm items-stretch relative group">
+    <div className="flex gap-1 my-4 bg-primary/10 rounded-sm items-stretch relative group">
       <IconButton
         onClick={handleClick}
         className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity"

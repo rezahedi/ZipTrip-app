@@ -27,26 +27,11 @@ function Footer() {
   };
 
   return (
-    <div className="bg-foreground/90 text-background mt-6 px-2 py-4">
-      <div className="my-0 mx-auto w-full max-w-7xl box-border flex flex-row flex-wrap gap-y-2">
-        <div className="p-0 sm:p-2 mb-2 sm:mb-0 w-full sm:w-auto">
-          <Link to="/">
-            <img
-              src="/images/logo-text-3-light.png"
-              width={160}
-              className="opacity-70 mb-10"
-            />
-          </Link>
-          <p className="max-w-2xs">
-            ZipTrip helps you plan fun and efficient one-day trips in cities
-            across the U.S. Discover attractions, food spots, and walking paths
-            all in one place.
-          </p>
-          <p className="mt-6">&copy; 2025 ZipTrip, All rights reserved.</p>
-        </div>
+    <div className="bg-foreground/90 text-background dark:bg-foreground/2 dark:text-foreground mt-14 px-2 py-14">
+      <div className="my-0 mx-auto w-full max-w-7xl box-border flex flex-row flex-wrap gap-y-8">
         <div className="grow w-full sm:w-auto flex justify-between sm:justify-around">
-          <div className="p-0 sm:p-2 mb-2 sm:mb-0">
-            <div className="text-sm text-background">
+          <div className="p-0 sm:p-2 mb-2 sm:mb-0 md:grow">
+            <div className="text-sm">
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
                 <Link to="/" color="primary">
                   <li className="font-bold text-lg">Home</li>
@@ -90,8 +75,8 @@ function Footer() {
             </div>
           </div>
 
-          <div className="p-0 sm:p-2 mb-2 sm:mb-0">
-            <div className="text-sm text-background">
+          <div className="p-0 sm:p-2 mb-2 sm:mb-0 md:grow">
+            <div className="text-sm">
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
                 <li className="font-bold text-lg">Last Updated Cities</li>
                 {cities.map((city: CityType) => (
@@ -102,6 +87,20 @@ function Footer() {
               </ul>
             </div>
           </div>
+        </div>
+        <div className="p-0 sm:p-2 mb-2 sm:mb-0 w-full md:w-sm">
+          <Link
+            to="/"
+            className="inline-block w-32 h-11 bg-[url('/images/logo-text-3-light.png')] bg-cover"
+          >
+            <span className="sr-only">ZipTrip</span>
+          </Link>
+          <p>
+            ZipTrip helps you plan fun and efficient one-day trips in cities
+            across the U.S. Discover attractions, food spots, and walking paths
+            all in one place.
+          </p>
+          <p className="mt-6">&copy; 2025 ZipTrip, All rights reserved.</p>
         </div>
       </div>
     </div>

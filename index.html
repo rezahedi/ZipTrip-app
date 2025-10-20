@@ -5,6 +5,28 @@
     <link rel="icon" type="image/svg+xml" href="/images/logo-3.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZipTrip</title>
+    <Script defer>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const userTheme = localStorage.getItem('theme') || null;
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+      if(userTheme!==null){
+        if(userTheme==="dark")
+          document.body.classList.add("dark");
+      } else if(systemTheme.matches) {
+        document.body.classList.add("dark");
+      }
+
+      systemTheme.addListener((e) => {
+        if(userTheme!==null) return;
+        console.log('listener')
+				if (e.matches)
+					document.body.classList.add("dark")
+				else
+          document.body.classList.remove("dark")
+			});
+    });
+    </Script>
   </head>
   <body>
     <div id="root"></div>
