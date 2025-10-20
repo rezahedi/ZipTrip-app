@@ -7,7 +7,7 @@ import {
   ControlPosition,
 } from "@vis.gl/react-google-maps";
 import LocateMeButton from "./LocateMeButton";
-import { debounce } from "@/lib/utils";
+import { debounce, getThemeColor } from "@/lib/utils";
 import Markers from "./Markers";
 import { usePlans } from "./PlansContext";
 
@@ -42,6 +42,7 @@ const Map = ({ children }: { children?: ReactNode }) => {
       mapTypeControl={false}
       onDragend={debouncedSetBoundingBox}
       onZoomChanged={debouncedSetBoundingBox}
+      colorScheme={getThemeColor()}
     >
       <Markers />
       {children}

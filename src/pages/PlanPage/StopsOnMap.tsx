@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
 import { Stop as StopType } from "@/types";
+import { getThemeColor } from "@/lib/utils";
 
 const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
   const map = useMap();
@@ -97,6 +98,7 @@ const StopsOnMap = ({
           gestureHandling="cooperative"
           streetViewControl={false}
           fullscreenControl={false}
+          colorScheme={getThemeColor()}
         />
         <MarkersAndPath stops={stops} />
       </APIProvider>

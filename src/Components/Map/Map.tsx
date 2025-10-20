@@ -11,7 +11,7 @@ import {
   MapCameraProps,
   MapMouseEvent,
 } from "@vis.gl/react-google-maps";
-import { debounce } from "@/lib/utils";
+import { debounce, getThemeColor } from "@/lib/utils";
 
 // Bay Area
 const MAP_INITIAL_VIEW = {
@@ -59,6 +59,7 @@ const Map = ({
       onDragend={debouncedSetBoundingBox}
       onZoomChanged={debouncedSetBoundingBox}
       onClick={onClick}
+      colorScheme={getThemeColor()}
     >
       {children}
     </GMap>
