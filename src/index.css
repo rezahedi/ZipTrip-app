@@ -50,8 +50,8 @@ body {
   --radius: 0.625rem;
 
   /* Base */
-  --background: oklch(1 0 0); /* pure white */
-  --foreground: oklch(0.18 0.01 270); /* dark gray with cool tint */
+  --background: oklch(94.309% 0.00011 271.152);
+  --foreground: oklch(12.553% 0.02455 293.865);
 
   /* UI Elements */
   --card: var(--background);
@@ -105,8 +105,8 @@ body {
 .dark {
 
   /* Base */
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --background: oklch(15.218% 0.01927 294.167);
+  --foreground: oklch(83.591% 0.0001 271.152);
 
   /* UI Elements */
   --card: var(--background);
@@ -136,7 +136,7 @@ body {
 
   /* Borders & Inputs */
   --border: oklch(34.07% 0.00004 271.152);
-  --input: oklch(23.075% 0.00003 271.152);
+  --input: oklch(16.095% 0.01697 295.886);
   --ring: oklch(53.824% 0.00006 271.152);
 
   /* Charts */
