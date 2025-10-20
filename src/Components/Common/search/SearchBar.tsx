@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getQueryValue } from "@/util/url";
 import { Button } from "@/Components/ui/button";
-import { Input } from "@/Components/ui/input";
 import { SearchIcon, XIcon as CloseIcon } from "lucide-react";
 
 const SearchBar = () => {
@@ -33,12 +32,13 @@ const SearchBar = () => {
   return (
     <div className="max-w-3xl mx-auto p-2 -mt-9">
       <form onSubmit={handleSubmit} className="relative">
-        <Input
+        <input
+          name="q"
           type="text"
           placeholder="Search for a city, activity, or place"
           value={searchQuery || ""}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full mx-auto rounded-4xl shadow-lg bg-background border border-ring px-14 py-7 text-lg md:text-lg"
+          className="w-full mx-auto rounded-4xl shadow-lg bg-input border border-ring px-14 py-4 text-lg md:text-lg"
         />
         <Button
           type="submit"
