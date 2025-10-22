@@ -12,6 +12,7 @@ type contextType = {
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
   createPlan: (plan: PlanType) => void;
+  saving: boolean;
   loading: boolean;
   error: string | null;
 };
@@ -24,12 +25,14 @@ const ItineraryContext = createContext<contextType>({
   addPlace: () => {},
   removePlace: () => {},
   createPlan: () => {},
+  saving: false,
   loading: false,
   error: null,
 });
 
 const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const [plan, setPlan] = useState<PlanType | null>(null);
+  const [saving, setSaving] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { user, token } = useAuth();
@@ -193,7 +196,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
       setError("You must be logged in to edit a plan");
       return false;
     }
-    setLoading(true);
+    setSaving(true);
     setError(null);
     try {
       let res = await fetch(
@@ -216,14 +219,14 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error(errorData.msg || "Failed to create plan");
       }
       await res.json();
-      setLoading(false);
+      setSaving(false);
       return true;
     } catch (error: unknown) {
       if (error instanceof Error)
         setError(error.message || "Failed to create plan");
       else if (typeof error === "string") setError(error);
       else setError("Failed to create plan");
-      setLoading(false);
+      setSaving(false);
       return false;
     }
   };
@@ -238,6 +241,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         addPlace,
         removePlace,
         createPlan,
+        saving,
         loading,
         error,
       }}

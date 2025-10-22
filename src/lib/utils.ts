@@ -44,3 +44,15 @@ export function getThemeColor(): ColorScheme {
   if (initTheme === "light") return ColorScheme.LIGHT;
   return ColorScheme.FOLLOW_SYSTEM;
 }
+
+export function getBoundsFromViewport(viewport: {
+  high: [number, number];
+  low: [number, number];
+}) {
+  return {
+    north: viewport.high[0],
+    south: viewport.low[0],
+    east: viewport.high[1],
+    west: viewport.low[1],
+  };
+}

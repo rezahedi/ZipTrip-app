@@ -4,16 +4,17 @@ import Editable from "./Editable";
 import { useItinerary } from "@/context/ItineraryContext";
 import ImageUploader from "./itinerary/ImageUploader";
 import Cities from "./Cities";
-import SidebarSkeleton from "./SidebarSkeleton";
 
 const Sidebar = () => {
-  const { plan, setTitle, setDescription, loading, error } = useItinerary();
+  const { plan, setTitle, setDescription, saving, error } = useItinerary();
+
+  if (!plan) return null;
 
   return (
     <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-      {loading && <SidebarSkeleton />}
-      {!loading && error && <div>Error: {error}</div>}
-      {!loading && plan && (
+      {saving && <div>Saving ...</div>}
+      {!saving && error && <div>Error: {error}</div>}
+      {plan && (
         <>
           <h2 className="font-semibold text-2xl">
             <Editable onSave={setTitle}>
