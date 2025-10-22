@@ -22,4 +22,8 @@ export interface CityType {
   imageURL?: string;
   location?: [number, number];
   plans?: number;
+  viewport?: {
+    high: [number, number];
+    low: [number, number];
+  };
 }

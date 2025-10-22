@@ -3,6 +3,7 @@ import { Place } from "@/types";
 import { PlanType } from "./PlanTypes";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
+import usePlanApi from "@/hooks/usePlanApi";
 
 type contextType = {
   plan: PlanType | null;
@@ -12,6 +13,7 @@ type contextType = {
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
   createPlan: (plan: PlanType) => void;
+  saving: boolean;
   loading: boolean;
   error: string | null;
 };
@@ -24,44 +26,68 @@ const ItineraryContext = createContext<contextType>({
   addPlace: () => {},
   removePlace: () => {},
   createPlan: () => {},
+  saving: false,
   loading: false,
   error: null,
 });
 
 const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
-  const [plan, setPlan] = useState<PlanType | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { plan, setPlan, saving, loading, createPlan, getPlan, updatePlan } =
+    usePlanApi();
+  const [optimisticPlan, setOptimisticPlan] = useState<PlanType | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { user, token } = useAuth();
+  const { token } = useAuth();
   const { planId } = useParams();
 
   useEffect(() => {
-    if (!planId) return;
+    if (!planId) return setPlan(null);
 
-    getPlan(planId);
+    (async () => {
+      try {
+        await getPlan(planId);
+      } catch (err: unknown) {
+        if (err instanceof Error) setError(err.message);
+        else setError("An unknown error occurred");
+      }
+    })();
   }, [planId, token]);
 
   useEffect(() => {
-    if (!plan || !planId) return;
-    // TODO: Find another way to update plan, because first time plan set after createPlan() or getPlan() this will run and it's pointless
-    updatePlan();
-  }, [plan]);
+    if (!planId || !plan || !optimisticPlan) return setPlan(null);
+
+    (async () => {
+      const originalPlan = plan;
+      // Replace plan's properties with whatever is in optimisticPlan
+      setPlan({ ...plan, ...optimisticPlan });
+      try {
+        await updatePlan(planId, optimisticPlan);
+      } catch (err: unknown) {
+        setPlan(originalPlan);
+        if (err instanceof Error) setError(err.message);
+        else setError("An unknown error occurred");
+      }
+    })();
+  }, [optimisticPlan]);
+
+  // TODO: Use useReducer for setTitle, setDescription and etc, to make optimisticPlan update more cleanly
 
   const setTitle = (title: string) => {
     if (!plan && !title) return;
-    setPlan((prev) => (prev ? { ...prev, title } : null));
+    setOptimisticPlan((prev) => (prev ? { ...prev, title } : { title }));
   };
 
   const setDescription = (description: string) => {
     if (!plan && !description) return;
 
-    setPlan((prev) => (prev ? { ...prev, description } : null));
+    setOptimisticPlan((prev) =>
+      prev ? { ...prev, description } : { description },
+    );
   };
 
   const addImage = (image: string) => {
     if (!plan) return;
 
-    setPlan((prev) => {
+    setOptimisticPlan((prev) => {
       if (!prev) return null;
       if (!prev.images)
         return {
@@ -78,15 +104,16 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const addPlace = (place: Place) => {
     if (!plan) return;
 
-    setPlan((prev) => {
-      if (!prev) return null;
+    setOptimisticPlan((prev) => {
+      // Initialize stops array using plan.stops if not existing in optimisticPlan
+      if (!prev || !prev.stops) {
+        prev = { ...prev, stops: plan.stops || [] };
+      }
 
-      // First stop
-      if (!prev.stops)
-        return {
-          ...prev,
-          stops: [place],
-        };
+      if (!prev.stops) {
+        prev.stops = [place];
+        return prev;
+      }
 
       // Avoid adding duplicates
       if (prev.stops.find((p) => p.placeId === place.placeId)) {
@@ -104,128 +131,18 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const removePlace = (placeId: string) => {
     if (!plan) return;
 
-    setPlan((prev) => {
-      if (!prev) return null;
-      if (!prev.stops)
-        return {
-          ...prev,
-          stops: [],
-        };
+    setOptimisticPlan((prev) => {
+      // Initialize stops array using plan.stops if not existing in optimisticPlan
+      if (!prev || !prev.stops) {
+        prev = { ...prev, stops: plan.stops || [] };
+      }
+
+      if (!prev.stops) return prev;
       return {
         ...prev,
         stops: prev.stops.filter((p) => p.placeId !== placeId),
       };
     });
-  };
-
-  const createPlan = async (plan: PlanType) => {
-    if (!user) {
-      setPlan(null);
-      return setError("You must be logged in to create a plan");
-    }
-
-    setLoading(true);
-    setError(null);
-    try {
-      let res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/account/plans`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify(plan),
-        },
-      );
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || "Failed to create plan");
-      }
-      setPlan(await res.json());
-      setLoading(false);
-    } catch (error: unknown) {
-      if (error instanceof Error)
-        setError(error.message || "Failed to create plan");
-      else if (typeof error === "string") setError(error);
-      else setError("Failed to create plan");
-      setLoading(false);
-    }
-  };
-
-  const getPlan = async (planId: string) => {
-    if (!user) {
-      setPlan(null);
-      return setError("You must be logged in to edit a plan");
-    }
-
-    setLoading(true);
-    setError(null);
-    try {
-      let res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/account/plans/${planId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        },
-      );
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || "Failed to get plan");
-      }
-      setPlan(await res.json());
-      setLoading(false);
-    } catch (error: unknown) {
-      if (error instanceof Error)
-        setError(error.message || "Failed to get plan");
-      else if (typeof error === "string") setError(error);
-      else setError("Failed to get plan");
-      setLoading(false);
-    }
-  };
-
-  const updatePlan = async (): Promise<boolean> => {
-    if (!user) {
-      setPlan(null);
-      setError("You must be logged in to edit a plan");
-      return false;
-    }
-    setLoading(true);
-    setError(null);
-    try {
-      let res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/account/plans/${planId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify({
-            title: plan?.title,
-            description: plan?.description,
-            stops: plan?.stops,
-          }),
-        },
-      );
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || "Failed to create plan");
-      }
-      await res.json();
-      setLoading(false);
-      return true;
-    } catch (error: unknown) {
-      if (error instanceof Error)
-        setError(error.message || "Failed to create plan");
-      else if (typeof error === "string") setError(error);
-      else setError("Failed to create plan");
-      setLoading(false);
-      return false;
-    }
   };
 
   return (
@@ -238,6 +155,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         addPlace,
         removePlace,
         createPlan,
+        saving,
         loading,
         error,
       }}

@@ -30,12 +30,18 @@ const PlanCard = ({
   return (
     <Link to={`/plans/${planId}`} className="no-underline w-full">
       <div className="group h-full relative transition-shadow duration-200 ease-in-out shadow-md hover:shadow-lg rounded-lg overflow-hidden">
-        <img
-          src={image}
-          className="h-48 w-full object-cover group-hover:scale-105 transition-all duration-200"
-          height="195"
-          alt={title}
-        />
+        {image ? (
+          <img
+            src={image}
+            className="h-48 w-full object-cover group-hover:scale-105 transition-all duration-200"
+            height="195"
+            alt={title}
+          />
+        ) : (
+          <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
+            No Image
+          </div>
+        )}
         {showBookmarkBtn && (
           <BookmarkButton
             planId={planId}

@@ -44,3 +44,43 @@ export function getThemeColor(): ColorScheme {
   if (initTheme === "light") return ColorScheme.LIGHT;
   return ColorScheme.FOLLOW_SYSTEM;
 }
+
+export function getBoundsFromViewport(viewport: {
+  high: [number, number];
+  low: [number, number];
+}) {
+  return {
+    north: viewport.high[0],
+    south: viewport.low[0],
+    east: viewport.high[1],
+    west: viewport.low[1],
+  };
+}
+
+export function calculateBounds(locations: [number, number][], buffer = 0.1) {
+  if (locations.length < 2) return null;
+
+  let north = -90;
+  let south = 90;
+  let east = -180;
+  let west = 180;
+
+  locations.forEach((location) => {
+    const [lat, lng] = location;
+    if (lat > north) north = lat;
+    if (lat < south) south = lat;
+    if (lng > east) east = lng;
+    if (lng < west) west = lng;
+  });
+
+  // 10% bounds buffer zone
+  const latPadding = (north - south) * buffer;
+  const lngPadding = (east - west) * buffer;
+
+  north += latPadding;
+  south -= latPadding;
+  east += lngPadding;
+  west -= lngPadding;
+
+  return { north, south, east, west };
+}

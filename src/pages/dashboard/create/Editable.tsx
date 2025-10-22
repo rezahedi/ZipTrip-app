@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { PenIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Editable = function Editable({
   children,
+  className = "",
   onSave,
 }: {
   children: string;
+  className?: string;
   onSave: (name: string) => void;
 }) {
   const [message, setMessage] = useState<string>("");
@@ -60,7 +63,13 @@ const Editable = function Editable({
           onKeyDown={handleKeyDown}
           contentEditable={editable}
           title="Click to inline edit"
-          className={`peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded ${editable === "false" ? `hover:bg-foreground/5 cursor-pointer` : `cursor-text`}`}
+          className={cn(
+            `peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded`,
+            editable === "false"
+              ? `hover:bg-foreground/5 cursor-pointer`
+              : `cursor-text`,
+            className,
+          )}
         >
           {children}
         </div>

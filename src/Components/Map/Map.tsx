@@ -23,7 +23,7 @@ const Map = ({
   children,
   setBoundingBox,
   onClick,
-  defaultBounds = null,
+  defaultBounds = undefined,
 }: {
   children?: ReactNode;
   setBoundingBox: Dispatch<
@@ -32,7 +32,7 @@ const Map = ({
   >;
   onClick?: (e: MapMouseEvent) => void;
   // eslint-disable-next-line no-undef
-  defaultBounds?: google.maps.LatLngBoundsLiteral | null;
+  defaultBounds?: google.maps.LatLngBoundsLiteral | undefined;
 }) => {
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
   const cameraProps: MapCameraProps = userLocation || MAP_INITIAL_VIEW;
@@ -50,7 +50,7 @@ const Map = ({
   return (
     <GMap
       {...cameraProps}
-      {...(defaultBounds && { defaultBounds })}
+      defaultBounds={defaultBounds}
       style={{ width: "100%", height: "100%" }}
       disableDefaultUI={false}
       gestureHandling="greedy"

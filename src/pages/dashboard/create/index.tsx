@@ -2,27 +2,40 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import { PlacesProvider } from "@/context/PlacesContext";
 import MapBox from "./MapBox";
-import { ItineraryProvider } from "@/context/ItineraryContext";
+import { ItineraryProvider, useItinerary } from "@/context/ItineraryContext";
 import StartPrompt from "./StartPrompt";
 import { useParams } from "react-router-dom";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 const CreatePage = () => {
-  const { planId } = useParams();
-
   return (
     <div className="h-full flex">
       <ItineraryProvider>
-        {!planId && <StartPrompt />}
-        {planId && (
-          <>
-            <Sidebar />
-            <PlacesProvider>
-              <MapBox />
-            </PlacesProvider>
-          </>
-        )}
+        <PageContent />
       </ItineraryProvider>
     </div>
+  );
+};
+
+const PageContent = () => {
+  const { planId } = useParams();
+  const { loading, error } = useItinerary();
+
+  if (!planId) return <StartPrompt />;
+
+  return (
+    <>
+      {loading && <SidebarSkeleton />}
+      {!loading && error && <div>Error: {error}</div>}
+      {!loading && !error && (
+        <>
+          <Sidebar />
+          <PlacesProvider>
+            <MapBox />
+          </PlacesProvider>
+        </>
+      )}
+    </>
   );
 };
 
