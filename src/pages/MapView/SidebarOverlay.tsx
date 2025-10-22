@@ -4,11 +4,9 @@ import { usePlans } from "./PlansContext";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { Button } from "@/Components/ui/button";
 import { useMap } from "@vis.gl/react-google-maps";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
-const SidebarOverlay = () => {
-  const isMobile = useIsMobile();
-
+const SidebarOverlay = ({ className = "" }: { className?: string }) => {
   const { plans, isLoading, selection, setSelection } = usePlans();
   const map = useMap();
 
@@ -37,7 +35,7 @@ const SidebarOverlay = () => {
   useEffect(() => {
     if (!selection || selection.source === "card") return;
 
-    const targetElement = getPlanRef(selection.plan._id);
+    const targetElement = getPlanRef(selection.item._id!);
     if (!targetElement) return;
 
     targetElement.scrollIntoView({
@@ -55,10 +53,13 @@ const SidebarOverlay = () => {
     }
   };
 
-  if (isMobile) return null;
-
   return (
-    <div className="bg-background p-4 m-3 w-xs lg:w-sm h-[calc(100vh-170px)] rounded-lg shadow-md flex flex-col">
+    <div
+      className={cn(
+        `bg-background p-4 md:m-3 w-full md:w-xs lg:w-sm h-full md:h-[calc(100vh-170px)] rounded-lg shadow-md flex flex-col`,
+        className,
+      )}
+    >
       <div className="flex justify-between items-center pb-2">
         <h2 className="font-medium text-lg">Explore Plans</h2>
         {plans.length > 0 && <span>{plans.length} plans</span>}
@@ -74,7 +75,7 @@ const SidebarOverlay = () => {
             <div
               key={plan._id}
               ref={(element) => setPlanRef(plan._id, element)}
-              onMouseEnter={() => setSelection({ plan, source: "card" })}
+              onMouseEnter={() => setSelection({ item: plan, source: "card" })}
             >
               <PlanCard {...plan} image={plan.images[0]} />
             </div>
