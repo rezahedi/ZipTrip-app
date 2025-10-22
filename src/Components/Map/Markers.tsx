@@ -1,7 +1,11 @@
 import React, { memo, useEffect } from "react";
 import Marker from "./Marker";
 import { useMap } from "@vis.gl/react-google-maps";
-import { itemsType, selectionType, setSelectionType } from "./types";
+import {
+  itemsType,
+  selectionType,
+  setSelectionType,
+} from "@/Components/Map/types";
 
 const Markers = memo(function Markers({
   items,
