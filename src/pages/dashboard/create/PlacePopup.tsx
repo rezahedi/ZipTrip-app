@@ -49,9 +49,9 @@ const PlacePopup = () => {
   if (detailLoading) return <PlacePopupSkeleton />;
 
   return (
-    <div className="flex gap-1 w-xs h-32">
+    <div className="flex gap-1 sm:w-xs sm:h-32">
       <img
-        className="w-24 h-full object-cover rounded-sm"
+        className="w-24 h-full object-cover rounded-sm hidden sm:block"
         src={place?.imageURL}
         alt={place?.name}
       />

@@ -5,9 +5,9 @@ import { Plan } from "@/types";
 const PlanPopup = ({ plan }: { plan: Plan }) => {
   return (
     <Link to={`/plans/${plan._id}`}>
-      <div className="flex gap-1 w-xs h-32">
+      <div className="flex gap-1 sm:w-xs sm:h-32">
         <img
-          className="w-24 h-full object-cover rounded-sm"
+          className="w-24 h-full object-cover rounded-sm hidden sm:block"
           src={plan.images[0]}
           alt={plan.title}
         />
