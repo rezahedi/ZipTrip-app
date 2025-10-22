@@ -24,6 +24,7 @@ const Map = ({
   setBoundingBox,
   onClick,
   defaultBounds = undefined,
+  className = "",
 }: {
   children?: ReactNode;
   setBoundingBox: Dispatch<
@@ -33,6 +34,7 @@ const Map = ({
   onClick?: (e: MapMouseEvent) => void;
   // eslint-disable-next-line no-undef
   defaultBounds?: google.maps.LatLngBoundsLiteral | undefined;
+  className?: string;
 }) => {
   const userLocation = JSON.parse(localStorage.getItem("userLocation") || "0");
   const cameraProps: MapCameraProps = userLocation || MAP_INITIAL_VIEW;
@@ -60,6 +62,7 @@ const Map = ({
       onZoomChanged={debouncedSetBoundingBox}
       onClick={onClick}
       colorScheme={getThemeColor()}
+      className={className}
     >
       {children}
     </GMap>
