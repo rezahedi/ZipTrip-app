@@ -6,11 +6,13 @@ import { ItineraryProvider, useItinerary } from "@/context/ItineraryContext";
 import StartPrompt from "./StartPrompt";
 import { useParams } from "react-router-dom";
 import SidebarSkeleton from "./SidebarSkeleton";
+import Title from "@/Components/Header/Title";
 
 const CreatePage = () => {
   return (
     <div className="h-full flex">
       <ItineraryProvider>
+        <Title>Create New Plan</Title>
         <PageContent />
       </ItineraryProvider>
     </div>
@@ -29,6 +31,7 @@ const PageContent = () => {
       {!loading && error && <div>Error: {error}</div>}
       {!loading && !error && (
         <>
+          <Title>Editing the Plan</Title>
           <Sidebar />
           <PlacesProvider>
             <MapBox />
