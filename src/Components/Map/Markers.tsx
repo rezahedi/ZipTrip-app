@@ -6,6 +6,7 @@ import {
   selectionType,
   setSelectionType,
 } from "@/Components/Map/types";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const Markers = memo(function Markers({
   items,
@@ -19,6 +20,7 @@ const Markers = memo(function Markers({
   children?: React.ReactNode;
 }) {
   const map = useMap();
+  const { isMobile } = useMediaQuery();
 
   useEffect(() => {
     if (!map || !selection || selection.source === "marker") return;
@@ -28,12 +30,14 @@ const Markers = memo(function Markers({
         ? selection.item.location
         : selection.item.startLocation;
 
-    map.panTo({
-      lat: position[0],
-      lng: position[1],
-    });
-    // Pan by half the width of the sidebar to the left to center the marker in the visible area.
-    map.panBy(-160, 0);
+    if (!isMobile) {
+      map.panTo({
+        lat: position[0],
+        lng: position[1],
+      });
+      // Pan by half the width of the sidebar to the left to center the marker in the visible area.
+      map.panBy(-160, 0);
+    }
   }, [selection, map]);
 
   return (
