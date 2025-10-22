@@ -58,6 +58,7 @@ const MapBox = () => {
       setBoundingBox={setBoundingBox}
       onClick={handleMapClick}
       defaultBounds={defaultBounds}
+      className="w-full flex-5/12 md:flex-auto"
     >
       <Markers items={places} selection={selection} setSelection={setSelection}>
         {place && (

@@ -11,7 +11,7 @@ const Sidebar = () => {
   if (!plan) return null;
 
   return (
-    <div className="w-lg p-3 h-[calc(100vh-61px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="flex-7/12 md:max-w-lg p-3 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {saving && <div>Saving ...</div>}
       {!saving && error && <div>Error: {error}</div>}
       {plan && (
