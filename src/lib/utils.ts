@@ -56,3 +56,31 @@ export function getBoundsFromViewport(viewport: {
     west: viewport.low[1],
   };
 }
+
+export function calculateBounds(locations: [number, number][], buffer = 0.1) {
+  if (locations.length < 2) return null;
+
+  let north = -90;
+  let south = 90;
+  let east = -180;
+  let west = 180;
+
+  locations.forEach((location) => {
+    const [lat, lng] = location;
+    if (lat > north) north = lat;
+    if (lat < south) south = lat;
+    if (lng > east) east = lng;
+    if (lng < west) west = lng;
+  });
+
+  // 10% bounds buffer zone
+  const latPadding = (north - south) * buffer;
+  const lngPadding = (east - west) * buffer;
+
+  north += latPadding;
+  south -= latPadding;
+  east += lngPadding;
+  west -= lngPadding;
+
+  return { north, south, east, west };
+}

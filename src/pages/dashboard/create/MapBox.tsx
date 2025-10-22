@@ -5,7 +5,7 @@ import PlacePopup from "./PlacePopup";
 import { Place } from "@/types";
 import { MapMouseEvent } from "@vis.gl/react-google-maps";
 import { useItinerary } from "@/context/ItineraryContext";
-import { getBoundsFromViewport } from "@/lib/utils";
+import { calculateBounds, getBoundsFromViewport } from "@/lib/utils";
 
 const MapBox = () => {
   const { places, setBoundingBox, selection, setSelection } = usePlaces();
@@ -47,6 +47,8 @@ const MapBox = () => {
   let defaultBounds;
   if (plan.stops && plan.stops?.length > 2) {
     // TODO: Calculate bounds from stops + buffer zone
+    defaultBounds =
+      calculateBounds(plan.stops.map((s) => s.location)) || undefined;
   } else if (plan.cities?.[0]?.viewport) {
     defaultBounds = getBoundsFromViewport(plan.cities[0].viewport);
   }
