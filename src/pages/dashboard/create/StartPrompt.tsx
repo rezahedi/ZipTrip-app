@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { Button } from "@/Components/ui/button";
-import { useItinerary } from "@/context/ItineraryContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import SelectCity from "./SelectCity";
 import { useAuthModal } from "@/context/AuthModalContext";
+import usePlanApi from "@/hooks/usePlanApi";
 
 const StartPrompt = () => {
-  const { plan, createPlan, loading, error } = useItinerary();
+  const { plan, createPlan, loading } = usePlanApi();
+  const [error, setError] = React.useState<string | null>(null);
   const { user } = useAuth();
   const { openLogin } = useAuthModal();
   const redirect = useNavigate();
@@ -20,12 +21,18 @@ const StartPrompt = () => {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const cities = JSON.parse(formData.get("cities") as string);
-    await createPlan({
-      title: title,
-      description: description,
-      cities: cities,
-      stops: [],
-    });
+    try {
+      setError(null);
+      await createPlan({
+        title: title,
+        description: description,
+        cities: cities,
+        stops: [],
+      });
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+      else setError("An unknown error occurred");
+    }
   };
 
   useEffect(() => {
