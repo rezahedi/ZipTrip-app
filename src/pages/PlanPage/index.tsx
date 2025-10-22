@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { PlanWithStops } from "@/types";
 import CardSection from "@/Components/Common/CardSection";
 import PageSkeleton from "./PageSkeleton";
+import Title from "@/Components/Header/Title";
 
 const PlanPage = () => {
   const [plan, setPlan] = useState<PlanWithStops | null>(null);
@@ -32,6 +33,7 @@ const PlanPage = () => {
 
   return (
     <div className="py-1">
+      <Title>{plan ? `${plan.title}` : "Loading Plan..."}</Title>
       {isLoading && <PageSkeleton />}
       {!isLoading && plan && <PlanDetails plan={plan} />}
       {plan && plan.cities.length > 0 && (

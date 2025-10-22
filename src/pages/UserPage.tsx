@@ -7,6 +7,7 @@ import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
 import { Plan, User } from "@/types";
+import Title from "@/Components/Header/Title";
 
 const PAGE_SIZE = 8;
 
@@ -60,6 +61,7 @@ const UserPage = () => {
       <h5 className="text-lg font-bold flex items-center">
         {user && user.name && (
           <>
+            <Title>{user.name}</Title>
             <img
               alt={user.name}
               src={user.imageURL}

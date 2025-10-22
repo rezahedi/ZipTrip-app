@@ -7,6 +7,7 @@ import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
 import { Plan, City } from "@/types";
+import Title from "@/Components/Header/Title";
 
 const PAGE_SIZE = 8;
 
@@ -59,6 +60,7 @@ const CityPage = () => {
     <div className="mt-0.5 mb-1">
       {city && (
         <h5 className="text-xl font-bold">
+          <Title>{city.name}</Title>
           {city.country} » {city.state && `${city.state} » `} {city.name}
         </h5>
       )}

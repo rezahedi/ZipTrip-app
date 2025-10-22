@@ -9,6 +9,7 @@ import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
 import { Plan } from "@/types";
+import Title from "@/Components/Header/Title";
 
 const PAGE_SIZE = 8;
 
@@ -55,6 +56,7 @@ const SearchPage = () => {
 
   return (
     <div className="mt-0.5 mb-1">
+      <Title>{`"${searchQuery}" search result`}</Title>
       <h5 className="text-lg font-bold mt-4">
         Search result for <u>{searchQuery}</u>:
       </h5>
