@@ -27,14 +27,7 @@ type PlacesContextType = {
   >;
 };
 
-const PlacesContext = createContext<PlacesContextType>({
-  places: [],
-  isLoading: false,
-  error: null,
-  selection: null,
-  setSelection: () => {},
-  setBoundingBox: () => {},
-});
+const PlacesContext = createContext<PlacesContextType | undefined>(undefined);
 
 const PlacesProvider = ({ children }: { children: React.ReactNode }) => {
   const [places, setPlaces] = useState<Place[]>([]);
@@ -96,7 +89,7 @@ const PlacesProvider = ({ children }: { children: React.ReactNode }) => {
 const usePlaces = () => {
   const context = useContext(PlacesContext);
   if (!context) {
-    throw new Error("usePlaces must be used within a PlacesProvider");
+    throw new Error("usePlaces must be used within its provider");
   }
   return context;
 };

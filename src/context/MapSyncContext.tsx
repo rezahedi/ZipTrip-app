@@ -36,7 +36,7 @@ const MapSyncProvider = ({ children }: { children: React.ReactNode }) => {
 const useMapSync = () => {
   const context = useContext(MapSyncContext);
   if (!context) {
-    throw new Error("useMapSync must be used within it's provider");
+    throw new Error("useMapSync must be used within its provider");
   }
   return context;
 };

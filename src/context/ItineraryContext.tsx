@@ -18,18 +18,7 @@ type contextType = {
   error: string | null;
 };
 
-const ItineraryContext = createContext<contextType>({
-  plan: null,
-  setTitle: () => {},
-  setDescription: () => {},
-  addImage: () => {},
-  addPlace: () => {},
-  removePlace: () => {},
-  createPlan: () => {},
-  saving: false,
-  loading: false,
-  error: null,
-});
+const ItineraryContext = createContext<contextType | undefined>(undefined);
 
 const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const { plan, setPlan, saving, loading, createPlan, getPlan, updatePlan } =
@@ -168,7 +157,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
 const useItinerary = () => {
   const context = useContext(ItineraryContext);
   if (!context) {
-    throw new Error("useItinerary must be used within a ItineraryProvider");
+    throw new Error("useItinerary must be used within its provider");
   }
   return context;
 };

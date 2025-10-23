@@ -12,17 +12,9 @@ type AuthModalContextType = {
   closeForgotPassword: () => void;
 };
 
-const AuthModalContext = createContext<AuthModalContextType>({
-  isLoginOpen: false,
-  isRegisterOpen: false,
-  isForgotPasswordOpen: false,
-  openLogin: () => {},
-  openRegister: () => {},
-  openForgotPassword: () => {},
-  closeLogin: () => {},
-  closeRegister: () => {},
-  closeForgotPassword: () => {},
-});
+const AuthModalContext = createContext<AuthModalContextType | undefined>(
+  undefined,
+);
 
 export const AuthModalProvider = ({
   children,
@@ -75,4 +67,10 @@ export const AuthModalProvider = ({
   );
 };
 
-export const useAuthModal = () => useContext(AuthModalContext);
+export const useAuthModal = () => {
+  const context = useContext(AuthModalContext);
+  if (!context) {
+    throw new Error("useAuthModal must be used within its provider");
+  }
+  return context;
+};

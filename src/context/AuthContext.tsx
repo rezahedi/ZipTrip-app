@@ -11,12 +11,7 @@ type AuthContextType = {
   logout: () => void;
 };
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  token: null,
-  login: () => {},
-  logout: () => {},
-});
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
@@ -54,6 +49,12 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const useAuth = () => useContext(AuthContext);
+const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within its provider");
+  }
+  return context;
+};
 
 export { AuthProvider, useAuth };
