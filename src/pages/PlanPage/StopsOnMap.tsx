@@ -1,84 +1,48 @@
-import React, { useEffect } from "react";
-import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
-import { Stop as StopType } from "@/types";
+import React from "react";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { Place, Stop as StopType } from "@/types";
 import { getThemeColor } from "@/lib/utils";
+import { InfoWindow, Marker } from "@/Components/Map";
+import { itemType } from "@/Components/Map/types";
+import { useMapSync } from "@/context/MapSyncContext";
 
 const MarkersAndPath = ({ stops }: { stops: StopType[] }) => {
-  const map = useMap();
+  const { selection, setSelection } = useMapSync();
+  const place = selection?.item as Place | undefined;
 
-  useEffect(() => {
-    if (!map || !window.google) return;
+  const handlePopupClose = () => {
+    setSelection(null);
+  };
 
-    const gmaps = window.google.maps;
-    const bounds = new gmaps.LatLngBounds();
-
-    // Create markers and info windows for each stop
-    const infoWindow = new gmaps.InfoWindow({
-      maxWidth: 340,
-    });
-    stops.forEach((stop, index) => {
-      if (stop.location.length !== 2) return;
-
-      const position = {
-        lat: stop.location[0],
-        lng: stop.location[1],
-      };
-
-      // Extend bounds to include this stop
-      bounds.extend(position);
-      const labelText =
-        index === 0 ? "A" : index === stops.length - 1 ? "B" : `${index + 1}`;
-
-      const marker = new gmaps.Marker({
-        position,
-        map,
-        title: stop.name,
-        icon: {
-          url: "/places/emoji_marker_red.svg",
-          scaledSize: new window.google.maps.Size(38, 38),
-          anchor: new window.google.maps.Point(19, 38),
-        },
-        label: {
-          text: labelText,
-          color: "#000",
-          fontWeight: "bold",
-          fontSize: "16px",
-        },
-      });
-
-      // Set custom content (can be HTML)
-      const content = `
-        <div style="display:flex;gap:4px;width:100%;height:100px">
-        <div style="flex-shrink:1">
-          <img
-            style="width:80px;height:100%;border-radius:4px;object-fit:cover"
-            src="${stop.imageURL}"
-            alt="${stop.name}"
-          /></div>
-          <div style="flex-shrink:4;max-height:160px;padding:0 8px">
-            <p style="font-weight:400;font-size:16px;padding:4px 0">${stop.address}</p>
-            <p>${stop.rating} / ${stop.userRatingCount} reviews</p>
+  return (
+    <>
+      {stops.length > 0 &&
+        stops.map((stop) => (
+          <Marker
+            key={stop.placeId}
+            item={stop as itemType}
+            onClick={setSelection}
+          />
+        ))}
+      {place && (
+        <InfoWindow position={place.location} onClose={handlePopupClose}>
+          <div className="flex gap-1 sm:w-xs sm:h-32">
+            <img
+              className="w-24 h-full object-cover rounded-sm hidden sm:block"
+              src={place.imageURL}
+              alt={place.name}
+            />
+            <div className="flex-4/5 max-h-40 px-2">
+              <h3 className="font-medium text-base/snug text-balance py-1">
+                {place.name}
+              </h3>
+              <p>{place.address}</p>
+            </div>
           </div>
-        </div>
-      `;
-
-      const headerElement = document.createElement("h3");
-      headerElement.textContent = stop.name;
-      headerElement.style = "font-weight:500;font-size:18px;text-wrap:balance";
-
-      // Add click listener to marker
-      marker.addListener("click", () => {
-        infoWindow.setHeaderContent(headerElement);
-        infoWindow.setContent(content);
-        infoWindow.open(map, marker);
-      });
-
-      // Fit map to bounds once all markers are placed
-      map.fitBounds(bounds);
-    });
-  }, [map]);
-
-  return null;
+        </InfoWindow>
+      )}
+    </>
+  );
 };
 
 const StopsOnMap = ({
@@ -99,8 +63,9 @@ const StopsOnMap = ({
           streetViewControl={false}
           fullscreenControl={false}
           colorScheme={getThemeColor()}
-        />
-        <MarkersAndPath stops={stops} />
+        >
+          <MarkersAndPath stops={stops} />
+        </Map>
       </APIProvider>
     </div>
   );

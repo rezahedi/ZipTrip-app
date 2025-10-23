@@ -1,11 +1,23 @@
 import React from "react";
 import { Stop as StopType } from "@/types";
 import { getMarkerIcon } from "@/types/map";
+import { useMapSync } from "@/context/MapSyncContext";
+import { itemType } from "@/Components/Map/types";
 
 const Stop = ({ detail }: { detail: StopType }) => {
   const { name, imageURL, address, type, rating, userRatingCount } = detail;
+  const { setSelection } = useMapSync();
+
+  const handleSetSelection = () => {
+    setSelection({ item: detail as itemType, source: "card" });
+  };
+
   return (
-    <div className="group transition-shadow duration-200 ease-in-out shadow-md hover:shadow-lg rounded-lg flex items-start sm:items-center gap-0.5 flex-col sm:flex-row overflow-hidden bg-foreground/3">
+    <div
+      onClick={handleSetSelection}
+      onMouseOver={handleSetSelection}
+      className="group transition-shadow duration-200 ease-in-out shadow-md hover:shadow-lg rounded-lg flex items-start sm:items-center gap-0.5 flex-col sm:flex-row overflow-hidden bg-foreground/3"
+    >
       {imageURL && (
         <img
           src={imageURL}
