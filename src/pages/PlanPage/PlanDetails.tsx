@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import IconButton from "@/Components/ui/IconButton";
 import { Share2Icon } from "lucide-react";
-import StopsOnMap from "./StopsOnMap";
+import MapBox from "./MapBox";
 import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
 import { PlanWithStops } from "@/types";
@@ -110,7 +110,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
 
         <MapSyncProvider>
           <div className="flex gap-4 my-4 flex-col md:flex-row-reverse">
-            <StopsOnMap stops={stops} />
+            <MapBox stops={stops} />
             <div className="grow md:flex-2/3">
               {images?.length > 0 && (
                 <ImageBlock

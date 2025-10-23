@@ -10,15 +10,17 @@ import { useAuth } from "@/context/AuthContext";
 import { fetchData } from "@/util";
 import { Place } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
-import { selectionType } from "@/Components/Map/types";
-import useSelection from "@/hooks/useSelection";
+import useSelection, {
+  SelectionType,
+  SetSelectionType,
+} from "@/hooks/useSelection";
 
 type PlacesContextType = {
   places: Place[];
   isLoading: boolean;
   error: string | null;
-  selection: selectionType | null;
-  setSelection: Dispatch<SetStateAction<selectionType | null>>;
+  selection: SelectionType | null;
+  setSelection: SetSelectionType;
   setBoundingBox: Dispatch<
     // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>

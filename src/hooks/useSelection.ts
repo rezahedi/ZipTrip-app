@@ -1,14 +1,14 @@
-import { selectionType } from "@/Components/Map/types";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-// export type SelectionType = {
-//   placeId: string;
-//   source: "card" | "marker";
-// };
-// export type SetSelectionType = Dispatch<SetStateAction<SelectionType | null>>;
+export type SelectionType = {
+  placeId: string;
+  location?: [number, number];
+  source: "card" | "marker";
+};
+export type SetSelectionType = Dispatch<SetStateAction<SelectionType | null>>;
 
-export default function useSelection(initial: selectionType | null = null) {
-  const [selection, setSelection] = useState<selectionType | null>(initial);
+export default function useSelection(initial: SelectionType | null = null) {
+  const [selection, setSelection] = useState<SelectionType | null>(initial);
 
   return { selection, setSelection };
 }

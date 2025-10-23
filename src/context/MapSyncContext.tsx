@@ -1,11 +1,8 @@
-import { selectionType } from "@/Components/Map/types";
-import useSelection from "@/hooks/useSelection";
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-} from "react";
+import useSelection, {
+  SelectionType,
+  SetSelectionType,
+} from "@/hooks/useSelection";
+import React, { createContext, useContext } from "react";
 
 // TODO: Store only placeId in selection {placeId: string, source: 'marker' | 'list'} and fetch full item data from existed list using placeId.
 // TODO: Create a factory function by wrapping the context/provider creation to build typed providers/hooks for different selection item types.
@@ -20,8 +17,8 @@ import React, {
  */
 
 type ContextType = {
-  selection: selectionType | null;
-  setSelection: Dispatch<SetStateAction<selectionType | null>>;
+  selection: SelectionType | null;
+  setSelection: SetSelectionType;
 };
 
 const MapSyncContext = createContext<ContextType | undefined>(undefined);

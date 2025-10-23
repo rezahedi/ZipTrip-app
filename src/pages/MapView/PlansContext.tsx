@@ -10,14 +10,17 @@ import { useAuth } from "@/context/AuthContext";
 import { fetchData } from "@/util";
 import { Plan } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
-import { selectionType } from "@/Components/Map/types";
+import useSelection, {
+  SelectionType,
+  SetSelectionType,
+} from "@/hooks/useSelection";
 
 type PlansContextType = {
   plans: Plan[];
   isLoading: boolean;
   error: string | null;
-  selection: selectionType | null;
-  setSelection: Dispatch<SetStateAction<selectionType | null>>;
+  selection: SelectionType | null;
+  setSelection: SetSelectionType;
   setBoundingBox: Dispatch<
     // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>
@@ -35,7 +38,7 @@ const PlansContext = createContext<PlansContextType>({
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
-  const [selection, setSelection] = useState<selectionType | null>(null);
+  const { selection, setSelection } = useSelection(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<

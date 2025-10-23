@@ -1,8 +1,9 @@
 import React from "react";
-import { Map, InfoWindow, LocateMeButton, Markers } from "@/Components/Map";
+import { Map, InfoWindow, LocateMeButton } from "@/Components/Map";
 import { usePlans } from "./PlansContext";
 import { Plan } from "@/types";
 import PlanPopup from "./PlanPopup";
+import Markers from "./Markers";
 
 const MapBox = ({
   className = "",
@@ -12,7 +13,8 @@ const MapBox = ({
   children?: React.ReactNode;
 }) => {
   const { plans, selection, setSelection, setBoundingBox } = usePlans();
-  const plan = selection?.item as Plan | undefined;
+  const selectedPlan: Plan | null =
+    plans.find((p) => p._id === selection?.placeId) || null;
 
   const handlePopupClose = () => {
     setSelection(null);
@@ -20,13 +22,15 @@ const MapBox = ({
 
   return (
     <Map setBoundingBox={setBoundingBox} className={className}>
-      <Markers items={plans} selection={selection} setSelection={setSelection}>
-        {plan && (
-          <InfoWindow position={plan.startLocation} onClose={handlePopupClose}>
-            <PlanPopup plan={plan} />
-          </InfoWindow>
-        )}
-      </Markers>
+      <Markers />
+      {selectedPlan && (
+        <InfoWindow
+          position={selectedPlan.startLocation}
+          onClose={handlePopupClose}
+        >
+          <PlanPopup plan={selectedPlan} />
+        </InfoWindow>
+      )}
       <LocateMeButton />
       {children && children}
     </Map>

@@ -2,17 +2,15 @@ import React from "react";
 import { Stop as StopType } from "@/types";
 import { getMarkerIcon } from "@/types/map";
 import { useMapSync } from "@/context/MapSyncContext";
-import { itemType } from "@/Components/Map/types";
 import { cn } from "@/lib/utils";
 
 const Stop = ({ detail }: { detail: StopType }) => {
   const { placeId, name, imageURL, address, type, rating, userRatingCount } =
     detail;
   const { selection, setSelection } = useMapSync();
-  const selectedPlace = (selection?.item as StopType) || null;
 
   const handleSetSelection = () => {
-    setSelection({ item: detail as itemType, source: "card" });
+    setSelection({ placeId: detail.placeId, source: "card" });
   };
 
   if (!placeId) return null;
@@ -23,9 +21,7 @@ const Stop = ({ detail }: { detail: StopType }) => {
       onMouseOver={handleSetSelection}
       className={cn(
         `group transition-shadow duration-200 ease-in-out shadow-md hover:shadow-lg rounded-lg flex items-start sm:items-center gap-0.5 flex-col sm:flex-row overflow-hidden bg-foreground/3`,
-        selectedPlace && selectedPlace.placeId === placeId
-          ? `bg-foreground/10`
-          : ``,
+        selection && selection.placeId === placeId ? `bg-foreground/10` : ``,
       )}
     >
       {imageURL && (

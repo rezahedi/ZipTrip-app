@@ -1,41 +1,41 @@
-import React, { memo } from "react";
+import React from "react";
 import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
-import { itemType, setSelectionType } from "./types";
-import { getMarkerIcon } from "@/types/map";
+import { SetSelectionType } from "@/hooks/useSelection";
 
-const Marker = memo(
-  function Marker({
-    item,
-    onClick,
-  }: {
-    item: itemType;
-    onClick: setSelectionType;
-  }) {
-    const handleClick = () => {
-      onClick({ item, source: "marker" });
-    };
+const Marker = ({
+  placeId,
+  emoji = "",
+  title,
+  position,
+  iconURL = "/places/emoji_marker.svg",
+  onClick,
+}: {
+  placeId: string;
+  emoji?: string;
+  title: string;
+  position: [number, number];
+  iconURL?: string;
+  onClick: SetSelectionType;
+}) => {
+  const handleClick = () => {
+    onClick({ placeId, source: "marker" });
+  };
 
-    const position = "location" in item ? item.location : item.startLocation;
-    const iconURL = "/places/emoji_marker.svg"; //`/places/${getMarkerIcon(("type" in item && item.type) || "")}`;
-    const emoji = getMarkerIcon(("type" in item && item.type) || "");
-
-    return (
-      <GMapMarker
-        label={emoji}
-        title={"name" in item ? item.name : item.title}
-        position={{ lat: position[0], lng: position[1] }}
-        onClick={handleClick}
-        icon={{
-          url: iconURL,
-          // eslint-disable-next-line no-undef
-          scaledSize: new google.maps.Size(40, 40),
-          // eslint-disable-next-line no-undef
-          anchor: new google.maps.Point(20, 40),
-        }}
-      />
-    );
-  },
-  (prevProps, nextProps) => prevProps.item._id === nextProps.item._id,
-);
+  return (
+    <GMapMarker
+      label={emoji}
+      title={title}
+      position={{ lat: position[0], lng: position[1] }}
+      onClick={handleClick}
+      icon={{
+        url: iconURL,
+        // eslint-disable-next-line no-undef
+        scaledSize: new google.maps.Size(40, 40),
+        // eslint-disable-next-line no-undef
+        anchor: new google.maps.Point(20, 40),
+      }}
+    />
+  );
+};
 
 export default Marker;

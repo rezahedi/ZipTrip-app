@@ -35,7 +35,7 @@ const SidebarOverlay = ({ className = "" }: { className?: string }) => {
   useEffect(() => {
     if (!selection || selection.source === "card") return;
 
-    const targetElement = getPlanRef(selection.item._id!);
+    const targetElement = getPlanRef(selection.placeId);
     if (!targetElement) return;
 
     targetElement.scrollIntoView({
@@ -75,7 +75,9 @@ const SidebarOverlay = ({ className = "" }: { className?: string }) => {
             <div
               key={plan._id}
               ref={(element) => setPlanRef(plan._id, element)}
-              onMouseEnter={() => setSelection({ item: plan, source: "card" })}
+              onMouseEnter={() =>
+                setSelection({ placeId: plan._id, source: "card" })
+              }
             >
               <PlanCard {...plan} image={plan.images[0]} />
             </div>

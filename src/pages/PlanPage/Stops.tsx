@@ -3,7 +3,6 @@ import Stop from "./Stop";
 import { Stop as StopType } from "@/types";
 import MarkedBlock from "./MarkedBlock";
 import { useMapSync } from "@/context/MapSyncContext";
-import { PlaceType } from "@/context/PlanTypes";
 
 const Stops = ({ stops }: { stops: StopType[] }) => {
   const refs = useRef(new Map());
@@ -24,7 +23,7 @@ const Stops = ({ stops }: { stops: StopType[] }) => {
   useEffect(() => {
     if (!selection || selection.source === "card") return;
 
-    const targetElement = getRef((selection.item as PlaceType).placeId);
+    const targetElement = getRef(selection.placeId);
     if (!targetElement) return;
 
     targetElement.scrollIntoView({

@@ -5,6 +5,7 @@ import { useItinerary } from "@/context/ItineraryContext";
 import AddButton from "./AddButton";
 import { fetchData } from "@/util";
 import PlacePopupSkeleton from "./PlacePopupSkeleton";
+import { PlaceType } from "@/context/PlanTypes";
 
 const PlacePopup = () => {
   const { selection } = usePlaces();
@@ -16,6 +17,8 @@ const PlacePopup = () => {
   const isAdded = place
     ? !!places.find((p) => p.placeId === place.placeId)
     : false;
+  const selectedPlace: PlaceType | null =
+    places.find((p) => p.placeId === selection?.placeId) || null;
 
   const handleAddToItinerary = () => {
     if (!place) return;
@@ -24,18 +27,17 @@ const PlacePopup = () => {
   };
 
   useEffect(() => {
-    if (!selection || !selection.item) return;
-    const placeId = (selection?.item as Place)?.placeId;
+    console.log("place selected", selection);
+    if (!selection) return;
 
     (async () => {
       setDetailLoading(true);
 
       // If name had value, mean the place is already exist in db
       // if not fetch place's detail from G-Places API
-      const URL =
-        "name" in selection.item && selection.item.name === ""
-          ? `places/fetch/${placeId}`
-          : `places/${placeId}`;
+      const URL = selectedPlace
+        ? `places/${selection.placeId}`
+        : `places/fetch/${selection.placeId}`;
       const res = await fetchData(URL, null, () => {});
       if (!res) return setDetailLoading(false);
 
