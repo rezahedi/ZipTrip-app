@@ -1,7 +1,7 @@
 import React from "react";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Place, Stop as StopType } from "@/types";
-import { getThemeColor } from "@/lib/utils";
+import { calculateBounds, getThemeColor } from "@/lib/utils";
 import { InfoWindow, Marker } from "@/Components/Map";
 import { itemType } from "@/Components/Map/types";
 import { useMapSync } from "@/context/MapSyncContext";
@@ -52,11 +52,14 @@ const StopsOnMap = ({
   className: string;
   stops: StopType[];
 }) => {
+  const defaultBounds =
+    calculateBounds(stops.map((s) => s.location)) || undefined;
+
   return (
     <div className={className}>
       <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
         <Map
-          defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
+          defaultBounds={defaultBounds}
           defaultZoom={4}
           style={{ width: "100%", height: "100%" }}
           gestureHandling="cooperative"
