@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function debounce<T extends (...args: unknown[]) => void>(
   func: T,
-  delay = 500,
+  delay = 300,
 ) {
   let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -19,6 +19,20 @@ export function debounce<T extends (...args: unknown[]) => void>(
 
     timeoutId = setTimeout(() => {
       func.apply(this, args);
+    }, delay);
+  };
+}
+
+export function throttle<T extends (...args: unknown[]) => void>(
+  func: T,
+  delay = 300,
+) {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
+    if (timeoutId) return;
+    func.apply(this, args);
+    timeoutId = setTimeout(() => {
+      timeoutId = null;
     }, delay);
   };
 }
