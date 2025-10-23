@@ -1,10 +1,10 @@
 import { selectionType } from "@/Components/Map/types";
+import useSelection from "@/hooks/useSelection";
 import React, {
   createContext,
   Dispatch,
   SetStateAction,
   useContext,
-  useState,
 } from "react";
 
 // TODO: Store only placeId in selection {placeId: string, source: 'marker' | 'list'} and fetch full item data from existed list using placeId.
@@ -27,7 +27,7 @@ type ContextType = {
 const MapSyncContext = createContext<ContextType | undefined>(undefined);
 
 const MapSyncProvider = ({ children }: { children: React.ReactNode }) => {
-  const [selection, setSelection] = useState<selectionType | null>(null);
+  const { selection, setSelection } = useSelection(null);
 
   return (
     <MapSyncContext.Provider value={{ selection, setSelection }}>

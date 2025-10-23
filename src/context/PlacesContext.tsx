@@ -11,6 +11,7 @@ import { fetchData } from "@/util";
 import { Place } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 import { selectionType } from "@/Components/Map/types";
+import useSelection from "@/hooks/useSelection";
 
 type PlacesContextType = {
   places: Place[];
@@ -35,7 +36,7 @@ const PlacesContext = createContext<PlacesContextType>({
 
 const PlacesProvider = ({ children }: { children: React.ReactNode }) => {
   const [places, setPlaces] = useState<Place[]>([]);
-  const [selection, setSelection] = useState<selectionType | null>(null);
+  const { selection, setSelection } = useSelection(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
