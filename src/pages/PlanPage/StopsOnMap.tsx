@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Place, Stop as StopType } from "@/types";
-import { calculateBounds, getThemeColor } from "@/lib/utils";
+import { calculateBounds, cn, getThemeColor, throttle } from "@/lib/utils";
 import { InfoWindow, Marker } from "@/Components/Map";
 import { itemType } from "@/Components/Map/types";
 import { useMapSync } from "@/context/MapSyncContext";
@@ -49,14 +49,39 @@ const StopsOnMap = ({
   className,
   stops,
 }: {
-  className: string;
+  className?: string;
   stops: StopType[];
 }) => {
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const defaultBounds =
     calculateBounds(stops.map((s) => s.location)) || undefined;
+  const [isFull, setIsFull] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!mapRef || !mapRef.current) return;
+
+    const top = mapRef.current.offsetTop;
+    console.log("top", top);
+    document.addEventListener(
+      "scroll",
+      throttle(() => {
+        if (!mapRef || !mapRef.current) return;
+        if (mapRef.current.offsetTop - top > 0) setIsFull(true);
+        else setIsFull(false);
+      }),
+    );
+    return document.removeEventListener("scroll", () => {});
+  }, []);
 
   return (
-    <div className={className}>
+    <div
+      className={cn(
+        "sticky top-0 md:top-4 z-1 grow md:flex-1/3 h-[300px] md:h-[450px] overflow-hidden md:rounded-md md:mx-0 transition-all delay-100",
+        className,
+        isFull ? "md:h-[calc(100vh-2rem)] -mx-2" : "",
+      )}
+      ref={mapRef}
+    >
       <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API_KEY}>
         <Map
           defaultBounds={defaultBounds}

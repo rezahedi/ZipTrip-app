@@ -110,10 +110,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
 
         <MapSyncProvider>
           <div className="flex gap-4 my-4 flex-col md:flex-row-reverse">
-            <StopsOnMap
-              className="sticky top-0 md:top-4 z-1 grow md:flex-1/3 h-[300px] sm:h-[450px] overflow-hidden rounded-md"
-              stops={stops}
-            />
+            <StopsOnMap stops={stops} />
             <div className="grow md:flex-2/3">
               {images?.length > 0 && (
                 <ImageBlock
