@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import HomePage from "@/pages/HomePage";
 import SearchPage from "@/pages/SearchPage";
-import MapViewPage from "@/pages/MapView";
+import MapViewPage from "@/pages/ExplorePage";
 import PlanPage from "@/pages/PlanPage";
 import UserPage from "@/pages/UserPage";
 import NotFound404 from "@/pages/404NotFound";

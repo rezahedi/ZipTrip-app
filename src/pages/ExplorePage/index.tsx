@@ -1,5 +1,5 @@
 import React from "react";
-import { PlansProvider } from "@/pages/MapView/PlansContext";
+import { PlansProvider } from "@/pages/ExplorePage/PlansContext";
 import { MapControl, ControlPosition } from "@vis.gl/react-google-maps";
 import SidebarOverlay from "./SidebarOverlay";
 import Title from "@/Components/Header/Title";
