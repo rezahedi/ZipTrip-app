@@ -6,7 +6,7 @@ import Title from "@/Components/Header/Title";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MapBox from "./MapBox";
 
-const MapViewPage = () => {
+const ExplorePage = () => {
   const { isMobile } = useMediaQuery();
 
   return (
@@ -30,4 +30,4 @@ const MapViewPage = () => {
   );
 };
 
-export default MapViewPage;
+export default ExplorePage;
