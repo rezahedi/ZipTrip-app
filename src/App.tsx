@@ -30,7 +30,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<MapLayout />}>
-            <Route path="/map" element={<MapViewPage />} />
+            <Route path="/explore" element={<MapViewPage />} />
             <Route path="/create" element={<CreatePage />} />
             <Route path="/create/:planId" element={<CreatePage />} />
           </Route>
