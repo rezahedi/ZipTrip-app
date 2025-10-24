@@ -10,7 +10,7 @@ import Title from "@/Components/Header/Title";
 
 const CreatePage = () => {
   return (
-    <div className="h-full flex">
+    <div className="h-[calc(100vh-61px)] flex flex-col-reverse md:flex-row">
       <ItineraryProvider>
         <Title>Create New Plan</Title>
         <PageContent />

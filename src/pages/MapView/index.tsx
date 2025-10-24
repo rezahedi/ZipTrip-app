@@ -1,20 +1,30 @@
 import React from "react";
 import { PlansProvider } from "@/pages/MapView/PlansContext";
-import Map from "./Map";
 import { MapControl, ControlPosition } from "@vis.gl/react-google-maps";
 import SidebarOverlay from "./SidebarOverlay";
 import Title from "@/Components/Header/Title";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import MapBox from "./MapBox";
 
 const MapViewPage = () => {
+  const { isMobile } = useMediaQuery();
+
   return (
-    <div className="h-full">
+    <div className="h-[calc(100vh-61px)] flex flex-col">
       <Title>Explore Nearby Plans on the Map</Title>
       <PlansProvider>
-        <Map>
-          <MapControl position={ControlPosition.LEFT_TOP}>
-            <SidebarOverlay />
-          </MapControl>
-        </Map>
+        {isMobile ? (
+          <>
+            <MapBox className="h-5/12" />
+            <SidebarOverlay className="flex-7/12 overflow-hidden" />
+          </>
+        ) : (
+          <MapBox>
+            <MapControl position={ControlPosition.LEFT_TOP}>
+              <SidebarOverlay />
+            </MapControl>
+          </MapBox>
+        )}
       </PlansProvider>
     </div>
   );

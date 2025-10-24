@@ -5,10 +5,12 @@ import { cn } from "@/lib/utils";
 const Editable = function Editable({
   children,
   className = "",
+  lineClamp = 3,
   onSave,
 }: {
   children: string;
   className?: string;
+  lineClamp?: number;
   onSave: (name: string) => void;
 }) {
   const [message, setMessage] = useState<string>("");
@@ -65,9 +67,10 @@ const Editable = function Editable({
           title="Click to inline edit"
           className={cn(
             `peer inline-block border border-transparent focus:outline-none focus:border-gray-300 focus:rounded`,
+            `line-clamp-${lineClamp >= 1 && lineClamp <= 6 ? lineClamp : 3}`,
             editable === "false"
               ? `hover:bg-foreground/5 cursor-pointer`
-              : `cursor-text`,
+              : `cursor-text line-clamp-none`,
             className,
           )}
         >
