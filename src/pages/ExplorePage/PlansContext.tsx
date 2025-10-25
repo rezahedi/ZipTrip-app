@@ -27,14 +27,7 @@ type PlansContextType = {
   >;
 };
 
-const PlansContext = createContext<PlansContextType>({
-  plans: [],
-  isLoading: false,
-  error: null,
-  selection: null,
-  setSelection: () => {},
-  setBoundingBox: () => {},
-});
+const PlansContext = createContext<PlansContextType | undefined>(undefined);
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
@@ -96,7 +89,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
 const usePlans = () => {
   const context = useContext(PlansContext);
   if (!context) {
-    throw new Error("usePlans must be used within a PlansProvider");
+    throw new Error("usePlans must be used within its provider");
   }
   return context;
 };
