@@ -1,21 +1,14 @@
 import React, { useEffect } from "react";
-import { InfoWindow, Marker } from "@/Components/Map";
+import { Marker } from "@/Components/Map";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { usePlans } from "./PlansContext";
 import { Plan } from "@/types";
-import PlanPopup from "./PlanPopup";
 
 const Markers = function Markers() {
   const map = useMap();
   const { isMobile } = useMediaQuery();
   const { plans, selection, setSelection } = usePlans();
-  const selectedPlan: Plan | null =
-    plans.find((p) => p._id === selection?.placeId) || null;
-
-  const handlePopupClose = () => {
-    setSelection(null);
-  };
 
   useEffect(() => {
     if (!map || !selection || selection.source === "marker") return;
@@ -50,14 +43,6 @@ const Markers = function Markers() {
             zIndex={100}
           />
         ))}
-      {selectedPlan && (
-        <InfoWindow
-          position={selectedPlan.startLocation}
-          onClose={handlePopupClose}
-        >
-          <PlanPopup plan={selectedPlan} />
-        </InfoWindow>
-      )}
     </>
   );
 };

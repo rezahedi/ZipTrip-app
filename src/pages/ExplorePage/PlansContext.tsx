@@ -8,15 +8,21 @@ import React, {
 } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { fetchData } from "@/util";
-import { Plan } from "@/types";
+import { Place, Plan } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 import useSelection, {
   SelectionType,
   SetSelectionType,
 } from "@/hooks/useSelection";
 
+type ItemType = {
+  type: "plan" | "place";
+  item: unknown;
+};
+
 type PlansContextType = {
   plans: Plan[];
+  places: Place[];
   isLoading: boolean;
   error: string | null;
   selection: SelectionType | null;
@@ -31,6 +37,7 @@ const PlansContext = createContext<PlansContextType | undefined>(undefined);
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [places, setPlaces] = useState<Place[]>([]);
   const { selection, setSelection } = useSelection(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,11 +62,16 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
       const paramsString = createNearbyQueries(currentBounds);
       try {
         const fetchResult = await fetchData(
-          `plans/nearby/?${paramsString}`,
+          `all/?${paramsString}`,
           token,
           setError,
         );
-        setPlans(fetchResult.items || []);
+        const fetchedPlans: ItemType[] =
+          fetchResult.items.filter((i: ItemType) => i.type === "plan") || [];
+        setPlans(fetchedPlans.map((i: ItemType) => i.item as Plan) || []);
+        const fetchedPlaces: ItemType[] =
+          fetchResult.items.filter((i: ItemType) => i.type === "place") || [];
+        setPlaces(fetchedPlaces.map((i: ItemType) => i.item as Place) || []);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -74,6 +86,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
     <PlansContext.Provider
       value={{
         plans,
+        places,
         isLoading,
         error,
         selection,
