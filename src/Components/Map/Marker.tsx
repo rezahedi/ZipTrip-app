@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
 import { SetSelectionType } from "@/hooks/useSelection";
 
-const Marker = ({
+const Marker = memo(function Marker({
   placeId,
   emoji = "",
   title,
@@ -16,7 +16,7 @@ const Marker = ({
   position: [number, number];
   iconURL?: string;
   onClick: SetSelectionType;
-}) => {
+}) {
   const handleClick = () => {
     onClick({ placeId, location: position, source: "marker" });
   };
@@ -36,6 +36,6 @@ const Marker = ({
       }}
     />
   );
-};
+});
 
 export default Marker;
