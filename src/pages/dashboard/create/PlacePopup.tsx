@@ -31,7 +31,7 @@ const PlacePopup = () => {
       setDetailLoading(true);
 
       // Fetch place's detail from API
-      const URL = `places/${selection.placeId}ddd`;
+      const URL = `places/${selection.placeId}`;
       const res = await fetchData(URL, null, () => {});
       if (!res) return setDetailLoading(false);
 
