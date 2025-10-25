@@ -18,7 +18,7 @@ const Marker = ({
   onClick: SetSelectionType;
 }) => {
   const handleClick = () => {
-    onClick({ placeId, source: "marker" });
+    onClick({ placeId, location: position, source: "marker" });
   };
 
   return (
