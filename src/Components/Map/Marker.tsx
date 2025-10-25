@@ -9,6 +9,7 @@ const Marker = memo(function Marker({
   position,
   iconURL = "/places/emoji_marker.svg",
   onClick,
+  zIndex = null,
 }: {
   placeId: string;
   emoji?: string;
@@ -16,6 +17,7 @@ const Marker = memo(function Marker({
   position: [number, number];
   iconURL?: string;
   onClick: SetSelectionType;
+  zIndex?: number | null | undefined;
 }) {
   const handleClick = () => {
     onClick({ placeId, location: position, source: "marker" });
@@ -34,6 +36,7 @@ const Marker = memo(function Marker({
         // eslint-disable-next-line no-undef
         anchor: new google.maps.Point(20, 40),
       }}
+      zIndex={zIndex}
     />
   );
 });

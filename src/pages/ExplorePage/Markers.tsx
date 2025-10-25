@@ -47,6 +47,7 @@ const Markers = function Markers() {
             position={item.startLocation}
             iconURL="/places/emoji_marker_red.svg"
             onClick={setSelection}
+            zIndex={100}
           />
         ))}
       {selectedPlan && (
