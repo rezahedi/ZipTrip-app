@@ -12,6 +12,7 @@ const PlacePopup = () => {
   const [place, setPlace] = useState<Place | null>(null);
   // const place = selection?.item as Place | undefined;
   const { plan, addPlace } = useItinerary();
+  const [error, setError] = useState<string>("");
   const places = plan?.stops || [];
   const isAdded = place
     ? !!places.find((p) => p.placeId === place.placeId)
@@ -28,12 +29,16 @@ const PlacePopup = () => {
     if (!selection) return;
 
     (async () => {
+      setError("");
       setDetailLoading(true);
 
       // Fetch place's detail from API
       const URL = `places/${selection.placeId}`;
       const res = await fetchData(URL, null, () => {});
-      if (!res) return setDetailLoading(false);
+      if (!res) {
+        setError("Couldn't find it, Try again or try other places!");
+        return setDetailLoading(false);
+      }
 
       setPlace(res);
       setDetailLoading(false);
@@ -43,6 +48,8 @@ const PlacePopup = () => {
   if (!selection) return null;
 
   if (detailLoading) return <PlacePopupSkeleton />;
+
+  if (error) return <div className="flex pt-6 p-3 text-center">{error}</div>;
 
   return (
     <div className="flex gap-1 sm:w-xs sm:h-32">
