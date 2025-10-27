@@ -1,21 +1,34 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { Marker } from "@/Components/Map";
 import { getMarkerIcon } from "@/types/map";
 import { usePlans } from "../PlansContext";
 
 const PlacesMarkers = function Markers() {
-  const { places, setSelection } = usePlans();
+  const { places, selection, setSelection } = usePlans();
+  const mouseOverTimeoutRef = useRef<number | null>(null);
 
   const handleMouseOver = useCallback(
     (placeId?: string, location?: [number, number]) => {
-      if (placeId) setSelection({ placeId, location, source: "marker" });
+      if (placeId) {
+        if (mouseOverTimeoutRef.current)
+          clearTimeout(mouseOverTimeoutRef.current);
+        mouseOverTimeoutRef.current = window.setTimeout(
+          () => setSelection({ placeId, location, source: "marker" }),
+          400,
+        );
+      }
     },
     [setSelection],
   );
 
-  const handleMouseOut = useCallback(() => {
-    setSelection(null);
-  }, [setSelection]);
+  const handleMouseOut = useCallback(
+    (placeId?: string) => {
+      if (!mouseOverTimeoutRef.current) return;
+      if (selection === null || (selection && selection.placeId !== placeId))
+        clearTimeout(mouseOverTimeoutRef.current);
+    },
+    [selection],
+  );
 
   return (
     <>
