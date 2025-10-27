@@ -3,6 +3,8 @@ import { Place } from "@/types";
 import { fetchData } from "@/util";
 import PopupSkeleton from "./PopupSkeleton";
 import { usePlans } from "../PlansContext";
+import { formatNumber } from "@/lib/utils";
+import { StarIcon } from "lucide-react";
 
 const Popup = () => {
   const { selection } = usePlans();
@@ -37,18 +39,25 @@ const Popup = () => {
 
   if (error) return <div className="flex pt-6 p-3 text-center">{error}</div>;
 
+  if (!place) return null;
+
   return (
     <div className="flex gap-1 sm:w-xs sm:h-32">
       <img
         className="w-24 h-full object-cover rounded-sm hidden sm:block"
-        src={place?.imageURL}
-        alt={place?.name}
+        src={place.imageURL}
+        alt={place.name}
       />
-      <div className="flex-4/5 max-h-40 px-2">
-        <h3 className="font-medium text-base/snug text-balance py-1">
-          {place?.name}
+      <div className="flex-4/5 max-h-40 px-2 space-y-2">
+        <h3 className="font-medium text-base/snug text-balance">
+          {place.name}
         </h3>
-        <p>{place?.address}</p>
+        <p>{place.address}</p>
+        <p className="flex gap-1 items-center">
+          <StarIcon className="size-3" />{" "}
+          <b className="font-semibold">{place.rating}</b> (
+          {formatNumber(place.userRatingCount)})
+        </p>
       </div>
     </div>
   );

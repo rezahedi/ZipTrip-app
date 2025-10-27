@@ -98,3 +98,17 @@ export function calculateBounds(locations: [number, number][], buffer = 0.1) {
 
   return { north, south, east, west };
 }
+
+export function formatNumber(
+  number: number,
+  maximumFractionDigits: number = 2,
+): string {
+  return number.toLocaleString("en-US", {
+    // add suffixes for thousands, millions, and billions
+    // the maximum number of decimal places to use
+    maximumFractionDigits,
+    // specify the abbreviations to use for the suffixes
+    notation: "compact",
+    compactDisplay: "short",
+  });
+}
