@@ -6,6 +6,7 @@ import PlacesMarkers from "./places/PlacesMarkers";
 import PlanPopup from "./PlanPopup";
 import { Plan } from "@/types";
 import Popup from "./places/Popup";
+import { MapMouseEvent } from "@vis.gl/react-google-maps";
 
 const MapBox = ({
   className = "",
@@ -23,8 +24,23 @@ const MapBox = ({
     setSelection(null);
   };
 
+  const handleMapClick = async (e: MapMouseEvent) => {
+    e.stop();
+    const placeId = e.detail.placeId;
+    const location: [number, number] | null = e.detail.latLng
+      ? [e.detail.latLng?.lat, e.detail.latLng?.lng]
+      : null;
+    if (!placeId || !location) return;
+
+    setSelection({ placeId, location, source: "marker" });
+  };
+
   return (
-    <Map setBoundingBox={setBoundingBox} className={className}>
+    <Map
+      setBoundingBox={setBoundingBox}
+      className={className}
+      onClick={handleMapClick}
+    >
       <PlacesMarkers />
       <Markers />
       {selectedPlan && (
