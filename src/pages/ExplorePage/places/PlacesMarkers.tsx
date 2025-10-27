@@ -1,15 +1,10 @@
 import React from "react";
-import { InfoWindow, Marker } from "@/Components/Map";
+import { Marker } from "@/Components/Map";
 import { getMarkerIcon } from "@/types/map";
-import Popup from "./Popup";
 import { usePlans } from "../PlansContext";
 
 const PlacesMarkers = function Markers() {
-  const { places, selection, setSelection } = usePlans();
-
-  const handlePopupClose = () => {
-    setSelection(null);
-  };
+  const { places, setSelection } = usePlans();
 
   return (
     <>
@@ -25,11 +20,6 @@ const PlacesMarkers = function Markers() {
             onClick={setSelection}
           />
         ))}
-      {selection && selection.location && (
-        <InfoWindow position={selection.location} onClose={handlePopupClose}>
-          <Popup />
-        </InfoWindow>
-      )}
     </>
   );
 };
