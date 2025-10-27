@@ -5,6 +5,8 @@ import { useItinerary } from "@/context/ItineraryContext";
 import AddButton from "./AddButton";
 import { fetchData } from "@/util";
 import PlacePopupSkeleton from "./PlacePopupSkeleton";
+import { StarIcon } from "lucide-react";
+import { formatNumber } from "@/lib/utils";
 
 const PlacePopup = () => {
   const { selection } = usePlaces();
@@ -51,18 +53,25 @@ const PlacePopup = () => {
 
   if (error) return <div className="flex pt-6 p-3 text-center">{error}</div>;
 
+  if (!place) return null;
+
   return (
     <div className="flex gap-1 sm:w-xs sm:h-32">
       <img
         className="w-24 h-full object-cover rounded-sm hidden sm:block"
-        src={place?.imageURL}
-        alt={place?.name}
+        src={place.imageURL}
+        alt={place.name}
       />
       <div className="flex-4/5 max-h-40 px-2">
         <h3 className="font-medium text-base/snug text-balance py-1">
-          {place?.name}
+          {place.name}
         </h3>
-        <p>{place?.address}</p>
+        <p>{place.address}</p>
+        <p className="flex gap-1 items-center">
+          <StarIcon className="size-3" />{" "}
+          <b className="font-semibold">{place.rating}</b> (
+          {formatNumber(place.userRatingCount)})
+        </p>
         <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
       </div>
     </div>
