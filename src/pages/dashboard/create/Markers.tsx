@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { usePlaces } from "@/context/PlacesContext";
 import { InfoWindow, Marker } from "@/Components/Map";
 import PlacePopup from "./PlacePopup";
@@ -7,9 +7,16 @@ import { getMarkerIcon } from "@/types/map";
 const Markers = memo(function Markers() {
   const { places, selection, setSelection } = usePlaces();
 
-  const handlePopupClose = () => {
+  const handleClick = useCallback(
+    (placeId?: string, location?: [number, number]) => {
+      if (placeId) setSelection({ placeId, location, source: "marker" });
+    },
+    [setSelection],
+  );
+
+  const handlePopupClose = useCallback(() => {
     setSelection(null);
-  };
+  }, [setSelection]);
 
   return (
     <>
@@ -22,7 +29,7 @@ const Markers = memo(function Markers() {
             title={item.name}
             position={item.location}
             iconURL="/places/emoji_marker.svg"
-            onClick={setSelection}
+            onClick={handleClick}
           />
         ))}
       {selection && selection.location && (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Stop as StopType } from "@/types";
 import { InfoWindow, Marker } from "@/Components/Map";
 import { useMapSync } from "@/context/MapSyncContext";
@@ -8,9 +8,16 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
   const selectedPlace: StopType | null =
     stops.find((s) => s.placeId === selection?.placeId) || null;
 
-  const handlePopupClose = () => {
+  const handleClick = useCallback(
+    (placeId?: string, location?: [number, number]) => {
+      if (placeId) setSelection({ placeId, location, source: "marker" });
+    },
+    [setSelection],
+  );
+
+  const handlePopupClose = useCallback(() => {
     setSelection(null);
-  };
+  }, [setSelection]);
 
   return (
     <>
@@ -23,7 +30,7 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
             title={stop.name}
             position={stop.location}
             iconURL="/places/emoji_marker_red.svg"
-            onClick={setSelection}
+            onClick={handleClick}
           />
         ))}
       {selectedPlace && (

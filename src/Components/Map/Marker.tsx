@@ -1,6 +1,10 @@
 import React, { memo } from "react";
 import { Marker as GMapMarker } from "@vis.gl/react-google-maps";
-import { SetSelectionType } from "@/hooks/useSelection";
+
+type EventsFunctionType = (
+  placeId?: string,
+  location?: [number, number],
+) => void;
 
 const Marker = memo(function Marker({
   placeId,
@@ -9,6 +13,8 @@ const Marker = memo(function Marker({
   position,
   iconURL = "/places/emoji_marker.svg",
   onClick,
+  onMouseOver,
+  onMouseOut,
   zIndex = null,
 }: {
   placeId: string;
@@ -16,11 +22,21 @@ const Marker = memo(function Marker({
   title: string;
   position: [number, number];
   iconURL?: string;
-  onClick: SetSelectionType;
+  onClick?: EventsFunctionType;
+  onMouseOver?: EventsFunctionType;
+  onMouseOut?: EventsFunctionType;
   zIndex?: number | null | undefined;
 }) {
   const handleClick = () => {
-    onClick({ placeId, location: position, source: "marker" });
+    if (onClick) onClick(placeId, position);
+  };
+
+  const handleMouseHover = () => {
+    if (onMouseOver) onMouseOver(placeId, position);
+  };
+
+  const handleMouseOut = () => {
+    if (onMouseOut) onMouseOut(placeId, position);
   };
 
   return (
@@ -29,6 +45,8 @@ const Marker = memo(function Marker({
       title={title}
       position={{ lat: position[0], lng: position[1] }}
       onClick={handleClick}
+      onMouseOver={handleMouseHover}
+      onMouseOut={handleMouseOut}
       icon={{
         url: iconURL,
         // eslint-disable-next-line no-undef

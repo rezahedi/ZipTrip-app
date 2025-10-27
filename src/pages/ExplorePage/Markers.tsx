@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Marker } from "@/Components/Map";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -28,6 +28,13 @@ const Markers = function Markers() {
     }
   }, [selection, map]);
 
+  const handleClick = useCallback(
+    (placeId?: string, location?: [number, number]) => {
+      if (placeId) setSelection({ placeId, location, source: "marker" });
+    },
+    [setSelection],
+  );
+
   return (
     <>
       {plans.length > 0 &&
@@ -39,7 +46,7 @@ const Markers = function Markers() {
             title={item.title}
             position={item.startLocation}
             iconURL="/places/emoji_marker_red.svg"
-            onClick={setSelection}
+            onClick={handleClick}
             zIndex={100}
           />
         ))}
