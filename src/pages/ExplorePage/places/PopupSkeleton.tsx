@@ -3,7 +3,7 @@ import { Skeleton } from "@/Components/ui/skeleton";
 
 const PopupSkeleton = () => {
   return (
-    <div className="flex gap-1 w-[230px] h-[128px]">
+    <div className="flex gap-1 sm:w-xs sm:h-32">
       <Skeleton className="w-24 h-full rounded-sm hidden sm:block" />
       <div className="flex-4/5 max-h-40 px-2">
         <Skeleton className="w-9/12 h-7 mb-4" />
