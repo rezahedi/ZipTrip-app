@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/Components/ui/button";
 import { XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import Modal from "@/Components/Common/Modal";
-import { Place } from "@/types";
-import { usePlans } from "../PlansContext";
-
-type ListType = { name: string; places: Place[] };
-const DEFAULT_LIST = [{ name: "My First List", places: [] }];
+import useList, { ListType } from "@/hooks/useList";
 
 const ListModal = ({
   isOpen,
   onClose,
+  placeId,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  placeId: string;
 }) => {
-  const [list, setList] = useState<ListType[]>([]);
-  const { placeDetail } = usePlans();
-  const place = placeDetail?.place as Place;
+  const {
+    list,
+    createList,
+    removeList,
+    addPlaceToList,
+    removePlaceFromList,
+    saving,
+    loading,
+  } = useList();
 
   useEffect(() => {
-    const listString = localStorage.getItem("list") || "[]";
-    try {
-      const parsedList = JSON.parse(listString);
-      setList(parsedList.length > 0 ? parsedList : DEFAULT_LIST);
-    } catch {
-      setList(DEFAULT_LIST);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (list.length == 0) return;
+    if (!list || list.length == 0) return;
 
     localStorage.setItem("list", JSON.stringify(list));
   }, [list]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
@@ -45,44 +39,34 @@ const ListModal = ({
     const newList = formData.get("newList") as string;
     if (newList.length == 0) return;
 
-    setList((prev) => [...prev, { name: newList, places: [] }]);
+    await createList(newList);
     form.reset();
   };
 
-  const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleRemoveList = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.target as HTMLButtonElement;
-    const index = Number(btn.dataset.index);
-    setList((prev) => prev.filter((v, i) => i !== index));
+    const listId = btn.dataset.id;
+    if (listId) await removeList(listId);
   };
 
-  const handleListSwitch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTogglePlaceInList = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const checkBox = e.target as HTMLInputElement;
-    const index = Number(checkBox.dataset.index);
-
-    if (!place) {
-      return (checkBox.checked = false);
-    }
+    const listId = checkBox.dataset.id;
+    if (!listId || !placeId) return;
 
     // find the index then push placeDetail into [index].places and setList
     if (checkBox.checked) {
-      setList((prev) =>
-        prev.map((item: ListType, i: number) => ({
-          ...item,
-          places: i === index ? [...item.places, place] : item.places,
-        })),
-      );
+      await addPlaceToList(listId, placeId);
     } else {
-      setList((prev) =>
-        prev.map((item: ListType, i: number) => ({
-          ...item,
-          places:
-            i === index
-              ? item.places.filter((p) => p.placeId !== place.placeId)
-              : item.places,
-        })),
-      );
+      await removePlaceFromList(listId, placeId);
     }
   };
+
+  const limitReached = list && list.length >= 3 ? true : false;
+
+  // if (!placeId) return null;
 
   return (
     <Modal
@@ -91,28 +75,24 @@ const ListModal = ({
       title="Your List"
       className="px-8 py-12"
     >
-      {list &&
-        list.map((item: ListType, i: number) => (
+      {loading && <p>Loading...</p>}
+      {!loading &&
+        list &&
+        list.map((item: ListType) => (
           <label
-            key={i}
+            key={item._id}
             className="group flex items-center gap-2 p-2 px-4 rounded-md hover:bg-foreground/5 cursor-pointer"
           >
             <input
               type="checkbox"
-              checked={
-                place
-                  ? item.places.find((p) => p.placeId === place.placeId)
-                    ? true
-                    : false
-                  : false
-              }
-              data-index={i}
-              onChange={handleListSwitch}
+              checked={item.places.includes(placeId) ? true : false}
+              data-id={item._id}
+              onChange={handleTogglePlaceInList}
             />
             <span className="grow">{item.name}</span>
             <IconButton
-              data-index={i}
-              onClick={handleRemove}
+              data-id={item._id}
+              onClick={handleRemoveList}
               className="opacity-0 group-hover:opacity-100"
             >
               <XIcon />
@@ -121,19 +101,20 @@ const ListModal = ({
         ))}
       <form
         className="flex gap-2 items-center px-2 mt-6"
-        onSubmit={handleSubmit}
+        onSubmit={handleCreateList}
       >
         <input
           name="newList"
           type="text"
           placeholder="Create new list ..."
-          disabled={list.length >= 3}
+          disabled={limitReached}
           className="grow border rounded-lg bg-background py-2 px-3"
         />
-        <Button type="submit" disabled={list.length >= 3}>
+        <Button type="submit" disabled={limitReached}>
           Add
         </Button>
       </form>
+      {saving && <p>Saving...</p>}
     </Modal>
   );
 };
