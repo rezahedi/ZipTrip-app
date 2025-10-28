@@ -54,7 +54,7 @@ const PlaceOverlay = () => {
       >
         <div className="w-full @md:flex-1/3">
           <img
-            className="w-full h-full object-cover rounded-sm hidden sm:block"
+            className="w-full h-full object-cover rounded-sm"
             src={place.imageURL}
             alt={place.name}
           />
