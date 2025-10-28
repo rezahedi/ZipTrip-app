@@ -40,7 +40,13 @@ const PlacesMarkers = function Markers() {
             emoji={getMarkerIcon(item.type)}
             title={item.name}
             position={item.location}
-            iconURL="/places/emoji_marker.svg"
+            iconOption={{
+              url: "/places/emoji_round.svg",
+              // eslint-disable-next-line no-undef
+              scaledSize: new google.maps.Size(38, 38),
+              // eslint-disable-next-line no-undef
+              anchor: new google.maps.Point(19, 38),
+            }}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
           />
