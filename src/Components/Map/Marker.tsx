@@ -12,6 +12,7 @@ const Marker = memo(function Marker({
   title,
   position,
   iconURL = "/places/emoji_marker.svg",
+  iconOption,
   onClick,
   onMouseOver,
   onMouseOut,
@@ -22,11 +23,27 @@ const Marker = memo(function Marker({
   title: string;
   position: [number, number];
   iconURL?: string;
+  iconOption?:
+    | string
+    // eslint-disable-next-line no-undef
+    | google.maps.Icon
+    // eslint-disable-next-line no-undef
+    | google.maps.Symbol
+    | null
+    | undefined;
   onClick?: EventsFunctionType;
   onMouseOver?: EventsFunctionType;
   onMouseOut?: EventsFunctionType;
   zIndex?: number | null | undefined;
 }) {
+  const icon = iconOption || {
+    url: iconURL,
+    // eslint-disable-next-line no-undef
+    scaledSize: new google.maps.Size(40, 40),
+    // eslint-disable-next-line no-undef
+    anchor: new google.maps.Point(20, 40),
+  };
+
   const handleClick = () => {
     if (onClick) onClick(placeId, position);
   };
@@ -47,13 +64,7 @@ const Marker = memo(function Marker({
       onClick={handleClick}
       onMouseOver={handleMouseHover}
       onMouseOut={handleMouseOut}
-      icon={{
-        url: iconURL,
-        // eslint-disable-next-line no-undef
-        scaledSize: new google.maps.Size(40, 40),
-        // eslint-disable-next-line no-undef
-        anchor: new google.maps.Point(20, 40),
-      }}
+      icon={icon}
       zIndex={zIndex}
     />
   );
