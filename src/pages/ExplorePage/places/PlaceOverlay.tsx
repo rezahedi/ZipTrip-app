@@ -48,7 +48,7 @@ const PlaceOverlay = () => {
       </IconButton>
       <div
         className={cn(
-          `flex flex-col @md:flex-row-reverse gap-2 h-full overflow-y-auto`,
+          `flex flex-col @md:flex-row-reverse gap-2 h-full overflow-y-auto pr-2 -mr-2`,
           SCROLL_BAR_STYLE,
         )}
       >
