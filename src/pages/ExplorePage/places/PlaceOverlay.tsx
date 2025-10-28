@@ -71,8 +71,8 @@ const PlaceOverlay = () => {
           </address>
           <p className="line-clamp-3 lg:line-clamp-none">{place.summary}</p>
           <hr />
-          <p>
-            <StarIcon className="size-3" />{" "}
+          <p className="flex items-center gap-1">
+            <StarIcon className="size-3 fill-foreground" />
             <b className="font-semibold text-balance">{place.rating}</b> (
             {formatNumber(place.userRatingCount)})
           </p>
