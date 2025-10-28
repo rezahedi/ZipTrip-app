@@ -24,8 +24,8 @@ export default function Modal({
     <Dialog open={isOpen} onOpenChange={onClose} modal>
       <DialogContent
         className={cn(
-          className,
           `px-3 py-8 w-full h-full sm:max-w-xl max-w-full sm:h-auto rounded-none sm:rounded-lg`,
+          className,
         )}
       >
         <DialogHeader>
