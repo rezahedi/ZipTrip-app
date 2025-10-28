@@ -7,7 +7,7 @@ import { formatNumber } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 
 const Popup = () => {
-  const { selection } = usePlans();
+  const { selection, setPlaceDetail } = usePlans();
   const [detailLoading, setDetailLoading] = useState<boolean>(true);
   const [place, setPlace] = useState<Place | null>(null);
   const [error, setError] = useState<string>("");
@@ -33,6 +33,17 @@ const Popup = () => {
     })();
   }, [selection]);
 
+  const handleClick = () => {
+    if (!selection || !place) return;
+
+    setPlaceDetail({
+      placeId: selection.placeId,
+      location: selection.location,
+      place: place,
+      source: "marker",
+    });
+  };
+
   if (!selection) return null;
 
   if (detailLoading) return <PopupSkeleton />;
@@ -42,7 +53,11 @@ const Popup = () => {
   if (!place) return null;
 
   return (
-    <div className="flex gap-1 sm:w-xs sm:h-32">
+    <div
+      className="flex gap-1 sm:w-xs sm:h-32 cursor-pointer"
+      onClick={handleClick}
+      rel="button"
+    >
       <img
         className="w-24 h-full object-cover rounded-sm hidden sm:block"
         src={place.imageURL}

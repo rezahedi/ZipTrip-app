@@ -27,6 +27,8 @@ type PlansContextType = {
   error: string | null;
   selection: SelectionType | null;
   setSelection: SetSelectionType;
+  placeDetail: SelectionType | null;
+  setPlaceDetail: SetSelectionType;
   setBoundingBox: Dispatch<
     // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>
@@ -39,6 +41,8 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [places, setPlaces] = useState<Place[]>([]);
   const { selection, setSelection } = useSelection(null);
+  const { selection: placeDetail, setSelection: setPlaceDetail } =
+    useSelection(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
@@ -91,6 +95,8 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
         error,
         selection,
         setSelection,
+        placeDetail,
+        setPlaceDetail,
         setBoundingBox,
       }}
     >

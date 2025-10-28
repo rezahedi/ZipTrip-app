@@ -5,6 +5,7 @@ import SidebarOverlay from "./SidebarOverlay";
 import Title from "@/Components/Header/Title";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MapBox from "./MapBox";
+import PlaceOverlay from "./places/PlaceOverlay";
 
 const ExplorePage = () => {
   const { isMobile } = useMediaQuery();
@@ -22,6 +23,9 @@ const ExplorePage = () => {
           <MapBox>
             <MapControl position={ControlPosition.LEFT_TOP}>
               <SidebarOverlay />
+            </MapControl>
+            <MapControl position={ControlPosition.RIGHT_BOTTOM}>
+              <PlaceOverlay />
             </MapControl>
           </MapBox>
         )}
