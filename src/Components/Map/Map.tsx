@@ -56,6 +56,7 @@ const Map = ({
       style={{ width: "100%", height: "100%" }}
       disableDefaultUI={false}
       gestureHandling="greedy"
+      cameraControl={false}
       streetViewControl={false}
       mapTypeControl={false}
       onDragend={debouncedSetBoundingBox}
