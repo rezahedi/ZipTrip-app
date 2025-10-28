@@ -46,10 +46,10 @@ const LocateMeButton = ({
   };
 
   return (
-    <MapControl position={ControlPosition.RIGHT_BOTTOM}>
+    <MapControl position={ControlPosition.RIGHT_TOP}>
       <Button
         onClick={handleGetLocation}
-        className="bg-background text-foreground/60 mx-3 p-1 size-10 rounded-xs shadow"
+        className="bg-background text-foreground/60 mx-2.5 p-1 size-10 rounded-xs shadow"
       >
         <LocateFixedIcon className="size-6" />
       </Button>
