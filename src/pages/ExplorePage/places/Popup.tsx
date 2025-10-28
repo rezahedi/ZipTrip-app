@@ -4,7 +4,9 @@ import { fetchData } from "@/util";
 import PopupSkeleton from "./PopupSkeleton";
 import { usePlans } from "../PlansContext";
 import { formatNumber } from "@/lib/utils";
-import { StarIcon } from "lucide-react";
+import { CirclePlusIcon, StarIcon } from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import IconButton from "@/Components/ui/IconButton";
 
 const Popup = () => {
   const { selection, setPlaceDetail } = usePlans();
@@ -53,11 +55,7 @@ const Popup = () => {
   if (!place) return null;
 
   return (
-    <div
-      className="flex gap-1 sm:w-xs sm:h-32 cursor-pointer"
-      onClick={handleClick}
-      rel="button"
-    >
+    <div className="flex gap-1 sm:w-xs sm:h-32">
       <img
         className="w-24 h-full object-cover rounded-sm hidden sm:block"
         src={place.imageURL}
@@ -73,6 +71,14 @@ const Popup = () => {
           <b className="font-semibold">{place.rating}</b> (
           {formatNumber(place.userRatingCount)})
         </p>
+        <div className="flex items-center">
+          <Button size="sm" onClick={handleClick}>
+            More Detail
+          </Button>
+          <IconButton title="Add to List">
+            <CirclePlusIcon />
+          </IconButton>
+        </div>
       </div>
     </div>
   );

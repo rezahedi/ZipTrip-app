@@ -5,6 +5,7 @@ import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { Button } from "@/Components/ui/button";
 import { useMap } from "@vis.gl/react-google-maps";
 import { cn } from "@/lib/utils";
+import { HIDE_SCROLL_BAR_STYLE } from "@/constants";
 
 const SidebarOverlay = ({ className = "" }: { className?: string }) => {
   const { plans, isLoading, selection, setSelection } = usePlans();
@@ -56,7 +57,7 @@ const SidebarOverlay = ({ className = "" }: { className?: string }) => {
   return (
     <div
       className={cn(
-        `bg-background p-4 md:m-3 w-full md:w-xs lg:w-sm h-full md:h-[calc(100vh-170px)] rounded-lg shadow-md flex flex-col`,
+        `bg-background p-4 md:m-3 w-full md:w-xs lg:w-sm h-[calc(100vh-6rem)] rounded-lg shadow-md flex flex-col`,
         className,
       )}
     >
@@ -64,7 +65,12 @@ const SidebarOverlay = ({ className = "" }: { className?: string }) => {
         <h2 className="font-medium text-lg">Explore Plans</h2>
         {plans.length > 0 && <span>{plans.length} plans</span>}
       </div>
-      <div className="flex-1 flex flex-col gap-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div
+        className={cn(
+          "flex-1 flex flex-col gap-4 overflow-y-scroll",
+          HIDE_SCROLL_BAR_STYLE,
+        )}
+      >
         {isLoading &&
           Array.from({ length: 2 }).map((_, index) => (
             <PlanCardSkeleton key={index} />

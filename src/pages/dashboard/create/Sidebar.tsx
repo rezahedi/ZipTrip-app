@@ -4,6 +4,8 @@ import Editable from "./Editable";
 import { useItinerary } from "@/context/ItineraryContext";
 import ImageUploader from "./itinerary/ImageUploader";
 import Cities from "./Cities";
+import { cn } from "@/lib/utils";
+import { SCROLL_BAR_STYLE } from "@/constants";
 
 const Sidebar = () => {
   const { plan, setTitle, setDescription, saving, error } = useItinerary();
@@ -11,7 +13,12 @@ const Sidebar = () => {
   if (!plan) return null;
 
   return (
-    <div className="flex-7/12 md:max-w-lg p-3 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div
+      className={cn(
+        "flex-7/12 md:max-w-lg p-3 overflow-y-scroll",
+        SCROLL_BAR_STYLE,
+      )}
+    >
       {saving && <div>Saving ...</div>}
       {!saving && error && <div>Error: {error}</div>}
       {plan && (
