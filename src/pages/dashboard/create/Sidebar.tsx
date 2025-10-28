@@ -1,5 +1,5 @@
 import React from "react";
-import { ItineraryList } from "./itinerary";
+import { AddNewPlace, ItineraryList } from "./itinerary";
 import Editable from "./Editable";
 import { useItinerary } from "@/context/ItineraryContext";
 import ImageUploader from "./itinerary/ImageUploader";
@@ -39,6 +39,7 @@ const Sidebar = () => {
           </div>
           <h3 className="font-semibold text-xl mt-4">Itinerary</h3>
           <ItineraryList />
+          <AddNewPlace />
         </>
       )}
     </div>
