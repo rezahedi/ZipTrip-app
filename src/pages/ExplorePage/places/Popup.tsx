@@ -4,9 +4,9 @@ import { fetchData } from "@/util";
 import PopupSkeleton from "./PopupSkeleton";
 import { usePlans } from "../PlansContext";
 import { formatNumber } from "@/lib/utils";
-import { CirclePlusIcon, StarIcon } from "lucide-react";
+import { StarIcon } from "lucide-react";
 import { Button } from "@/Components/ui/button";
-import IconButton from "@/Components/ui/IconButton";
+import AddToListButton from "./AddToListButton";
 
 const Popup = () => {
   const { selection, setPlaceDetail } = usePlans();
@@ -75,9 +75,7 @@ const Popup = () => {
           <Button size="sm" onClick={handleClick}>
             More Detail
           </Button>
-          <IconButton title="Add to List">
-            <CirclePlusIcon />
-          </IconButton>
+          <AddToListButton />
         </div>
       </div>
     </div>

@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { usePlans } from "../PlansContext";
-import { StarIcon, XIcon, CirclePlusIcon } from "lucide-react";
+import { StarIcon, XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import { Place } from "@/types";
 import { cn, formatNumber } from "@/lib/utils";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { SCROLL_BAR_STYLE } from "@/constants";
+import AddToListButton from "./AddToListButton";
 
 const PlaceOverlay = () => {
   const { placeDetail, setPlaceDetail } = usePlans();
@@ -62,9 +63,7 @@ const PlaceOverlay = () => {
         <div className="flex-2/3 space-y-2 text-sm">
           <div className="flex items-center justify-between">
             <h3 className="text-lg text-balance">{place.name}</h3>
-            <IconButton title="Add to List">
-              <CirclePlusIcon />
-            </IconButton>
+            <AddToListButton />
           </div>
           <address className="not-italic text-foreground/80">
             {place.address}
