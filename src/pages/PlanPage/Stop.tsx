@@ -3,11 +3,15 @@ import { Stop as StopType } from "@/types";
 import { getMarkerIcon } from "@/types/map";
 import { useMapSync } from "@/context/MapSyncContext";
 import { cn } from "@/lib/utils";
+import { CirclePlusIcon } from "lucide-react";
+import { useList } from "@/context/ListContext";
+import { Button } from "@/Components/ui/button";
 
 const Stop = ({ detail }: { detail: StopType }) => {
   const { placeId, name, imageURL, address, type, rating, userRatingCount } =
     detail;
   const { selection, setSelection } = useMapSync();
+  const { openEditor } = useList();
 
   const handleSetSelection = () => {
     setSelection({ placeId: detail.placeId, source: "card" });
@@ -31,7 +35,7 @@ const Stop = ({ detail }: { detail: StopType }) => {
           className="w-full sm:w-56 object-cover group-hover:scale-105 transition-all duration-200"
         />
       )}
-      <div className="flex flex-col content-start py-2 p-4 gap-2">
+      <div className="flex flex-col items-start py-2 p-4 gap-2">
         <h5 className="font-semibold text-lg">
           {getMarkerIcon(type)} {name}
         </h5>
@@ -41,6 +45,13 @@ const Stop = ({ detail }: { detail: StopType }) => {
             {rating} / {userRatingCount} reviews
           </p>
         )}
+        <Button
+          variant="outline"
+          className="mt-4 hover:bg-foreground/20"
+          onClick={openEditor}
+        >
+          <CirclePlusIcon /> Add to List
+        </Button>
       </div>
     </div>
   );

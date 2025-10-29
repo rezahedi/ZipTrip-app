@@ -2,9 +2,14 @@ import React, { useCallback } from "react";
 import { Stop as StopType } from "@/types";
 import { InfoWindow, Marker } from "@/Components/Map";
 import { useMapSync } from "@/context/MapSyncContext";
+import ListEditor from "../ExplorePage/places/list/ListEditor";
+import { useList } from "@/context/ListContext";
+import { CirclePlusIcon } from "lucide-react";
+import IconButton from "@/Components/ui/IconButton";
 
 const Markers = ({ stops }: { stops: StopType[] }) => {
   const { selection, setSelection } = useMapSync();
+  const { isOpenEditor, closeEditor, openEditor } = useList();
   const selectedPlace: StopType | null =
     stops.find((s) => s.placeId === selection?.placeId) || null;
 
@@ -49,10 +54,18 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
                 {selectedPlace.name}
               </h3>
               <p>{selectedPlace.address}</p>
+              <IconButton title="Add to List" onClick={openEditor}>
+                <CirclePlusIcon />
+              </IconButton>
             </div>
           </div>
         </InfoWindow>
       )}
+      <ListEditor
+        isOpen={isOpenEditor}
+        onClose={closeEditor}
+        placeId={selection?.placeId}
+      />
     </>
   );
 };
