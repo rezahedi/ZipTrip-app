@@ -29,6 +29,7 @@ const AddNewPlace = () => {
         className="border rounded-lg p-1.5 w-full"
       />
       <Button onClick={handleOpen}>From List</Button>
+      {/* FIXME: ListViewer should moved out of AddNewPlace button somewhere in parent elements, or have a context wrapper */}
       <ListViewer
         isOpen={isOpen}
         onClose={handleClose}
