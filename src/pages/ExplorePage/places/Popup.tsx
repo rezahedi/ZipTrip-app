@@ -6,7 +6,7 @@ import { usePlans } from "../PlansContext";
 import { formatNumber } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import { Button } from "@/Components/ui/button";
-import AddToListButton from "./AddToListButton";
+import AddToListButton from "./list/AddToListButton";
 
 const Popup = () => {
   const { selection, setPlaceDetail } = usePlans();

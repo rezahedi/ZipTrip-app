@@ -7,7 +7,7 @@ import { cn, formatNumber } from "@/lib/utils";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { SCROLL_BAR_STYLE } from "@/constants";
-import AddToListButton from "./AddToListButton";
+import AddToListButton from "./list/AddToListButton";
 
 const PlaceOverlay = () => {
   const { placeDetail, setPlaceDetail } = usePlans();

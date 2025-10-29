@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { Place } from "@/types";
 
 const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
-export type ListType = { _id: string; name: string; places: string[] };
+export type ListType = {
+  _id: string;
+  name: string;
+  places: string[];
+  placesDetail?: Place[];
+};
 
 export default function useList() {
   const [list, setList] = useState<ListType[] | null>([]);
@@ -68,7 +74,7 @@ export default function useList() {
       throw new Error("You must be logged in to get list");
     }
 
-    setLoading(true);
+    setSaving(true);
     try {
       let res = await fetch(`${API_BASE_URL}/account/list/${listId}`, {
         method: "GET",
@@ -82,10 +88,17 @@ export default function useList() {
         throw new Error(errorData.msg || "Failed to get list");
       }
       // TODO: set places here
-      // setList(await res.json());
-      setLoading(false);
+      const listWithPlaces = await res.json();
+      console.log(listWithPlaces);
+      setList((prev) => {
+        if (!prev) return null;
+        return prev.map((l) =>
+          l._id === listId ? { ...l, placesDetail: listWithPlaces.places } : l,
+        );
+      });
+      setSaving(false);
     } catch (error) {
-      setLoading(false);
+      setSaving(false);
       throw error;
     }
   };
