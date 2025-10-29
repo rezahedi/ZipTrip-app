@@ -5,7 +5,7 @@ import IconButton from "@/Components/ui/IconButton";
 import Modal from "@/Components/Common/Modal";
 import useList, { ListType } from "@/hooks/useList";
 
-const ListModal = ({
+const ListEditor = ({
   isOpen,
   onClose,
   placeId,
@@ -119,4 +119,4 @@ const ListModal = ({
   );
 };
 
-export default ListModal;
+export default ListEditor;

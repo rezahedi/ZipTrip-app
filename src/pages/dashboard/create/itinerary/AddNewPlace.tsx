@@ -1,6 +1,6 @@
 import { Button } from "@/Components/ui/button";
 import { useItinerary } from "@/context/ItineraryContext";
-import ListPlacesModal from "@/pages/ExplorePage/places/list/ListPlacesModal";
+import ListViewer from "@/pages/ExplorePage/places/list/ListViewer";
 import { Place } from "@/types";
 import React, { useState } from "react";
 
@@ -29,7 +29,7 @@ const AddNewPlace = () => {
         className="border rounded-lg p-1.5 w-full"
       />
       <Button onClick={handleOpen}>From List</Button>
-      <ListPlacesModal
+      <ListViewer
         isOpen={isOpen}
         onClose={handleClose}
         onPlaceSelect={handlePlaceSelect}

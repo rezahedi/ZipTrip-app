@@ -5,7 +5,7 @@ import useList, { ListType } from "@/hooks/useList";
 import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
 
-const ListPlacesModal = ({
+const ListViewer = ({
   isOpen,
   onClose,
   onPlaceSelect,
@@ -76,4 +76,4 @@ const ListPlacesModal = ({
   );
 };
 
-export default ListPlacesModal;
+export default ListViewer;

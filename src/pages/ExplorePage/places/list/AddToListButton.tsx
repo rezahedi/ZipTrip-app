@@ -1,7 +1,7 @@
 import IconButton from "@/Components/ui/IconButton";
 import { CirclePlusIcon } from "lucide-react";
 import React, { useState } from "react";
-import ListModal from "./ListModal";
+import ListEditor from "./ListEditor";
 
 const AddToListButton = ({ placeId }: { placeId: string }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -19,7 +19,7 @@ const AddToListButton = ({ placeId }: { placeId: string }) => {
       <IconButton title="Add to List" onClick={handleOpen}>
         <CirclePlusIcon />
       </IconButton>
-      <ListModal isOpen={isOpen} onClose={handleClose} placeId={placeId} />
+      <ListEditor isOpen={isOpen} onClose={handleClose} placeId={placeId} />
     </>
   );
 };
