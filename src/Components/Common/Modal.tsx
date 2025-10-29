@@ -4,17 +4,20 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/Components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 export default function Modal({
   title = "",
+  description = "",
   isOpen,
   onClose,
   children,
   className,
 }: {
   title?: string;
+  description?: string;
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
@@ -31,6 +34,11 @@ export default function Modal({
         <DialogHeader>
           {title && (
             <DialogTitle className="text-2xl text-center">{title}</DialogTitle>
+          )}
+          {description && (
+            <DialogDescription className="text-center">
+              {description}
+            </DialogDescription>
           )}
         </DialogHeader>
         <div className="flex flex-col gap-2">{children}</div>
