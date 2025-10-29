@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChevronUpIcon } from "lucide-react";
 import Modal from "@/Components/Common/Modal";
-import useList, { ListType } from "@/hooks/useList";
+import useListHook, { ListType } from "@/hooks/useListHook";
 import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
 
@@ -14,7 +14,7 @@ const ListViewer = ({
   onClose: () => void;
   onPlaceSelect: (place: Place) => void;
 }) => {
-  const { list, getList, saving, loading } = useList();
+  const { list, getList, saving, loading } = useListHook();
   const [openedList, setOpenedList] = useState<string>("");
   console.log(list);
   useEffect(() => {

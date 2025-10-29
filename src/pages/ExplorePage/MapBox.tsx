@@ -7,6 +7,7 @@ import PlanPopup from "./PlanPopup";
 import { Plan } from "@/types";
 import Popup from "./places/Popup";
 import { MapMouseEvent } from "@vis.gl/react-google-maps";
+import { ListProvider } from "@/context/ListContext";
 
 const MapBox = ({
   className = "",
@@ -41,7 +42,15 @@ const MapBox = ({
       className={className}
       onClick={handleMapClick}
     >
-      <PlacesMarkers />
+      <ListProvider>
+        {children && children}
+        <PlacesMarkers />
+        {!selectedPlan && selection && selection.location && (
+          <InfoWindow position={selection.location} onClose={handlePopupClose}>
+            <Popup />
+          </InfoWindow>
+        )}
+      </ListProvider>
       <Markers />
       {selectedPlan && (
         <InfoWindow
@@ -51,13 +60,7 @@ const MapBox = ({
           <PlanPopup plan={selectedPlan} />
         </InfoWindow>
       )}
-      {!selectedPlan && selection && selection.location && (
-        <InfoWindow position={selection.location} onClose={handlePopupClose}>
-          <Popup />
-        </InfoWindow>
-      )}
       <LocateMeButton />
-      {children && children}
     </Map>
   );
 };

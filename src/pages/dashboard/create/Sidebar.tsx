@@ -6,6 +6,7 @@ import ImageUploader from "./itinerary/ImageUploader";
 import Cities from "./Cities";
 import { cn } from "@/lib/utils";
 import { SCROLL_BAR_STYLE } from "@/constants";
+import { ListProvider } from "@/context/ListContext";
 
 const Sidebar = () => {
   const { plan, setTitle, setDescription, saving, error } = useItinerary();
@@ -43,7 +44,9 @@ const Sidebar = () => {
           </>
         )}
       </div>
-      <AddNewPlace />
+      <ListProvider>
+        <AddNewPlace />
+      </ListProvider>
     </div>
   );
 };

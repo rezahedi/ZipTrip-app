@@ -75,7 +75,7 @@ const Popup = () => {
           <Button size="sm" onClick={handleClick}>
             More Detail
           </Button>
-          <AddToListButton placeId={place.placeId} />
+          <AddToListButton />
         </div>
       </div>
     </div>

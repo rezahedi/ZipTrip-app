@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@/Components/ui/button";
 import { XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import Modal from "@/Components/Common/Modal";
-import useList, { ListType } from "@/hooks/useList";
+import useListHook, { ListType } from "@/hooks/useListHook";
+
+const LIST_COUNT_LIMIT = 3;
 
 const ListEditor = ({
   isOpen,
@@ -12,7 +14,7 @@ const ListEditor = ({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  placeId: string;
+  placeId: string | null | undefined;
 }) => {
   const {
     list,
@@ -22,13 +24,7 @@ const ListEditor = ({
     removePlaceFromList,
     saving,
     loading,
-  } = useList();
-
-  useEffect(() => {
-    if (!list || list.length == 0) return;
-
-    localStorage.setItem("list", JSON.stringify(list));
-  }, [list]);
+  } = useListHook();
 
   const handleCreateList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,9 +60,9 @@ const ListEditor = ({
     }
   };
 
-  const limitReached = list && list.length >= 3 ? true : false;
+  const limitReached = list && list.length >= LIST_COUNT_LIMIT ? true : false;
 
-  // if (!placeId) return null;
+  if (!placeId) return null;
 
   return (
     <Modal

@@ -1,25 +1,16 @@
 import IconButton from "@/Components/ui/IconButton";
 import { CirclePlusIcon } from "lucide-react";
-import React, { useState } from "react";
-import ListEditor from "./ListEditor";
+import React from "react";
+import { useList } from "@/context/ListContext";
 
-const AddToListButton = ({ placeId }: { placeId: string }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+const AddToListButton = () => {
+  const { openEditor } = useList();
 
   return (
     <>
-      <IconButton title="Add to List" onClick={handleOpen}>
+      <IconButton title="Add to List" onClick={openEditor}>
         <CirclePlusIcon />
       </IconButton>
-      <ListEditor isOpen={isOpen} onClose={handleClose} placeId={placeId} />
     </>
   );
 };

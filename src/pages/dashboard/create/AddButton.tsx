@@ -13,7 +13,7 @@ const AddButton = ({
     return (
       <Button
         size="sm"
-        className={`mt-2 bg-transparent text-primary border`}
+        className={`bg-transparent text-primary border`}
         disabled={isAdded}
       >
         <CheckIcon /> Added
@@ -21,7 +21,7 @@ const AddButton = ({
     );
 
   return (
-    <Button size="sm" className="mt-2" onClick={onClick}>
+    <Button size="sm" onClick={onClick}>
       Add to Itinerary
     </Button>
   );

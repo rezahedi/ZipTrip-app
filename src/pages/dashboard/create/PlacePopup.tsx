@@ -7,6 +7,7 @@ import { fetchData } from "@/util";
 import PlacePopupSkeleton from "./PlacePopupSkeleton";
 import { StarIcon } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
+import AddToListButton from "@/pages/ExplorePage/places/list/AddToListButton";
 
 const PlacePopup = () => {
   const { selection } = usePlaces();
@@ -72,7 +73,10 @@ const PlacePopup = () => {
           <b className="font-semibold">{place.rating}</b> (
           {formatNumber(place.userRatingCount)})
         </p>
-        <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
+        <div className="flex items-center mt-2">
+          <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
+          <AddToListButton />
+        </div>
       </div>
     </div>
   );

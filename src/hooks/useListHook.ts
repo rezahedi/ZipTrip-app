@@ -11,7 +11,7 @@ export type ListType = {
   placesDetail?: Place[];
 };
 
-export default function useList() {
+export default function useListHook() {
   const [list, setList] = useState<ListType[] | null>([]);
   const [saving, setSaving] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);

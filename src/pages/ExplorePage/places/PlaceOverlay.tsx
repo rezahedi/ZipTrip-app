@@ -63,7 +63,7 @@ const PlaceOverlay = () => {
         <div className="flex-2/3 space-y-2 text-sm">
           <div className="flex items-center justify-between">
             <h3 className="text-lg text-balance">{place.name}</h3>
-            <AddToListButton placeId={place.placeId} />
+            <AddToListButton />
           </div>
           <address className="not-italic text-foreground/80">
             {place.address}

@@ -1,25 +1,9 @@
-import { Button } from "@/Components/ui/button";
 import { useItinerary } from "@/context/ItineraryContext";
-import ListViewer from "@/pages/ExplorePage/places/list/ListViewer";
-import { Place } from "@/types";
-import React, { useState } from "react";
+import React from "react";
+import AddPlaceFromList from "./AddPlaceFromList";
 
 const AddNewPlace = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { addPlace } = useItinerary();
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const handlePlaceSelect = (place: Place) => {
-    addPlace(place);
-    handleClose();
-  };
 
   return (
     <div className="bg-background p-3 sticky bottom-0 flex items-center gap-1">
@@ -28,13 +12,7 @@ const AddNewPlace = () => {
         placeholder="Add a place..."
         className="border rounded-lg p-1.5 w-full"
       />
-      <Button onClick={handleOpen}>From List</Button>
-      {/* FIXME: ListViewer should moved out of AddNewPlace button somewhere in parent elements, or have a context wrapper */}
-      <ListViewer
-        isOpen={isOpen}
-        onClose={handleClose}
-        onPlaceSelect={handlePlaceSelect}
-      />
+      <AddPlaceFromList onAddPlace={addPlace}>From List</AddPlaceFromList>
     </div>
   );
 };
