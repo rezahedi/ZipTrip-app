@@ -16,7 +16,7 @@ const ListViewer = ({
 }) => {
   const { list, getList, saving, loading } = useListHook();
   const [openedList, setOpenedList] = useState<string>("");
-  console.log(list);
+
   useEffect(() => {
     if (!list || list.length == 0) return;
 
