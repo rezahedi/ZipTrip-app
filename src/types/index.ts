@@ -55,6 +55,8 @@ export interface Stop {
   rating: number;
   userRatingCount: number;
   reviewSummary: string;
+  directionGoogleURI?: string;
+  placeGoogleURI?: string;
 }
 
 export interface PlanWithStops extends Plan {

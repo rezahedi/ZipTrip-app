@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 export type SelectionType = {
   placeId: string;
   location?: [number, number];
+  place?: unknown;
   source: "card" | "marker";
 };
 export type SetSelectionType = Dispatch<SetStateAction<SelectionType | null>>;

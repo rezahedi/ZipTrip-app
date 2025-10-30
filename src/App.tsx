@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import HomePage from "@/pages/HomePage";
 import SearchPage from "@/pages/SearchPage";
-import MapViewPage from "@/pages/MapView";
+import ExplorePage from "@/pages/ExplorePage";
 import PlanPage from "@/pages/PlanPage";
 import UserPage from "@/pages/UserPage";
 import NotFound404 from "@/pages/404NotFound";
@@ -30,7 +30,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<MapLayout />}>
-            <Route path="/map" element={<MapViewPage />} />
+            <Route path="/explore" element={<ExplorePage />} />
             <Route path="/create" element={<CreatePage />} />
             <Route path="/create/:planId" element={<CreatePage />} />
           </Route>

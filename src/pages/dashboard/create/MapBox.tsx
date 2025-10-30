@@ -5,6 +5,7 @@ import { MapMouseEvent } from "@vis.gl/react-google-maps";
 import { useItinerary } from "@/context/ItineraryContext";
 import { calculateBounds, getBoundsFromViewport } from "@/lib/utils";
 import Markers from "./Markers";
+import { ListProvider } from "@/context/ListContext";
 
 const MapBox = () => {
   const { setBoundingBox, setSelection } = usePlaces();
@@ -39,7 +40,9 @@ const MapBox = () => {
       defaultBounds={defaultBounds}
       className="w-full flex-5/12 md:flex-auto"
     >
-      <Markers />
+      <ListProvider>
+        <Markers />
+      </ListProvider>
       <LocateMeButton />
     </Map>
   );

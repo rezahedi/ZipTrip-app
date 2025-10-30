@@ -9,7 +9,7 @@ import Banner from "./Banner";
 
 export const NAV_MENU = [
   { text: "Home", link: "/" },
-  { text: "Explore", link: "/map" },
+  { text: "Explore", link: "/explore" },
   { text: "About", link: "#" },
 ];
 

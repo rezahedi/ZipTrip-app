@@ -11,6 +11,7 @@ import StatsBlock from "./StatsBlock";
 import Cities from "../dashboard/create/Cities";
 import BookmarkButton from "@/Components/Common/BookmarkButton";
 import { MapSyncProvider } from "@/context/MapSyncContext";
+import { ListProvider } from "@/context/ListContext";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
@@ -109,33 +110,35 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
         </div>
 
         <MapSyncProvider>
-          <div className="flex gap-4 my-4 flex-col md:flex-row-reverse">
-            <MapBox stops={stops} />
-            <div className="grow md:flex-2/3">
-              {images?.length > 0 && (
-                <ImageBlock
-                  className="overflow-hidden flex rounded-md h-[300px] sm:h-[450px]"
-                  images={images}
+          <ListProvider>
+            <div className="flex gap-4 my-4 flex-col md:flex-row-reverse">
+              <MapBox stops={stops} />
+              <div className="grow md:flex-2/3">
+                {images?.length > 0 && (
+                  <ImageBlock
+                    className="overflow-hidden flex rounded-md h-[300px] sm:h-[450px]"
+                    images={images}
+                  />
+                )}
+
+                <StatsBlock
+                  className="py-6"
+                  stats={{
+                    rate,
+                    reviewCount,
+                    type,
+                    distance,
+                    stopCount,
+                    duration,
+                  }}
                 />
-              )}
 
-              <StatsBlock
-                className="py-6"
-                stats={{
-                  rate,
-                  reviewCount,
-                  type,
-                  distance,
-                  stopCount,
-                  duration,
-                }}
-              />
+                <p className="py-6">{description}</p>
 
-              <p className="py-6">{description}</p>
-
-              {stops.length > 0 && <Stops stops={stops} />}
+                {stops.length > 0 && <Stops stops={stops} />}
+              </div>
             </div>
-          </div>
+          </ListProvider>
         </MapSyncProvider>
       </article>
     </>

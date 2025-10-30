@@ -1,41 +1,28 @@
-import { usePlaces } from "@/context/PlacesContext";
 import React, { useEffect, useState } from "react";
 import { Place } from "@/types";
-import { useItinerary } from "@/context/ItineraryContext";
-import AddButton from "./AddButton";
 import { fetchData } from "@/util";
-import PlacePopupSkeleton from "./PlacePopupSkeleton";
-import { StarIcon } from "lucide-react";
+import PopupSkeleton from "./PopupSkeleton";
+import { usePlans } from "../PlansContext";
 import { formatNumber } from "@/lib/utils";
-import AddToListButton from "@/pages/ExplorePage/places/list/AddToListButton";
+import { StarIcon } from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import AddToListButton from "./list/AddToListButton";
 
-const PlacePopup = () => {
-  const { selection } = usePlaces();
+const Popup = () => {
+  const { selection, setPlaceDetail } = usePlans();
   const [detailLoading, setDetailLoading] = useState<boolean>(true);
   const [place, setPlace] = useState<Place | null>(null);
-  // const place = selection?.item as Place | undefined;
-  const { plan, addPlace } = useItinerary();
   const [error, setError] = useState<string>("");
-  const places = plan?.stops || [];
-  const isAdded = place
-    ? !!places.find((p) => p.placeId === place.placeId)
-    : false;
-
-  const handleAddToItinerary = () => {
-    if (!place) return;
-
-    addPlace(place);
-  };
+  // const place = selection?.item as Place | undefined;
 
   useEffect(() => {
-    console.log("place selected", selection);
     if (!selection) return;
 
     (async () => {
-      setError("");
       setDetailLoading(true);
 
-      // Fetch place's detail from API
+      // If name had value, mean the place is already exist in db
+      // if not fetch place's detail from G-Places API
       const URL = `places/${selection.placeId}`;
       const res = await fetchData(URL, null, () => {});
       if (!res) {
@@ -48,9 +35,20 @@ const PlacePopup = () => {
     })();
   }, [selection]);
 
+  const handleClick = () => {
+    if (!selection || !place) return;
+
+    setPlaceDetail({
+      placeId: selection.placeId,
+      location: selection.location,
+      place: place,
+      source: "marker",
+    });
+  };
+
   if (!selection) return null;
 
-  if (detailLoading) return <PlacePopupSkeleton />;
+  if (detailLoading) return <PopupSkeleton />;
 
   if (error) return <div className="flex pt-6 p-3 text-center">{error}</div>;
 
@@ -63,8 +61,8 @@ const PlacePopup = () => {
         src={place.imageURL}
         alt={place.name}
       />
-      <div className="flex-4/5 max-h-40 px-2">
-        <h3 className="font-medium text-base/snug text-balance py-1">
+      <div className="flex-4/5 max-h-40 px-2 space-y-2">
+        <h3 className="font-medium text-base/snug text-balance">
           {place.name}
         </h3>
         <p>{place.address}</p>
@@ -73,8 +71,10 @@ const PlacePopup = () => {
           <b className="font-semibold">{place.rating}</b> (
           {formatNumber(place.userRatingCount)})
         </p>
-        <div className="flex items-center mt-2">
-          <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
+        <div className="flex items-center">
+          <Button size="sm" onClick={handleClick}>
+            More Detail
+          </Button>
           <AddToListButton />
         </div>
       </div>
@@ -82,4 +82,4 @@ const PlacePopup = () => {
   );
 };
 
-export default PlacePopup;
+export default Popup;

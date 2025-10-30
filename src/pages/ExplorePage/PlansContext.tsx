@@ -8,37 +8,41 @@ import React, {
 } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { fetchData } from "@/util";
-import { Plan } from "@/types";
+import { Place, Plan } from "@/types";
 import { useMap } from "@vis.gl/react-google-maps";
 import useSelection, {
   SelectionType,
   SetSelectionType,
 } from "@/hooks/useSelection";
 
+type ItemType = {
+  type: "plan" | "place";
+  item: unknown;
+};
+
 type PlansContextType = {
   plans: Plan[];
+  places: Place[];
   isLoading: boolean;
   error: string | null;
   selection: SelectionType | null;
   setSelection: SetSelectionType;
+  placeDetail: SelectionType | null;
+  setPlaceDetail: SetSelectionType;
   setBoundingBox: Dispatch<
     // eslint-disable-next-line no-undef
     SetStateAction<google.maps.LatLngBounds | undefined>
   >;
 };
 
-const PlansContext = createContext<PlansContextType>({
-  plans: [],
-  isLoading: false,
-  error: null,
-  selection: null,
-  setSelection: () => {},
-  setBoundingBox: () => {},
-});
+const PlansContext = createContext<PlansContextType | undefined>(undefined);
 
 const PlansProvider = ({ children }: { children: React.ReactNode }) => {
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [places, setPlaces] = useState<Place[]>([]);
   const { selection, setSelection } = useSelection(null);
+  const { selection: placeDetail, setSelection: setPlaceDetail } =
+    useSelection(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [boundingBox, setBoundingBox] = useState<
@@ -62,11 +66,16 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
       const paramsString = createNearbyQueries(currentBounds);
       try {
         const fetchResult = await fetchData(
-          `plans/nearby/?${paramsString}`,
+          `all/?${paramsString}`,
           token,
           setError,
         );
-        setPlans(fetchResult.items || []);
+        const fetchedPlans: ItemType[] =
+          fetchResult.items.filter((i: ItemType) => i.type === "plan") || [];
+        setPlans(fetchedPlans.map((i: ItemType) => i.item as Plan) || []);
+        const fetchedPlaces: ItemType[] =
+          fetchResult.items.filter((i: ItemType) => i.type === "place") || [];
+        setPlaces(fetchedPlaces.map((i: ItemType) => i.item as Place) || []);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -81,10 +90,13 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
     <PlansContext.Provider
       value={{
         plans,
+        places,
         isLoading,
         error,
         selection,
         setSelection,
+        placeDetail,
+        setPlaceDetail,
         setBoundingBox,
       }}
     >
@@ -96,7 +108,7 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
 const usePlans = () => {
   const context = useContext(PlansContext);
   if (!context) {
-    throw new Error("usePlans must be used within a PlansProvider");
+    throw new Error("usePlans must be used within its provider");
   }
   return context;
 };
