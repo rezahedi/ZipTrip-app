@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChevronUpIcon } from "lucide-react";
 import Modal from "@/Components/Common/Modal";
-import useListHook, { ListType } from "@/hooks/useListHook";
+import { ListType } from "@/hooks/useListHook";
 import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
 import { useList } from "@/context/ListContext";
@@ -18,12 +18,16 @@ const ListViewer = ({
   const { list, getList, saving, loading } = useList();
   const [openedList, setOpenedList] = useState<string>("");
 
+  // Load and open first list by default
   useEffect(() => {
+    if (openedList !== "") return;
     if (!list || list.length == 0) return;
 
-    setOpenedList(list[0]._id);
-    getList(list[0]._id);
-  }, []);
+    (async () => {
+      setOpenedList(list[0]._id);
+      await getList(list[0]._id);
+    })();
+  }, [list, openedList]);
 
   const handleOpenList = async (e: React.MouseEvent<HTMLDivElement>) => {
     const div = e.currentTarget as HTMLDivElement;
