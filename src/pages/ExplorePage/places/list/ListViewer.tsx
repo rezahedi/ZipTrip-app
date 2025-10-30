@@ -5,6 +5,7 @@ import { ListType } from "@/hooks/useListHook";
 import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
 import { useList } from "@/context/ListContext";
+import PlaceCardSkeleton from "./PlaceCardSkeleton";
 
 // TODO: Consider using HTML5 native accordion
 
@@ -70,19 +71,23 @@ const ListViewer = ({
               />
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
-              {openedList === item._id &&
-                item.placesDetail &&
-                item.placesDetail.map((place: Place) => (
-                  <PlaceCard
-                    key={place.placeId}
-                    place={place}
-                    onPlaceSelect={onPlaceSelect}
-                  />
-                ))}
+              {openedList === item._id && (
+                <>
+                  {saving && <PlaceCardSkeleton />}
+                  {!saving &&
+                    item.placesDetail &&
+                    item.placesDetail.map((place: Place) => (
+                      <PlaceCard
+                        key={place.placeId}
+                        place={place}
+                        onPlaceSelect={onPlaceSelect}
+                      />
+                    ))}
+                </>
+              )}
             </div>
           </div>
         ))}
-      {saving && <p>Saving...</p>}
     </Modal>
   );
 };
