@@ -12,13 +12,13 @@ const PlaceCard = ({
 }) => {
   return (
     <div
-      className="flex gap-1 aspect-square relative cursor-pointer"
+      className="flex gap-1 aspect-[16/10] sm:aspect-[6/5] relative cursor-pointer"
       role="button"
       onClick={() => onPlaceSelect(place)}
       title="Add to Itinerary"
     >
       <img
-        className="absolute top-0 left-0 size-full object-cover rounded-sm hidden sm:block"
+        className="absolute top-0 left-0 size-full object-cover rounded-sm"
         src={place.imageURL}
         alt={place.name}
       />
