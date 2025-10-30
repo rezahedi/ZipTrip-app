@@ -14,8 +14,15 @@ const ListViewer = ({
 }: {
   onPlaceSelect: (place: Place) => void;
 }) => {
-  const { list, getList, saving, loading, isOpenViewer, closeViewer } =
-    useList();
+  const {
+    list,
+    getList,
+    saving,
+    loading,
+    isOpenViewer,
+    closeViewer,
+    removePlaceFromList,
+  } = useList();
   const [openedList, setOpenedList] = useState<string>("");
 
   // Load and open first list by default
@@ -38,6 +45,10 @@ const ListViewer = ({
 
     setOpenedList(listId);
     if (listId) await getList(listId);
+  };
+
+  const handleRemovePlace = async (listId: string, placeId: string) => {
+    await removePlaceFromList(listId, placeId);
   };
 
   // if (!placeId) return null;
@@ -77,6 +88,9 @@ const ListViewer = ({
                         key={place.placeId}
                         place={place}
                         onPlaceSelect={onPlaceSelect}
+                        onPlaceRemove={() =>
+                          handleRemovePlace(item._id, place.placeId)
+                        }
                       />
                     ))}
                 </>
