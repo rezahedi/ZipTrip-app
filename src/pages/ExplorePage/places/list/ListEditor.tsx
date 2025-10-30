@@ -3,7 +3,8 @@ import { Button } from "@/Components/ui/button";
 import { XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import Modal from "@/Components/Common/Modal";
-import useListHook, { ListType } from "@/hooks/useListHook";
+import { ListType } from "@/hooks/useListHook";
+import { useList } from "@/context/ListContext";
 
 const LIST_COUNT_LIMIT = 3;
 
@@ -24,7 +25,7 @@ const ListEditor = ({
     removePlaceFromList,
     saving,
     loading,
-  } = useListHook();
+  } = useList();
 
   const handleCreateList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

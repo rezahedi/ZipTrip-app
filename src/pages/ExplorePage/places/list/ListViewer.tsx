@@ -4,6 +4,7 @@ import Modal from "@/Components/Common/Modal";
 import useListHook, { ListType } from "@/hooks/useListHook";
 import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
+import { useList } from "@/context/ListContext";
 
 const ListViewer = ({
   isOpen,
@@ -14,7 +15,7 @@ const ListViewer = ({
   onClose: () => void;
   onPlaceSelect: (place: Place) => void;
 }) => {
-  const { list, getList, saving, loading } = useListHook();
+  const { list, getList, saving, loading } = useList();
   const [openedList, setOpenedList] = useState<string>("");
 
   useEffect(() => {
