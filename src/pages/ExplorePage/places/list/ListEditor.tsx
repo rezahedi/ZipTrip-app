@@ -9,8 +9,9 @@ import { useAuth } from "@/context/AuthContext";
 
 const LIST_COUNT_LIMIT = 5;
 
-const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
+const ListEditor = () => {
   const {
+    placeId,
     list,
     createList,
     removeList,

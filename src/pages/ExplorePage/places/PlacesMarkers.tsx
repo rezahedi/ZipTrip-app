@@ -52,7 +52,7 @@ const PlacesMarkers = function Markers() {
             onMouseOut={handleMouseOut}
           />
         ))}
-      <ListEditor placeId={selection?.placeId} />
+      <ListEditor />
     </>
   );
 };

@@ -18,8 +18,8 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
     stops.find((s) => s.placeId === selection?.placeId) || null;
 
   const handleOpenEditor = () => {
-    if (!token) return openLogin();
-    openEditor();
+    if (!token || !selectedPlace) return openLogin();
+    openEditor(selectedPlace.placeId);
   };
 
   const handleClick = useCallback(
@@ -70,7 +70,7 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
           </div>
         </InfoWindow>
       )}
-      <ListEditor placeId={selection?.placeId} />
+      <ListEditor />
     </>
   );
 };

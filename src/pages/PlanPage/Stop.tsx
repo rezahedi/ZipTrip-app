@@ -28,8 +28,8 @@ const Stop = ({ detail }: { detail: StopType }) => {
   const { openLogin } = useAuthModal();
 
   const handleOpenEditor = () => {
-    if (!token) return openLogin();
-    openEditor();
+    if (!token || !selection) return openLogin();
+    openEditor(selection.placeId);
   };
 
   const handleSetSelection = () => {

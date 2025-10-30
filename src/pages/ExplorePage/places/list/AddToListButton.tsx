@@ -5,14 +5,14 @@ import { useList } from "@/context/ListContext";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 
-const AddToListButton = () => {
+const AddToListButton = ({ placeId }: { placeId: string }) => {
   const { openEditor } = useList();
   const { token } = useAuth();
   const { openLogin } = useAuthModal();
 
   const handleOpenEditor = () => {
     if (!token) return openLogin();
-    openEditor();
+    openEditor(placeId);
   };
 
   return (

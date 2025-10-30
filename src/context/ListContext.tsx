@@ -2,6 +2,7 @@ import useListHook, { ListType } from "@/hooks/useListHook";
 import React, { createContext, useContext, useState } from "react";
 
 type ListContextType = {
+  placeId: string | null;
   list: ListType[] | null;
   createList: (name: string) => Promise<void>;
   getList: (listId: string) => Promise<void>;
@@ -13,7 +14,7 @@ type ListContextType = {
   isOpenEditor: boolean;
   isOpenViewer: boolean;
   closeEditor: () => void;
-  openEditor: () => void;
+  openEditor: (currentPlaceId: string) => void;
   closeViewer: () => void;
   openViewer: () => void;
 };
@@ -23,6 +24,7 @@ const ListContext = createContext<ListContextType | undefined>(undefined);
 const ListProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpenEditor, setIsOpenEditor] = useState<boolean>(false);
   const [isOpenViewer, setIsOpenViewer] = useState<boolean>(false);
+  const [placeId, setPlaceId] = useState<string | null>(null);
   const {
     list,
     createList,
@@ -38,7 +40,8 @@ const ListProvider = ({ children }: { children: React.ReactNode }) => {
     setIsOpenEditor(false);
   };
 
-  const openEditor = () => {
+  const openEditor = (currentPlaceId: string) => {
+    setPlaceId(currentPlaceId);
     setIsOpenEditor(true);
   };
 
@@ -53,6 +56,7 @@ const ListProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ListContext.Provider
       value={{
+        placeId,
         list,
         createList,
         getList,

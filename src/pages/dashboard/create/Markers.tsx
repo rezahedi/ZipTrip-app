@@ -38,7 +38,7 @@ const Markers = memo(function Markers() {
           <PlacePopup />
         </InfoWindow>
       )}
-      <ListEditor placeId={selection?.placeId} />
+      <ListEditor />
     </>
   );
 });
