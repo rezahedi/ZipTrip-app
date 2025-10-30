@@ -10,15 +10,12 @@ import PlaceCardSkeleton from "./PlaceCardSkeleton";
 // TODO: Consider using HTML5 native accordion
 
 const ListViewer = ({
-  isOpen,
-  onClose,
   onPlaceSelect,
 }: {
-  isOpen: boolean;
-  onClose: () => void;
   onPlaceSelect: (place: Place) => void;
 }) => {
-  const { list, getList, saving, loading } = useList();
+  const { list, getList, saving, loading, isOpenViewer, closeViewer } =
+    useList();
   const [openedList, setOpenedList] = useState<string>("");
 
   // Load and open first list by default
@@ -47,8 +44,8 @@ const ListViewer = ({
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isOpenViewer}
+      onClose={closeViewer}
       title="Your List"
       description="Click on saved places to add it to your itinerary"
       className="px-8 py-12"

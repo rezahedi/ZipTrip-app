@@ -8,15 +8,7 @@ import { useList } from "@/context/ListContext";
 
 const LIST_COUNT_LIMIT = 5;
 
-const ListEditor = ({
-  isOpen,
-  onClose,
-  placeId,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  placeId: string | null | undefined;
-}) => {
+const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
   const {
     list,
     createList,
@@ -25,6 +17,8 @@ const ListEditor = ({
     removePlaceFromList,
     saving,
     loading,
+    isOpenEditor,
+    closeEditor,
   } = useList();
 
   const handleCreateList = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,8 +61,8 @@ const ListEditor = ({
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isOpenEditor}
+      onClose={closeEditor}
       title="Your List"
       className="px-8 py-12"
     >

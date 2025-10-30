@@ -9,7 +9,7 @@ import IconButton from "@/Components/ui/IconButton";
 
 const Markers = ({ stops }: { stops: StopType[] }) => {
   const { selection, setSelection } = useMapSync();
-  const { isOpenEditor, closeEditor, openEditor } = useList();
+  const { openEditor } = useList();
   const selectedPlace: StopType | null =
     stops.find((s) => s.placeId === selection?.placeId) || null;
 
@@ -61,11 +61,7 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
           </div>
         </InfoWindow>
       )}
-      <ListEditor
-        isOpen={isOpenEditor}
-        onClose={closeEditor}
-        placeId={selection?.placeId}
-      />
+      <ListEditor placeId={selection?.placeId} />
     </>
   );
 };
