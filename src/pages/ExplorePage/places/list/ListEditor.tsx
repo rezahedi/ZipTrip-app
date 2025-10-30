@@ -6,7 +6,7 @@ import Modal from "@/Components/Common/Modal";
 import { ListType } from "@/hooks/useListHook";
 import { useList } from "@/context/ListContext";
 
-const LIST_COUNT_LIMIT = 3;
+const LIST_COUNT_LIMIT = 5;
 
 const ListEditor = ({
   isOpen,
