@@ -70,9 +70,8 @@ const ListViewer = ({
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
               {openedList === item._id && (
                 <>
-                  {saving && <PlaceCardSkeleton />}
-                  {!saving &&
-                    item.placesDetail &&
+                  {saving && !item.placesDetail && <PlaceCardSkeleton />}
+                  {item.placesDetail &&
                     item.placesDetail.map((place: Place) => (
                       <PlaceCard
                         key={place.placeId}
