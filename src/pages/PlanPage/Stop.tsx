@@ -7,6 +7,8 @@ import { CirclePlusIcon, MapPinnedIcon, RouteIcon } from "lucide-react";
 import { useList } from "@/context/ListContext";
 import { Button } from "@/Components/ui/button";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 const Stop = ({ detail }: { detail: StopType }) => {
   const {
@@ -22,6 +24,13 @@ const Stop = ({ detail }: { detail: StopType }) => {
   } = detail;
   const { selection, setSelection } = useMapSync();
   const { openEditor } = useList();
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
+
+  const handleOpenEditor = () => {
+    if (!token) return openLogin();
+    openEditor();
+  };
 
   const handleSetSelection = () => {
     setSelection({ placeId: detail.placeId, source: "card" });
@@ -73,7 +82,7 @@ const Stop = ({ detail }: { detail: StopType }) => {
           <Button
             variant="outline"
             className="hover:bg-foreground/20"
-            onClick={openEditor}
+            onClick={handleOpenEditor}
           >
             <CirclePlusIcon />
             <span className="hidden sm:inline-block">Add to List</span>

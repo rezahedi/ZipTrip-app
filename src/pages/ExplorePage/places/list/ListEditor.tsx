@@ -5,6 +5,7 @@ import IconButton from "@/Components/ui/IconButton";
 import Modal from "@/Components/Common/Modal";
 import { ListType } from "@/hooks/useListHook";
 import { useList } from "@/context/ListContext";
+import { useAuth } from "@/context/AuthContext";
 
 const LIST_COUNT_LIMIT = 5;
 
@@ -20,6 +21,7 @@ const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
     isOpenEditor,
     closeEditor,
   } = useList();
+  const { token } = useAuth();
 
   const handleCreateList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,6 +58,8 @@ const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
   };
 
   const limitReached = list && list.length >= LIST_COUNT_LIMIT ? true : false;
+
+  if (!token) return;
 
   if (!placeId) return null;
 

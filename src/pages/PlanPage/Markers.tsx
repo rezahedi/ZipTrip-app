@@ -6,12 +6,21 @@ import ListEditor from "../ExplorePage/places/list/ListEditor";
 import { useList } from "@/context/ListContext";
 import { CirclePlusIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
+import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 const Markers = ({ stops }: { stops: StopType[] }) => {
   const { selection, setSelection } = useMapSync();
   const { openEditor } = useList();
+  const { token } = useAuth();
+  const { openLogin } = useAuthModal();
   const selectedPlace: StopType | null =
     stops.find((s) => s.placeId === selection?.placeId) || null;
+
+  const handleOpenEditor = () => {
+    if (!token) return openLogin();
+    openEditor();
+  };
 
   const handleClick = useCallback(
     (placeId?: string, location?: [number, number]) => {
@@ -54,7 +63,7 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
                 {selectedPlace.name}
               </h3>
               <p>{selectedPlace.address}</p>
-              <IconButton title="Add to List" onClick={openEditor}>
+              <IconButton title="Add to List" onClick={handleOpenEditor}>
                 <CirclePlusIcon />
               </IconButton>
             </div>
