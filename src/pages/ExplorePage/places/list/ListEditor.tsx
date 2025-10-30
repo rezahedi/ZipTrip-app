@@ -65,7 +65,7 @@ const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
       onClose={closeEditor}
       title="Your List"
       description={saving ? "saving ..." : "\u00A0"}
-      className="px-8 py-12"
+      className="px-8 py-12 h-auto"
     >
       {loading && <p>Loading...</p>}
       {!loading &&

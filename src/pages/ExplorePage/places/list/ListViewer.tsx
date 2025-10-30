@@ -59,7 +59,7 @@ const ListViewer = ({
       onClose={closeViewer}
       title="Your List"
       description="Click on saved places to add it to your itinerary"
-      className="px-8 py-12"
+      className="px-8 py-12 h-auto"
     >
       {loading && <p>Loading...</p>}
       {!loading &&
