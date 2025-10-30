@@ -6,6 +6,8 @@ import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
 import { useList } from "@/context/ListContext";
 
+// TODO: Consider using HTML5 native accordion
+
 const ListViewer = ({
   isOpen,
   onClose,
