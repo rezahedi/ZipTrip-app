@@ -64,6 +64,7 @@ const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
       isOpen={isOpenEditor}
       onClose={closeEditor}
       title="Your List"
+      description={saving ? "saving ..." : "\u00A0"}
       className="px-8 py-12"
     >
       {loading && <p>Loading...</p>}
@@ -105,7 +106,6 @@ const ListEditor = ({ placeId }: { placeId: string | null | undefined }) => {
           Add
         </Button>
       </form>
-      {saving && <p>Saving...</p>}
     </Modal>
   );
 };
