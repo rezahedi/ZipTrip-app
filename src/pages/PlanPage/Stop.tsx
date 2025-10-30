@@ -3,13 +3,23 @@ import { Stop as StopType } from "@/types";
 import { getMarkerIcon } from "@/types/map";
 import { useMapSync } from "@/context/MapSyncContext";
 import { cn } from "@/lib/utils";
-import { CirclePlusIcon } from "lucide-react";
+import { CirclePlusIcon, MapPinnedIcon, RouteIcon } from "lucide-react";
 import { useList } from "@/context/ListContext";
 import { Button } from "@/Components/ui/button";
+import { Link } from "react-router-dom";
 
 const Stop = ({ detail }: { detail: StopType }) => {
-  const { placeId, name, imageURL, address, type, rating, userRatingCount } =
-    detail;
+  const {
+    placeId,
+    name,
+    imageURL,
+    address,
+    type,
+    rating,
+    userRatingCount,
+    directionGoogleURI,
+    placeGoogleURI,
+  } = detail;
   const { selection, setSelection } = useMapSync();
   const { openEditor } = useList();
 
@@ -45,13 +55,30 @@ const Stop = ({ detail }: { detail: StopType }) => {
             {rating} / {userRatingCount} reviews
           </p>
         )}
-        <Button
-          variant="outline"
-          className="mt-4 hover:bg-foreground/20"
-          onClick={openEditor}
-        >
-          <CirclePlusIcon /> Add to List
-        </Button>
+        <div className="flex flex-wrap items-center gap-1 mt-4 lg:opacity-0 group-hover:opacity-100">
+          {placeGoogleURI && (
+            <Link to={placeGoogleURI} target="_blank">
+              <Button variant="outline" className="hover:bg-foreground/20">
+                <MapPinnedIcon /> Google Map
+              </Button>
+            </Link>
+          )}
+          {directionGoogleURI && (
+            <Link to={directionGoogleURI} target="_blank">
+              <Button variant="outline" className="hover:bg-foreground/20">
+                <RouteIcon /> Direction
+              </Button>
+            </Link>
+          )}
+          <Button
+            variant="outline"
+            className="hover:bg-foreground/20"
+            onClick={openEditor}
+          >
+            <CirclePlusIcon />
+            <span className="hidden sm:inline-block">Add to List</span>
+          </Button>
+        </div>
       </div>
     </div>
   );
