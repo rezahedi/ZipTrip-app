@@ -20,7 +20,6 @@ const MapBox = ({
     if (!mapRef || !mapRef.current) return;
 
     const top = mapRef.current.offsetTop;
-    console.log("top", top);
     document.addEventListener(
       "scroll",
       throttle(() => {

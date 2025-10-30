@@ -28,7 +28,6 @@ const PlacePopup = () => {
   };
 
   useEffect(() => {
-    console.log("place selected", selection);
     if (!selection) return;
 
     (async () => {
