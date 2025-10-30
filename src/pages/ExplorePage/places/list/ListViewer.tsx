@@ -27,11 +27,15 @@ const ListViewer = ({
       setOpenedList(list[0]._id);
       await getList(list[0]._id);
     })();
-  }, [list, openedList]);
+  }, [list]);
 
-  const handleOpenList = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleToggleList = async (e: React.MouseEvent<HTMLDivElement>) => {
     const div = e.currentTarget as HTMLDivElement;
     const listId = div.dataset.id as string;
+
+    // If clicked on a open list, close it
+    if (openedList !== "" && listId === openedList) return setOpenedList("");
+
     setOpenedList(listId);
     if (listId) await getList(listId);
   };
@@ -55,7 +59,7 @@ const ListViewer = ({
               className="group flex items-center gap-2 p-2 px-4 rounded-md hover:bg-foreground/5 cursor-pointer"
               role="button"
               data-id={item._id}
-              onClick={handleOpenList}
+              onClick={handleToggleList}
               tabIndex={0}
             >
               <span className="grow">{item.name}</span>
