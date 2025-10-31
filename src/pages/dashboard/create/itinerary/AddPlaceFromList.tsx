@@ -11,7 +11,7 @@ const AddPlaceFromList = ({
   onAddPlace: (place: Place) => void;
   children?: React.ReactNode;
 }) => {
-  const { isOpenViewer, closeViewer, openViewer } = useList();
+  const { closeViewer, openViewer } = useList();
 
   const handlePlaceSelect = (place: Place) => {
     onAddPlace(place);
@@ -21,11 +21,7 @@ const AddPlaceFromList = ({
   return (
     <>
       <Button onClick={openViewer}>{children}</Button>
-      <ListViewer
-        isOpen={isOpenViewer}
-        onClose={closeViewer}
-        onPlaceSelect={handlePlaceSelect}
-      />
+      <ListViewer onPlaceSelect={handlePlaceSelect} />
     </>
   );
 };

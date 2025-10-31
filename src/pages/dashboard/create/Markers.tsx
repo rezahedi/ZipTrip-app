@@ -3,12 +3,10 @@ import { usePlaces } from "@/context/PlacesContext";
 import { InfoWindow, Marker } from "@/Components/Map";
 import PlacePopup from "./PlacePopup";
 import { getMarkerIcon } from "@/types/map";
-import { useList } from "@/context/ListContext";
 import ListEditor from "@/pages/ExplorePage/places/list/ListEditor";
 
 const Markers = memo(function Markers() {
   const { places, selection, setSelection } = usePlaces();
-  const { isOpenEditor, closeEditor } = useList();
 
   const handleClick = useCallback(
     (placeId?: string, location?: [number, number]) => {
@@ -40,11 +38,7 @@ const Markers = memo(function Markers() {
           <PlacePopup />
         </InfoWindow>
       )}
-      <ListEditor
-        isOpen={isOpenEditor}
-        onClose={closeEditor}
-        placeId={selection?.placeId}
-      />
+      <ListEditor />
     </>
   );
 });

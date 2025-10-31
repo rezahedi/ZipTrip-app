@@ -35,10 +35,6 @@ export default function useListHook() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
-
   const createList = async (name: string) => {
     if (!token) {
       setList(null);
@@ -89,7 +85,6 @@ export default function useListHook() {
       }
       // TODO: set places here
       const listWithPlaces = await res.json();
-      console.log(listWithPlaces);
       setList((prev) => {
         if (!prev) return null;
         return prev.map((l) =>

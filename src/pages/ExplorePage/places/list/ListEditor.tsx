@@ -5,19 +5,13 @@ import IconButton from "@/Components/ui/IconButton";
 import Modal from "@/Components/Common/Modal";
 import { ListType } from "@/hooks/useListHook";
 import { useList } from "@/context/ListContext";
+import { useAuth } from "@/context/AuthContext";
 
 const LIST_COUNT_LIMIT = 5;
 
-const ListEditor = ({
-  isOpen,
-  onClose,
-  placeId,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  placeId: string | null | undefined;
-}) => {
+const ListEditor = () => {
   const {
+    placeId,
     list,
     createList,
     removeList,
@@ -25,7 +19,10 @@ const ListEditor = ({
     removePlaceFromList,
     saving,
     loading,
+    isOpenEditor,
+    closeEditor,
   } = useList();
+  const { token } = useAuth();
 
   const handleCreateList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,14 +60,17 @@ const ListEditor = ({
 
   const limitReached = list && list.length >= LIST_COUNT_LIMIT ? true : false;
 
+  if (!token) return;
+
   if (!placeId) return null;
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isOpenEditor}
+      onClose={closeEditor}
       title="Your List"
-      className="px-8 py-12"
+      description={saving ? "saving ..." : "\u00A0"}
+      className="px-8 py-12 h-auto"
     >
       {loading && <p>Loading...</p>}
       {!loading &&
@@ -111,7 +111,6 @@ const ListEditor = ({
           Add
         </Button>
       </form>
-      {saving && <p>Saving...</p>}
     </Modal>
   );
 };

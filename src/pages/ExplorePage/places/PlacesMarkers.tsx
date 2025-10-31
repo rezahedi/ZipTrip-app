@@ -2,13 +2,11 @@ import React, { useCallback, useRef } from "react";
 import { Marker } from "@/Components/Map";
 import { getMarkerIcon } from "@/types/map";
 import { usePlans } from "../PlansContext";
-import { useList } from "@/context/ListContext";
 import ListEditor from "./list/ListEditor";
 
 const PlacesMarkers = function Markers() {
   const { places, selection, setSelection } = usePlans();
   const mouseOverTimeoutRef = useRef<number | null>(null);
-  const { isOpenEditor, closeEditor } = useList();
 
   const handleMouseOver = useCallback(
     (placeId?: string, location?: [number, number]) => {
@@ -54,11 +52,7 @@ const PlacesMarkers = function Markers() {
             onMouseOut={handleMouseOut}
           />
         ))}
-      <ListEditor
-        isOpen={isOpenEditor}
-        onClose={closeEditor}
-        placeId={selection?.placeId}
-      />
+      <ListEditor />
     </>
   );
 };

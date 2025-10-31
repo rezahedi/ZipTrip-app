@@ -5,19 +5,24 @@ import { ListType } from "@/hooks/useListHook";
 import { Place } from "@/types";
 import PlaceCard from "./PlaceCard";
 import { useList } from "@/context/ListContext";
+import PlaceCardSkeleton from "./PlaceCardSkeleton";
 
 // TODO: Consider using HTML5 native accordion
 
 const ListViewer = ({
-  isOpen,
-  onClose,
   onPlaceSelect,
 }: {
-  isOpen: boolean;
-  onClose: () => void;
   onPlaceSelect: (place: Place) => void;
 }) => {
-  const { list, getList, saving, loading } = useList();
+  const {
+    list,
+    getList,
+    saving,
+    loading,
+    isOpenViewer,
+    closeViewer,
+    removePlaceFromList,
+  } = useList();
   const [openedList, setOpenedList] = useState<string>("");
 
   // Load and open first list by default
@@ -42,15 +47,19 @@ const ListViewer = ({
     if (listId) await getList(listId);
   };
 
+  const handleRemovePlace = async (listId: string, placeId: string) => {
+    await removePlaceFromList(listId, placeId);
+  };
+
   // if (!placeId) return null;
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={isOpenViewer}
+      onClose={closeViewer}
       title="Your List"
       description="Click on saved places to add it to your itinerary"
-      className="px-8 py-12"
+      className="px-8 py-12 h-auto"
     >
       {loading && <p>Loading...</p>}
       {!loading &&
@@ -69,20 +78,26 @@ const ListViewer = ({
                 className={openedList === item._id ? `rotate-180` : ``}
               />
             </div>
-            <div className="grid grid-cols-3 gap-2 mt-2">
-              {openedList === item._id &&
-                item.placesDetail &&
-                item.placesDetail.map((place: Place) => (
-                  <PlaceCard
-                    key={place.placeId}
-                    place={place}
-                    onPlaceSelect={onPlaceSelect}
-                  />
-                ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
+              {openedList === item._id && (
+                <>
+                  {saving && !item.placesDetail && <PlaceCardSkeleton />}
+                  {item.placesDetail &&
+                    item.placesDetail.map((place: Place) => (
+                      <PlaceCard
+                        key={place.placeId}
+                        place={place}
+                        onPlaceSelect={onPlaceSelect}
+                        onPlaceRemove={() =>
+                          handleRemovePlace(item._id, place.placeId)
+                        }
+                      />
+                    ))}
+                </>
+              )}
             </div>
           </div>
         ))}
-      {saving && <p>Saving...</p>}
     </Modal>
   );
 };

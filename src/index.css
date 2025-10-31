@@ -50,7 +50,7 @@ body {
   --radius: 0.625rem;
 
   /* Base */
-  --background: oklch(94.309% 0.00011 271.152);
+  --background: oklch(96.416% 0.00011 271.152);
   --foreground: oklch(12.553% 0.02455 293.865);
 
   /* UI Elements */
@@ -105,7 +105,7 @@ body {
 .dark {
   /* Base */
   --background: oklch(15.218% 0.01927 294.167);
-  --foreground: oklch(83.591% 0.0001 271.152);
+  --foreground: oklch(93.403% 0.00011 271.152);
 
   /* UI Elements */
   --card: var(--background);

@@ -28,7 +28,6 @@ const PlacePopup = () => {
   };
 
   useEffect(() => {
-    console.log("place selected", selection);
     if (!selection) return;
 
     (async () => {
@@ -75,7 +74,7 @@ const PlacePopup = () => {
         </p>
         <div className="flex items-center mt-2">
           <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
-          <AddToListButton />
+          <AddToListButton placeId={place.placeId} />
         </div>
       </div>
     </div>
