@@ -27,7 +27,6 @@ const ListViewer = ({
 
   // Load and open first list by default
   useEffect(() => {
-    console.log(list);
     if (openedList !== "") return;
     if (!list || list.length == 0) return;
 

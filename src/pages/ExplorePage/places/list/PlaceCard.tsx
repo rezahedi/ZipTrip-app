@@ -36,7 +36,7 @@ const PlaceCard = ({
             {place.name}
           </h3>
           {/* <p className="text-sm">{place.address}</p> */}
-          {place.rating && (
+          {place.rating !== undefined && (
             <p className="flex gap-1 items-center text-xs">
               <StarIcon className="size-3 fill-foreground" />{" "}
               <b className="font-semibold">{place.rating}</b> (
