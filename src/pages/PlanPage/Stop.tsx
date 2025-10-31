@@ -1,5 +1,5 @@
 import React from "react";
-import { Stop as StopType } from "@/types";
+import { Place, Stop as StopType } from "@/types";
 import { getMarkerIcon } from "@/types/map";
 import { useMapSync } from "@/context/MapSyncContext";
 import { cn } from "@/lib/utils";
@@ -10,30 +10,31 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 
-const Stop = ({ detail }: { detail: StopType }) => {
+const Stop = ({ place }: { place: StopType }) => {
   const {
     placeId,
     name,
-    imageURL,
     address,
-    type,
+    imageURL,
     rating,
     userRatingCount,
-    directionGoogleURI,
     placeGoogleURI,
-  } = detail;
+    directionGoogleURI,
+    type,
+  } = place;
   const { selection, setSelection } = useMapSync();
   const { openEditor } = useList();
   const { token } = useAuth();
   const { openLogin } = useAuthModal();
 
   const handleOpenEditor = () => {
-    if (!token || !selection) return openLogin();
-    openEditor(selection.placeId);
+    if (!token) return openLogin();
+
+    openEditor(place as Place);
   };
 
   const handleSetSelection = () => {
-    setSelection({ placeId: detail.placeId, source: "card" });
+    setSelection({ placeId: place.placeId, source: "card" });
   };
 
   if (!placeId) return null;

@@ -7,8 +7,8 @@ const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 export type ListType = {
   _id: string;
   name: string;
-  places: string[];
-  placesDetail?: Place[];
+  placeIDs: string[];
+  placeDetails?: Place[];
 };
 
 export default function useListHook() {
@@ -87,9 +87,7 @@ export default function useListHook() {
       const listWithPlaces = await res.json();
       setList((prev) => {
         if (!prev) return null;
-        return prev.map((l) =>
-          l._id === listId ? { ...l, placesDetail: listWithPlaces.places } : l,
-        );
+        return prev.map((l) => (l._id === listId ? listWithPlaces : l));
       });
       setSaving(false);
     } catch (error) {
@@ -125,7 +123,7 @@ export default function useListHook() {
     }
   };
 
-  const addPlaceToList = async (listId: string, placeId: string) => {
+  const addPlaceToList = async (listId: string, place: Place) => {
     if (!token) {
       setList(null);
       throw new Error("You must be logged in to add place to list");
@@ -133,16 +131,14 @@ export default function useListHook() {
 
     setSaving(true);
     try {
-      let res = await fetch(
-        `${API_BASE_URL}/account/list/${listId}/${placeId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      let res = await fetch(`${API_BASE_URL}/account/list/${listId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify(place),
+      });
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.msg || "Failed to add the place to list");

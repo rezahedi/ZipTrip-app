@@ -10,7 +10,9 @@ const ItineraryList = () => {
   return (
     <div className="space-y-4">
       {places &&
-        places.map((place) => <ItineraryItem key={place._id} place={place} />)}
+        places.map((place) => (
+          <ItineraryItem key={place.placeId} place={place} />
+        ))}
       {places.length === 0 && <EmptySlate />}
     </div>
   );

@@ -74,7 +74,7 @@ const PlacePopup = () => {
         </p>
         <div className="flex items-center mt-2">
           <AddButton onClick={handleAddToItinerary} isAdded={isAdded} />
-          <AddToListButton placeId={place.placeId} />
+          <AddToListButton place={place} />
         </div>
       </div>
     </div>

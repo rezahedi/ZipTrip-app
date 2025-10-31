@@ -11,7 +11,7 @@ const LIST_COUNT_LIMIT = 5;
 
 const ListEditor = () => {
   const {
-    placeId,
+    place,
     list,
     createList,
     removeList,
@@ -48,13 +48,13 @@ const ListEditor = () => {
   ) => {
     const checkBox = e.target as HTMLInputElement;
     const listId = checkBox.dataset.id;
-    if (!listId || !placeId) return;
+    if (!listId || !place) return;
 
     // find the index then push placeDetail into [index].places and setList
     if (checkBox.checked) {
-      await addPlaceToList(listId, placeId);
+      await addPlaceToList(listId, place);
     } else {
-      await removePlaceFromList(listId, placeId);
+      await removePlaceFromList(listId, place.placeId);
     }
   };
 
@@ -62,7 +62,7 @@ const ListEditor = () => {
 
   if (!token) return;
 
-  if (!placeId) return null;
+  if (!place) return null;
 
   return (
     <Modal
@@ -82,7 +82,7 @@ const ListEditor = () => {
           >
             <input
               type="checkbox"
-              checked={item.places.includes(placeId) ? true : false}
+              checked={item.placeIDs.includes(place.placeId) ? true : false}
               data-id={item._id}
               onChange={handleTogglePlaceInList}
             />

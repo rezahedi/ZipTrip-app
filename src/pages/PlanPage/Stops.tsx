@@ -42,7 +42,7 @@ const Stops = ({ stops }: { stops: StopType[] }) => {
       {stops.map((stop) => (
         <MarkedBlock key={stop.placeId}>
           <div ref={(element) => setRef(stop.placeId, element)}>
-            <Stop detail={stop} />
+            <Stop place={stop} />
           </div>
         </MarkedBlock>
       ))}
