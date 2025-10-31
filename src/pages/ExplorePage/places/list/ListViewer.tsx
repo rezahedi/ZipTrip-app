@@ -27,6 +27,7 @@ const ListViewer = ({
 
   // Load and open first list by default
   useEffect(() => {
+    console.log(list);
     if (openedList !== "") return;
     if (!list || list.length == 0) return;
 
@@ -81,9 +82,9 @@ const ListViewer = ({
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
               {openedList === item._id && (
                 <>
-                  {saving && !item.placesDetail && <PlaceCardSkeleton />}
-                  {item.placesDetail &&
-                    item.placesDetail.map((place: Place) => (
+                  {saving && !item.placeDetails && <PlaceCardSkeleton />}
+                  {item.placeDetails &&
+                    item.placeDetails.map((place: Place) => (
                       <PlaceCard
                         key={place.placeId}
                         place={place}

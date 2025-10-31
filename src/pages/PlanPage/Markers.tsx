@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Stop as StopType } from "@/types";
+import { Place, Stop as StopType } from "@/types";
 import { InfoWindow, Marker } from "@/Components/Map";
 import { useMapSync } from "@/context/MapSyncContext";
 import ListEditor from "../ExplorePage/places/list/ListEditor";
@@ -18,8 +18,9 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
     stops.find((s) => s.placeId === selection?.placeId) || null;
 
   const handleOpenEditor = () => {
-    if (!token || !selectedPlace) return openLogin();
-    openEditor(selectedPlace.placeId);
+    if (!token) return openLogin();
+    if (!selectedPlace) return;
+    openEditor(selectedPlace as Place);
   };
 
   const handleClick = useCallback(
