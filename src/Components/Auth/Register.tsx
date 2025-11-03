@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Google } from "@/ui/icons";
 import { Dialog, DialogContent } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
 import { postData } from "@/util";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { User } from "@/types";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const RegisterPage = ({
   open,
@@ -130,6 +131,26 @@ const RegisterPage = ({
     }
   };
 
+  const handleGoogleLogin = async (code: string) => {
+    if (!code) return setErrorMessage("Code is required");
+
+    try {
+      const userData = await postData(
+        "auth/login/google",
+        { code },
+        setErrorMessage,
+      );
+      if (userData) {
+        await login(userData);
+        handleDialogClose();
+      }
+    } catch (err: unknown) {
+      let errorMessage = "";
+      if (err instanceof Error) errorMessage = err.message;
+      setErrorMessage(`Error sending data to server: ${errorMessage}`);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleDialogClose} modal>
       <DialogContent className="px-3 py-8 w-full max-w-full h-full sm:w-auto sm:max-w-4xl sm:h-auto rounded-none sm:rounded-lg items-center">
@@ -138,12 +159,11 @@ const RegisterPage = ({
             <h5 className="flex justify-center text-3xl">
               Create Your Account
             </h5>
-            <Button
-              variant="ghost"
-              className="my-2 w-full p-5 font-normal text-lg bg-foreground text-background hover:bg-foreground hover:text-background active:scale-95"
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
             >
-              <Google className="size-8" /> Sign up with Google
-            </Button>
+              <GoogleLoginButton onLogin={handleGoogleLogin} />
+            </GoogleOAuthProvider>
             <div className="my-4 text-foreground/60 text-center">OR</div>
             <label className="block">
               Name:

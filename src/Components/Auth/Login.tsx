@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Google } from "@/ui/icons";
 import { postData } from "@/util";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { User } from "@/types";
 import { Dialog, DialogContent } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const LoginPage = ({
   open,
@@ -78,8 +79,10 @@ const LoginPage = ({
     handleClose();
   };
 
-  const handleLogin = async () => {
-    if (!email || !password || !isValid) {
+  const handleLogin = async (
+    demoData: { email: string; password: string } | null = null,
+  ) => {
+    if (!demoData && (!email || !password || !isValid)) {
       setEmailError("Email is required");
       setPasswordError("Password is required");
       setIsValid(false);
@@ -89,7 +92,7 @@ const LoginPage = ({
     try {
       const userData: User = await postData(
         "auth/login",
-        { email, password },
+        demoData || { email, password },
         setErrorMessage,
       );
       if (userData) {
@@ -103,6 +106,30 @@ const LoginPage = ({
     }
   };
 
+  const handleGoogleLogin = async (code: string) => {
+    if (!code) return setErrorMessage("Code is required");
+
+    try {
+      const userData = await postData(
+        "auth/login/google",
+        { code },
+        setErrorMessage,
+      );
+      if (userData) {
+        await login(userData);
+        handleDialogClose();
+      }
+    } catch (err: unknown) {
+      let errorMessage = "";
+      if (err instanceof Error) errorMessage = err.message;
+      setErrorMessage(`Error sending data to server: ${errorMessage}`);
+    }
+  };
+
+  const handleDemoLogin = async (email: string, password: string) => {
+    await handleLogin({ email, password });
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleDialogClose} modal>
       <DialogContent className="px-3 py-8 w-full max-w-full h-full sm:w-auto sm:max-w-4xl sm:h-auto rounded-none sm:rounded-lg items-center">
@@ -110,12 +137,11 @@ const LoginPage = ({
           {/* Left Section */}
           <div className="flex-1 md:flex-1/2 px-2 py-3 space-y-2">
             <h5 className="flex justify-center text-3xl">Sign In</h5>
-            <Button
-              variant="ghost"
-              className="my-2 w-full p-5 font-normal text-lg bg-foreground text-background hover:bg-foreground hover:text-background active:scale-95"
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
             >
-              <Google className="size-8" /> Sign in with Google
-            </Button>
+              <GoogleLoginButton onLogin={handleGoogleLogin} />
+            </GoogleOAuthProvider>
             <div className="my-4 text-foreground/60 text-center">OR</div>
             <label className="block">
               Email:
@@ -162,7 +188,7 @@ const LoginPage = ({
             <Button
               variant="default"
               className="w-full active:scale-95"
-              onClick={handleLogin}
+              onClick={() => handleLogin()}
             >
               Sign in
             </Button>
@@ -177,6 +203,27 @@ const LoginPage = ({
                 className="p-0 font-semibold hover:text-primary"
               >
                 Sign up
+              </Button>
+            </p>
+            <p className="text-sm flex gap-1 items-center justify-center">
+              <span className="italic">Demo login:</span>
+              <Button
+                variant={"outline"}
+                className="hover:bg-primary"
+                onClick={() =>
+                  handleDemoLogin("john.doe@example.com", "B5TTP76m2NSBbye")
+                }
+              >
+                John Doe
+              </Button>
+              <Button
+                variant={"outline"}
+                className="hover:bg-primary"
+                onClick={() =>
+                  handleDemoLogin("sarah.smith@example.com", "B5TTP76m2NSBbye")
+                }
+              >
+                Sarah Smith
               </Button>
             </p>
           </div>
