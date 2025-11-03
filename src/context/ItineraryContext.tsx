@@ -118,7 +118,6 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   }, [planId, token]);
 
   useEffect(() => {
-    console.log("optimisticPlan", optimisticPlan);
     if (!planId || !plan || !optimisticPlan) return setPlan(null);
 
     (async () => {
