@@ -1,9 +1,84 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "react";
 import { Place } from "@/types";
-import { PlanType } from "./PlanTypes";
+import { PlaceType, PlanType } from "./PlanTypes";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
 import usePlanApi from "@/hooks/usePlanApi";
+
+type Action =
+  | {
+      type: "setTitle" | "setDescription";
+      payload: string;
+    }
+  | {
+      type: "addImage";
+      payload: string;
+      init: string[];
+    }
+  | {
+      type: "removePlace";
+      payload: string;
+      init: PlaceType[];
+    }
+  | {
+      type: "addPlace";
+      payload: Place;
+      init: PlaceType[];
+    };
+
+const reducer = (state: PlanType | null, action: Action): PlanType | null => {
+  switch (action.type) {
+    case "setTitle":
+      return {
+        ...state,
+        title: action.payload,
+      };
+
+    case "setDescription":
+      return {
+        ...state,
+        description: action.payload,
+      };
+
+    case "addImage": {
+      let images = state?.images || action.init;
+
+      images.push(action.payload);
+
+      return {
+        ...state,
+        images,
+      };
+    }
+
+    case "addPlace": {
+      let stops = state?.stops || action.init;
+
+      if (!stops.find((p) => p.placeId === action.payload.placeId))
+        stops.push(action.payload);
+
+      return { ...state, stops };
+    }
+
+    case "removePlace": {
+      let stops = state?.stops || action.init;
+
+      return {
+        ...state,
+        stops: stops.filter((p) => p.placeId !== action.payload),
+      };
+    }
+
+    default:
+      return state;
+  }
+};
 
 type contextType = {
   plan: PlanType | null;
@@ -23,7 +98,8 @@ const ItineraryContext = createContext<contextType | undefined>(undefined);
 const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const { plan, setPlan, saving, loading, createPlan, getPlan, updatePlan } =
     usePlanApi();
-  const [optimisticPlan, setOptimisticPlan] = useState<PlanType | null>(null);
+  // const [optimisticPlan, setOptimisticPlan] = useState<PlanType | null>(null);
+  const [optimisticPlan, dispatch] = useReducer(reducer, null);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
   const { planId } = useParams();
@@ -42,6 +118,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   }, [planId, token]);
 
   useEffect(() => {
+    console.log("optimisticPlan", optimisticPlan);
     if (!planId || !plan || !optimisticPlan) return setPlan(null);
 
     (async () => {
@@ -61,77 +138,33 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   // TODO: Use useReducer for setTitle, setDescription and etc, to make optimisticPlan update more cleanly
 
   const setTitle = (title: string) => {
-    if (!plan && !title) return;
-    setOptimisticPlan((prev) => (prev ? { ...prev, title } : { title }));
+    if (!plan || !title) return;
+
+    dispatch({ type: "setTitle", payload: title });
   };
 
   const setDescription = (description: string) => {
-    if (!plan && !description) return;
+    if (!plan || !description) return;
 
-    setOptimisticPlan((prev) =>
-      prev ? { ...prev, description } : { description },
-    );
+    dispatch({ type: "setDescription", payload: description });
   };
 
   const addImage = (image: string) => {
-    if (!plan) return;
+    if (!plan || !image) return;
 
-    setOptimisticPlan((prev) => {
-      if (!prev) return null;
-      if (!prev.images)
-        return {
-          ...prev,
-          images: [image],
-        };
-      return {
-        ...prev,
-        images: [...prev.images, image],
-      };
-    });
+    dispatch({ type: "addImage", payload: image, init: plan.images || [] });
   };
 
   const addPlace = (place: Place) => {
-    if (!plan) return;
+    if (!plan || !place) return;
 
-    setOptimisticPlan((prev) => {
-      // Initialize stops array using plan.stops if not existing in optimisticPlan
-      if (!prev || !prev.stops) {
-        prev = { ...prev, stops: plan.stops || [] };
-      }
-
-      if (!prev.stops) {
-        prev.stops = [place];
-        return prev;
-      }
-
-      // Avoid adding duplicates
-      if (prev.stops.find((p) => p.placeId === place.placeId)) {
-        return prev;
-      }
-
-      // Add new stop to the end
-      return {
-        ...prev,
-        stops: [...prev.stops, place],
-      };
-    });
+    dispatch({ type: "addPlace", payload: place, init: plan.stops || [] });
   };
 
   const removePlace = (placeId: string) => {
-    if (!plan) return;
+    if (!plan || !placeId) return;
 
-    setOptimisticPlan((prev) => {
-      // Initialize stops array using plan.stops if not existing in optimisticPlan
-      if (!prev || !prev.stops) {
-        prev = { ...prev, stops: plan.stops || [] };
-      }
-
-      if (!prev.stops) return prev;
-      return {
-        ...prev,
-        stops: prev.stops.filter((p) => p.placeId !== placeId),
-      };
-    });
+    dispatch({ type: "removePlace", payload: placeId, init: plan.stops || [] });
   };
 
   return (
