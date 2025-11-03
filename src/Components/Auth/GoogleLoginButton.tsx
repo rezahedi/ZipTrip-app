@@ -11,8 +11,6 @@ const GoogleLoginButton = ({
   const handleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (response: CodeResponse) => {
-      console.log("credentialResponse", response);
-
       onLogin(response.code);
     },
     onError: async (errorResponse) => {
