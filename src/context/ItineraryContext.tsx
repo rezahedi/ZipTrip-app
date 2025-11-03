@@ -75,7 +75,9 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const addImage = (image: string) => {
     if (!plan || !image) return;
 
-    dispatch({ type: "addImage", payload: image, init: plan.images || [] });
+    setPlan({ ...plan, images: [...(plan.images || []), image] });
+
+    // dispatch({ type: "addImage", payload: image, init: plan.images || [] });
   };
 
   const addPlace = (place: Place) => {
