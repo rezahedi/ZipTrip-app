@@ -1,84 +1,10 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Place } from "@/types";
-import { PlaceType, PlanType } from "./PlanTypes";
+import { PlanType } from "./PlanTypes";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
 import usePlanApi from "@/hooks/usePlanApi";
-
-type Action =
-  | {
-      type: "setTitle" | "setDescription";
-      payload: string;
-    }
-  | {
-      type: "addImage";
-      payload: string;
-      init: string[];
-    }
-  | {
-      type: "removePlace";
-      payload: string;
-      init: PlaceType[];
-    }
-  | {
-      type: "addPlace";
-      payload: Place;
-      init: PlaceType[];
-    };
-
-const reducer = (state: PlanType | null, action: Action): PlanType | null => {
-  switch (action.type) {
-    case "setTitle":
-      return {
-        ...state,
-        title: action.payload,
-      };
-
-    case "setDescription":
-      return {
-        ...state,
-        description: action.payload,
-      };
-
-    case "addImage": {
-      let images = state?.images || action.init;
-
-      images.push(action.payload);
-
-      return {
-        ...state,
-        images,
-      };
-    }
-
-    case "addPlace": {
-      let stops = state?.stops || action.init;
-
-      if (!stops.find((p) => p.placeId === action.payload.placeId))
-        stops.push(action.payload);
-
-      return { ...state, stops };
-    }
-
-    case "removePlace": {
-      let stops = state?.stops || action.init;
-
-      return {
-        ...state,
-        stops: stops.filter((p) => p.placeId !== action.payload),
-      };
-    }
-
-    default:
-      return state;
-  }
-};
+import usePlanOptimistic from "@/hooks/usePlanOptimistic";
 
 type contextType = {
   plan: PlanType | null;
@@ -99,7 +25,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const { plan, setPlan, saving, loading, createPlan, getPlan, updatePlan } =
     usePlanApi();
   // const [optimisticPlan, setOptimisticPlan] = useState<PlanType | null>(null);
-  const [optimisticPlan, dispatch] = useReducer(reducer, null);
+  const { optimisticPlan, dispatch } = usePlanOptimistic(null);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
   const { planId } = useParams();
@@ -133,8 +59,6 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
       }
     })();
   }, [optimisticPlan]);
-
-  // TODO: Use useReducer for setTitle, setDescription and etc, to make optimisticPlan update more cleanly
 
   const setTitle = (title: string) => {
     if (!plan || !title) return;
