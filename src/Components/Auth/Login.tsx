@@ -79,8 +79,10 @@ const LoginPage = ({
     handleClose();
   };
 
-  const handleLogin = async () => {
-    if (!email || !password || !isValid) {
+  const handleLogin = async (
+    demoData: { email: string; password: string } | null = null,
+  ) => {
+    if (!demoData && (!email || !password || !isValid)) {
       setEmailError("Email is required");
       setPasswordError("Password is required");
       setIsValid(false);
@@ -90,7 +92,7 @@ const LoginPage = ({
     try {
       const userData: User = await postData(
         "auth/login",
-        { email, password },
+        demoData || { email, password },
         setErrorMessage,
       );
       if (userData) {
@@ -122,6 +124,10 @@ const LoginPage = ({
       if (err instanceof Error) errorMessage = err.message;
       setErrorMessage(`Error sending data to server: ${errorMessage}`);
     }
+  };
+
+  const handleDemoLogin = async (email: string, password: string) => {
+    await handleLogin({ email, password });
   };
 
   return (
@@ -182,7 +188,7 @@ const LoginPage = ({
             <Button
               variant="default"
               className="w-full active:scale-95"
-              onClick={handleLogin}
+              onClick={() => handleLogin()}
             >
               Sign in
             </Button>
@@ -197,6 +203,27 @@ const LoginPage = ({
                 className="p-0 font-semibold hover:text-primary"
               >
                 Sign up
+              </Button>
+            </p>
+            <p className="text-sm flex gap-1 items-center justify-center">
+              <span className="italic">Demo login:</span>
+              <Button
+                variant={"outline"}
+                className="hover:bg-primary"
+                onClick={() =>
+                  handleDemoLogin("john.doe@example.com", "B5TTP76m2NSBbye")
+                }
+              >
+                John Doe
+              </Button>
+              <Button
+                variant={"outline"}
+                className="hover:bg-primary"
+                onClick={() =>
+                  handleDemoLogin("sarah.smith@example.com", "B5TTP76m2NSBbye")
+                }
+              >
+                Sarah Smith
               </Button>
             </p>
           </div>
