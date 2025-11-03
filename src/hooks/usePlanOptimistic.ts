@@ -1,5 +1,4 @@
 import { PlaceType, PlanType } from "@/context/PlanTypes";
-import { Place } from "@/types";
 import { useReducer } from "react";
 
 type Action =
@@ -19,7 +18,7 @@ type Action =
     }
   | {
       type: "addPlace";
-      payload: Place;
+      payload: PlaceType;
       init: PlaceType[];
     };
 
