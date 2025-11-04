@@ -43,12 +43,12 @@ const Sidebar = () => {
           <>
             <h2 className="font-semibold text-2xl">
               <Editable onSave={setTitle}>
-                {plan?.title || "Your Next Trip"}
+                {plan.title || "Your Next Trip"}
               </Editable>
             </h2>
             <p className="text-base mt-2">
               <Editable onSave={setDescription}>
-                {plan?.description || "Write something about your trip..."}
+                {plan.description || "Write something about your trip..."}
               </Editable>
             </p>
             <ImageUploader />
