@@ -6,6 +6,7 @@ import { useItinerary } from "@/context/ItineraryContext";
 import { calculateBounds, getBoundsFromViewport } from "@/lib/utils";
 import Markers from "./Markers";
 import { ListProvider } from "@/context/ListContext";
+import { Polyline } from "@/Components/Map/Polyline";
 
 const MapBox = () => {
   const { setBoundingBox, setSelection } = usePlaces();
@@ -40,6 +41,14 @@ const MapBox = () => {
       defaultBounds={defaultBounds}
       className="w-full flex-5/12 md:flex-auto"
     >
+      {plan.polyline && (
+        <Polyline
+          strokeWeight={5}
+          strokeOpacity={0.7}
+          strokeColor={"#fea403"}
+          encodedPath={plan.polyline}
+        />
+      )}
       <ListProvider>
         <Markers />
       </ListProvider>
