@@ -15,8 +15,8 @@ import { debounce, getThemeColor } from "@/lib/utils";
 
 // Bay Area
 const MAP_INITIAL_VIEW = {
-  defaultCenter: { lat: 37.70580795161106, lng: -122.51368137617244 },
-  defaultZoom: 11,
+  defaultCenter: { lat: 37.78895639668091, lng: -122.43377970356813 },
+  defaultZoom: 13,
 };
 
 const Map = ({
