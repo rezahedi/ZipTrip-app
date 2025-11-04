@@ -14,6 +14,7 @@ export interface PlanType {
   images?: string[];
   cities?: CityType[];
   stops?: PlaceType[];
+  polyline?: string;
 }
 
 export interface CityType {

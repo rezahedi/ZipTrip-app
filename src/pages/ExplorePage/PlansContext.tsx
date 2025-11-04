@@ -22,6 +22,7 @@ type ItemType = {
 
 type PlansContextType = {
   plans: Plan[];
+  setPlanPolyline: (planId: string, polyline: string) => void;
   places: Place[];
   isLoading: boolean;
   error: string | null;
@@ -86,10 +87,17 @@ const PlansProvider = ({ children }: { children: React.ReactNode }) => {
     })();
   }, [map, boundingBox, token]);
 
+  const setPlanPolyline = (planId: string, polyline: string) => {
+    setPlans((prev) =>
+      prev.map((plan) => (plan._id === planId ? { ...plan, polyline } : plan)),
+    );
+  };
+
   return (
     <PlansContext.Provider
       value={{
         plans,
+        setPlanPolyline,
         places,
         isLoading,
         error,

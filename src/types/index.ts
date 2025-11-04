@@ -6,6 +6,7 @@ export interface Plan {
   cities: City[];
   type?: "Full day" | "Half day" | "Night";
   stopCount: number;
+  polyline?: string;
   rate: number;
   reviewCount: number;
   startLocation: [number, number];

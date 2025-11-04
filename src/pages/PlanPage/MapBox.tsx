@@ -3,13 +3,16 @@ import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Stop as StopType } from "@/types";
 import { calculateBounds, cn, getThemeColor, throttle } from "@/lib/utils";
 import Markers from "./Markers";
+import { Polyline } from "@/Components/Map/Polyline";
 
 const MapBox = ({
   className,
   stops,
+  polyline,
 }: {
   className?: string;
   stops: StopType[];
+  polyline: string;
 }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const defaultBounds =
@@ -50,6 +53,14 @@ const MapBox = ({
           fullscreenControl={false}
           colorScheme={getThemeColor()}
         >
+          {polyline && (
+            <Polyline
+              strokeWeight={5}
+              strokeOpacity={0.7}
+              strokeColor={"#fea403"}
+              encodedPath={polyline}
+            />
+          )}
           <Markers stops={stops} />
         </Map>
       </APIProvider>

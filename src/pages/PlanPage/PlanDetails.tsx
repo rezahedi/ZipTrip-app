@@ -23,6 +23,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     images,
     cities,
     stops,
+    polyline,
     type,
     stopCount,
     distance,
@@ -112,7 +113,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
         <MapSyncProvider>
           <ListProvider>
             <div className="flex gap-4 my-4 flex-col md:flex-row-reverse">
-              <MapBox stops={stops} />
+              <MapBox stops={stops} polyline={polyline || ""} />
               <div className="grow md:flex-2/3">
                 {images?.length > 0 && (
                   <ImageBlock
