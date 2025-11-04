@@ -11,6 +11,7 @@ type contextType = {
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   addImage: (image: string) => void;
+  setPolyline: (polyline: string) => void;
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
   createPlan: (plan: PlanType) => void;
@@ -80,6 +81,12 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     // dispatch({ type: "addImage", payload: image, init: plan.images || [] });
   };
 
+  const setPolyline = (polyline: string) => {
+    if (!plan || !polyline) return;
+
+    setPlan({ ...plan, polyline });
+  };
+
   const addPlace = (place: Place) => {
     if (!plan || !place) return;
 
@@ -96,6 +103,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     <ItineraryContext.Provider
       value={{
         plan,
+        setPolyline,
         setTitle,
         setDescription,
         addImage,
