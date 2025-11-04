@@ -28,11 +28,13 @@ const MapBox = ({
 
     (async () => {
       // fetch planDetails
-      const planDetail: Plan = await fetchData(
+      const planDetail: Plan | null = await fetchData(
         `plans/${selectedPlan._id}`,
         null,
         () => {},
       );
+      if (!planDetail) return;
+
       setPlanPolyline(planDetail._id, planDetail.polyline || "");
     })();
   }, [selection]);
