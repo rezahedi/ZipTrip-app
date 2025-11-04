@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Map, LocateMeButton, InfoWindow } from "@/Components/Map";
 import { usePlans } from "./PlansContext";
 import Markers from "./Markers";
@@ -7,6 +7,8 @@ import PlanPopup from "./PlanPopup";
 import { Plan } from "@/types";
 import Popup from "./places/Popup";
 import { MapMouseEvent } from "@vis.gl/react-google-maps";
+import { fetchData } from "@/util";
+import { Polyline } from "@/Components/Map/Polyline";
 
 const MapBox = ({
   className = "",
@@ -15,10 +17,25 @@ const MapBox = ({
   className?: string;
   children?: React.ReactNode;
 }) => {
-  const { plans, selection, setSelection, setBoundingBox } = usePlans();
+  const { plans, setPlanPolyline, selection, setSelection, setBoundingBox } =
+    usePlans();
 
   const selectedPlan: Plan | null =
     plans.find((p) => p._id === selection?.placeId) || null;
+
+  useEffect(() => {
+    if (!selectedPlan || selectedPlan.polyline) return;
+
+    (async () => {
+      // fetch planDetails
+      const planDetail: Plan = await fetchData(
+        `plans/${selectedPlan._id}`,
+        null,
+        () => {},
+      );
+      setPlanPolyline(planDetail._id, planDetail.polyline || "");
+    })();
+  }, [selection]);
 
   const handlePopupClose = () => {
     setSelection(null);
@@ -50,12 +67,22 @@ const MapBox = ({
       )}
       <Markers />
       {selectedPlan && (
-        <InfoWindow
-          position={selectedPlan.startLocation}
-          onClose={handlePopupClose}
-        >
-          <PlanPopup plan={selectedPlan} />
-        </InfoWindow>
+        <>
+          <InfoWindow
+            position={selectedPlan.startLocation}
+            onClose={handlePopupClose}
+          >
+            <PlanPopup plan={selectedPlan} />
+          </InfoWindow>
+          {selectedPlan.polyline && (
+            <Polyline
+              strokeWeight={5}
+              strokeOpacity={0.7}
+              strokeColor={"#fea403"}
+              encodedPath={selectedPlan.polyline}
+            />
+          )}
+        </>
       )}
       <LocateMeButton />
     </Map>
