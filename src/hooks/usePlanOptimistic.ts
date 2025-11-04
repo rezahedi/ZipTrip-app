@@ -37,7 +37,7 @@ const reducer = (state: PlanType | null, action: Action): PlanType | null => {
       };
 
     case "addImage": {
-      let images = state?.images || action.init;
+      let images = [...(state?.images || action.init)];
 
       images.push(action.payload);
 
@@ -48,7 +48,7 @@ const reducer = (state: PlanType | null, action: Action): PlanType | null => {
     }
 
     case "addPlace": {
-      let stops = state?.stops || action.init;
+      let stops = [...(state?.stops || action.init)];
 
       if (!stops.find((p) => p.placeId === action.payload.placeId))
         stops.push(action.payload);
@@ -57,7 +57,7 @@ const reducer = (state: PlanType | null, action: Action): PlanType | null => {
     }
 
     case "removePlace": {
-      let stops = state?.stops || action.init;
+      let stops = [...(state?.stops || action.init)];
 
       return {
         ...state,
