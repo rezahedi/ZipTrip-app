@@ -12,6 +12,8 @@ import Cities from "../dashboard/create/Cities";
 import BookmarkButton from "@/Components/Common/BookmarkButton";
 import { MapSyncProvider } from "@/context/MapSyncContext";
 import { ListProvider } from "@/context/ListContext";
+import { Button } from "@/Components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
@@ -35,6 +37,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     updatedAt,
   } = plan;
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {}, [isBookmarked]);
 
@@ -47,7 +50,20 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
       <article className="py-4">
         <div className="flex justify-between flex-wrap mb-4">
           {/* Title */}
-          <h4 className="text-3xl">{title}</h4>
+          <h4 className="text-3xl flex items-center gap-2">
+            {title}
+            {user && userId._id === user?._id && (
+              <Link to={`/create/${planId}`}>
+                <Button
+                  title="Edit"
+                  variant={"outline"}
+                  className="hover:bg-foreground/10"
+                >
+                  <SquarePenIcon /> Edit
+                </Button>
+              </Link>
+            )}
+          </h4>
 
           {/* Icon Buttons */}
           <div className="flex gap-1 flex-1 sm:flex-auto justify-end">
