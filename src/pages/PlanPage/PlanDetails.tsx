@@ -2,7 +2,7 @@ import React, { useState, lazy, Suspense, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import IconButton from "@/Components/ui/IconButton";
-import { Share2Icon } from "lucide-react";
+import { Share2Icon, SquarePenIcon } from "lucide-react";
 import MapBox from "./MapBox";
 import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
@@ -68,6 +68,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
           {/* Icon Buttons */}
           <div className="flex gap-1 flex-1 sm:flex-auto justify-end">
             <IconButton
+              title="Share"
               variant="ghost"
               onClick={() => setIsShareDialogOpen(true)}
             >
