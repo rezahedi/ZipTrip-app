@@ -6,11 +6,13 @@ const Editable = function Editable({
   children,
   className = "",
   lineClamp = 3,
+  showEditIcon = true,
   onSave,
 }: {
   children: string;
   className?: string;
   lineClamp?: number;
+  showEditIcon?: boolean;
   onSave: (name: string) => void;
 }) {
   const [message, setMessage] = useState<string>("");
@@ -76,7 +78,9 @@ const Editable = function Editable({
         >
           {children}
         </div>
-        <PenIcon className="invisible shrink-0 peer-hover:visible w-4 text-gray-400" />
+        {showEditIcon && (
+          <PenIcon className="invisible shrink-0 peer-hover:visible w-4 text-gray-400" />
+        )}
       </div>
       {message && <i className="text-xs text-gray-600">{message}</i>}
     </span>
