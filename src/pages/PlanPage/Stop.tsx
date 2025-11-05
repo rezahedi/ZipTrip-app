@@ -21,6 +21,8 @@ const Stop = ({ place }: { place: StopType }) => {
     placeGoogleURI,
     directionGoogleURI,
     type,
+    reviewSummary,
+    summary,
   } = place;
   const { selection, setSelection } = useMapSync();
   const { openEditor } = useList();
@@ -64,6 +66,9 @@ const Stop = ({ place }: { place: StopType }) => {
           <p className="line-clamp-2 text-sm">
             {rating} / {userRatingCount} reviews
           </p>
+        )}
+        {(summary || reviewSummary) && (
+          <p className="text-sm">{summary || reviewSummary}</p>
         )}
         <div className="flex flex-wrap items-center gap-1 mt-4 lg:opacity-0 group-hover:opacity-100">
           {placeGoogleURI && (
