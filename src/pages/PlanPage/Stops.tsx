@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import Stop from "./Stop";
-import { Stop as StopType } from "@/types";
+import { StopDetail } from "@/types";
 import MarkedBlock from "./MarkedBlock";
 import { useMapSync } from "@/context/MapSyncContext";
 
-const Stops = ({ stops }: { stops: StopType[] }) => {
+const Stops = ({ stops }: { stops: StopDetail[] }) => {
   const refs = useRef(new Map());
   const { selection } = useMapSync();
 

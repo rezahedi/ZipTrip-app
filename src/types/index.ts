@@ -54,14 +54,19 @@ export interface Place {
 export interface Stop {
   placeId: string;
   name: string;
-  description?: string;
+  note?: string;
+  expense?: number;
   imageURL: string;
   address: string;
   location: [number, number];
 }
+
+// extend Stop with Place properties, both have common properties and unique properties
+export interface StopDetail extends Stop, Place {}
+
 // Used when plan fetched by id (in planDetail page and create/edit Plan page)
 export interface PlanWithDetail extends Plan {
-  stops: Place[];
+  stops: StopDetail[];
   cities: CityDetail[];
 }
 

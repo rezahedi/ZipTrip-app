@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useItinerary } from "@/context/ItineraryContext";
 import { MapPinnedIcon, RouteIcon, StarIcon, XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
-import { Place } from "@/types";
+import { StopDetail } from "@/types";
 import Editable from "../Editable";
 import { formatNumber } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-const ItineraryItem = ({ place }: { place: Place }) => {
+const ItineraryItem = ({ place }: { place: StopDetail }) => {
   const { removePlace } = useItinerary();
   const [showMore, setShowMore] = useState<boolean>(false);
   const { isMobile } = useMediaQuery();

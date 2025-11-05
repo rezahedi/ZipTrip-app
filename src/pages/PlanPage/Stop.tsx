@@ -1,5 +1,5 @@
 import React from "react";
-import { Place } from "@/types";
+import { StopDetail } from "@/types";
 import { getMarkerIcon } from "@/types/map";
 import { useMapSync } from "@/context/MapSyncContext";
 import { cn, formatNumber } from "@/lib/utils";
@@ -8,6 +8,7 @@ import {
   MapPinnedIcon,
   RouteIcon,
   StarIcon,
+  TicketMinusIcon,
 } from "lucide-react";
 import { useList } from "@/context/ListContext";
 import { Button } from "@/Components/ui/button";
@@ -15,7 +16,13 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 
-const Stop = ({ place }: { place: Place }) => {
+const usDollarFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+});
+
+const Stop = ({ place }: { place: StopDetail }) => {
   const { selection, setSelection } = useMapSync();
   const { openEditor } = useList();
   const { token } = useAuth();
@@ -53,10 +60,21 @@ const Stop = ({ place }: { place: Place }) => {
       )}
       <div className="flex flex-col items-start py-2 p-4 gap-2">
         <h5 className="font-semibold text-lg">
-          {getMarkerIcon(place.type)} {place.name}
+          {getMarkerIcon(place.type)} {place.name}{" "}
+          {place.expense && (
+            <span className="inline-block">
+              <span className="flex gap-1 items-center font-normal text-sm py-0.5 px-2.5 rounded-full bg-accent/40">
+                <TicketMinusIcon className="size-4 stroke-1" />
+                {usDollarFormatter.format(place.expense)}
+              </span>
+            </span>
+          )}
         </h5>
         <p>{place.address}</p>
-        {place.summary && <p className="text-sm">{place.summary}</p>}
+
+        {(place.note || place.summary) && (
+          <p className="text-sm">{place.note || place.summary}</p>
+        )}
         {place.rating && (
           <div className="text-sm">
             <p className="flex gap-1 items-center text-sm">
