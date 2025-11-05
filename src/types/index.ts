@@ -86,3 +86,23 @@ export interface City {
   };
   plans: number;
 }
+
+export type PlanDTO = {
+  title: string;
+  description?: string;
+  images?: string[];
+  cities?: { placeId: string; name: string }[];
+  type?: "Full day" | "Half day" | "Night";
+  stops: StopDTO[];
+};
+
+export type StopDTO = {
+  placeId: string;
+  name: string;
+  imageURL?: string;
+  address?: string;
+  location: [number, number];
+  // TODO: rating and userRatingCount really need to denormalized in plan document?
+  rating?: number;
+  userRatingCount?: number;
+};
