@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "@/util";
 import PlanDetails from "./PlanDetails";
 import { useAuth } from "@/context/AuthContext";
-import { PlanWithStops } from "@/types";
+import { PlanWithDetail } from "@/types";
 import CardSection from "@/Components/Common/CardSection";
 import PageSkeleton from "./PageSkeleton";
 import Title from "@/Components/Header/Title";
 
 const PlanPage = () => {
-  const [plan, setPlan] = useState<PlanWithStops | null>(null);
+  const [plan, setPlan] = useState<PlanWithDetail | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { planId } = useParams();
   const { token } = useAuth();

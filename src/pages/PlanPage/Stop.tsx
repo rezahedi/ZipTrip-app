@@ -1,5 +1,5 @@
 import React from "react";
-import { Place, Stop as StopType } from "@/types";
+import { Place } from "@/types";
 import { getMarkerIcon } from "@/types/map";
 import { useMapSync } from "@/context/MapSyncContext";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useAuthModal } from "@/context/AuthModalContext";
 
-const Stop = ({ place }: { place: StopType }) => {
+const Stop = ({ place }: { place: Place }) => {
   const {
     placeId,
     name,

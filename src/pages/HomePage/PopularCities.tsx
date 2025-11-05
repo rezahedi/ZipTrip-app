@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { CityType } from "@/context/PlanTypes";
+import { CityDetail } from "@/types";
 
 const PopularCities = ({
   cities,
   className = "",
 }: {
-  cities: CityType[];
+  cities: CityDetail[];
   className?: string;
 }) => {
   return (
@@ -19,7 +19,7 @@ const PopularCities = ({
     >
       <h3 className="font-semibold text-2xl">Popular Cities</h3>
       <ul className="my-8 text-xl flex md:flex-col md:flex-nowrap flex-wrap gap-3 md:gap-1">
-        {cities.map((city: CityType) => (
+        {cities.map((city: CityDetail) => (
           <li key={city.placeId}>
             <Link
               to={`/city/${city.placeId}`}

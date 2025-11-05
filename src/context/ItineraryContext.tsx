@@ -1,20 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Place } from "@/types";
-import { PlanType } from "./PlanTypes";
+import { Place, PlanDTO, PlanWithDetail } from "@/types";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
 import usePlanApi from "@/hooks/usePlanApi";
 import usePlanOptimistic from "@/hooks/usePlanOptimistic";
 
 type contextType = {
-  plan: PlanType | null;
+  plan: PlanWithDetail | null;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   addImage: (image: string) => void;
   setPolyline: (polyline: string) => void;
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
-  createPlan: (plan: PlanType) => void;
+  createPlan: (plan: PlanDTO) => void;
   saving: boolean;
   loading: boolean;
   error: string | null;
@@ -50,7 +49,13 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     (async () => {
       const originalPlan = plan;
       // Replace plan's properties with whatever is in optimisticPlan
-      setPlan({ ...plan, ...optimisticPlan });
+      setPlan({
+        ...plan,
+        title: optimisticPlan.title || plan.title,
+        description: optimisticPlan.description || plan.description,
+        images: optimisticPlan.images || plan.images,
+        stops: optimisticPlan.stops || plan.stops,
+      });
       try {
         await updatePlan(planId, optimisticPlan);
       } catch (err: unknown) {

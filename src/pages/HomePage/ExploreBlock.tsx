@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRightIcon } from "lucide-react";
 import PopularCities from "./PopularCities";
-import { CityType } from "@/context/PlanTypes";
 import { fetchData } from "@/util";
+import { CityDetail } from "@/types";
 
 const ExploreBlock = () => {
-  const [cities, setCities] = useState<CityType[]>([]);
+  const [cities, setCities] = useState<CityDetail[]>([]);
 
   useEffect(() => {
     (async () => {

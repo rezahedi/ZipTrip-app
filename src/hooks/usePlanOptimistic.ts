@@ -1,5 +1,8 @@
-import { PlaceType, PlanType } from "@/context/PlanTypes";
+import { Place } from "./../types/index";
+import { PlanDTO } from "@/types";
 import { useReducer } from "react";
+
+type PartialPlanDTO = Partial<PlanDTO>;
 
 type Action =
   | {
@@ -14,15 +17,18 @@ type Action =
   | {
       type: "removePlace";
       payload: string;
-      init: PlaceType[];
+      init: Place[];
     }
   | {
       type: "addPlace";
-      payload: PlaceType;
-      init: PlaceType[];
+      payload: Place;
+      init: Place[];
     };
 
-const reducer = (state: PlanType | null, action: Action): PlanType | null => {
+const reducer = (
+  state: PartialPlanDTO | null,
+  action: Action,
+): PartialPlanDTO | null => {
   switch (action.type) {
     case "setTitle":
       return {
@@ -70,7 +76,7 @@ const reducer = (state: PlanType | null, action: Action): PlanType | null => {
   }
 };
 
-export default function usePlanOptimistic(init: PlanType | null) {
+export default function usePlanOptimistic(init: PlanDTO | null) {
   const [optimisticPlan, dispatch] = useReducer(reducer, init);
 
   return { optimisticPlan, dispatch };

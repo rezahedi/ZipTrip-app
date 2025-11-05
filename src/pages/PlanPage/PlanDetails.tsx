@@ -6,7 +6,7 @@ import { Share2Icon, SquarePenIcon } from "lucide-react";
 import MapBox from "./MapBox";
 import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
-import { PlanWithStops } from "@/types";
+import { PlanWithDetail } from "@/types";
 import StatsBlock from "./StatsBlock";
 import Cities from "../dashboard/create/Cities";
 import BookmarkButton from "@/Components/Common/BookmarkButton";
@@ -17,7 +17,7 @@ import { useAuth } from "@/context/AuthContext";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
-const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
+const PlanDetails = ({ plan }: { plan: PlanWithDetail }) => {
   const {
     _id: planId,
     title,

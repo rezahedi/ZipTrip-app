@@ -2,9 +2,9 @@ import React from "react";
 import { useItinerary } from "@/context/ItineraryContext";
 import { XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
-import { PlaceType } from "@/context/PlanTypes";
+import { Place } from "@/types";
 
-const ItineraryItem = ({ place }: { place: PlaceType }) => {
+const ItineraryItem = ({ place }: { place: Place }) => {
   const { removePlace } = useItinerary();
 
   const handleClick = () => {

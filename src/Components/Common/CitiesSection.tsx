@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Skeleton } from "@/Components/ui/skeleton";
 import { fetchData } from "@/util";
 import { Link } from "react-router-dom";
-import { CityType } from "@/context/PlanTypes";
+import { CityDetail } from "@/types";
 
 const CitiesSection = ({ title }: { title: string }) => {
-  const [cities, setCities] = useState<CityType[]>([]);
+  const [cities, setCities] = useState<CityDetail[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

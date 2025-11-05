@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "@/util";
-import { CityType } from "@/context/PlanTypes";
+import { CityDetail } from "@/types";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  const [cities, setCities] = useState<CityType[]>([]);
+  const [cities, setCities] = useState<CityDetail[]>([]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -79,7 +79,7 @@ function Footer() {
             <div className="text-sm">
               <ul className="list-none p-0 m-0 text-sm flex flex-col gap-2">
                 <li className="font-bold text-lg">Last Updated Cities</li>
-                {cities.map((city: CityType) => (
+                {cities.map((city: CityDetail) => (
                   <Link key={city.placeId} to={`/city/${city.placeId}`}>
                     <li>{city.name}</li>
                   </Link>
