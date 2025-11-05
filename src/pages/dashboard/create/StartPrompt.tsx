@@ -26,6 +26,7 @@ const StartPrompt = () => {
       await createPlan({
         title: title,
         description: description,
+        images: [],
         cities: cities,
         stops: [],
       });

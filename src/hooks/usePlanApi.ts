@@ -1,16 +1,17 @@
 import { useAuth } from "@/context/AuthContext";
 import { PlanType } from "@/context/PlanTypes";
+import { Plan, PlanDTO } from "@/types";
 import { useState } from "react";
 
 const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
 export default function usePlanApi() {
-  const [plan, setPlan] = useState<PlanType | null>(null);
+  const [plan, setPlan] = useState<Plan | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { token } = useAuth();
 
-  const createPlan = async (plan: PlanType) => {
+  const createPlan = async (plan: PlanDTO) => {
     if (!token) {
       setPlan(null);
       throw new Error("You must be logged in to create a plan");
