@@ -1,20 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { useItinerary } from "@/context/ItineraryContext";
-import { XIcon } from "lucide-react";
+import { MapPinnedIcon, RouteIcon, StarIcon, XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import { Place } from "@/types";
+import { formatNumber } from "@/lib/utils";
+import { Link } from "react-router-dom";
+import { Button } from "@/Components/ui/button";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const ItineraryItem = ({ place }: { place: Place }) => {
   const { removePlace } = useItinerary();
+  const [showMore, setShowMore] = useState<boolean>(false);
+  const { isMobile } = useMediaQuery();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
     if (!place || !place.placeId) return;
 
     removePlace(place.placeId);
   };
 
+  const handleShowMore = () => {
+    if (isMobile) return;
+
+    setShowMore(true);
+  };
+
+  const handleShowLess = () => {
+    if (isMobile) return;
+
+    setShowMore(false);
+  };
+
+  const handleToggleShowMore = () => {
+    if (isMobile) setShowMore(!showMore);
+  };
+
   return (
-    <div className="flex gap-1 my-4 bg-primary/10 rounded-sm items-stretch relative group">
+    <div
+      className="flex my-4 bg-primary/10 rounded-sm items-stretch relative group cursor-pointer"
+      onMouseOver={handleShowMore}
+      onMouseOut={handleShowLess}
+      onClick={handleToggleShowMore}
+      role="button"
+      tabIndex={0}
+      title={showMore ? "Click to show more" : "Click to show less"}
+    >
       <IconButton
         onClick={handleClick}
         className="absolute -top-1 -right-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
@@ -23,6 +54,7 @@ const ItineraryItem = ({ place }: { place: Place }) => {
       >
         <XIcon />
       </IconButton>
+
       <div className="w-22 shrink-0">
         <img
           className="w-full h-full object-cover rounded-l-sm"
@@ -30,13 +62,48 @@ const ItineraryItem = ({ place }: { place: Place }) => {
           alt={place.name}
         />
       </div>
-      <div className="p-2">
-        <h3 className="font-medium text-base/snug text-balance py-1">
+      <div className="p-3 space-y-2">
+        <h3 className="font-medium text-lg/snug text-balance py-1">
           {place.name}
         </h3>
         <p className="text-foreground/70 font-normal text-xs">
           {place.address}
         </p>
+        {place.summary && <p className="text-sm">{place.summary}</p>}
+        {showMore && (
+          <>
+            {place.rating && (
+              <div className="text-sm">
+                <p className="flex gap-1 items-center text-sm">
+                  <StarIcon className="size-3" />
+                  <b className="font-semibold">{place.rating}</b> (
+                  {formatNumber(place.userRatingCount)} reviews)
+                </p>
+                {place.reviewSummary || ""}
+              </div>
+            )}
+            <div className="flex flex-wrap items-center justify-end gap-1 text-xs">
+              {place.placeGoogleURI && (
+                <Link
+                  to={place.placeGoogleURI}
+                  target="_blank"
+                  className="flex gap-1"
+                >
+                  <Button size={"sm"} variant="link" className="text-xs">
+                    <MapPinnedIcon className="size-4 stroke-1" /> Google Map
+                  </Button>
+                </Link>
+              )}
+              {place.directionGoogleURI && (
+                <Link to={place.directionGoogleURI} target="_blank">
+                  <Button size={"sm"} variant="link" className="text-xs">
+                    <RouteIcon className="size-4 stroke-1" /> Direction
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
