@@ -45,7 +45,7 @@ const Editable = function Editable({
   // TODO: But make sure it works on mobile too, as we don't have mouse over in mobile, so active edit mode on touch (onClick).
   // Edit mode if clicked
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
+    e.stopPropagation();
     setEditable("plaintext-only");
     setMessage("Autosave, Hit Enter or Esc to exit.");
   };
