@@ -3,6 +3,7 @@ import { useItinerary } from "@/context/ItineraryContext";
 import { MapPinnedIcon, RouteIcon, StarIcon, XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import { Place } from "@/types";
+import Editable from "../Editable";
 import { formatNumber } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
@@ -69,7 +70,16 @@ const ItineraryItem = ({ place }: { place: Place }) => {
         <p className="text-foreground/70 font-normal text-xs">
           {place.address}
         </p>
-        {place.summary && <p className="text-sm">{place.summary}</p>}
+        {place.summary && (
+          <Editable
+            className="text-sm"
+            showEditIcon={false}
+            lineClamp={3}
+            onSave={() => {}}
+          >
+            {place.summary}
+          </Editable>
+        )}
         {showMore && (
           <>
             {place.rating && (
