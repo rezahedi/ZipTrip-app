@@ -6,11 +6,13 @@ const Editable = function Editable({
   children,
   className = "",
   lineClamp = 3,
+  showEditIcon = true,
   onSave,
 }: {
   children: string;
   className?: string;
   lineClamp?: number;
+  showEditIcon?: boolean;
   onSave: (name: string) => void;
 }) {
   const [message, setMessage] = useState<string>("");
@@ -43,7 +45,7 @@ const Editable = function Editable({
   // TODO: But make sure it works on mobile too, as we don't have mouse over in mobile, so active edit mode on touch (onClick).
   // Edit mode if clicked
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
+    e.stopPropagation();
     setEditable("plaintext-only");
     setMessage("Autosave, Hit Enter or Esc to exit.");
   };
@@ -76,7 +78,9 @@ const Editable = function Editable({
         >
           {children}
         </div>
-        <PenIcon className="invisible shrink-0 peer-hover:visible w-4 text-gray-400" />
+        {showEditIcon && (
+          <PenIcon className="invisible shrink-0 peer-hover:visible w-4 text-gray-400" />
+        )}
       </div>
       {message && <i className="text-xs text-gray-600">{message}</i>}
     </span>

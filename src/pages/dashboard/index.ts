@@ -1,19 +1,8 @@
 import DashboardTheme from "./Theme";
 import MyPlans from "./MyPlans";
 import Bookmarked from "./Bookmarked";
-import CreateNew from "./CreateNew";
 import Done from "./Done";
 import Profile from "./Profile";
-import EditPlan from "./EditPlan";
 import Settings from "./Settings";
 
-export {
-  DashboardTheme,
-  MyPlans,
-  Bookmarked,
-  CreateNew,
-  Done,
-  Profile,
-  EditPlan,
-  Settings,
-};
+export { DashboardTheme, MyPlans, Bookmarked, Done, Profile, Settings };

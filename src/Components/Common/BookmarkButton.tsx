@@ -43,7 +43,12 @@ const BookmarkButton = ({
   };
 
   return (
-    <IconButton onClick={handleBookmark} variant="ghost" className={className}>
+    <IconButton
+      onClick={handleBookmark}
+      variant="ghost"
+      className={className}
+      title={bookmark ? "Remove Bookmark" : "Add Bookmark"}
+    >
       <BookmarkIcon
         className={bookmark ? "text-accent fill-accent" : "text-ring"}
       />

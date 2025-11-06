@@ -1,5 +1,8 @@
-import { PlaceType, PlanType } from "@/context/PlanTypes";
+import { Place } from "./../types/index";
+import { PlanDTO } from "@/types";
 import { useReducer } from "react";
+
+type PartialPlanDTO = Partial<PlanDTO>;
 
 type Action =
   | {
@@ -14,15 +17,28 @@ type Action =
   | {
       type: "removePlace";
       payload: string;
-      init: PlaceType[];
+      init: Place[];
     }
   | {
       type: "addPlace";
-      payload: PlaceType;
-      init: PlaceType[];
+      payload: Place;
+      init: Place[];
+    }
+  | {
+      type: "setExpense";
+      payload: { placeId: string; expense: number };
+      init: Place[];
+    }
+  | {
+      type: "setNote";
+      payload: { placeId: string; note: string };
+      init: Place[];
     };
 
-const reducer = (state: PlanType | null, action: Action): PlanType | null => {
+const reducer = (
+  state: PartialPlanDTO | null,
+  action: Action,
+): PartialPlanDTO | null => {
   switch (action.type) {
     case "setTitle":
       return {
@@ -65,12 +81,44 @@ const reducer = (state: PlanType | null, action: Action): PlanType | null => {
       };
     }
 
+    case "setExpense": {
+      let stops = [...(state?.stops || action.init)];
+
+      return {
+        ...state,
+        stops: stops.map((p) =>
+          p.placeId === action.payload.placeId
+            ? {
+                ...p,
+                expense: action.payload.expense,
+              }
+            : p,
+        ),
+      };
+    }
+
+    case "setNote": {
+      let stops = [...(state?.stops || action.init)];
+
+      return {
+        ...state,
+        stops: stops.map((p) =>
+          p.placeId === action.payload.placeId
+            ? {
+                ...p,
+                note: action.payload.note,
+              }
+            : p,
+        ),
+      };
+    }
+
     default:
       return state;
   }
 };
 
-export default function usePlanOptimistic(init: PlanType | null) {
+export default function usePlanOptimistic(init: PlanDTO | null) {
   const [optimisticPlan, dispatch] = useReducer(reducer, init);
 
   return { optimisticPlan, dispatch };

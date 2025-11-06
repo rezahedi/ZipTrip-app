@@ -1,9 +1,9 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { CityType } from "@/context/PlanTypes";
 import { XIcon } from "lucide-react";
 import IconButton from "@/Components/ui/IconButton";
 import { Link } from "react-router-dom";
+import { City } from "@/types";
 
 const Cities = ({
   cities,
@@ -11,10 +11,10 @@ const Cities = ({
   className = "",
   onRemove,
 }: {
-  cities: CityType[];
+  cities: City[];
   linked?: boolean;
   className?: string;
-  onRemove?: (city: CityType) => void;
+  onRemove?: (city: City) => void;
 }) => {
   if (!cities) return null;
 
@@ -58,8 +58,8 @@ const Item = ({
   city,
   onRemove,
 }: {
-  city: CityType;
-  onRemove?: (city: CityType) => void;
+  city: City;
+  onRemove?: (city: City) => void;
 }) => {
   return (
     <>

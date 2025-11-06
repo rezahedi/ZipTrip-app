@@ -1,25 +1,5 @@
 import { fetchData } from "@/util";
 
-export interface PassingStop {
-  _id?: string;
-  name: string;
-  imageURL: string;
-  address: string;
-  description: string;
-  location: [number, number];
-}
-
-export interface PassingPlan {
-  _id?: string;
-  title: string;
-  description: string;
-  images: string[];
-  type: string;
-  distance: string;
-  duration: string;
-  stops: PassingStop[];
-}
-
 const API_V1_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
 const getMyPlans = async (
@@ -53,75 +33,6 @@ const deletePlan = async (
     onError("An error occurred while removing the plan");
     return false;
   }
-};
-
-const getPlan = async (
-  token: string,
-  planId: string,
-  onError: (error: string) => void,
-) => {
-  return await fetchData(`account/plans/${planId}`, token, onError);
-};
-
-const updatePlan = async (
-  token: string,
-  plan: PassingPlan,
-  onError: (error: string) => void,
-) => {
-  try {
-    let res = await fetch(`${API_V1_BASE_URL}/account/plans/${plan._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(plan),
-    });
-    if (!res.ok) {
-      const errorData = await res.json();
-      onError(errorData.msg || "Failed to update plan");
-      return null;
-    }
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-    onError("An error occurred while updating the plan");
-    return null;
-  }
-};
-
-const createPlan = async (
-  token: string,
-  plan: PassingPlan,
-  onError: (error: string) => void,
-) => {
-  try {
-    let res = await fetch(`${API_V1_BASE_URL}/account/plans`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(plan),
-    });
-    if (!res.ok) {
-      const errorData = await res.json();
-      onError(errorData.msg || "Failed to create plan");
-      return null;
-    }
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-    onError("An error occurred while creating the plan");
-    return null;
-  }
-};
-
-const getCategories = async (
-  token: string,
-  onError: (error: string) => void,
-) => {
-  return await fetchData(`account/categories`, token, onError);
 };
 
 const AddBookmark = async (
@@ -182,14 +93,4 @@ const getBookmarks = async (
   return await fetchData(`account/bookmarks?${params}`, token, onError);
 };
 
-export {
-  getMyPlans,
-  deletePlan,
-  getPlan,
-  updatePlan,
-  getCategories,
-  createPlan,
-  AddBookmark,
-  removeBookmark,
-  getBookmarks,
-};
+export { getMyPlans, deletePlan, AddBookmark, removeBookmark, getBookmarks };

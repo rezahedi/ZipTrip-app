@@ -1,20 +1,21 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Place } from "@/types";
-import { PlanType } from "./PlanTypes";
+import { Place, PlanDTO, PlanWithDetail } from "@/types";
 import { useAuth } from "./AuthContext";
 import { useParams } from "react-router-dom";
 import usePlanApi from "@/hooks/usePlanApi";
 import usePlanOptimistic from "@/hooks/usePlanOptimistic";
 
 type contextType = {
-  plan: PlanType | null;
+  plan: PlanWithDetail | null;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   addImage: (image: string) => void;
   setPolyline: (polyline: string) => void;
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
-  createPlan: (plan: PlanType) => void;
+  setExpense: (placeId: string, expense: number) => void;
+  setNote: (placeId: string, note: string) => void;
+  createPlan: (plan: PlanDTO) => void;
   saving: boolean;
   loading: boolean;
   error: string | null;
@@ -25,7 +26,6 @@ const ItineraryContext = createContext<contextType | undefined>(undefined);
 const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const { plan, setPlan, saving, loading, createPlan, getPlan, updatePlan } =
     usePlanApi();
-  // const [optimisticPlan, setOptimisticPlan] = useState<PlanType | null>(null);
   const { optimisticPlan, dispatch } = usePlanOptimistic(null);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
@@ -50,7 +50,13 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     (async () => {
       const originalPlan = plan;
       // Replace plan's properties with whatever is in optimisticPlan
-      setPlan({ ...plan, ...optimisticPlan });
+      setPlan({
+        ...plan,
+        title: optimisticPlan.title || plan.title,
+        description: optimisticPlan.description || plan.description,
+        images: optimisticPlan.images || plan.images,
+        stops: optimisticPlan.stops || plan.stops,
+      });
       try {
         await updatePlan(planId, optimisticPlan);
       } catch (err: unknown) {
@@ -99,6 +105,26 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "removePlace", payload: placeId, init: plan.stops || [] });
   };
 
+  const setExpense = (placeId: string, expense: number) => {
+    if (!plan || !placeId) return;
+
+    dispatch({
+      type: "setExpense",
+      payload: { placeId, expense },
+      init: plan.stops || [],
+    });
+  };
+
+  const setNote = (placeId: string, note: string) => {
+    if (!plan || !placeId) return;
+
+    dispatch({
+      type: "setNote",
+      payload: { placeId, note },
+      init: plan.stops || [],
+    });
+  };
+
   return (
     <ItineraryContext.Provider
       value={{
@@ -109,6 +135,8 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         addImage,
         addPlace,
         removePlace,
+        setExpense,
+        setNote,
         createPlan,
         saving,
         loading,

@@ -2,20 +2,22 @@ import React, { useState, lazy, Suspense, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import IconButton from "@/Components/ui/IconButton";
-import { Share2Icon } from "lucide-react";
+import { Share2Icon, SquarePenIcon } from "lucide-react";
 import MapBox from "./MapBox";
 import Stops from "./Stops";
 import ImageBlock from "./ImageBlock";
-import { PlanWithStops } from "@/types";
+import { PlanWithDetail } from "@/types";
 import StatsBlock from "./StatsBlock";
 import Cities from "../dashboard/create/Cities";
 import BookmarkButton from "@/Components/Common/BookmarkButton";
 import { MapSyncProvider } from "@/context/MapSyncContext";
 import { ListProvider } from "@/context/ListContext";
+import { Button } from "@/Components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 const ShareDialog = lazy(() => import("./ShareDialog"));
 
-const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
+const PlanDetails = ({ plan }: { plan: PlanWithDetail }) => {
   const {
     _id: planId,
     title,
@@ -35,6 +37,7 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
     updatedAt,
   } = plan;
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {}, [isBookmarked]);
 
@@ -47,11 +50,25 @@ const PlanDetails = ({ plan }: { plan: PlanWithStops }) => {
       <article className="py-4">
         <div className="flex justify-between flex-wrap mb-4">
           {/* Title */}
-          <h4 className="text-3xl">{title}</h4>
+          <h4 className="text-3xl flex items-center gap-2">
+            {title}
+            {user && userId._id === user?._id && (
+              <Link to={`/create/${planId}`}>
+                <Button
+                  title="Edit"
+                  variant={"outline"}
+                  className="hover:bg-foreground/10"
+                >
+                  <SquarePenIcon /> Edit
+                </Button>
+              </Link>
+            )}
+          </h4>
 
           {/* Icon Buttons */}
           <div className="flex gap-1 flex-1 sm:flex-auto justify-end">
             <IconButton
+              title="Share"
               variant="ghost"
               onClick={() => setIsShareDialogOpen(true)}
             >

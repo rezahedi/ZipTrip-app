@@ -6,7 +6,7 @@ import { fetchData } from "@/util";
 import Pagination from "@/Components/Common/Pagination";
 import PlanCardSkeleton from "@/Components/Common/PlanCardSkeleton";
 import { useAuth } from "@/context/AuthContext";
-import { Plan, City } from "@/types";
+import { Plan, CityDetail } from "@/types";
 import Title from "@/Components/Header/Title";
 
 const PAGE_SIZE = 8;
@@ -18,7 +18,7 @@ const CityPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [pagesCount, setPagesCount] = useState<number>(0);
-  const [city, setCity] = useState<City | null>(null);
+  const [city, setCity] = useState<CityDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
 
