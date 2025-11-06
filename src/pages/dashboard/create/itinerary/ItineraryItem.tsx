@@ -11,7 +11,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import AddExpense from "./AddExpense";
 
 const ItineraryItem = ({ place }: { place: StopDetail }) => {
-  const { removePlace, setExpense } = useItinerary();
+  const { removePlace, setExpense, setNote } = useItinerary();
   const [showMore, setShowMore] = useState<boolean>(false);
   const { isMobile } = useMediaQuery();
 
@@ -40,6 +40,10 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
 
   const handleSaveExpense = (expense: number) => {
     setExpense(place.placeId, expense);
+  };
+
+  const handleSaveNote = (note: string) => {
+    setNote(place.placeId, note);
   };
 
   return (
@@ -79,7 +83,7 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
           className="text-sm"
           showEditIcon={false}
           lineClamp={3}
-          onSave={() => {}}
+          onSave={handleSaveNote}
         >
           {place.note || place.summary || "Add your note here ..."}
         </Editable>

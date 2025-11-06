@@ -28,6 +28,11 @@ type Action =
       type: "setExpense";
       payload: { placeId: string; expense: number };
       init: Place[];
+    }
+  | {
+      type: "setNote";
+      payload: { placeId: string; note: string };
+      init: Place[];
     };
 
 const reducer = (
@@ -86,6 +91,22 @@ const reducer = (
             ? {
                 ...p,
                 expense: action.payload.expense,
+              }
+            : p,
+        ),
+      };
+    }
+
+    case "setNote": {
+      let stops = [...(state?.stops || action.init)];
+
+      return {
+        ...state,
+        stops: stops.map((p) =>
+          p.placeId === action.payload.placeId
+            ? {
+                ...p,
+                note: action.payload.note,
               }
             : p,
         ),

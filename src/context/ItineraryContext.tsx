@@ -14,6 +14,7 @@ type contextType = {
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
   setExpense: (placeId: string, expense: number) => void;
+  setNote: (placeId: string, note: string) => void;
   createPlan: (plan: PlanDTO) => void;
   saving: boolean;
   loading: boolean;
@@ -115,6 +116,16 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  const setNote = (placeId: string, note: string) => {
+    if (!plan || !placeId) return;
+
+    dispatch({
+      type: "setNote",
+      payload: { placeId, note },
+      init: plan.stops || [],
+    });
+  };
+
   return (
     <ItineraryContext.Provider
       value={{
@@ -126,6 +137,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         addPlace,
         removePlace,
         setExpense,
+        setNote,
         createPlan,
         saving,
         loading,
