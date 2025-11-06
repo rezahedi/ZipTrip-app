@@ -27,7 +27,7 @@ const AddExpense = ({
     e.stopPropagation();
     const newExpense: number = e.target.valueAsNumber;
     setIsEditMode(false);
-    onSave(newExpense);
+    if (newExpense > 0) onSave(newExpense);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -35,7 +35,7 @@ const AddExpense = ({
     if (e.key === "Enter" || e.key === "Tab") {
       const newExpense: number = e.currentTarget.valueAsNumber;
       setIsEditMode(false);
-      onSave(newExpense);
+      if (newExpense > 0) onSave(newExpense);
     } else if (e.key === "Escape") {
       setIsEditMode(false);
     }

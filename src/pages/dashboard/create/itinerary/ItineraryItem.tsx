@@ -54,7 +54,7 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
       onClick={handleToggleShowMore}
       role="button"
       tabIndex={0}
-      title={showMore ? "Click to show more" : "Click to show less"}
+      title={showMore ? "Click to show less" : "Click to show more"}
     >
       <IconButton
         onClick={handleClick}
