@@ -8,6 +8,7 @@ import { formatNumber } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import AddExpense from "./AddExpense";
 
 const ItineraryItem = ({ place }: { place: StopDetail }) => {
   const { removePlace } = useItinerary();
@@ -37,6 +38,10 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
     if (isMobile) setShowMore(!showMore);
   };
 
+  const handleSaveExpense = (expense: number) => {
+    console.log("Saving expense:", expense);
+  };
+
   return (
     <div
       className="flex my-4 bg-primary/10 rounded-sm items-stretch relative group cursor-pointer"
@@ -63,42 +68,26 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
           alt={place.name}
         />
       </div>
-      <div className="p-3 space-y-2">
+      <div className="w-full p-3 space-y-2">
         <h3 className="font-medium text-lg/snug text-balance py-1">
           {place.name}
         </h3>
         <p className="text-foreground/70 font-normal text-xs">
           {place.address}
         </p>
-        {place.summary && (
-          <Editable
-            className="text-sm"
-            showEditIcon={false}
-            lineClamp={3}
-            onSave={() => {}}
-          >
-            {place.summary}
-          </Editable>
-        )}
-        {showMore && (
-          <>
-            {place.rating && (
-              <div className="text-sm">
-                <p className="flex gap-1 items-center text-sm">
-                  <StarIcon className="size-3" />
-                  <b className="font-semibold">{place.rating}</b> (
-                  {formatNumber(place.userRatingCount)} reviews)
-                </p>
-                {place.reviewSummary || ""}
-              </div>
-            )}
-            <div className="flex flex-wrap items-center justify-end gap-1 text-xs">
+        <Editable
+          className="text-sm"
+          showEditIcon={false}
+          lineClamp={3}
+          onSave={() => {}}
+        >
+          {place.note || place.summary || "Add your note here ..."}
+        </Editable>
+        <div className="flex flex-wrap items-center justify-end text-xs">
+          {showMore && (
+            <>
               {place.placeGoogleURI && (
-                <Link
-                  to={place.placeGoogleURI}
-                  target="_blank"
-                  className="flex gap-1"
-                >
+                <Link to={place.placeGoogleURI} target="_blank">
                   <Button size={"sm"} variant="link" className="text-xs">
                     <MapPinnedIcon className="size-4 stroke-1" /> Google Map
                   </Button>
@@ -111,7 +100,22 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
                   </Button>
                 </Link>
               )}
-            </div>
+            </>
+          )}
+          <AddExpense expense={place.expense || 0} onSave={handleSaveExpense} />
+        </div>
+        {showMore && (
+          <>
+            {place.rating && (
+              <div className="text-sm">
+                <p className="flex gap-1 items-center text-sm">
+                  <StarIcon className="size-3" />
+                  <b className="font-semibold">{place.rating}</b> (
+                  {formatNumber(place.userRatingCount)} reviews)
+                </p>
+                {place.reviewSummary || ""}
+              </div>
+            )}
           </>
         )}
       </div>
