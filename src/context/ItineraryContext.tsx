@@ -13,6 +13,7 @@ type contextType = {
   setPolyline: (polyline: string) => void;
   addPlace: (place: Place) => void;
   removePlace: (placeId: string) => void;
+  setExpense: (placeId: string, expense: number) => void;
   createPlan: (plan: PlanDTO) => void;
   saving: boolean;
   loading: boolean;
@@ -104,6 +105,16 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "removePlace", payload: placeId, init: plan.stops || [] });
   };
 
+  const setExpense = (placeId: string, expense: number) => {
+    if (!plan || !placeId) return;
+
+    dispatch({
+      type: "setExpense",
+      payload: { placeId, expense },
+      init: plan.stops || [],
+    });
+  };
+
   return (
     <ItineraryContext.Provider
       value={{
@@ -114,6 +125,7 @@ const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
         addImage,
         addPlace,
         removePlace,
+        setExpense,
         createPlan,
         saving,
         loading,

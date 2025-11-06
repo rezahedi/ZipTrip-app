@@ -23,6 +23,11 @@ type Action =
       type: "addPlace";
       payload: Place;
       init: Place[];
+    }
+  | {
+      type: "setExpense";
+      payload: { placeId: string; expense: number };
+      init: Place[];
     };
 
 const reducer = (
@@ -68,6 +73,22 @@ const reducer = (
       return {
         ...state,
         stops: stops.filter((p) => p.placeId !== action.payload),
+      };
+    }
+
+    case "setExpense": {
+      let stops = [...(state?.stops || action.init)];
+
+      return {
+        ...state,
+        stops: stops.map((p) =>
+          p.placeId === action.payload.placeId
+            ? {
+                ...p,
+                expense: action.payload.expense,
+              }
+            : p,
+        ),
       };
     }
 

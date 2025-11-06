@@ -11,7 +11,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import AddExpense from "./AddExpense";
 
 const ItineraryItem = ({ place }: { place: StopDetail }) => {
-  const { removePlace } = useItinerary();
+  const { removePlace, setExpense } = useItinerary();
   const [showMore, setShowMore] = useState<boolean>(false);
   const { isMobile } = useMediaQuery();
 
@@ -39,7 +39,7 @@ const ItineraryItem = ({ place }: { place: StopDetail }) => {
   };
 
   const handleSaveExpense = (expense: number) => {
-    console.log("Saving expense:", expense);
+    setExpense(place.placeId, expense);
   };
 
   return (
