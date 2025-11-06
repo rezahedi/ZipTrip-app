@@ -26,7 +26,6 @@ const ItineraryContext = createContext<contextType | undefined>(undefined);
 const ItineraryProvider = ({ children }: { children: React.ReactNode }) => {
   const { plan, setPlan, saving, loading, createPlan, getPlan, updatePlan } =
     usePlanApi();
-  // const [optimisticPlan, setOptimisticPlan] = useState<PlanType | null>(null);
   const { optimisticPlan, dispatch } = usePlanOptimistic(null);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
