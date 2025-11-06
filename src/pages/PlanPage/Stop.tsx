@@ -61,7 +61,7 @@ const Stop = ({ place }: { place: StopDetail }) => {
       <div className="flex flex-col items-start py-2 p-4 gap-2">
         <h5 className="font-semibold text-lg">
           {getMarkerIcon(place.type)} {place.name}{" "}
-          {place.expense && (
+          {place.expense !== undefined && place.expense > 0 && (
             <span className="inline-block">
               <span className="flex gap-1 items-center font-normal text-sm py-0.5 px-2.5 rounded-full bg-accent/40">
                 <TicketMinusIcon className="size-4 stroke-1" />
