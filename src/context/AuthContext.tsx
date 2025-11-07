@@ -29,7 +29,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, expiresIn);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [user]);
 
   const login = (userData: User) => {
     setUser(userData);
