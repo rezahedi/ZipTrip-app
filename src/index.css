@@ -50,7 +50,7 @@ body {
   --radius: 0.625rem;
 
   /* Base */
-  --background: oklch(96.416% 0.00011 271.152);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(12.553% 0.02455 293.865);
 
   /* UI Elements */
