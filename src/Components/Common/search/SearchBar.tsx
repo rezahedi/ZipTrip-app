@@ -38,7 +38,7 @@ const SearchBar = () => {
           placeholder="Search for a city, activity, or place"
           value={searchQuery || ""}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full mx-auto rounded-4xl shadow-lg bg-input border border-ring px-14 py-4 text-lg md:text-lg"
+          className="w-full mx-auto rounded-4xl shadow-lg bg-background border border-ring px-14 py-4 text-lg md:text-lg"
         />
         <Button
           type="submit"

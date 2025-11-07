@@ -31,7 +31,7 @@ const CitiesSection = ({ title }: { title: string }) => {
   if (error) return;
 
   return (
-    <div className="rounded-md bg-accent/10 px-5 py-6">
+    <div className="rounded-4xl bg-accent/10 px-5 py-6">
       <h5 className="mb-6 font-semibold text-2xl">{title}</h5>
       <div className="flex flex-wrap justify-between gap-4">
         <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
