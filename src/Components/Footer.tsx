@@ -44,32 +44,24 @@ function Footer() {
                   <li>API Documentation</li>
                 </Link>
                 <Link
-                  to="https://github.com/Code-the-Dream-School/ii-practicum-team-5-back"
+                  to="https://github.com/rezahedi/ZipTrip-api"
                   target="_blank"
                   color="primary"
                 >
                   <li>Backend Repository</li>
                 </Link>
                 <Link
-                  to="https://github.com/Code-the-Dream-School/ii-practicum-team-5-front"
+                  to="https://github.com/rezahedi/ZipTrip-app"
                   target="_blank"
                   color="primary"
                 >
                   <li>Frontend Repository</li>
                 </Link>
-                <Link
-                  to="https://codethedream.org/classes/practicum"
-                  target="_blank"
-                  color="primary"
-                >
-                  <li>Practicum Program</li>
+                <Link to="https://vercel.com/" target="_blank" color="primary">
+                  <li>Deployed on Vercel</li>
                 </Link>
-                <Link
-                  to="https://codethedream.org"
-                  target="_blank"
-                  color="primary"
-                >
-                  <li>Code The Dream</li>
+                <Link to="https://rezahedi.dev" target="_blank" color="primary">
+                  <li>See my Other Projects 🦈</li>
                 </Link>
               </ul>
             </div>
