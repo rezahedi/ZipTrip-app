@@ -76,6 +76,7 @@ export interface User {
   email: string;
   imageURL: string;
   token: string;
+  expiresIn: string;
 }
 
 export interface CityDetail {

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
+import { User } from "@/types";
+import { postData } from "@/util";
+import { useAuth } from "@/context/AuthContext";
 
 const ResetPasswordPage = () => {
   const { token } = useParams();
@@ -8,23 +11,19 @@ const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useAuth();
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch("/api/v1/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resetToken: token, newPassword: password }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data));
+      const userData: User = await postData(
+        "auth/reset-password",
+        { resetToken: token, newPassword: password },
+        setErrorMessage,
+      );
+      if (userData) {
+        await login(userData);
         setErrorMessage("Password reset successful!");
         setTimeout(() => navigate("/"), 2000);
-      } else {
-        setErrorMessage(data.msg || "Reset failed.");
       }
     } catch (err: unknown) {
       let errorMessage = "";

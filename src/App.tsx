@@ -29,9 +29,12 @@ function App() {
         <Routes>
           <Route element={<MapLayout />}>
             <Route path="/explore" element={<ExplorePage />} />
-            <Route path="/create" element={<CreatePage />} />
-            <Route path="/create/:planId" element={<CreatePage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/create" element={<CreatePage />} />
+              <Route path="/create/:planId" element={<CreatePage />} />
+            </Route>
           </Route>
+
           {/* Routes wrapped in main layout */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
@@ -43,19 +46,14 @@ function App() {
               path="/resetpassword/:token"
               element={<ResetPasswordPage />}
             />
-            <Route
-              path="/account"
-              element={
-                <ProtectedRoute>
-                  <DashboardTheme />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<MyPlans />} />
-              <Route path="bookmarked" element={<Bookmarked />} />
-              <Route path="done" element={<Done />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="settings" element={<Settings />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/account" element={<DashboardTheme />}>
+                <Route index element={<MyPlans />} />
+                <Route path="bookmarked" element={<Bookmarked />} />
+                <Route path="done" element={<Done />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
             </Route>
             <Route path="*" element={<NotFound404 />} />
           </Route>
