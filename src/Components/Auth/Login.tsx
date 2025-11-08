@@ -5,7 +5,6 @@ import { useAuthModal } from "@/context/AuthModalContext";
 import { User } from "@/types";
 import { Dialog, DialogContent } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleLoginButton from "./GoogleLoginButton";
 
 const LoginPage = ({
@@ -137,11 +136,7 @@ const LoginPage = ({
           {/* Left Section */}
           <div className="flex-1 md:flex-1/2 px-2 py-3 space-y-2">
             <h5 className="flex justify-center text-3xl">Sign In</h5>
-            <GoogleOAuthProvider
-              clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
-            >
-              <GoogleLoginButton onLogin={handleGoogleLogin} />
-            </GoogleOAuthProvider>
+            <GoogleLoginButton onLogin={handleGoogleLogin} />
             <div className="my-4 text-foreground/60 text-center">OR</div>
             <label className="block">
               Email:
