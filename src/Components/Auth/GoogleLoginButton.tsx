@@ -11,6 +11,8 @@ const GoogleLoginButton = ({
       onSuccess={(response: CredentialResponse) => {
         if (response.credential) onLogin(response.credential);
       }}
+      text="continue_with"
+      theme="filled_blue"
     />
   );
 };
