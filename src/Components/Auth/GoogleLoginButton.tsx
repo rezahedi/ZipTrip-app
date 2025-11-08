@@ -13,6 +13,7 @@ const GoogleLoginButton = ({
       }}
       text="continue_with"
       theme="filled_blue"
+      width="100%"
     />
   );
 };
