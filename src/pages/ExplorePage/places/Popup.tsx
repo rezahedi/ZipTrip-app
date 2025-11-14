@@ -55,9 +55,9 @@ const Popup = () => {
   if (!place) return null;
 
   return (
-    <div className="flex gap-1 sm:w-xs sm:h-32">
+    <div className="flex gap-1 sm:w-xs">
       <img
-        className="w-24 h-full object-cover rounded-sm hidden sm:block"
+        className="w-24 object-cover rounded-sm hidden sm:block"
         src={place.imageURL}
         alt={place.name}
       />
