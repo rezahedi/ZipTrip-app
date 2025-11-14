@@ -10,9 +10,10 @@ const Markers = memo(function Markers() {
 
   const handleClick = useCallback(
     (placeId?: string, location?: [number, number]) => {
+      if (selection && placeId === selection.placeId) return;
       if (placeId) setSelection({ placeId, location, source: "marker" });
     },
-    [setSelection],
+    [selection, setSelection],
   );
 
   const handlePopupClose = useCallback(() => {

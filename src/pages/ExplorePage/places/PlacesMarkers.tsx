@@ -12,14 +12,16 @@ const PlacesMarkers = function Markers() {
 
   const handleClick = useCallback(
     (placeId?: string, location?: [number, number]) => {
+      if (selection && placeId === selection.placeId) return;
       if (placeId) setSelection({ placeId, location, source: "marker" });
     },
-    [setSelection],
+    [selection, setSelection],
   );
 
   const handleMouseOver = useCallback(
     (placeId?: string, location?: [number, number]) => {
       if (placeId) {
+        if (selection && placeId === selection.placeId) return;
         if (mouseOverTimeoutRef.current)
           clearTimeout(mouseOverTimeoutRef.current);
         mouseOverTimeoutRef.current = window.setTimeout(
@@ -28,7 +30,7 @@ const PlacesMarkers = function Markers() {
         );
       }
     },
-    [setSelection],
+    [selection, setSelection],
   );
 
   const handleMouseOut = useCallback(
