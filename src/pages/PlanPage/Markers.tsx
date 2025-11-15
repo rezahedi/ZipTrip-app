@@ -53,9 +53,9 @@ const Markers = ({ stops }: { stops: StopType[] }) => {
           position={selectedPlace.location}
           onClose={handlePopupClose}
         >
-          <div className="flex gap-1 sm:w-xs sm:h-32">
+          <div className="flex gap-1 sm:w-xs">
             <img
-              className="w-24 h-full object-cover rounded-sm hidden sm:block"
+              className="w-24 object-cover rounded-sm hidden sm:block"
               src={selectedPlace.imageURL}
               alt={selectedPlace.name}
             />
